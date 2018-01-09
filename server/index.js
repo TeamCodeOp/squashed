@@ -1,9 +1,10 @@
-var express = require('express');
-var app = express();
+const express = require('express');
 
-app.use(express.static(__dirname + '/../react-client/dist'));
+const app = express();
 
-app.listen(3000, function() {
+app.use(express.static(`${__dirname}/../react-client/dist`));
+
+app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
 

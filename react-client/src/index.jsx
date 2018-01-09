@@ -4,11 +4,9 @@ import $ from 'jquery';
 
 
 class App extends React.Component {
-
-  render () {
+  render() {
     return (<div>
       <h1>Trip collab</h1>
-
     </div>);
   }
 }
