@@ -5,10 +5,15 @@
  *   https://github.com/airbnb/javascript
  */
 module.exports = {
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "extends": "airbnb",
   "rules": {
     "func-names": ["error", "never"],
-    "no-console": 0,
-    "react/prefer-stateless-function": [<enabled>, { "ignorePureComponents": <ignorePureComponents> }],
+    "no-console": "off",
+    "react/prefer-stateless-function": "off",
+    "comma-dangle": "off"
   }
 }
