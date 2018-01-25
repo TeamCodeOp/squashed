@@ -8,7 +8,6 @@ module.exports = {
   "extends": "airbnb",
   "rules": {
     "func-names": ["error", "never"],
-    "no-console": 0,
-    "react/prefer-stateless-function": [<enabled>, { "ignorePureComponents": <ignorePureComponents> }],
+    "no-console": 0
   }
 }
