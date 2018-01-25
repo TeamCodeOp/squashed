@@ -31,5 +31,8 @@
     "react-dom": "^15.4.2",
     "sequelize": "^4.30.1",
     "tedious": "^2.1.5"
+  },
+  "engines": {
+    "node": "8.9.3"
   }
 }
