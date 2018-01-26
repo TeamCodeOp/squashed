@@ -16,6 +16,8 @@ module.exports = {
     "no-console": "off",
     "react/prefer-stateless-function": "off",
     "comma-dangle": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "prefer-destructuring": "off",
+    "no-undef": "off"
   }
 }

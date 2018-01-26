@@ -3,7 +3,7 @@ CREATE DATABASE codeop;
 
 USE codeop;
 
-CREATE TABLE PROJECTS (
+CREATE TABLE projects (
   /* Describe your table here.*/
   id int NOT NULL AUTO_INCREMENT,
   project_name varchar(20) NOT NULL,
