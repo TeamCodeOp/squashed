@@ -10,6 +10,10 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
 
+app.get('/', (req, res) => {
+  res.status(200).json();
+});
+
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
