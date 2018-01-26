@@ -7,6 +7,10 @@ class App extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    console.log('App mounted');
+  }
+
   render() {
     return (
       <div>
