@@ -17,6 +17,7 @@ module.exports = {
     "react/prefer-stateless-function": "off",
     "comma-dangle": "off",
     "no-unused-vars": "off",
-    "no-undef": "off",
+    "prefer-destructuring": "off",
+    "no-undef": "off"
   }
 }
