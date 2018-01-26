@@ -1,3 +1,4 @@
+
 /**
  * These rules enforce the airbnb Style Guide
  *
@@ -14,6 +15,7 @@ module.exports = {
     "func-names": ["error", "never"],
     "no-console": "off",
     "react/prefer-stateless-function": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-unused-vars": "off"
   }
 }
