@@ -1,14 +1,12 @@
-const Sequelize = require('sequelize');
+const mysql = require('mysql');
 
-const sequelize = new Sequelize('codeop', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
-
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000,
-  }
+const connection = mysql.createConnection({
+  user: 'root',
+  password: '',
+  database: 'codeop'
 });
+
+connection.connect();
+
+module.exports = connection;
 
