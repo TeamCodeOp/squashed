@@ -1,15 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import { render } from 'react-dom';
+import { createStore } from 'redux';
+import Root from './components/Root.jsx';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Trip collab</h1>
-      </div>);
-  }
-}
+let store;
 
-ReactDOM.render(<App />, document.getElementById('app'));
+
+render(
+  <Root store={store} />,
+  document.getElementById('root')
+);
 
