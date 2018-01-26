@@ -1,8 +1,10 @@
 const mysql = require('mysql');
 const { expect } = require('chai');
+const db = require('../../database/index.js');
+const model = require('../../database/model.js');
 
 
-describe('thesis', () => {
+describe('codeOp database', () => {
   let dbConnection;
 
   beforeEach((done) => {
@@ -24,14 +26,22 @@ describe('thesis', () => {
     dbConnection.end();
   });
 
-  it('should insert project name to the DB', (done) => {
-    const userQ = 'INSERT INTO projects (project_name) VALUES ("test project")';
-    dbConnection.query(userQ, () => {
-      console.log('inside');
-      dbConnection.query('SELECT * FROM projects WHERE project_name = "test project"', (err, results) => {
-        expect(results.length).to.equal(1);
-        done();
+  it('Should insert project name', (done) => {
+    const data = {
+      project_name: 'javascript'
+    };
+    model.insertProjectData(data)
+      .then(() => {
+        const query = `SELECT * FROM projects WHERE project_name = '${data.project_name}';`;
+        console.log('select query', query);
+        return dbConnection.query(query, (err, results) => {
+          if (err) {
+            throw err;
+          } else {
+            expect(results.length).to.equal(1);
+            done();
+          }
+        });
       });
-    });
   });
 });
