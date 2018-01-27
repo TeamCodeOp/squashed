@@ -1,4 +1,6 @@
-
+body, textarea {
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
 
 #createProjectHeader {
   margin-top: 2em;

@@ -8,26 +8,41 @@ class AddProject extends React.Component {
     this.state = {
       projectName: '',
       description: '',
-      githubRepo: ''
+      githubRepo: '',
+      techs: [],
+      projectImage: '',
     };
   }
 
-  handleChange(e, { name, value }) {
+  handleInput(e, { name, value }) {
+    e.preventDefault();
+
     this.setState({
       [name]: value
     });
   }
 
+  handleDescription(e) {
+    this.setState({
+      description: e.target.value
+    });
+  }
+
   handleSubmit() {
-    const { projectName, description, githubRepo } = this.state;
+    const { projectName, githubRepo } = this.state;
 
     this.setState({
       projectName: projectName,
-      description: description,
       githubRepo: githubRepo
     });
   }
 
+  handleTechs(){
+    console.log();
+    // this.setState({
+
+    // })
+  }
 
   render() {
     const { projectName, description, githubRepo } = this.state;
@@ -62,11 +77,11 @@ class AddProject extends React.Component {
           <Grid.Column></Grid.Column>
           <Grid.Column width={6}>
             <Form className='addProject' onSubmit={this.handleSubmit}>
-              <Form.Input label='Project Name' placeholder='Project Name' name='Project Name' value={projectName} onChange={this.handleChange} />
-              <Form.TextArea label='Description' placeholder='Tell us more about your project...' />
-              <Form.Input label='Github' placeholder='Repo Link' name='Github Repo' value={githubRepo} onChange={this.handleChange} />
+              <Form.Input label='Name' placeholder='Project Name' name='Project Name' value={projectName} onChange={this.handleInput} />
+              <Form.TextArea label='Description' placeholder='Tell us more about your project...' onChange={this.handleDescription} />
+              <Form.Input label='Github' placeholder='Project repo link' name='Github Repo' value={githubRepo} onChange={this.handleInput} />
               <label>Tech Stacks</label>
-              <Dropdown placeholder='Techs' fluid multiple selection options={techs} id='techDropdown' />
+              <Dropdown placeholder='Select' fluid multiple selection options={techs} id='techDropdown' onChange={this.handleTechs}/>
               <p></p>
               <Form.Input label='Project Screenshot' type='file' icon={<Icon name='upload'/>} className='inputFile' />
               <Form.Button content='Submit' floated='right' />
