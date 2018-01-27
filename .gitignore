@@ -28,5 +28,6 @@ node_modules/
 
 # heroku local environment
 .env
+config.js
 
 package-lock.json
