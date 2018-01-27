@@ -1,8 +1,26 @@
 
 
+#createProjectHeader {
+  margin-top: 2em;
+}
+
+.ui.form .field>label, label {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+#techDropdown {
+  margin-top: .5em;
+}
+
+.ui.form.addProject {
+  margin-top: 3em;
+}
+
+
 .footer {
   display: table;
-  margin-top: 2em;
+  margin-top: 5em;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
