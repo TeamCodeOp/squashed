@@ -1,5 +1,10 @@
 import React from 'react';
 import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
+import axios from 'axios';
+import cloudinary from 'cloudinary';
+import config from '../../../config';
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
 
 class AddProject extends React.Component {
   constructor(props) {
@@ -10,15 +15,49 @@ class AddProject extends React.Component {
       description: '',
       githubRepo: '',
       techs: [],
-      projectImage: '',
+      uploadedFileCloudinaryUrl: ''
     };
+
+    this.handleTechs = this.handleTechs.bind(this);
+    this.handleGitHubRepo = this.handleGitHubRepo.bind(this);
+    this.handleProjectName = this.handleProjectName.bind(this);
+    this.handleDescription = this.handleDescription.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInput(e, { name, value }) {
-    e.preventDefault();
+  onImageDrop(files) { 
+    this.setState({ 
+      uploadedFile: files[0] 
+    });  
+    this.handleImageUpload(files[0]); 
+  }
 
+  handleImageUpload(file) { 
+    let upload = request.post(config.CLOUDINARY_UPLOAD_URL) 
+    .field('upload_preset', config.CLOUDINARY_UPLOAD_PRESET) 
+    .field('file', file);  
+
+    upload.end((err, response) => { 
+      if (err) { 
+        console.error(err); 
+      }  
+      if (response.body.secure_url !== '') { 
+            this.setState({ 
+                uploadedFileCloudinaryUrl: response.body.secure_url 
+              }); 
+            } 
+          }); 
+  }
+
+  handleProjectName(e) {
     this.setState({
-      [name]: value
+      projectName: e.target.value
+    });
+  }
+
+  handleGitHubRepo(e) {
+    this.setState({
+      githubRepo: e.target.value
     });
   }
 
@@ -28,25 +67,42 @@ class AddProject extends React.Component {
     });
   }
 
-  handleSubmit() {
-    const { projectName, githubRepo } = this.state;
-
-    this.setState({
-      projectName: projectName,
-      githubRepo: githubRepo
-    });
+  handleSubmit(e) {
+    e.preventDefault();
+    axios.post('/projects', {
+      projectName: this.state.projectName,
+      description: this.state.description,
+      githubRepo: this.state.githubRepo,
+      techs: this.state.techs,
+      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl
+    })
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          projectName: '',
+          description: '',
+          githubRepo: '',
+          techs: [],
+          uploadedFileCloudinaryUrl: '',
+          uploadedFile: ''
+        });
+        alert('Project added successfully');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  handleTechs(){
-    console.log();
-    // this.setState({
-
-    // })
+  handleTechs(e, data) {
+    console.log(data);
+    this.setState({ techs: data.value });
   }
 
   render() {
-    const { projectName, description, githubRepo } = this.state;
-    const techs = [
+    const {
+      projectName, description, githubRepo, techs, screenshot
+    } = this.state;
+    const techOptions = [
       { key: 'angular', text: 'Angular', value: 'angular' },
       { key: 'backbone', text: 'Backbone', value: 'backbone' },
       { key: 'c', text: 'C/C++', value: 'c' },
@@ -77,13 +133,28 @@ class AddProject extends React.Component {
           <Grid.Column></Grid.Column>
           <Grid.Column width={6}>
             <Form className='addProject' onSubmit={this.handleSubmit}>
-              <Form.Input label='Name' placeholder='Project Name' name='Project Name' value={projectName} onChange={this.handleInput} />
-              <Form.TextArea label='Description' placeholder='Tell us more about your project...' onChange={this.handleDescription} />
-              <Form.Input label='Github' placeholder='Project repo link' name='Github Repo' value={githubRepo} onChange={this.handleInput} />
-              <label>Tech Stacks</label>
-              <Dropdown placeholder='Select' fluid multiple selection options={techs} id='techDropdown' onChange={this.handleTechs}/>
+              <Form.Input label='Name' placeholder='Project Name' name='Project Name' value={projectName} onChange={this.handleProjectName} />
+              <Form.TextArea label='Description' placeholder='Tell us more about your project...' value={description} onChange={this.handleDescription} />
+              <Form.Input label='Github' placeholder='Project repo link' name='Github Repo' value={githubRepo} onChange={this.handleGitHubRepo} />
+              <label>Tech Stack</label>
+              <Dropdown placeholder='Select' fluid multiple selection options={techOptions} value={techs} id='techDropdown' onChange={this.handleTechs}/>
               <p></p>
-              <Form.Input label='Project Screenshot' type='file' icon={<Icon name='upload'/>} className='inputFile' />
+   <div className="FileUpload">
+          <Dropzone
+            onDrop={this.onImageDrop.bind(this)}
+            multiple={false}
+            accept="image/*">
+            <div>Drop an image or click to select a file to upload.</div>
+          </Dropzone>
+        </div>
+
+        <div>
+          {this.state.uploadedFileCloudinaryUrl === '' ? null :
+          <div>
+            <p>{this.state.uploadedFile.name}</p>
+            <img src={this.state.uploadedFileCloudinaryUrl} />
+          </div>}
+        </div>
               <Form.Button content='Submit' floated='right' />
             </Form>
           </Grid.Column>
