@@ -12,13 +12,23 @@ class AddProject extends React.Component {
       techs: [],
       projectImage: '',
     };
+
+    this.handleTechs = this.handleTechs.bind(this);
+    this.handleGitHubRepo = this.handleGitHubRepo.bind(this);
+    this.handleProjectName = this.handleProjectName.bind(this);
+    this.handleDescription = this.handleDescription.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInput(e, { name, value }) {
-    e.preventDefault();
-
+  handleProjectName(e) {
     this.setState({
-      [name]: value
+      projectName: e.target.value
+    });
+  }
+
+  handleGitHubRepo(e) {
+    this.setState({
+      githubRepo: e.target.value
     });
   }
 
@@ -28,25 +38,25 @@ class AddProject extends React.Component {
     });
   }
 
-  handleSubmit() {
-    const { projectName, githubRepo } = this.state;
-
+  handleSubmit(e) {
     this.setState({
-      projectName: projectName,
-      githubRepo: githubRepo
+      projectName: '',
+      description: '',
+      githubRepo: '',
+      techs: [],
+      projectImage: ''
     });
+    e.preventDefault();
   }
 
-  handleTechs(){
-    console.log();
-    // this.setState({
-
-    // })
+  handleTechs(e, data) {
+    console.log(data);
+    this.setState({ techs: data.value });
   }
 
   render() {
-    const { projectName, description, githubRepo } = this.state;
-    const techs = [
+    const { projectName, description, githubRepo, techs, screenshot } = this.state;
+    const techOptions = [
       { key: 'angular', text: 'Angular', value: 'angular' },
       { key: 'backbone', text: 'Backbone', value: 'backbone' },
       { key: 'c', text: 'C/C++', value: 'c' },
@@ -77,13 +87,13 @@ class AddProject extends React.Component {
           <Grid.Column></Grid.Column>
           <Grid.Column width={6}>
             <Form className='addProject' onSubmit={this.handleSubmit}>
-              <Form.Input label='Name' placeholder='Project Name' name='Project Name' value={projectName} onChange={this.handleInput} />
-              <Form.TextArea label='Description' placeholder='Tell us more about your project...' onChange={this.handleDescription} />
-              <Form.Input label='Github' placeholder='Project repo link' name='Github Repo' value={githubRepo} onChange={this.handleInput} />
-              <label>Tech Stacks</label>
-              <Dropdown placeholder='Select' fluid multiple selection options={techs} id='techDropdown' onChange={this.handleTechs}/>
+              <Form.Input label='Name' placeholder='Project Name' name='Project Name' value={projectName} onChange={this.handleProjectName} />
+              <Form.TextArea label='Description' placeholder='Tell us more about your project...' value={description} onChange={this.handleDescription} />
+              <Form.Input label='Github' placeholder='Project repo link' name='Github Repo' value={githubRepo} onChange={this.handleGitHubRepo} />
+              <label>Tech Stack</label>
+              <Dropdown placeholder='Select' fluid multiple selection options={techOptions} value={techs} id='techDropdown' onChange={this.handleTechs}/>
               <p></p>
-              <Form.Input label='Project Screenshot' type='file' icon={<Icon name='upload'/>} className='inputFile' />
+              <Form.Input label='Project Screenshot' type='file' value={screenshot} icon={<Icon name='upload'/>} className='inputFile' />
               <Form.Button content='Submit' floated='right' />
             </Form>
           </Grid.Column>
