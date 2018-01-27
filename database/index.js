@@ -20,6 +20,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// connectionLimit: 10
+// host: 'us-cdbr-iron-east-05.cleardb.net'
+// user: 'b4563830505e5c',
+// password: '2590904e',
+// database: 'heroku_e13a74604d192c8'
+
 connection.connect((err) => {
   if (err) {
     console.log('could not connect to database', err);
