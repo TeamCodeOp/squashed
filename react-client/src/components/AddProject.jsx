@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
+import axios from 'axios';
 
 class AddProject extends React.Component {
   constructor(props) {
@@ -39,14 +40,27 @@ class AddProject extends React.Component {
   }
 
   handleSubmit(e) {
-    this.setState({
-      projectName: '',
-      description: '',
-      githubRepo: '',
-      techs: [],
-      projectImage: ''
-    });
     e.preventDefault();
+    axios.post('/projects', {
+      projectName: this.state.projectName,
+      description: this.state.description,
+      githubRepo: this.state.githubRepo,
+      techs: this.state.techs,
+      projectImage: this.state.projectImage
+    })
+      .then((response) => {
+        this.setState({
+          projectName: '',
+          description: '',
+          githubRepo: '',
+          techs: [],
+          projectImage: ''
+        });
+        alert('Project added successfully');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   handleTechs(e, data) {
@@ -55,7 +69,9 @@ class AddProject extends React.Component {
   }
 
   render() {
-    const { projectName, description, githubRepo, techs, screenshot } = this.state;
+    const {
+      projectName, description, githubRepo, techs, screenshot
+    } = this.state;
     const techOptions = [
       { key: 'angular', text: 'Angular', value: 'angular' },
       { key: 'backbone', text: 'Backbone', value: 'backbone' },

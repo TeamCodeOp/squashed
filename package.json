@@ -47,6 +47,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.2",
     "chai": "^4.1.2",
+    "cloudinary": "^1.9.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-15": "^1.0.5",
     "express": "^4.15.0",
