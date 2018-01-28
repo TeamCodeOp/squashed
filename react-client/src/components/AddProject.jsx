@@ -4,6 +4,7 @@ import axios from 'axios';
 import cloudinary from 'cloudinary';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
+
 let config;
 let CLOUDINARY_UPLOAD_URL;
 let CLOUDINARY_UPLOAD_PRESET;
