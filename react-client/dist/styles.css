@@ -17,6 +17,20 @@ body, textarea {
 
 .ui.form.addProject {
   margin-top: 3em;
+  margin-bottom: 10em;
+}
+
+.dropZone {
+  margin-top: .5em;
+  text-align: center;
+  border: 1px dotted rgba(34,36,38,.15);
+  height: 3em;
+  margin-bottom: 2em;
+}
+
+span.imageUploadText {
+  line-height: 3em;
+  color: rgba(34,36,38,.15);
 }
 
 
