@@ -2,9 +2,21 @@ import React from 'react';
 import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import cloudinary from 'cloudinary';
-import config from '../../../config';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
+
+let config;
+let CLOUDINARY_UPLOAD_URL;
+let CLOUDINARY_UPLOAD_PRESET;
+
+if (process.env.NODE_ENV === 'production') {
+  CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
+  CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
+} else {
+  config = require('../../../config');
+  CLOUDINARY_UPLOAD_URL = config.CLOUDINARY_UPLOAD_URL;
+  CLOUDINARY_UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET;
+};
 
 class AddProject extends React.Component {
   constructor(props) {
@@ -33,8 +45,8 @@ class AddProject extends React.Component {
   }
 
   handleImageUpload(file) { 
-    let upload = request.post(config.CLOUDINARY_UPLOAD_URL) 
-    .field('upload_preset', config.CLOUDINARY_UPLOAD_PRESET) 
+    let upload = request.post(CLOUDINARY_UPLOAD_URL) 
+    .field('upload_preset', CLOUDINARY_UPLOAD_PRESET) 
     .field('file', file);  
 
     upload.end((err, response) => { 
@@ -42,11 +54,11 @@ class AddProject extends React.Component {
         console.error(err); 
       }  
       if (response.body.secure_url !== '') { 
-            this.setState({ 
-                uploadedFileCloudinaryUrl: response.body.secure_url 
-              }); 
-            } 
-          }); 
+        this.setState({ 
+          uploadedFileCloudinaryUrl: response.body.secure_url 
+        }); 
+      } 
+    }); 
   }
 
   handleProjectName(e) {
@@ -134,27 +146,29 @@ class AddProject extends React.Component {
           <Grid.Column width={6}>
             <Form className='addProject' onSubmit={this.handleSubmit}>
               <Form.Input label='Name' placeholder='Project Name' name='Project Name' value={projectName} onChange={this.handleProjectName} />
-              <Form.TextArea label='Description' placeholder='Tell us more about your project...' value={description} onChange={this.handleDescription} />
               <Form.Input label='Github' placeholder='Project repo link' name='Github Repo' value={githubRepo} onChange={this.handleGitHubRepo} />
               <label>Tech Stack</label>
               <Dropdown placeholder='Select' fluid multiple selection options={techOptions} value={techs} id='techDropdown' onChange={this.handleTechs}/>
               <p></p>
-   <div className="FileUpload">
-          <Dropzone
-            onDrop={this.onImageDrop.bind(this)}
-            multiple={false}
-            accept="image/*">
-            <div>Drop an image or click to select a file to upload.</div>
-          </Dropzone>
-        </div>
+              <Form.TextArea label='Description' placeholder='Tell us more about your project...' value={description} onChange={this.handleDescription} />
+              <label>Project Screenshot</label>
+              <div className='fileUpload'>
+                <Dropzone
+                  className='dropZone'
+                  onDrop={this.onImageDrop.bind(this)}
+                  multiple={false}
+                  accept='image/*'>
+                  <span className='imageUploadText'><Icon name='upload' size='large' />Drop an image or click to select a file to upload.</span>
+                </Dropzone>
+              </div>
 
-        <div>
-          {this.state.uploadedFileCloudinaryUrl === '' ? null :
-          <div>
-            <p>{this.state.uploadedFile.name}</p>
-            <img src={this.state.uploadedFileCloudinaryUrl} />
-          </div>}
-        </div>
+              <div>
+                {this.state.uploadedFileCloudinaryUrl === '' ? null :
+                <div style={{textAlign: 'center'}}>
+                  <p>{this.state.uploadedFile.name}</p>
+                  <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }}/>
+                </div>}
+              </div>
               <Form.Button content='Submit' floated='right' />
             </Form>
           </Grid.Column>
