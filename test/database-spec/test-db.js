@@ -28,7 +28,7 @@ describe('codeOp database', () => {
 
   it('Should insert project name', (done) => {
     const data = {
-      project_name: 'javascript'
+      project_name: 'banana'
     };
     model.insertProjectData(data)
       .then(() => {
