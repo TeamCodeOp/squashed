@@ -1,8 +1,7 @@
 const passport = require('passport');
 const mysqlDB = require('../database/index.js');
 const GitHubStrategy = require('passport-github').Strategy;
-const config = require('../config.js');
-
+const config = require('../config/configvars.js');
 
 passport.use(new GitHubStrategy(
   {
@@ -11,24 +10,22 @@ passport.use(new GitHubStrategy(
     callbackURL: 'http://localhost:3000/auth/github/return',
     passReqToCallback: true
   },
-  function(req, accessToken, refreshToken, profile, done) {
+  (req, accessToken, refreshToken, profile, done) => {
     // console.log('request', req);
     const userProfile = {
       displayName: profile.displayName,
       gitLogin: profile.username,
       avatarUrl: profile.photos[0].value
     };
-    //console.log('user profile', profile);
+    // console.log('user profile', profile);
     mysqlDB.userLogin(userProfile, (err, user) => {
       if (err) {
         return done(err, null);
-      } else {
-        return done(null, profile);
       }
+      return done(null, profile);
     });
   }
 ));
-
 
 // used to serialize the user for the session
 passport.serializeUser((user, done) => {
@@ -43,5 +40,3 @@ passport.deserializeUser((userId, done) => {
   // });
   done(null, userId);
 });
-
-
