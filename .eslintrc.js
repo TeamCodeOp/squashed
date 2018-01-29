@@ -18,6 +18,7 @@ module.exports = {
     "comma-dangle": "off",
     "no-unused-vars": "off",
     "prefer-destructuring": "off",
-    "no-undef": "off"
+    "no-undef": "off",
+    "function-paren-newline":"off"
   }
 }

@@ -7,6 +7,7 @@ class NavHeader extends Component {
     super(props);
 
     this.state = {};
+    this.onButtonClick = this.onButtonClick.bind(this);
   }
 
   onButtonClick(e, { name }) {

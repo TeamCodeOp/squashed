@@ -10,7 +10,7 @@ const insertProjectData = (data) => {
       if (err) {
         return reject(err);
       }
-      //console.log('results', results);
+      // console.log('results', results);
       return resolve(results);
     });
   });
