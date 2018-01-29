@@ -3,11 +3,10 @@ import { render } from 'react-dom';
 import { createStore } from 'redux';
 import Root from './components/Root.jsx';
 
-let store;
 
 
 render(
-  <Root store={store} />,
+  <Root />,
   document.getElementById('root')
 );
 
