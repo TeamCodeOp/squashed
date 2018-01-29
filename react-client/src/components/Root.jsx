@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
 import AddProject from './AddProject.jsx';
+import Developer from './Developer.jsx';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -16,6 +17,7 @@ const Root = ({ store }) => (
         <Switch>
           <Route exact path="/" component={App} />
           <Route path="/create" component={AddProject} />
+          <Route path="/developer" component={Developer} />
         </Switch>
       </div>
     </Router>

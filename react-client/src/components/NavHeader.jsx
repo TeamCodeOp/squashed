@@ -40,22 +40,13 @@ class NavHeader extends Component {
         </Menu.Item>
 
         <Menu.Menu position='right'>
-          {this.props.user.username ?
             <Menu.Item as={Link} to="/login"
               icon='github'
               name='Login'
               active={activeItem === 'Login'}
               onClick={this.onButtonClick}
             >
-            </Menu.Item> :
-            <Menu.Item as={Link} to="/logout"
-              icon='github'
-              name='Logout'
-              active={activeItem === 'Logout'}
-              onClick={this.onButtonClick}
-            >
             </Menu.Item>
-          }
         </Menu.Menu>
       </Menu>
     );
