@@ -6,7 +6,9 @@ class NavHeader extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+
+    };
     this.onButtonClick = this.onButtonClick.bind(this);
   }
 
@@ -38,13 +40,22 @@ class NavHeader extends Component {
         </Menu.Item>
 
         <Menu.Menu position='right'>
-          <Menu.Item
-            icon='github'
-            name='Login'
-            active={activeItem === 'Login'}
-            onClick={this.onButtonClick}
-          >
-          </Menu.Item>
+          {this.props.user.username ?
+            <Menu.Item as={Link} to="/login"
+              icon='github'
+              name='Login'
+              active={activeItem === 'Login'}
+              onClick={this.onButtonClick}
+            >
+            </Menu.Item> :
+            <Menu.Item as={Link} to="/logout"
+              icon='github'
+              name='Logout'
+              active={activeItem === 'Logout'}
+              onClick={this.onButtonClick}
+            >
+            </Menu.Item>
+          }
         </Menu.Menu>
       </Menu>
     );
