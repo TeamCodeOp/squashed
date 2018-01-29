@@ -38,7 +38,7 @@ class NavHeader extends Component {
         </Menu.Item>
 
         <Menu.Menu position='right'>
-          <Menu.Item
+          <Menu.Item href="/auth/github"
             icon='github'
             name='Login'
             active={activeItem === 'Login'}
