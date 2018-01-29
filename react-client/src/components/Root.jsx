@@ -7,26 +7,56 @@ import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
 import AddProject from './AddProject.jsx';
 import Developer from './Developer.jsx';
+import axios from 'axios';
 
-const Root = ({ store }) => (
-  <Provider store={store}>
 
-    <Router>
-      <div>
-        <NavHeader />
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route path="/create" component={AddProject} />
-          <Route path="/developer" component={Developer} />
-        </Switch>
-      </div>
-    </Router>
 
-  </Provider>
-);
+class Root extends React.Component {
+  constructor(props) {
+    super(props);
 
-Root.propTypes = {
-  store: PropTypes.object.isRequired
-};
+    this.state = {
+      session: '',
+      username: '',
+    };
+  }
+
+
+  componentWillMount() {
+    axios.get('/checkSession')
+      .then((response) => {
+        console.log(response);
+        this.setState({
+
+        })
+      })
+  }
+
+
+
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <NavHeader />
+          <Switch>
+            <Route exact path="/" component={App} />
+            <Route path="/create" component={AddProject} />
+            <Route path="/developer" component={Developer} />
+          </Switch>
+        </div>
+      </Router>
+    )
+  }
+
+}
+
+
+
+
+// Root.propTypes = {
+//   store: PropTypes.object.isRequired
+// };
 
 export default Root;

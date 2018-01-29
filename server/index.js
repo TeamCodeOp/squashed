@@ -70,6 +70,7 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
         session: req.sessionID
       }
     }));
+    // res.redirect('/');
   }
 );
 

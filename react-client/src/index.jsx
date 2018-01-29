@@ -7,7 +7,7 @@ let store;
 
 
 render(
-  <Root store={store} />,
+  <Root />,
   document.getElementById('root')
 );
 
