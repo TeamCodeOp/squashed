@@ -73,9 +73,21 @@ const retrieveProjects = (cb) => {
   });
 };
 
+const getUserInfo = (username, cb) => {
+  connection.query(`SELECT * FROM users WHERE git_username ='${username}';`, (err, user) => {
+    // console.log('line71: ', user[0]);
+    if (user.length === 0 || err) {
+      console.log(err);
+    } else {
+      cb(user[0]);
+    }
+  });
+};
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;
 module.exports.deleteUserSession = deleteUserSession;
 module.exports.retrieveProjects = retrieveProjects;
+module.exports.getUserInfo = getUserInfo;
+

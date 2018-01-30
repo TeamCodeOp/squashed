@@ -61,6 +61,7 @@ app.get('/developers/:username', (req, res) => {
       console.log('line 58: ', user);
       res.send(user);
     });
+
   });
 });
 
