@@ -17,7 +17,7 @@ CREATE TABLE projects (
   description varchar(100),
   repo_url varchar(20),
   category varchar(20),
-  image_Url varchar(20),
+  image_Url varchar(100),
   creation_date date,
   status varchar(10),
   user_id int,

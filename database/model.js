@@ -1,20 +1,54 @@
 const db = require('./index.js');
 const Promise = require('bluebird');
 
-const insertProjectData = (data) => {
-  console.log('here', data.project_name);
+const insertProjectData = (projectData) => {
   return new Promise((resolve, reject) => {
-    const insertQuery = `INSERT INTO projects (project_name) VALUES('${data.project_name}')`;
+    const insertQuery = 
+    `INSERT INTO projects (
+      project_name,
+      description, 
+      repo_url,
+      category,
+      image_Url
+    ) VALUES(
+      '${projectData.projectName}',
+      '${projectData.description}',
+      '${projectData.githubRepo}',
+      '${projectData.techs[0]}',
+      '${projectData.uploadedFileCloudinaryUrl}'
+    )`;
     console.log('insertQuery', insertQuery);
-    db.query(insertQuery, (err, results) => {
+    
+    db.connection.query(insertQuery, (err, results) => {
       if (err) {
         return reject(err);
       }
-      // console.log('results', results);
+      console.log('results', results);
       return resolve(results);
     });
   });
 };
+
+/*
+{
+  projectName: 'foobar',
+  description: 'foobar',
+  githubRepo: 'foobar',
+  techs: 
+   [ 'backbone',
+     'angular',
+     'c',
+     'express',
+     'go',
+     'java',
+     'javascript',
+     'mongo',
+     'mysql',
+     'node' ],
+  uploadedFileCloudinaryUrl: ''
+}
+
+*/
 
 // const insertProjectData = (params) => {
 //   console.log(params, 'params');
