@@ -7,7 +7,8 @@ USE codeop;
 CREATE TABLE users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
-  git_username varchar(10) NOT NULL
+  git_username varchar(20) NOT NULL,
+  session_id varchar(64)
 );
 
 CREATE TABLE projects (

@@ -19,17 +19,19 @@ connection.connect((err) => {
   }
 });
 
-let userLogin = (userProfile, cb) => {
-  console.log('userLogin in database', userProfile);
+const userLogin = (userProfile, cb) => {
+  // console.log('userLogin in database', userProfile);
   connection.query(`SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`, (err, user) => {
-    console.log('USER......', user);
+    // console.log('USER......', user);
     if (user.length === 0 || err) {
-      connection.query(`INSERT INTO users (name,git_username) VALUES ("${userProfile.displayName}", "${userProfile.gitLogin}");`, (err, results) => {
-        console.log('inner results in sql');
+      // console.log('line 27 ----------', userProfile);
+      connection.query(`INSERT INTO users (name,git_username,session_id) VALUES ("${userProfile.displayName}",
+        "${userProfile.gitLogin}", "${userProfile.session_id}");`, (err, results) => {
+        // console.log('inner results in sql');
         if (err) {
           cb(err, null);
         } else {
-          console.log('user inserted in the table');
+          // console.log('user inserted in the table');
           cb(null, results);
         }
       });
@@ -40,7 +42,19 @@ let userLogin = (userProfile, cb) => {
   });
 };
 
+const checkUserSession = (sessionID, cb) => {
+  connection.query(`SELECT * FROM users WHERE session_id = '${sessionID}';`, (err, user) => {
+    console.log(user[0]);
+    if (err) {
+      console.log(err);
+    } else
+    if (user[0]) {
+      cb(user[0]);
+    }
+  });
+};
+
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
-
+module.exports.checkUserSession = checkUserSession;
