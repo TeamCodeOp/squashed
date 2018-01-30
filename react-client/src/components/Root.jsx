@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RouteProps from 'react-route-props';
+import axios from 'axios';
+
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
 import AddProject from './AddProject.jsx';
-import axios from 'axios';
 
 class Root extends React.Component {
   constructor(props) {

@@ -19,7 +19,7 @@ class NavHeader extends Component {
         />
         <Menu.Item
           as={Link}
-          to="/create"
+          to={this.props.username ? '/create' : '/create'}
           name="Add Project"
         />
         <Menu.Menu position="right">

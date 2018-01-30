@@ -4,6 +4,7 @@ const passport = require('passport');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const mysqlDB = require('../database/index.js');
+const mysqlModel = require('../database/model.js');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
@@ -103,6 +104,11 @@ app.get('/*', (req, res) => {
 
 app.get('/', (req, res) => {
   res.status(200).json();
+});
+
+app.post('/projects', (req, res) => {
+  mysqlModel.insertProjectData(req.body);
+  res.status(201).json();
 });
 
 app.get('/testing', (req, res) => {
