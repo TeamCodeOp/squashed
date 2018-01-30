@@ -1,14 +1,14 @@
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import RouteProps from 'react-route-props';
-import axios from 'axios';
-
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
+import NavHeader from './NavHeader.jsx';
 import AddProject from './AddProject.jsx';
+import Developer from './Developer.jsx';
+import Project from './Project.jsx';
 
 class Root extends React.Component {
   constructor(props) {
@@ -80,6 +80,10 @@ class Root extends React.Component {
               username={this.state.username}
               name={this.state.name}
             />
+            <Route exact path="/" component={App} />
+            <Route path="/create" component={AddProject} />
+            <Route path="/:username" component={Developer} />
+            <Route path="/project" component={Project} />
           </Switch>
         </div>
       </Router>

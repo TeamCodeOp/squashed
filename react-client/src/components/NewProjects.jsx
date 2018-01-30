@@ -29,6 +29,7 @@ import List from './List.jsx';
 //   }
 // }
 
+
 const NewProjects = props => (
   <Container style={{ textAlign: 'center' }}>
     <Grid>

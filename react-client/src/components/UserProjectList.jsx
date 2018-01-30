@@ -9,16 +9,13 @@ class List extends React.Component {
 
   render() {
     return (
-      <Grid.Row columns={4}>
-        {this.props.projects.map((project, i) => {
-          //Remember that every row constitues a new List component because the results mapping is initiated in index.jsx
-          //so all this map does is create new Columns for containing div for each item in the Semantic-UI Grid
-
+      <Grid.Row columns={3}>
+        {this.props.items.map((item, i) => {
           return (
             <Grid.Column key={i}>
               <div style={{ float: 'left', position: 'relative' }}>
-                <a href={project.repo_url}>
-                  <Image src={project.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'} style={{ borderRadius: '10px' }} /*set the size of the image*/ />
+                <a href={'https://github.com/TeamCodeOp/thesis'}>
+                  <Image src={'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'} style={{ borderRadius: '10px' }} />
                   <div
                     style={{
                       position: 'absolute',
@@ -39,13 +36,10 @@ class List extends React.Component {
                         textAlign: 'left'
                       }}
                     >
-                      {project.project_name} {'\n'}
-                      <p></p>
-                      <p>{project.description}</p>
-                      <p>
-                      Techs: {project.category}{' '}
-                      </p>
-
+                      {item.name} {'\n'}
+                      <p />
+                      <p>{item.description}</p>
+                      <p>Techs: {'JavaScript'}{' '}</p>
                     </p>
                   </div>
                 </a>
