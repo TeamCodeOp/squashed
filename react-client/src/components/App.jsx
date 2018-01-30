@@ -9,14 +9,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('App mounted');
+    this.props.checkSignIn();
+    this.props.getProjects();
   }
 
   render() {
     return (
       <div>
         <Search />
-        <NewProjects />
+        <NewProjects
+          projects={this.props.projects}
+        />
       </div>);
   }
 }

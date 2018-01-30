@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 
 let connection = mysql.createConnection({
   user: 'root',
-  password: 'root',
+  password: '',
   database: 'codeop'
 });
 
@@ -46,6 +46,8 @@ const checkUserSession = (sessionID, cb) => {
       throw err;
     } else if (user[0]) {
       cb(user[0]);
+    } else {
+      cb('User not logged in');
     }
   });
 };

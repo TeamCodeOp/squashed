@@ -20,11 +20,9 @@ class Root extends React.Component {
       name: '',
       projects: []
     };
-  }
 
-  componentDidMount() {
-    this.checkSignIn();
-    this.getProjects();
+    this.checkSignIn = this.checkSignIn.bind(this);
+    this.getProjects = this.getProjects.bind(this);
   }
 
   checkSignIn() {
@@ -42,6 +40,7 @@ class Root extends React.Component {
   }
 
   getProjects() {
+    console.log('checking for projects...');
     axios.get('/projects')
       .then((response) => {
         this.setState({
@@ -70,6 +69,9 @@ class Root extends React.Component {
               sessionId={this.state.session_id}
               username={this.state.username}
               name={this.state.name}
+              projects={this.state.projects}
+              checkSignIn={this.checkSignIn}
+              getProjects={this.getProjects}
             />
             <RouteProps
               path="/create"
