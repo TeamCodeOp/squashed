@@ -16,7 +16,7 @@ CREATE TABLE projects (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   project_name varchar(20) NOT NULL UNIQUE,
   description varchar(100),
-  repo_url varchar(20),
+  repo_url varchar(100),
   category varchar(20),
   image_Url varchar(100),
   creation_date date,

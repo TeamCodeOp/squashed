@@ -75,16 +75,18 @@ console.log('logoutt-----', req.sessionID);
   });
 });
 
+app.get('/projects', (req, res) => {
+  mysqlDB.retrieveProjects((projects) => {
+    res.send(projects);
+  });
+});
+
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
 
 app.get('/', (req, res) => {
   res.status(200).json();
-});
-
-app.get('/projects', (req, res) => {
-  //db function to retrieve projs
 });
 
 app.post('/projects', (req, res) => {

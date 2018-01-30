@@ -61,8 +61,19 @@ const deleteUserSession = (sessionID, cb) => {
   });
 };
 
+const retrieveProjects = (cb) => {
+  connection.query('SELECT * FROM projects', (err, projects) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(projects);
+    }
+  });
+};
+
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;
 module.exports.deleteUserSession = deleteUserSession;
+module.exports.retrieveProjects = retrieveProjects;
