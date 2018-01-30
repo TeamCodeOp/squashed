@@ -17,17 +17,13 @@ connection.connect((err) => {
 });
 
 const userLogin = (userProfile, cb) => {
-  // console.log('userLogin in database', userProfile);
   connection.query(`SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`, (err, user) => {
-    // console.log('USER......', user);
     if (user.length === 0 || err) {
-      // console.log('line 27 ----------', userProfile);
-      connection.query(`INSERT INTO users (name,git_username,session_id) VALUES ("${userProfile.displayName}",
-        "${userProfile.gitLogin}", "${userProfile.session_id}");`, (err, results) => {
+      connection.query(`INSERT INTO users (name,git_username,session_id,avatar_url) VALUES ("${userProfile.displayName}",
+        "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}");`, (err, results) => {
         if (err) {
           cb(err, null);
         } else {
-          // console.log('user inserted in the table');
           cb(null, results);
         }
       });
