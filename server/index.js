@@ -83,6 +83,10 @@ app.get('/', (req, res) => {
   res.status(200).json();
 });
 
+app.get('/projects', (req, res) => {
+  //db function to retrieve projs
+});
+
 app.post('/projects', (req, res) => {
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();

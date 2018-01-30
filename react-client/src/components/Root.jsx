@@ -17,18 +17,35 @@ class Root extends React.Component {
     this.state = {
       session_id: '',
       username: '',
-      name: ''
+      name: '',
+      projects: []
     };
   }
 
   componentDidMount() {
+    this.checkSignIn();
+    this.getProjects();
+  }
+
+  checkSignIn() {
     axios.get('/checkSession')
       .then((response) => {
         this.setState({
           session_id: response.data.session_id,
           username: response.data.git_username,
           name: response.data.name
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
+  getProjects() {
+    axios.get('/projects')
+      .then((response) => {
+        this.setState({
+          projects: response.data
         });
       })
       .catch((error) => {
@@ -44,11 +61,23 @@ class Root extends React.Component {
             sessionId={this.state.session_id}
             username={this.state.username}
             name={this.state.name}
-
           />
           <Switch>
-            <Route exact path="/" component={App} />
-            <Route path="/create" component={AddProject} />
+            <RouteProps
+              exact
+              path="/"
+              component={App}
+              sessionId={this.state.session_id}
+              username={this.state.username}
+              name={this.state.name}
+            />
+            <RouteProps
+              path="/create"
+              component={AddProject}
+              sessionId={this.state.session_id}
+              username={this.state.username}
+              name={this.state.name}
+            />
           </Switch>
         </div>
       </Router>
