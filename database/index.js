@@ -27,7 +27,6 @@ const userLogin = (userProfile, cb) => {
       // console.log('line 27 ----------', userProfile);
       connection.query(`INSERT INTO users (name,git_username,session_id) VALUES ("${userProfile.displayName}",
         "${userProfile.gitLogin}", "${userProfile.session_id}");`, (err, results) => {
-        // console.log('inner results in sql');
         if (err) {
           cb(err, null);
         } else {
@@ -36,8 +35,13 @@ const userLogin = (userProfile, cb) => {
         }
       });
     } else if (user.length !== 0) {
-      console.log('user already existed in the table');
-      cb(null, user);
+      connection.query(`UPDATE users SET session_id ='${userProfile.session_id}' WHERE git_username = '${userProfile.gitLogin}';`, (err, user) => {
+        if (err) {
+          throw err;
+        } else {
+          cb(null, user);
+        }
+      });
     }
   });
 };
@@ -46,10 +50,20 @@ const checkUserSession = (sessionID, cb) => {
   connection.query(`SELECT * FROM users WHERE session_id = '${sessionID}';`, (err, user) => {
     console.log(user[0]);
     if (err) {
-      console.log(err);
-    } else
-    if (user[0]) {
+      throw err;
+    } else if (user[0]) {
       cb(user[0]);
+    }
+  });
+};
+
+const deleteUserSession = (sessionID, cb) => {
+  console.log('deleteUserSession', sessionID);
+  connection.query(`UPDATE users SET session_id =" " WHERE session_id ='${sessionID}';`, (err, user) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(user);
     }
   });
 };
@@ -58,3 +72,4 @@ const checkUserSession = (sessionID, cb) => {
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;
+module.exports.deleteUserSession = deleteUserSession;

@@ -62,7 +62,6 @@ console.log('after /auth/github');
 app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/'}),
   (req, res) => {
     console.log('------- inside passport authenticate');
-    //res.redirect('/create');
     cache.put(req.sessionID, req.user);
     res.redirect(url.format({
       pathname: '/',
@@ -73,6 +72,7 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
   }
 );
 
+
 app.get('/checkSession', (req, res) => {
   console.log('SESSIONID-----: ', req.sessionID);
   mysqlDB.checkUserSession(req.sessionID, (user) => {
@@ -81,10 +81,15 @@ app.get('/checkSession', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
+console.log('logoutt-----', req.sessionID);
+
   req.session.destroy((err) => {
     if (err) {
       return next(err);
     }
+  mysqlDB.deleteUserSession(req.sessionID, (user) => {
+    console.log(user);
+  });
     req.logout();
 
     res.redirect('/');
