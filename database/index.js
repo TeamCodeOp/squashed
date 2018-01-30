@@ -54,7 +54,7 @@ const checkUserSession = (sessionID, cb) => {
 
 const deleteUserSession = (sessionID, cb) => {
   console.log('deleteUserSession', sessionID);
-  connection.query(`UPDATE users SET session_id =" " WHERE session_id ='${sessionID}';`, (err, user) => {
+  connection.query(`UPDATE users SET session_id ="" WHERE session_id ='${sessionID}';`, (err, user) => {
     if (err) {
       throw err;
     } else {
