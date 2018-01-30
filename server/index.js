@@ -81,10 +81,15 @@ app.get('/checkSession', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
+console.log('logoutt-----', req.sessionID);
+
   req.session.destroy((err) => {
     if (err) {
       return next(err);
     }
+  mysqlDB.deleteUserSession(req.sessionID, (user) => {
+    console.log(user);
+  });
     req.logout();
 
     res.redirect('/');
