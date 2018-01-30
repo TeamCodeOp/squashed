@@ -8,7 +8,8 @@ CREATE TABLE users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
   git_username varchar(20) NOT NULL,
-  session_id varchar(64)
+  session_id varchar(64),
+  avatar_url varchar(100)
 );
 
 CREATE TABLE projects (

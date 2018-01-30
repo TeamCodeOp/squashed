@@ -19,7 +19,7 @@ passport.use(new GitHubStrategy(
       session_id: req.sessionID
 
     };
-    // console.log('user profile', profile);
+    console.log('user profile', userProfile.avatarUrl);
     mysqlDB.userLogin(userProfile, (err, user) => {
       if (err) {
         return done(err, null);
@@ -31,14 +31,9 @@ passport.use(new GitHubStrategy(
 
 // used to serialize the user for the session
 passport.serializeUser((user, done) => {
-  // console.log(' user in serialize', user);
   done(null, user.id);
 });
 // used to deserialize the user
 passport.deserializeUser((userId, done) => {
-  // mysqlDB.connection.query('select * from user where id = ' + userId, (err, rows) => {
-  //   console.log('user in deserializeUser', rows);
-  //   done(err, rows[0]);
-  // });
   done(null, userId);
 });

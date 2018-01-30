@@ -21,22 +21,6 @@ app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// let options = {
-//   host: 'localhost',
-//   port: 3000,
-//   user: 'root',
-//   password: '',
-//   database: 'codeop'
-// };
-
-// let connection = mysql.createConnection(options);
-console.log('ALMOST');
-// let sessionStore = new MySQLStore(options, connection);
-
-
-console.log('SUCCESSFUL');
-
-
 app.use(session({
   secret: 'egh576',
   resave: false,
@@ -50,12 +34,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 console.log(' here before /auth/github');
-
-// app.get('/*', (req, res) => {
-//   console.log(__dirname);
-//   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
-// });
-
 
 app.get('/auth/github', passport.authenticate('github'));
 console.log('after /auth/github');
@@ -98,7 +76,6 @@ console.log('logoutt-----', req.sessionID);
 });
 
 app.get('/*', (req, res) => {
-  // console.log(__dirname);
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
 
