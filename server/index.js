@@ -75,6 +75,12 @@ console.log('logoutt-----', req.sessionID);
   });
 });
 
+app.get('/projects', (req, res) => {
+  mysqlDB.retrieveProjects((projects) => {
+    res.send(projects);
+  });
+});
+
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });

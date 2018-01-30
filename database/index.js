@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 
 let connection = mysql.createConnection({
   user: 'root',
-  password: 'root',
+  password: '',
   database: 'codeop'
 });
 
@@ -46,6 +46,8 @@ const checkUserSession = (sessionID, cb) => {
       throw err;
     } else if (user[0]) {
       cb(user[0]);
+    } else {
+      cb('User not logged in');
     }
   });
 };
@@ -61,8 +63,19 @@ const deleteUserSession = (sessionID, cb) => {
   });
 };
 
+const retrieveProjects = (cb) => {
+  connection.query('SELECT * FROM projects', (err, projects) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(projects);
+    }
+  });
+};
+
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;
 module.exports.deleteUserSession = deleteUserSession;
+module.exports.retrieveProjects = retrieveProjects;
