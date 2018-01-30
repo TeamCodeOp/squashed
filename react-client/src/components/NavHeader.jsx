@@ -7,53 +7,38 @@ class NavHeader extends Component {
     super(props);
 
     this.state = {};
-    this.onButtonClick = this.onButtonClick.bind(this);
-  }
-
-  onButtonClick(e, { name }) {
-    this.setState({
-      activeItem: name
-    });
   }
 
   render() {
-    const { activeItem } = this.state;
-    console.log(this.props);
     return (
       <Menu>
-        <Menu.Item as={Link} to="/"
-          name='Home'
-          active={activeItem === 'Home'}
-          onClick={this.onButtonClick}
-        >
-          Home
-        </Menu.Item>
-
-        <Menu.Item as={Link} to="/create"
-          name='Add Project'
-          active={activeItem === 'Add Project'}
-          onClick={this.onButtonClick}
-        >
-          Add Project
-        </Menu.Item>
-
-        <Menu.Menu position='right'>
+        <Menu.Item
+          as={Link}
+          to="/"
+          name="Home"
+        />
+        <Menu.Item
+          as={Link}
+          to="/create"
+          name="Add Project"
+        />
+        <Menu.Menu position="right">
           {this.props.username ?
-          <Menu.Item href="/logout"
-            icon='github'
-            name='Logout'
-            active={activeItem === 'Logout'}
-            onClick={this.onButtonClick}
-          >
-          </Menu.Item>
-        : <Menu.Item href="/auth/github"
-            icon='github'
-            name='Login'
-            active={activeItem === 'Login'}
-            onClick={this.onButtonClick}
-          >
-          </Menu.Item>
-        }
+            <Menu.Item
+              href="/logout"
+              icon="github"
+              name="Logout"
+            />
+            : <Menu.Item
+              href="/auth/github"
+              icon="github"
+              name="Login"
+            />
+          }
+          {this.props.username ?
+            <Menu.Item name={this.props.username} />
+            : <Menu.Item name="My Account" />
+          }
         </Menu.Menu>
       </Menu>
     );

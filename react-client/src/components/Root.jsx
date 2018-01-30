@@ -22,7 +22,6 @@ class Root extends React.Component {
   componentDidMount() {
     axios.get('/checkSession')
       .then((response) => {
-        console.log('response from checkSession', response);
         this.setState({
           session_id: response.data.session_id,
           username: response.data.git_username,

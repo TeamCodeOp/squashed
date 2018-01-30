@@ -45,6 +45,9 @@ const userLogin = (userProfile, cb) => {
 const checkUserSession = (sessionID, cb) => {
   connection.query(`SELECT * FROM users WHERE session_id = '${sessionID}';`, (err, user) => {
     console.log(user[0]);
+    if (err) {
+      console.log(err);
+    } else
     if (user[0]) {
       cb(user[0]);
     }
