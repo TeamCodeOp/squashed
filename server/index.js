@@ -73,6 +73,24 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
   }
 );
 
+app.get('/checkSession', (req, res) => {
+  console.log('SESSIONID-----: ', req.sessionID);
+  mysqlDB.checkUserSession(req.sessionID, (user) => {
+    console.log('USERline79', user);
+    res.send(user);
+  });
+});
+
+// app.get('/checkSession', (req, res) => {
+//   User.findOne({ sessionID: req.sessionID }, (err, user) => {
+//     if (user) {
+//       res.send({isSignedIn: true, userId: user.fbId, username: user.displayName});
+//     } else {
+//       res.send(false);
+//     }
+//   });
+// });
+
 
 
 app.get('/logout', (req, res) => {
@@ -87,7 +105,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  console.log(__dirname);
+  // console.log(__dirname);
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
 

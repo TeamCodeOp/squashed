@@ -11,11 +11,13 @@ passport.use(new GitHubStrategy(
     passReqToCallback: true
   },
   (req, accessToken, refreshToken, profile, done) => {
-    // console.log('request', req);
+    console.log('sessionID: ', req.sessionID);
     const userProfile = {
       displayName: profile.displayName,
       gitLogin: profile.username,
-      avatarUrl: profile.photos[0].value
+      avatarUrl: profile.photos[0].value,
+      session_id: req.sessionID
+
     };
     // console.log('user profile', profile);
     mysqlDB.userLogin(userProfile, (err, user) => {
@@ -29,7 +31,7 @@ passport.use(new GitHubStrategy(
 
 // used to serialize the user for the session
 passport.serializeUser((user, done) => {
-  console.log(' user in serialize', user);
+  // console.log(' user in serialize', user);
   done(null, user.id);
 });
 // used to deserialize the user

@@ -18,7 +18,7 @@ class NavHeader extends Component {
 
   render() {
     const { activeItem } = this.state;
-
+    console.log(this.props);
     return (
       <Menu>
         <Menu.Item as={Link} to="/"
@@ -38,13 +38,22 @@ class NavHeader extends Component {
         </Menu.Item>
 
         <Menu.Menu position='right'>
-          <Menu.Item href="/auth/github"
+          {this.props.username ?
+          <Menu.Item href="/logout"
+            icon='github'
+            name='Logout'
+            active={activeItem === 'Logout'}
+            onClick={this.onButtonClick}
+          >
+          </Menu.Item>
+        : <Menu.Item href="/auth/github"
             icon='github'
             name='Login'
             active={activeItem === 'Login'}
             onClick={this.onButtonClick}
           >
           </Menu.Item>
+        }
         </Menu.Menu>
       </Menu>
     );

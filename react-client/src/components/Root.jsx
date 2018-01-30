@@ -6,22 +6,28 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
 import AddProject from './AddProject.jsx';
+import axios from 'axios';
 
 class Root extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      session: '',
-      username: ''
+      session_id: '',
+      username: '',
+      name: ''
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios.get('/checkSession')
       .then((response) => {
+        console.log('response from checkSession', response);
         this.setState({
-          session: response.data.location.search
+          session_id: response.data.session_id,
+          username: response.data.git_username,
+          name: response.data.name
+
         });
       })
       .catch((error) => {
@@ -33,7 +39,12 @@ class Root extends React.Component {
     return (
       <Router>
         <div>
-          <NavHeader session={this.state.session}/>
+          <NavHeader
+            sessionId={this.state.session_id}
+            username={this.state.username}
+            name={this.state.name}
+
+          />
           <Switch>
             <Route exact path="/" component={App} />
             <Route path="/create" component={AddProject} />
