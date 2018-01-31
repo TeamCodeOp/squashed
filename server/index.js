@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const passport = require('passport');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
 const mysqlDB = require('../database/index.js');
 const mysqlModel = require('../database/model.js');
 const bodyParser = require('body-parser');
@@ -33,10 +32,7 @@ app.use(passport.initialize());
 // Restore Session
 app.use(passport.session());
 
-console.log(' here before /auth/github');
-
 app.get('/auth/github', passport.authenticate('github'));
-console.log('after /auth/github');
 
 app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/'}),
   (req, res) => {
@@ -112,7 +108,7 @@ app.get('/testing', (req, res) => {
 
 
 app.listen(port, () => {
-  console.log('listening on port 3000!');
+  console.log(`listening on ${port}!`);
 });
 
 module.exports = app;

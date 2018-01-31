@@ -1,12 +1,23 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
+let connection;
+// let config;
 
-let connection = mysql.createConnection({
-  user: 'root',
-  password: '',
-  database: 'codeop'
-});
-
+if (process.env.NODE_ENV === 'production') {
+  console.log('production');
+  connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+} else {
+  console.log('development');
+}
+// } else {
+//   config = require('../config/configvars.js');
+//   connection = mysql.createConnection({
+//     user: config.DB_USERNAME,
+//     password: config.DB_PASSWORD,
+//     database: config.DB_NAME,
+//     host: config.DB_HOST
+//   });
+// }
 
 connection.connect((err) => {
   if (err) {
@@ -21,7 +32,6 @@ const userLogin = (userProfile, cb) => {
     if (user.length === 0 || err) {
       connection.query(`INSERT INTO users (name,git_username,session_id,avatar_url) VALUES ("${userProfile.displayName}",
         "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}");`, (err, results) => {
-        console.log('RESULTS---', results);
         if (err) {
           cb(err, null);
         } else {
@@ -30,7 +40,6 @@ const userLogin = (userProfile, cb) => {
       });
     } else if (user.length !== 0) {
       connection.query(`UPDATE users SET session_id ='${userProfile.session_id}' WHERE git_username = '${userProfile.gitLogin}';`, (err, user) => {
-        console.log('EXISTING USER', user);
         if (err) {
           throw err;
         } else {
@@ -55,7 +64,6 @@ const checkUserSession = (sessionID, cb) => {
 };
 
 const deleteUserSession = (sessionID, cb) => {
-  console.log('deleteUserSession', sessionID);
   connection.query(`UPDATE users SET session_id =" " WHERE session_id ='${sessionID}';`, (err, user) => {
     if (err) {
       throw err;
@@ -87,7 +95,6 @@ const getUserInfo = (username, cb) => {
 
 const getProjectsByUser = (userId, cb) => {
   connection.query(`SELECT * FROM projects WHERE user_id ='${userId}';`, (err, projects) => {
-    console.log('line76: ', projects);
     if (err) {
       throw err;
     } else {
