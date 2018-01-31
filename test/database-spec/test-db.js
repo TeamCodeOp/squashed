@@ -27,42 +27,66 @@ describe('codeOp database', () => {
     dbConnection.end();
   });
 
-  it('Should insert project name', (done) => {
-    const data = {
-      project_name: 'banana'
+  // it('Should insert project name', (done) => {
+  //   const data = {
+  //     project_name: 'banana'
+  //   };
+  //   model.insertProjectData(data)
+  //     .then(() => {
+  //       const query = `SELECT * FROM projects WHERE project_name = '${data.project_name}';`;
+  //       console.log('select query', query);
+  //       return dbConnection.query(query, (err, results) => {
+  //         if (err) {
+  //           throw err;
+  //         } else {
+  //           expect(results.length).to.equal(1);
+  //           done();
+  //         }
+  //       });
+  //     });
+  // });
+
+  it('Should add user info to the users schema', (done) => {
+    const userProfile = {
+      displayName: 'Bob Miller',
+      gitLogin: 'bmiller',
+      avatarUrl: 'https://avatars0.githubusercontent.com/u/30578313?v=4',
+      session_id: 'bdhjsdf68'
     };
-    model.insertProjectData(data)
-      .then(() => {
-        const query = `SELECT * FROM projects WHERE project_name = '${data.project_name}';`;
-        console.log('select query', query);
-        return dbConnection.query(query, (err, results) => {
-          if (err) {
-            throw err;
-          } else {
-            expect(results.length).to.equal(1);
-            done();
-          }
-        });
+    dbIndex.userLogin(userProfile, (err, results) => {
+      const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
+      console.log('select query', query);
+      dbConnection.query(query, (err, results) => {
+        console.log('results in tests', results);
+        if (err) {
+          throw err;
+        } else {
+          expect(results.length).to.equal(1);
+          done();
+        }
       });
+    });
   });
 
-  it('Should delete user session when user logout from the application', (done) => {
-    const data = {
-      session_id: "weh3h43kj53k"
+  it('Should add user info to the users schema', (done) => {
+    const userProfile = {
+      displayName: 'Bob Miller',
+      gitLogin: 'bmiller',
+      avatarUrl: 'https://avatars0.githubusercontent.com/u/30578313?v=4',
+      session_id: 'bdhjsdf68'
     };
-    dbIndex.deleteUserSession(data.session_id)
-      .then(() => {
-        const query = `SELECT * FROM users WHERE session_id ='${sessionID}';`;
-        console.log('select query', query);
-        return dbConnection.query(query, (err, results) => {
-          console.log('results in tests', results);
-          if (err) {
-            throw err;
-          } else {
-            expect(results.length).to.equal(1);
-            done();
-          }
-        });
+    dbIndex.userLogin(userProfile, (err, results) => {
+      const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
+      console.log('select query', query);
+      dbConnection.query(query, (err, results) => {
+        console.log('results in tests', results);
+        if (err) {
+          throw err;
+        } else {
+          expect(results.length).to.equal(1);
+          done();
+        }
       });
+    });
   });
 });
