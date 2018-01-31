@@ -10,14 +10,14 @@ const insertProjectData = (projectData) => {
       repo_url,
       category,
       image_Url,
-      git_username
+      user_id
     ) VALUES(
       '${projectData.projectName}',
       '${projectData.description}',
       '${projectData.githubRepo}',
       '${projectData.techs[0]}',
       '${projectData.uploadedFileCloudinaryUrl}',
-      '${projectData.git_username}'
+      ${projectData.userId}
     )`;
     console.log('insertQuery', insertQuery);
 

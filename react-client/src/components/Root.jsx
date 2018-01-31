@@ -18,7 +18,8 @@ class Root extends React.Component {
       session_id: '',
       username: '',
       name: '',
-      projects: []
+      projects: [],
+      userId: null
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -80,6 +81,7 @@ class Root extends React.Component {
               sessionId={this.state.session_id}
               username={this.state.username}
               name={this.state.name}
+              userId={this.state.userId}
             />
             <Route exact path="/" component={App} />
             <Route path="/create" component={AddProject} />
