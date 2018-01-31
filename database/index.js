@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 let connection;
 // let config;
 
-if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
   console.log('line 7 database');
   connection = mysql.createConnection({
     user: process.env.DB_USERNAME,
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST
   });
-}
+// }
 // } else {
 //   config = require('../config/configvars.js');
 //   connection = mysql.createConnection({

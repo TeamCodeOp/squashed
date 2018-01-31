@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const passport = require('passport');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
 const mysqlDB = require('../database/index.js');
 const mysqlModel = require('../database/model.js');
 const bodyParser = require('body-parser');
