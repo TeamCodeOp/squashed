@@ -86,7 +86,8 @@ class AddProject extends React.Component {
       description: this.state.description,
       githubRepo: this.state.githubRepo,
       techs: this.state.techs,
-      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl
+      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
+      userId: this.props.userId
     })
       .then((response) => {
         console.log(response);

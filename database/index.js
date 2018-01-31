@@ -21,6 +21,7 @@ const userLogin = (userProfile, cb) => {
     if (user.length === 0 || err) {
       connection.query(`INSERT INTO users (name,git_username,session_id,avatar_url) VALUES ("${userProfile.displayName}",
         "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}");`, (err, results) => {
+        console.log('RESULTS---', results);
         if (err) {
           cb(err, null);
         } else {
@@ -29,6 +30,7 @@ const userLogin = (userProfile, cb) => {
       });
     } else if (user.length !== 0) {
       connection.query(`UPDATE users SET session_id ='${userProfile.session_id}' WHERE git_username = '${userProfile.gitLogin}';`, (err, user) => {
+        console.log('EXISTING USER', user);
         if (err) {
           throw err;
         } else {

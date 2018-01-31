@@ -11,7 +11,6 @@ passport.use(new GitHubStrategy(
     passReqToCallback: true
   },
   (req, accessToken, refreshToken, profile, done) => {
-    console.log('sessionID: ', req.sessionID);
     const userProfile = {
       displayName: profile.displayName,
       gitLogin: profile.username,
@@ -19,7 +18,6 @@ passport.use(new GitHubStrategy(
       session_id: req.sessionID
 
     };
-    console.log('user profile', userProfile.avatarUrl);
     mysqlDB.userLogin(userProfile, (err, user) => {
       if (err) {
         return done(err, null);
