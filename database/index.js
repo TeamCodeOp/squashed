@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 
 let connection = mysql.createConnection({
   user: 'root',
-  password: 'root',
+  password: '',
   database: 'codeop'
 });
 
