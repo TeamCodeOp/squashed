@@ -3,9 +3,12 @@ const Promise = require('bluebird');
 let connection;
 // let config;
 
-// if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
+  console.log('production');
   connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-// }
+} else {
+  console.log('development');
+}
 // } else {
 //   config = require('../config/configvars.js');
 //   connection = mysql.createConnection({
