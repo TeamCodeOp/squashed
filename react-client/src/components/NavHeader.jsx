@@ -22,27 +22,28 @@ class NavHeader extends Component {
           to={this.props.username ? '/create' : '/create'}
           name="Add Project"
         />
-        <Menu.Menu position="right">
-          {this.props.username ?
+        {this.props.username ?
+          <Menu.Menu position="right">
+            <Menu.Item
+              as={Link}
+              to={`/${this.props.username}`}
+              name="My Profile"
+            />
             <Menu.Item
               href="/logout"
               icon="github"
               name="Logout"
             />
-            : <Menu.Item
+          </Menu.Menu>
+          :
+          <Menu.Menu position="right">
+            <Menu.Item
               href="/auth/github"
               icon="github"
               name="Login"
             />
-          }
-          {this.props.username ?
-            <Menu.Item name={this.props.username} />
-            : <Menu.Item
-                as={Link}
-                to={`/${this.props.username}`}
-                name="My Profile" />
-          }
-        </Menu.Menu>
+          </Menu.Menu>
+        }
       </Menu>
     );
   }
