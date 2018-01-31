@@ -1,15 +1,34 @@
 const passport = require('passport');
 const mysqlDB = require('../database/index.js');
 const GitHubStrategy = require('passport-github').Strategy;
-const config = require('../config/configvars.js');
+let config;
+
+// if (process.env.NODE_ENV !== 'production') {
+//   config = require('../config/configvars.js');
+//   clientID: config.CLIENT_ID,
+//   clientSecret: config.CLIENT_SECRET,
+//   callbackURL: 'http://localhost:3000/auth/github/return',
+//   passReqToCallback: true
+// }
+
 
 passport.use(new GitHubStrategy(
+
   {
-    clientID: config.CLIENT_ID,
-    clientSecret: config.CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/auth/github/return',
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: 'https://shielded-plateau-98653.herokuapp.com/auth/github/return',
     passReqToCallback: true
   },
+
+  // else {
+  //   config = require('../config/configvars.js');
+  //   clientID: config.CLIENT_ID,
+  //   clientSecret: config.CLIENT_SECRET,
+  //   callbackURL: 'http://localhost:3000/auth/github/return',
+  //   passReqToCallback: true
+  // }
+
   (req, accessToken, refreshToken, profile, done) => {
     const userProfile = {
       displayName: profile.displayName,

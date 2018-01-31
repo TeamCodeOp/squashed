@@ -1,12 +1,19 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
+let connection;
+let config;
 
-let connection = mysql.createConnection({
-  user: 'root',
-  password: '',
-  database: 'codeop'
-});
-
+if (process.env.NODE_ENV === 'production') {
+  connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+} else {
+  config = require('../config/configvars.js');
+  connection = mysql.createConnection({
+    user: config.DB_USERNAME,
+    password: config.DB_PASSWORD,
+    database: config.DB_NAME,
+    host: config.DB_HOST
+  });
+}
 
 connection.connect((err) => {
   if (err) {
