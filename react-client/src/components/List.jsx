@@ -18,7 +18,14 @@ class List extends React.Component {
             <Grid.Column key={i}>
               <div style={{ float: 'left', position: 'relative' }}>
                 <a href={project.repo_url}>
-                  <Image src={project.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'} style={{ borderRadius: '10px' }} /*set the size of the image*/ />
+                  <Image
+                    src={project.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
+                    style={{
+                      borderRadius: '10px',
+                      height: '180px',
+                      width: '100%'
+                    }}
+                  />
                   <div
                     style={{
                       position: 'absolute',

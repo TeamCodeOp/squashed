@@ -11,16 +11,10 @@ class Developer extends React.Component {
       name: '',
       username: '',
       userAvatar: '',
-      projectName: '',
-      description: '',
-      githubRepo: '',
-      techs: [],
-      uploadedFileCloudinaryUrl: '',
       projects: []
     };
   }
 
-  // TO DO: update state for projects
   componentDidMount() {
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {

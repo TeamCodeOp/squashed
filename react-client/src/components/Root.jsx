@@ -49,7 +49,8 @@ class Root extends React.Component {
       .then((response) => {
         this.setState({
           projects: response.data
-        });})
+        });
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -76,23 +77,16 @@ class Root extends React.Component {
               checkSignIn={this.checkSignIn}
               getProjects={this.getProjects}
             />
-
-            {/* <Route
-              path="/uploadproject"
-              component={UploadForm}
-            /> */}
-
-            <RouteProps
+            <Route
               path="/create"
-              sessionId={this.state.session_id}
-              username={this.state.username}
-              name={this.state.name}
-              userId={this.state.userId}
-
               render={() => (
                 this.state.username ? (
-                  // <Redirect to="/uploadproject"/>
-                  <UploadForm />
+                  <UploadForm
+                    sessionId={this.state.session_id}
+                    username={this.state.username}
+                    name={this.state.name}
+                    userId={this.state.userId}
+                  />
                 ) : (
                   <AddProject />
                 )

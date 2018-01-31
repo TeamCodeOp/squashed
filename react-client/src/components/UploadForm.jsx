@@ -28,7 +28,7 @@ class UploadForm extends React.Component {
       description: '',
       githubRepo: '',
       techs: [],
-      uploadedFileCloudinaryUrl: ''
+      uploadedFileCloudinaryUrl: '',
     };
 
     this.handleTechs = this.handleTechs.bind(this);
@@ -36,7 +36,6 @@ class UploadForm extends React.Component {
     this.handleProjectName = this.handleProjectName.bind(this);
     this.handleDescription = this.handleDescription.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    
   }
 
   onImageDrop(files) {
@@ -88,7 +87,8 @@ class UploadForm extends React.Component {
       description: this.state.description,
       githubRepo: this.state.githubRepo,
       techs: this.state.techs,
-      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl
+      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
+      userId: this.props.userId
     })
       .then((response) => {
         console.log(response);
