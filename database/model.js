@@ -3,22 +3,24 @@ const Promise = require('bluebird');
 
 const insertProjectData = (projectData) => {
   return new Promise((resolve, reject) => {
-    const insertQuery = 
+    const insertQuery =
     `INSERT INTO projects (
       project_name,
-      description, 
+      description,
       repo_url,
       category,
-      image_Url
+      image_Url,
+      git_username
     ) VALUES(
       '${projectData.projectName}',
       '${projectData.description}',
       '${projectData.githubRepo}',
       '${projectData.techs[0]}',
-      '${projectData.uploadedFileCloudinaryUrl}'
+      '${projectData.uploadedFileCloudinaryUrl}',
+      '${projectData.git_username}'
     )`;
     console.log('insertQuery', insertQuery);
-    
+
     db.connection.query(insertQuery, (err, results) => {
       if (err) {
         return reject(err);
@@ -34,7 +36,7 @@ const insertProjectData = (projectData) => {
   projectName: 'foobar',
   description: 'foobar',
   githubRepo: 'foobar',
-  techs: 
+  techs:
    [ 'backbone',
      'angular',
      'c',

@@ -31,7 +31,8 @@ class Root extends React.Component {
         this.setState({
           session_id: response.data.session_id,
           username: response.data.git_username,
-          name: response.data.name
+          name: response.data.name,
+          userId: response.data.id
         });
       })
       .catch((error) => {
