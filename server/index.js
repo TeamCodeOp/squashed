@@ -32,10 +32,7 @@ app.use(passport.initialize());
 // Restore Session
 app.use(passport.session());
 
-console.log(' here before /auth/github');
-
 app.get('/auth/github', passport.authenticate('github'));
-console.log('after /auth/github');
 
 app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/'}),
   (req, res) => {

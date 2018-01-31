@@ -4,13 +4,7 @@ let connection;
 // let config;
 
 // if (process.env.NODE_ENV === 'production') {
-  console.log('line 7 database');
-  connection = mysql.createConnection({
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST
-  });
+  connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
 // }
 // } else {
 //   config = require('../config/configvars.js');
