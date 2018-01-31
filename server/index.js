@@ -51,6 +51,18 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
   }
 );
 
+// GET request to database to get user info and user's projects
+// TO DO: how to send user and projects back in one request
+app.get('/developers/:username', (req, res) => {
+  let username = req.params.username;
+  mysqlDB.getUserInfo(username, (user) => {
+    mysqlDB.getProjectsByUser(user.id, (projects) => {
+      user.projects = projects;
+      console.log('line 58: ', user);
+      res.send(user);
+    });
+  });
+});
 
 app.get('/checkSession', (req, res) => {
   console.log('SESSIONID-----: ', req.sessionID);
@@ -72,12 +84,6 @@ console.log('logoutt-----', req.sessionID);
     req.logout();
 
     res.redirect('/');
-  });
-});
-
-app.get('/projects', (req, res) => {
-  mysqlDB.retrieveProjects((projects) => {
-    res.send(projects);
   });
 });
 

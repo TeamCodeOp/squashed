@@ -17,8 +17,7 @@ class Project extends React.Component {
 
 
   render() {
-    return (
-    );
+
   }
 }
 
