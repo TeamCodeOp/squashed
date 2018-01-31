@@ -51,6 +51,12 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
   }
 );
 
+app.get('/projects', (req, res) => {
+  mysqlDB.retrieveProjects((projects) => {
+    res.send(projects);
+  });
+});
+
 // GET request to database to get user info and user's projects
 // TO DO: how to send user and projects back in one request
 app.get('/developers/:username', (req, res) => {

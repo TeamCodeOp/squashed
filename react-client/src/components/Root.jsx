@@ -83,11 +83,9 @@ class Root extends React.Component {
               name={this.state.name}
               userId={this.state.userId}
             />
-            <Route exact path="/" component={App} />
-            <Route path="/create" component={AddProject} />
-            <Route path="/:username" component={Developer} />
             <Route path="/project" component={Project} />
-          </Switch>
+            <Route path="/:username" component={Developer} />
+            </Switch>
         </div>
       </Router>
     );
