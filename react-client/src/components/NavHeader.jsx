@@ -19,7 +19,7 @@ class NavHeader extends Component {
         />
         <Menu.Item
           as={Link}
-          to={this.props.username ? '/create' : '/create'}
+          to="/create"
           name="Add Project"
         />
         {this.props.username ?
