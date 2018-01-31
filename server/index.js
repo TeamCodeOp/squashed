@@ -58,7 +58,6 @@ app.get('/projects', (req, res) => {
 });
 
 // GET request to database to get user info and user's projects
-// TO DO: how to send user and projects back in one request
 app.get('/developers/:username', (req, res) => {
   let username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {

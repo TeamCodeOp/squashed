@@ -89,7 +89,7 @@ const getProjectsByUser = (userId, cb) => {
   connection.query(`SELECT * FROM projects WHERE user_id ='${userId}';`, (err, projects) => {
     console.log('line76: ', projects);
     if (err) {
-      throw(err);
+      throw err;
     } else {
       cb(projects);
     }
