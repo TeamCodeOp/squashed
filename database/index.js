@@ -5,7 +5,14 @@ let config;
 let connection;
 
 if (process.env.NODE_ENV === 'production') {
-  connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+  // connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+  connection = mysql.createPool({
+    connectionLimit: 10,
+    host: 'us-cdbr-iron-east-05.cleardb.net',
+    user: 'b5947ef2bf9d48',
+    password: '43fd774d',
+    database: 'heroku_a9ded5de1ff1c8b',
+  });
 } else {
   connection = mysql.createConnection({
     user: 'root',
@@ -13,7 +20,6 @@ if (process.env.NODE_ENV === 'production') {
     database: 'codeop'
   });
 }
-
 
 connection.connect((err) => {
   if (err) {
