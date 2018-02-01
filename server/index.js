@@ -34,9 +34,8 @@ app.use(passport.session());
 
 app.get('/auth/github', passport.authenticate('github'));
 
-app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/'}),
+app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
-    console.log('------- inside passport authenticate');
     cache.put(req.sessionID, req.user);
     res.redirect(url.format({
       pathname: '/',
@@ -99,6 +98,20 @@ console.log('logoutt-----', req.sessionID);
   });
 });
 
+app.get('/searchProjects', (req, res) => {
+  console.log('SEARCH projects endpoint');
+  let queryTerm = req.query;
+  console.log('query req', queryTerm);
+  mysqlDB.findProject(queryTerm.title, (err, data) => {
+    console.log('data in search projects', data);
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).json(data);
+    }
+  });
+});
+
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
@@ -116,6 +129,8 @@ app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
+
+
 
 
 app.listen(port, () => {

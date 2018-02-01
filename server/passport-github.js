@@ -41,7 +41,7 @@ passport.use(new GitHubStrategy(options, (req, accessToken, refreshToken, profil
 
 // used to serialize the user for the session
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 // used to deserialize the user
 passport.deserializeUser((userId, done) => {

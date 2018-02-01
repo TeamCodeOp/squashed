@@ -16,10 +16,12 @@ class App extends React.Component {
     // GET request to '/projects' to get projects
   }
 
+
+
   render() {
     return (
       <div>
-        <Search />
+        <Search searchByUserInput={this.props.searchByUserInput}/>
         <NewProjects
           projects={this.props.projects}
         />

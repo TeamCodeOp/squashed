@@ -48,7 +48,6 @@ const userLogin = (userProfile, cb) => {
 
 const checkUserSession = (sessionID, cb) => {
   connection.query(`SELECT * FROM users WHERE session_id = '${sessionID}';`, (err, user) => {
-    console.log(user[0]);
     if (err) {
       throw err;
     } else if (user[0]) {
@@ -60,7 +59,7 @@ const checkUserSession = (sessionID, cb) => {
 };
 
 const deleteUserSession = (sessionID, cb) => {
-  connection.query(`UPDATE users SET session_id =" " WHERE session_id ='${sessionID}';`, (err, user) => {
+  connection.query(`UPDATE users SET session_id ="" WHERE session_id ='${sessionID}';`, (err, user) => {
     if (err) {
       throw err;
     } else {
@@ -72,7 +71,7 @@ const deleteUserSession = (sessionID, cb) => {
 const retrieveProjects = (cb) => {
   connection.query('SELECT * FROM projects', (err, projects) => {
     if (err) {
-      throw err;
+       console.log(err);
     } else {
       cb(projects);
     }
@@ -80,6 +79,7 @@ const retrieveProjects = (cb) => {
 };
 
 const getUserInfo = (username, cb) => {
+  console.log('in database getUserInfo', username);
   connection.query(`SELECT * FROM users WHERE git_username ='${username}';`, (err, user) => {
     if (user.length === 0 || err) {
       console.log(err);
@@ -121,6 +121,20 @@ const getUserByUserId = (userId, cb) => {
   });
 };
 
+const findProject = (query, callback) => {
+  const selectQuery = "SELECT * FROM projects WHERE project_name like \'%" + query + "%\';";
+  connection.query(selectQuery, (err, results) => {
+    if (err) {
+      console.log('err in database find project', err);
+      callback(err, null);
+    } else {
+      console.log('success in findProject', results);
+      callback(null, results);
+    }
+  });
+};
+
+
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;
@@ -130,3 +144,4 @@ module.exports.getUserInfo = getUserInfo;
 module.exports.getProjectsByUser = getProjectsByUser;
 module.exports.getProjectByProjectId = getProjectByProjectId;
 module.exports.getUserByUserId = getUserByUserId;
+module.exports.findProject = findProject;

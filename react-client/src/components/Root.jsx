@@ -26,6 +26,7 @@ class Root extends React.Component {
 
     this.checkSignIn = this.checkSignIn.bind(this);
     this.getProjects = this.getProjects.bind(this);
+    this.searchByUserInput = this.searchByUserInput.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +61,13 @@ class Root extends React.Component {
       });
   }
 
+ searchByUserInput(result) {
+  console.log('result in searchByUserProject', result);
+    this.setState({
+      projects: result
+    });
+  }
+
   render() {
     return (
       <Router>
@@ -80,6 +88,7 @@ class Root extends React.Component {
               projects={this.state.projects}
               checkSignIn={this.checkSignIn}
               getProjects={this.getProjects}
+              searchByUserInput={this.searchByUserInput}
             />
             <Route
               path="/create"
