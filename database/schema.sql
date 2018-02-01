@@ -1,5 +1,9 @@
-USE heroku_a9ded5de1ff1c8b;
+DROP DATABASE IF EXISTS codeop;
+CREATE DATABASE codeop;
 
+USE codeop;
+
+-- USE heroku_a9ded5de1ff1c8b;
 CREATE TABLE users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
@@ -21,10 +25,16 @@ CREATE TABLE projects (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-/*mysql --host=us-cdbr-iron-east-05.cleardb.net --user=b5947ef2bf9d48 --password=43fd774d --reconnect heroku_a9ded5de1ff1c8b < schema.sql
+
 
 /* Create other tables and define schemas for them here! */
 
 /*  Execute this file from the command line (from database folder)by typing:
  *    mysql -u root < schema.sql
  *  to create the database and the tables.*/
+
+ /*
+Run this command to create tables for Heroku if you
+change the schema
+mysql --host=us-cdbr-iron-east-05.cleardb.net --user=b5947ef2bf9d48 --password=43fd774d --reconnect heroku_a9ded5de1ff1c8b < schema.sql
+ */
