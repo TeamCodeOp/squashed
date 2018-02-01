@@ -1,6 +1,6 @@
 # Project Name
 
-Find other egineers to collaborate with.
+Find other egineers to collaborate with! :octocat: :squirrel:
 
 ## Team
 
