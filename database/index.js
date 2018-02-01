@@ -1,23 +1,19 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
+
+let config;
 let connection;
-// let config;
 
 if (process.env.NODE_ENV === 'production') {
-  console.log('production');
   connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
 } else {
-  console.log('development');
+  connection = mysql.createConnection({
+    user: 'root',
+    password: '',
+    database: 'codeop'
+  });
 }
-// } else {
-//   config = require('../config/configvars.js');
-//   connection = mysql.createConnection({
-//     user: config.DB_USERNAME,
-//     password: config.DB_PASSWORD,
-//     database: config.DB_NAME,
-//     host: config.DB_HOST
-//   });
-// }
+
 
 connection.connect((err) => {
   if (err) {
@@ -103,6 +99,27 @@ const getProjectsByUser = (userId, cb) => {
   });
 };
 
+const getProjectByProjectId = (projectId, cb) => {
+  connection.query(`SELECT * FROM projects WHERE id ='${projectId}';`, (err, project) => {
+    console.log('line101: ', project);
+    if (err) {
+      throw err;
+    } else {
+      cb(project[0]);
+    }
+  });
+};
+
+const getUserByUserId = (userId, cb) => {
+  connection.query(`SELECT * FROM users WHERE id ='${userId}';`, (err, user) => {
+    console.log('line112: ', user);
+    if (err) {
+      throw err;
+    } else {
+      cb(user[0]);
+    }
+  });
+};
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
@@ -111,4 +128,5 @@ module.exports.deleteUserSession = deleteUserSession;
 module.exports.retrieveProjects = retrieveProjects;
 module.exports.getUserInfo = getUserInfo;
 module.exports.getProjectsByUser = getProjectsByUser;
-
+module.exports.getProjectByProjectId = getProjectByProjectId;
+module.exports.getUserByUserId = getUserByUserId;
