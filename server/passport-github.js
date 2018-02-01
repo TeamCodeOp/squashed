@@ -1,6 +1,7 @@
 const passport = require('passport');
 const mysqlDB = require('../database/index.js');
 const GitHubStrategy = require('passport-github').Strategy;
+
 let config;
 let options;
 
@@ -20,7 +21,6 @@ if (process.env.NODE_ENV === 'production') {
     passReqToCallback: true
   };
 }
-
 
 passport.use(new GitHubStrategy(options, (req, accessToken, refreshToken, profile, done) => {
   const userProfile = {
