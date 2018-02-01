@@ -28,6 +28,10 @@ class Root extends React.Component {
     this.getProjects = this.getProjects.bind(this);
   }
 
+  componentDidMount() {
+    // console.log('Root mounted');
+  }
+
   checkSignIn() {
     axios.get('/checkSession')
       .then((response) => {

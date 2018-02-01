@@ -12,7 +12,7 @@ class App extends React.Component {
     this.props.checkSignIn();
     this.props.getProjects();
 
-    console.log('App mounted');
+    // console.log('App mounted');
     // GET request to '/projects' to get projects
   }
 
