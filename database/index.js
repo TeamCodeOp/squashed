@@ -5,13 +5,12 @@ let config;
 let connection;
 
 if (process.env.NODE_ENV === 'production') {
-  // connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
   connection = mysql.createPool({
     connectionLimit: 10,
-    host: 'us-cdbr-iron-east-05.cleardb.net',
-    user: 'b5947ef2bf9d48',
-    password: '43fd774d',
-    database: 'heroku_a9ded5de1ff1c8b',
+    host: process.env.CLEARDB_HOST,
+    user: process.env.CLEARDB_USERNAME,
+    password: process.env.CLEARDB_PASS,
+    database: process.env.CLEARDB_NAME
   });
 } else {
   connection = mysql.createConnection({
@@ -20,6 +19,8 @@ if (process.env.NODE_ENV === 'production') {
     database: 'codeop'
   });
 }
+
+// Uncomment below code for local testing
 
 // connection.connect((err) => {
 //   if (err) {
@@ -77,7 +78,7 @@ const deleteUserSession = (sessionID, cb) => {
 const retrieveProjects = (cb) => {
   connection.query('SELECT * FROM projects', (err, projects) => {
     if (err) {
-       console.log(err);
+      console.log(err);
     } else {
       cb(projects);
     }
@@ -107,7 +108,6 @@ const getProjectsByUser = (userId, cb) => {
 
 const getProjectByProjectId = (projectId, cb) => {
   connection.query(`SELECT * FROM projects WHERE id ='${projectId}';`, (err, project) => {
-    console.log('line101: ', project);
     if (err) {
       throw err;
     } else {
@@ -118,7 +118,6 @@ const getProjectByProjectId = (projectId, cb) => {
 
 const getUserByUserId = (userId, cb) => {
   connection.query(`SELECT * FROM users WHERE id ='${userId}';`, (err, user) => {
-    console.log('line112: ', user);
     if (err) {
       throw err;
     } else {
@@ -128,7 +127,7 @@ const getUserByUserId = (userId, cb) => {
 };
 
 const findProject = (query, callback) => {
-  const selectQuery = "SELECT * FROM projects WHERE project_name like \'%" + query + "%\';";
+  const selectQuery = `SELECT * FROM projects WHERE project_name like %${query}%;`;
   connection.query(selectQuery, (err, results) => {
     if (err) {
       console.log('err in database find project', err);
@@ -139,7 +138,6 @@ const findProject = (query, callback) => {
     }
   });
 };
-
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;

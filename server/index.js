@@ -58,7 +58,6 @@ app.get('/developers/:username', (req, res) => {
   mysqlDB.getUserInfo(username, (user) => {
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       user.projects = projects;
-      console.log('line 58: ', user);
       res.send(user);
     });
   });
@@ -66,7 +65,7 @@ app.get('/developers/:username', (req, res) => {
 
 // GET request to database to project info and project's owner
 app.get('/projects/:id', (req, res) => {
-  let projectId = req.params.id;
+  const projectId = req.params.id;
   mysqlDB.getProjectByProjectId(projectId, (project) => {
     mysqlDB.getUserByUserId(project.user_id, (user) => {
       project.user = user;
@@ -76,22 +75,18 @@ app.get('/projects/:id', (req, res) => {
 });
 
 app.get('/checkSession', (req, res) => {
-  console.log('SESSIONID-----: ', req.sessionID);
   mysqlDB.checkUserSession(req.sessionID, (user) => {
     res.send(user);
   });
 });
 
 app.get('/logout', (req, res) => {
-console.log('logoutt-----', req.sessionID);
-
   req.session.destroy((err) => {
     if (err) {
       return next(err);
     }
-  mysqlDB.deleteUserSession(req.sessionID, (user) => {
-    console.log(user);
-  });
+    mysqlDB.deleteUserSession(req.sessionID, (user) => {
+    });
     req.logout();
 
     res.redirect('/');
@@ -99,11 +94,8 @@ console.log('logoutt-----', req.sessionID);
 });
 
 app.get('/searchProjects', (req, res) => {
-  console.log('SEARCH projects endpoint');
-  let queryTerm = req.query;
-  console.log('query req', queryTerm);
+  const queryTerm = req.query;
   mysqlDB.findProject(queryTerm.title, (err, data) => {
-    console.log('data in search projects', data);
     if (err) {
       res.status(500).send(err);
     } else {
@@ -129,9 +121,6 @@ app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
-
-
-
 
 app.listen(port, () => {
   console.log(`listening on ${port}!`);
