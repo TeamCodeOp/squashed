@@ -47,8 +47,8 @@ class UploadForm extends React.Component {
 
   handleImageUpload(file) {
 
-    let upload = request.post(process.env.CLOUDINARY_UPLOAD_URL)
-      .field('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET)
+    let upload = request.post('https://api.cloudinary.com/v1_1/dzfsouij5/image/upload')
+      .field('upload_preset', 'yqyt31zl')
       .field('file', file);
 
     upload.end((err, response) => {

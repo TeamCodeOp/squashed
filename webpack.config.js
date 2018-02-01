@@ -1,4 +1,3 @@
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 const SRC_DIR = path.join(__dirname, '/react-client/src');
@@ -24,9 +23,5 @@ module.exports = {
   },
   node: {
     fs: 'empty'
-  },
-  plugins: [
-    new Dotenv()
-
-  ]
+  }
 };
