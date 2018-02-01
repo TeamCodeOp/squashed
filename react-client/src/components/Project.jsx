@@ -17,11 +17,11 @@ class Project extends React.Component {
   }
 
   componentDidMount() {
-    console.log('thispropsmatch: ', this.props.match);
+    // console.log('thispropsmatch: ', this.props.match);
 
     axios.get(`/projects/${this.props.match.params.id}`)
       .then((response) => {
-        console.log('response data on line 20: ', response)
+        // console.log('response data on line 20: ', response)
         this.setState({
           projectName: response.data.project_name,
           description: response.data.description,
