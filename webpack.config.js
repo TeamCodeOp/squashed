@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 const SRC_DIR = path.join(__dirname, '/react-client/src');
@@ -23,5 +24,10 @@ module.exports = {
   },
   node: {
     fs: 'empty'
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
+  ]
 };

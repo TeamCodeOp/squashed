@@ -6,18 +6,18 @@ import request from 'superagent';
 
 import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
 
-// let config;
-// let CLOUDINARY_UPLOAD_URL;
-// let CLOUDINARY_UPLOAD_PRESET;
+let config;
+let CLOUDINARY_UPLOAD_URL;
+let CLOUDINARY_UPLOAD_PRESET;
 
-// if (process.env.NODE_ENV === 'production') {
-//   CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
-//   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
-// } else {
-//   config = require('../../../config/configvars.js');
-//   CLOUDINARY_UPLOAD_URL = config.CLOUDINARY_UPLOAD_URL;
-//   CLOUDINARY_UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET;
-// };
+if (process.env.NODE_ENV === 'production') {
+  CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
+  CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
+} else {
+  config = require('../../../config/configvars.js');
+  CLOUDINARY_UPLOAD_URL = config.CLOUDINARY_UPLOAD_URL;
+  CLOUDINARY_UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET;
+};
 
 class UploadForm extends React.Component {
   constructor(props) {
@@ -46,9 +46,9 @@ class UploadForm extends React.Component {
   }
 
   handleImageUpload(file) {
-    let upload = request.post('https://api.cloudinary.com/v1_1/dzfsouij5/image/upload')
-    .field('upload_preset', 'yqyt31zl')
-    .field('file', file);
+    let upload = request.post(CLOUDINARY_UPLOAD_URL)
+      .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+      .field('file', file);
 
     upload.end((err, response) => {
       if (err) {
