@@ -1,4 +1,4 @@
-const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 const SRC_DIR = path.join(__dirname, '/react-client/src');
@@ -26,8 +26,7 @@ module.exports = {
     fs: 'empty'
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    })
+    new Dotenv()
+
   ]
 };
