@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 
 const insertProjectData = (projectData) => {
   return new Promise((resolve, reject) => {
+    console.log('projectData', projectData);
     const insertQuery =
     `INSERT INTO projects (
       project_name,
