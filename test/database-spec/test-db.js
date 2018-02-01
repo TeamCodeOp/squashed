@@ -47,6 +47,7 @@ describe('codeOp database', () => {
   // });
 
 
+
   it('Should add user info to the users schema', (done) => {
     const userProfile = {
       displayName: 'Bob Miller',
