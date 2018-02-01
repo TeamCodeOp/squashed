@@ -8,10 +8,10 @@ const PleaseLogIn = () => {
         <Grid.Column></Grid.Column>
           <Grid.Column width={6}>
 
-            <h3 id="login-h3">Please login using Github</h3>
+            <h3 id="login-h3"><i className="fab fa-github"></i></h3>
 
             <div className="ui container center aligned">
-              <a icon="github" href="/auth/github">Please login using Github</a>
+              <a href="/auth/github" style={{ color: "rgba(0,0,0,.6)" }}>Please login using Github</a>
             </div>
 
           </Grid.Column>
