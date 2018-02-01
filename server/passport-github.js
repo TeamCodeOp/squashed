@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
   options = {
     clientID: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/auth/github/return',
+    callbackURL: 'http://localhost:8080/auth/github/return',
     passReqToCallback: true
   };
 }
@@ -41,7 +41,7 @@ passport.use(new GitHubStrategy(options, (req, accessToken, refreshToken, profil
 
 // used to serialize the user for the session
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 // used to deserialize the user
 passport.deserializeUser((userId, done) => {
