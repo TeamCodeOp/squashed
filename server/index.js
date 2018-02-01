@@ -13,7 +13,7 @@ const url = require('url');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static(`${__dirname}/../react-client/dist`));
+app.use(express.static('./react-client/dist'));
 
 app.use(require('cookie-parser')());
 
@@ -61,6 +61,17 @@ app.get('/developers/:username', (req, res) => {
       user.projects = projects;
       console.log('line 58: ', user);
       res.send(user);
+    });
+  });
+});
+
+// GET request to database to project info and project's owner
+app.get('/projects/:id', (req, res) => {
+  let projectId = req.params.id;
+  mysqlDB.getProjectByProjectId(projectId, (project) => {
+    mysqlDB.getUserByUserId(project.user_id, (user) => {
+      project.user = user;
+      res.send(project);
     });
   });
 });

@@ -93,8 +93,8 @@ class Root extends React.Component {
               )}
             />
 
-            <Route path="/project" component={Project} />
-            <Route path="/:username" component={Developer} />
+            <Route path="/apps/:id" component={Project} />
+            <Route path="/users/:username" component={Developer} />
           </Switch>
         </div>
       </Router>
@@ -103,3 +103,4 @@ class Root extends React.Component {
 }
 
 export default Root;
+
