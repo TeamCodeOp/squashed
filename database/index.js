@@ -126,7 +126,7 @@ const getUserByUserId = (userId, cb) => {
 };
 
 const findProject = (query, callback) => {
-  const selectQuery = `SELECT * FROM projects WHERE project_name like %${query}%;`;
+  const selectQuery = `SELECT * FROM projects WHERE project_name like %'${query}%';`;
   connection.query(selectQuery, (err, results) => {
     if (err) {
       console.log('err in database find project', err);
