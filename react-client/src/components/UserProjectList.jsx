@@ -14,7 +14,7 @@ class List extends React.Component {
           return (
             <Grid.Column key={i}>
               <div style={{ float: 'left', position: 'relative' }}>
-                <a href={`/apps/${project.id}`}>
+                <a href={`/apps/${item.id}`}>
                   <Image
                     src={item.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
                     style={{

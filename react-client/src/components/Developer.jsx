@@ -18,6 +18,7 @@ class Developer extends React.Component {
   componentDidMount() {
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
+        console.log(response);
         this.setState({
           name: response.data.name,
           username: response.data.git_username,
@@ -68,7 +69,7 @@ class Developer extends React.Component {
             </Header>
             <Container style={{ textAlign: 'center' }}>
               <Grid>
-                {this.state.projects.map((item, i) => {
+                {this.state.projects.map((project, i) => {
                   if (i % 3 === 0 && i < this.state.projects.length - 1) {
                     return <UserProjectList key={i} items={this.state.projects.slice(i, i + 3)} />;
                   }
