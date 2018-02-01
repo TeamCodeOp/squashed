@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
   options = {
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: ' https://codeop28.herokuapp.com/auth/github/return',
+    callbackURL: 'https://codeop28.herokuapp.com/auth/github/return',
     passReqToCallback: true
   };
 } else {
