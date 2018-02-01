@@ -1,13 +1,13 @@
 # Project Name
 
-> Pithy project description
+Find other egineers to collaborate with.
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+* [Thuan Tran - Software Engineer](https://github.com/toowan) :star2: 
+* [Tejaswi Guvvala - Software Engineer](https://github.com/tguvvala) :star2: 
+* [Ralph Plumley - Scrum Master](https://github.com/ralphplumley) :star2: 
+* [Dan Kelly - Product Owner](https://github.com/DanielJKelly) :star2: 
 
 ## Table of Contents
 
@@ -21,20 +21,9 @@
 
 ## Usage
 
-> Some usage instructions
-
 ## Requirements
-
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
 
 ## Development
 
 ### Installing Dependencies
 
-From within the root directory:
-
-```sh
