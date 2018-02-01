@@ -21,7 +21,7 @@ CREATE TABLE projects (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-/*mysql --host=us-cdbr-east.cleardb.com --user=xxxx --password=xxxx --reconnect heroku_xxxxxx < schema.sql
+/*mysql --host=us-cdbr-iron-east-05.cleardb.net --user=b5947ef2bf9d48 --password=43fd774d --reconnect heroku_a9ded5de1ff1c8b < schema.sql
 
 /* Create other tables and define schemas for them here! */
 
