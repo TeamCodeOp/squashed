@@ -11,7 +11,7 @@ const cache = require('memory-cache');
 const url = require('url');
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 app.use(express.static('./react-client/dist'));
 

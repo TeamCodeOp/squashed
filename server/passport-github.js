@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
   options = {
     clientID: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET,
-    callbackURL: 'http://localhost:8080/auth/github/return',
+    callbackURL: 'http://localhost:3000/auth/github/return',
     passReqToCallback: true
   };
 }
