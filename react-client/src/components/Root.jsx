@@ -61,8 +61,8 @@ class Root extends React.Component {
       });
   }
 
- searchByUserInput(result) {
-  console.log('result in searchByUserProject', result);
+  searchByUserInput(result) {
+    console.log('result in searchByUserProject', result);
     this.setState({
       projects: result
     });

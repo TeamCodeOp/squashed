@@ -2,6 +2,7 @@ import React from 'react';
 import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
+import ProjectsMenu from './ProjectsMenu.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,13 +16,11 @@ class App extends React.Component {
     // console.log('App mounted');
     // GET request to '/projects' to get projects
   }
-
-
-
   render() {
     return (
       <div>
         <Search searchByUserInput={this.props.searchByUserInput}/>
+        <ProjectsMenu getProjects={this.props.getProjects} />
         <NewProjects
           projects={this.props.projects}
         />
