@@ -4,7 +4,6 @@ const db = require('../../database/index.js');
 const model = require('../../database/model.js');
 const dbIndex = require('../../database/index.js');
 
-
 describe('codeOp database', () => {
   let dbConnection;
 
@@ -68,36 +67,33 @@ describe('codeOp database', () => {
             if (err) {
               cb(err, null);
             } else {
-        cb(null, results);
-      }
-    });
-  } else if (user.length !== 0) {
+              cb(null, results);
+            }
+          });
+        } else if (user.length !== 0) {
 
-    dbConnection.query(`UPDATE users SET session_id ='${userProfile.session_id}' WHERE git_username = '${userProfile.gitLogin}';`, (err, user) => {
-      if (err) {
-        throw err;
-      } else {
-        cb(null, user);
-      }
-    });
+          dbConnection.query(`UPDATE users SET session_id ='${userProfile.session_id}' WHERE git_username = '${userProfile.gitLogin}';`, (err, user) => {
+            if (err) {
+              throw err;
+            } else {
+              cb(null, user);
+            }
+          });
 
-    const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
-    console.log('select query', query);
-    dbConnection.query(query, (err, results) => {
-      console.log('results in tests', results);
-      if (err) {
-        throw err;
-      } else {
-        expect(results.length).to.equal(1);
-        done();
-      }
-    });
-  }
-});
-};
-
-
-
+          const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
+          console.log('select query', query);
+          dbConnection.query(query, (err, results) => {
+            console.log('results in tests', results);
+            if (err) {
+              throw err;
+            } else {
+              expect(results.length).to.equal(1);
+              done();
+            }
+          });
+        }
+      });
+    };
     userLogin(userProfile, (err, results) => {
       const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
       console.log('select query', query);
