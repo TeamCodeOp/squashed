@@ -13,7 +13,13 @@ describe('codeOp database', () => {
       user: 'root',
       database: 'codeop',
     });
-    dbConnection.connect();
+    dbConnection.connect((err) => {
+      if (err) {
+        console.log('could not connect to database', err);
+      } else {
+        console.log('connected to database');
+      }
+    });
 
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */

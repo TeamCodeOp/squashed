@@ -1,9 +1,9 @@
--- DROP DATABASE IF EXISTS codeop;
--- CREATE DATABASE codeop;
+DROP DATABASE IF EXISTS codeop;
+CREATE DATABASE codeop;
 
--- USE codeop;
+USE codeop;
 
-USE heroku_a9ded5de1ff1c8b;
+-- USE heroku_a9ded5de1ff1c8b;
 
 CREATE TABLE users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
