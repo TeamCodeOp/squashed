@@ -81,9 +81,7 @@ describe('test database', () => {
           });
 
           const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
-          console.log('select query', query);
           dbConnection.query(query, (err, results) => {
-            console.log('results in tests', results);
             if (err) {
               throw err;
             } else {
@@ -96,9 +94,7 @@ describe('test database', () => {
     };
     userLogin(userProfile, (err, results) => {
       const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
-      console.log('select query', query);
       dbConnection.query(query, (err, results) => {
-        console.log('results in tests', results);
         if (err) {
           throw err;
         } else {
