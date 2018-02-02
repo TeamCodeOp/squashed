@@ -23,20 +23,20 @@ const insertProjectData = (projectData) => {
       if (err) {
         return reject(err);
       }
-      // const techs = projectData.techs;
-      // const valuesToInsert = [];
-      // techs.forEach((techName) => {
-      //   valuesToInsert.push([results.insertId, techName]);
-      // });
+      const techs = projectData.techs;
+      const valuesToInsert = [];
+      techs.forEach((techName) => {
+        valuesToInsert.push([results.insertId, techName]);
+      });
 
-      // const sql = format('INSERT INTO technologies (project_id, tech_name) VALUES %L', valuesToInsert);
+      const sql = format('INSERT INTO technologies (project_id, tech_name) VALUES %L', valuesToInsert);
 
-      // db.connection.query(sql, (err2, results2) => {
-      //   if (err2) {
-      //     console.log('error: \n', err2);
-      //   }
-      //   console.log('............results: \n', results2);
-      // });
+      db.connection.query(sql, (err2, results2) => {
+        if (err2) {
+          console.log('error: \n', err2);
+        }
+        console.log('............results: \n', results2);
+      });
 
       return resolve(results);
     });
