@@ -13,10 +13,10 @@ class Developer extends React.Component {
       username: '',
       userAvatar: '',
       projects: [],
-      data: {
-        message: []
-      }
+      messages: []
     };
+
+    this.socket = io().connect();
   }
 
   componentDidMount() {
@@ -32,6 +32,7 @@ class Developer extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+
   }
 
   render() {
@@ -58,6 +59,7 @@ class Developer extends React.Component {
     );
 
     return (
+
       <div>
         <Grid columns='equal'>
           <Grid.Column width={2} />
