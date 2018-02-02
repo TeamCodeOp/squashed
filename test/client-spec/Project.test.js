@@ -15,7 +15,7 @@ describe('<Project />', () => {
     }
   };
 
-  it('renders without exploding', () => {
+  xit('renders without exploding', () => {
     expect(
       shallow(
         <Project {...props} />
