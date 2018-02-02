@@ -1,7 +1,8 @@
 import React from 'react';
-import { Header, Icon, Card, Grid, Image, Container } from 'semantic-ui-react';
+import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input } from 'semantic-ui-react';
 import axios from 'axios';
 import UserProjectList from './UserProjectList.jsx';
+import io from 'socket.io-client';
 
 class Developer extends React.Component {
   constructor(props) {
@@ -11,14 +12,16 @@ class Developer extends React.Component {
       name: '',
       username: '',
       userAvatar: '',
-      projects: []
+      projects: [],
+      data: {
+        message: []
+      }
     };
   }
 
   componentDidMount() {
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
-        console.log(response);
         this.setState({
           name: response.data.name,
           username: response.data.git_username,
@@ -32,6 +35,28 @@ class Developer extends React.Component {
   }
 
   render() {
+    const firstName = this.state.name.split(' ')[0];
+
+    const Chatbox = (
+      <div style={{ width: '300px'}}>
+        <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2'}}>{firstName}</Header>
+        <Segment attached>
+          <p>Dan: hello</p>
+          <p>Ralph: hi there!</p>
+        </Segment>
+        <Segment attached>
+        <Input
+          placeholder='...'
+          action='send'
+          style={{
+            width: '270px',
+            margin: '0 auto'
+          }}
+        />
+        </Segment>
+      </div>
+    );
+
     return (
       <div>
         <Grid columns='equal'>
@@ -57,6 +82,14 @@ class Developer extends React.Component {
                   <Icon name='user' />
                   22 Friends
                 </a>
+              </Card.Content>
+              <Card.Content extra>
+                <Popup
+                  trigger={<Button color='green' content='Chat' floated='left' size='mini'/>}
+                  content={Chatbox}
+                  on='click'
+                  position='bottom left'
+                />
               </Card.Content>
             </Card>
           </Grid.Column>
