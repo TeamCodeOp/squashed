@@ -46,14 +46,16 @@ class Project extends React.Component {
               padding: '2em',
               border: '1px solid rgba(0,0,0,.4)',
             }}>
+              <a href={this.state.githubRepo} target="_blank">
               <Item.Image
                 size='small'
                 src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                style={{ borderRadius: '10px', width: '150px', height: 'auto' }}
+                style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
               />
+              </a>
               <Item.Content>
-                <Item.Header as='a'>{this.state.projectName}</Item.Header>
-                <Item.Meta>by <a href={`https://github.com/${this.state.githubUser}`}>{this.state.githubUser}</a></Item.Meta>
+                <Item.Header as='a'><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
+                <Item.Meta>by <a href={`https://codeop28.herokuapp.com/${this.state.githubUser}` || `http://localhost:3000/users/${this.state.githubUser}`}>{this.state.githubUser}</a></Item.Meta>
                 <Item.Description>
                   {this.state.description}
                 </Item.Description>
@@ -64,6 +66,13 @@ class Project extends React.Component {
               </Item.Content>
             </Item>
           </Item.Group>
+          <ReactDisqusThread
+            shortname="CodeOp"
+            identifier={this.props.match.params.id}
+            title="CodeOp"
+            url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${this.props.match.params.id}`}
+            onNewComment={this.handleNewComment}
+          />
         </Grid.Column>
         <Grid.Column></Grid.Column>
       </Grid>
