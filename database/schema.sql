@@ -5,7 +5,7 @@
 
 USE heroku_a9ded5de1ff1c8b;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
   git_username varchar(20) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE users (
   avatar_url varchar(100)
 );
 
-CREATE TABLE projects (
+CREATE TABLE IF NOT EXISTS projects (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   project_name varchar(20) NOT NULL UNIQUE,
   description varchar(100),
