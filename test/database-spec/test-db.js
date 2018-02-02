@@ -52,8 +52,6 @@ describe('codeOp database', () => {
   //     });
   // });
 
-
-
   it('Should add user info to the users schema', (done) => {
     const userProfile = {
       displayName: 'Bob Miller',
@@ -61,7 +59,46 @@ describe('codeOp database', () => {
       avatarUrl: 'https://avatars0.githubusercontent.com/u/30578313?v=4',
       session_id: 'bdhjsdf68'
     };
-    dbIndex.userLogin(userProfile, (err, results) => {
+
+    const userLogin = (userProfile, cb) => {
+      dbConnection.query(`SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`, (err, user) => {
+        if (user.length === 0 || err) {
+          dbConnection.query(`INSERT INTO users (name,git_username,session_id,avatar_url) VALUES ("${userProfile.displayName}",
+      "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}");`, (err, results) => {
+            if (err) {
+              cb(err, null);
+            } else {
+        cb(null, results);
+      }
+    });
+  } else if (user.length !== 0) {
+
+    dbConnection.query(`UPDATE users SET session_id ='${userProfile.session_id}' WHERE git_username = '${userProfile.gitLogin}';`, (err, user) => {
+      if (err) {
+        throw err;
+      } else {
+        cb(null, user);
+      }
+    });
+
+    const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
+    console.log('select query', query);
+    dbConnection.query(query, (err, results) => {
+      console.log('results in tests', results);
+      if (err) {
+        throw err;
+      } else {
+        expect(results.length).to.equal(1);
+        done();
+      }
+    });
+  }
+});
+};
+
+
+
+    userLogin(userProfile, (err, results) => {
       const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
       console.log('select query', query);
       dbConnection.query(query, (err, results) => {
@@ -76,3 +113,4 @@ describe('codeOp database', () => {
     });
   });
 });
+
