@@ -56,7 +56,7 @@ class Project extends React.Component {
               </a>
               <Item.Content>
                 <Item.Header as='a'><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
-                <Item.Meta>by <a href={`https://codeop28.herokuapp.com/${this.state.githubUser}` || `http://localhost:3000/users/${this.state.githubUser}`}>{this.state.githubUser}</a></Item.Meta>
+                <Item.Meta>by <a href={`https://codeop28.herokuapp.com/users/${this.state.githubUser}` || `http://localhost:3000/users/${this.state.githubUser}`}>{this.state.githubUser}</a></Item.Meta>
                 <Item.Description>
                   {this.state.description}
                 </Item.Description>
