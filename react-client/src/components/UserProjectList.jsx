@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Image } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class List extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class List extends React.Component {
           return (
             <Grid.Column key={i}>
               <div style={{ float: 'left', position: 'relative' }}>
-                <a href={`/apps/${item.id}`}>
+                <Link to={`/apps/${item.id}`}>
                   <Image
                     src={item.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
                     style={{
@@ -48,7 +49,7 @@ class List extends React.Component {
                       <p>Techs: {item.category}</p>
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
             </Grid.Column>
           );

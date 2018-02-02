@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import ReactDisqusThread from 'react-disqus-thread';
-import { Grid, Image, Item, Link } from 'semantic-ui-react';
+import { Grid, Image, Item } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class Project extends React.Component {
   constructor(props) {
@@ -55,10 +56,8 @@ class Project extends React.Component {
               />
               </a>
               <Item.Content>
-                <Item.Header as='a'><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
-                <Item.Meta as={Link} to={`https://codeop28.herokuapp.com/users/${this.state.githubUser}` || `http://localhost:3000/users/${this.state.githubUser}`}>by {this.state.githubUser}
-                </Item.Meta>
-
+                <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
+                <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
                 <Item.Description>
                   {this.state.description}
                 </Item.Description>
