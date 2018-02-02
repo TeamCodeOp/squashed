@@ -37,9 +37,6 @@ class Developer extends React.Component {
         <Grid columns='equal'>
           <Grid.Column width={2} />
           <Grid.Column width={4}>
-            <Header as='h3' textAlign='center'>
-              Developer
-            </Header>
             <Card>
               <Image src={`${this.state.userAvatar}`} />
               <Card.Content>
@@ -64,10 +61,10 @@ class Developer extends React.Component {
             </Card>
           </Grid.Column>
           <Grid.Column width={8}>
-            <Header as='h3' textAlign='center'>
-              Projects
-            </Header>
             <Container style={{ textAlign: 'center' }}>
+              <Header as='h3' textAlign='center'>
+                Projects
+              </Header>
               <Grid>
                 {this.state.projects.map((project, i) => {
                   if (i % 3 === 0 && i < this.state.projects.length - 1) {
