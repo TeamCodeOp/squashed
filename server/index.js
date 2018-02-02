@@ -116,13 +116,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
+  // console.log('<><><><><><><><>: ', req.body);
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
-});
-
-app.get('/testing', (req, res) => {
-  res.status(200);
-  res.send('GET request to testing');
 });
 
 io.on('connection', (socket) => {
@@ -131,6 +127,14 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
   });
 });
+
+/* ************************************ */ 
+
+app.get('/testing', (req, res) => {
+  res.status(200);
+  res.send('GET request to testing');
+});
+
 
 app.listen(port, () => {
   console.log(`listening on ${port}!`);
