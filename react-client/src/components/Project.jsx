@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import ReactDisqusThread from 'react-disqus-thread';
 import { Grid, Image, Item } from 'semantic-ui-react';
 
 class Project extends React.Component {
