@@ -5,7 +5,7 @@
 
 USE heroku_a9ded5de1ff1c8b;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
   git_username varchar(20) NOT NULL,
@@ -13,27 +13,25 @@ CREATE TABLE users (
   avatar_url varchar(100)
 );
 
-CREATE TABLE projects (
+CREATE TABLE IF NOT EXISTS projects (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   project_name varchar(20) NOT NULL UNIQUE,
   description varchar(100),
   repo_url varchar(100),
-  category varchar(20),
   image_Url varchar(100),
   creation_date date,
-  status varchar(10),
   user_id int,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql
 
--- CREATE TABLE technologies (
---   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
---   tech_name varchar(20) NOT NULL,
---   project_id int,
---   FOREIGN KEY (project_id) REFERENCES projects(id)
--- );
+CREATE TABLE IF NOT EXISTS technologies (
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  tech_name varchar(20) NOT NULL,
+  project_id int,
+  FOREIGN KEY (project_id) REFERENCES projects(id)
+);
 
 /* Create other tables and define schemas for them here!
 

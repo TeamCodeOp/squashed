@@ -102,7 +102,7 @@ class Developer extends React.Component {
               </Header>
               <Grid>
                 {this.state.projects.map((project, i) => {
-                  if (i % 3 === 0 && i < this.state.projects.length - 1) {
+                  if (i % 3 === 0 && i <= this.state.projects.length - 1) {
                     return <UserProjectList key={i} items={this.state.projects.slice(i, i + 3)} />;
                   }
                 })}
