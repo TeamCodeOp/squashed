@@ -67,6 +67,7 @@
     "passport-github": "^1.1.0",
     "prop-types": "^15.6.0",
     "react": "^15.4.2",
+    "react-disqus-thread": "^0.4.0",
     "react-dom": "^15.4.2",
     "react-dropzone": "^4.2.7",
     "react-redux": "^5.0.6",
