@@ -4,7 +4,7 @@ const db = require('../../database/index.js');
 const model = require('../../database/model.js');
 const dbIndex = require('../../database/index.js');
 
-describe('codeOp database', () => {
+describe('test database', () => {
   let dbConnection;
 
   beforeEach((done) => {
@@ -23,8 +23,8 @@ describe('codeOp database', () => {
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */
     // also reset auto increment
-    dbConnection.query('TRUNCATE projects', () => {
-      dbConnection.query('ALTER TABLE projects AUTO_INCREMENT = 1', done);
+    dbConnection.query('TRUNCATE users', () => {
+      dbConnection.query('ALTER TABLE users AUTO_INCREMENT = 1', done);
     });
   });
 
@@ -81,9 +81,7 @@ describe('codeOp database', () => {
           });
 
           const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
-          console.log('select query', query);
           dbConnection.query(query, (err, results) => {
-            console.log('results in tests', results);
             if (err) {
               throw err;
             } else {
@@ -96,9 +94,7 @@ describe('codeOp database', () => {
     };
     userLogin(userProfile, (err, results) => {
       const query = `SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`;
-      console.log('select query', query);
       dbConnection.query(query, (err, results) => {
-        console.log('results in tests', results);
         if (err) {
           throw err;
         } else {
