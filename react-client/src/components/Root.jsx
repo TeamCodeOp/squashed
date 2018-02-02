@@ -11,6 +11,7 @@ import AddProject from './AddProject.jsx';
 import Developer from './Developer.jsx';
 import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
+import Chat from './Chat.jsx';
 
 class Root extends React.Component {
   constructor(props) {

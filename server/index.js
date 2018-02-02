@@ -9,9 +9,12 @@ const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
+const http = require('http').Server(express);
+const io = require('socket.io')(http);
 
 const app = express();
 const port = process.env.PORT || 3000;
+
 
 app.use(express.static('./react-client/dist'));
 
@@ -120,6 +123,13 @@ app.post('/projects', (req, res) => {
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 app.listen(port, () => {
