@@ -74,10 +74,8 @@ class Root extends React.Component {
     const techQuery = queryString.stringify({
       techs
     });
-    console.log(techQuery);
     axios.get(`/projects?${techQuery}`)
       .then((response) => {
-        console.log('data: ',response.data);
         this.setState({
           projects: response.data
         });

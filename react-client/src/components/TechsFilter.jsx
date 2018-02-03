@@ -11,13 +11,7 @@ class TechsFilter extends React.Component {
     this.handleTechs = this.handleTechs.bind(this);
   }
 
-  // handleCategorySelect(e, data) {
-  //   console.log(data);
-  //   this.props.handleCategoryClick(data.value);
-  // }
-
   handleTechs(e, data) {
-    console.log(data);
     this.setState({ techs: data.value }, function () {
       this.props.getProjectsByTechs(this.state.techs);
     });

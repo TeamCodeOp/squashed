@@ -92,14 +92,12 @@ const retrieveProjectsByTechs = (techs, cb) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('RESULTSSSS', results)
       cb(formatProjectsWithTechs(results, techs));
     }
   });
 };
 
 const formatProjectsWithTechs = (data, techs) => {
-  console.log('techs in format', techs);
   const storage = {};
   const projects = [];
   for (let i = 0; i < data.length; i += 1) {
@@ -116,9 +114,9 @@ const formatProjectsWithTechs = (data, techs) => {
   }
   return _.filter(Object.entries(storage), (pair) => {
     return JSON.stringify(pair[1].techs.sort()) === JSON.stringify(techs.sort());
-  });
+  })
+    .map(el => el[1]);
 };
-
 
 const getUserInfo = (username, cb) => {
   connection.query(`SELECT * FROM users WHERE git_username ='${username}';`, (err, user) => {
