@@ -4,6 +4,7 @@
 
 USE codeop;
 
+-- USE heroku_a9ded5de1ff1c8b;
 
 CREATE TABLE IF NOT EXISTS users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -24,14 +25,20 @@ CREATE TABLE IF NOT EXISTS projects (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql
-
 CREATE TABLE IF NOT EXISTS technologies (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   tech_name varchar(20) NOT NULL,
   project_id int,
   FOREIGN KEY (project_id) REFERENCES projects(id)
 );
+
+CREATE TABLE IF NOT EXISTS followers (
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  followed_user_id int NOT NULL,
+  follower_id int NOT NULL
+);
+
+-- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql
 
 /* Create other tables and define schemas for them here!
 
