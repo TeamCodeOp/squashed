@@ -17,8 +17,8 @@ class ProjectsMenu extends React.Component {
         <Menu.Item className="projectMenuItem" onClick={this.props.getProjects}>
           Latest
         </Menu.Item>
-        <Menu.Item className="projectMenuItem" onClick={this.props.getProjects}>
-          <TechsFilter />
+        <Menu.Item className="projectMenuItem">
+          <TechsFilter getProjectsByTechs={this.props.getProjectsByTechs} />
         </Menu.Item>
         <Menu.Item className="projectMenuItem" onClick={this.props.getProjects}>
           Popular

@@ -20,7 +20,8 @@ class App extends React.Component {
     return (
       <div>
         <Search searchByUserInput={this.props.searchByUserInput}/>
-        <ProjectsMenu getProjects={this.props.getProjects} />
+        <ProjectsMenu getProjects={this.props.getProjects}
+        getProjectsByTechs={this.props.getProjectsByTechs} />
         <NewProjects
           projects={this.props.projects}
         />

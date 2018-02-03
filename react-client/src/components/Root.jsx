@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import RouteProps from 'react-route-props';
 import { Provider } from 'react-redux';
@@ -27,6 +28,7 @@ class Root extends React.Component {
     this.checkSignIn = this.checkSignIn.bind(this);
     this.getProjects = this.getProjects.bind(this);
     this.searchByUserInput = this.searchByUserInput.bind(this);
+    this.getProjectsByTechs = this.getProjectsByTechs.bind(this);
   }
 
   componentDidMount() {
@@ -68,6 +70,23 @@ class Root extends React.Component {
     });
   }
 
+  getProjectsByTechs(techs) {
+    const techQuery = queryString.stringify({
+      techs
+    });
+    console.log(techQuery);
+    axios.get(`/projects?${techQuery}`)
+      .then((response) => {
+        console.log('data: ',response.data);
+        this.setState({
+          projects: response.data
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <Router>
@@ -89,6 +108,7 @@ class Root extends React.Component {
               checkSignIn={this.checkSignIn}
               getProjects={this.getProjects}
               searchByUserInput={this.searchByUserInput}
+              getProjectsByTechs={this.getProjectsByTechs}
             />
             <Route
               path="/create"

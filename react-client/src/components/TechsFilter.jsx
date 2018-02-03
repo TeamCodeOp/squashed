@@ -18,7 +18,9 @@ class TechsFilter extends React.Component {
 
   handleTechs(e, data) {
     console.log(data);
-    this.setState({ techs: data.value });
+    this.setState({ techs: data.value }, function () {
+      this.props.getProjectsByTechs(this.state.techs);
+    });
   }
 
   render() {

@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
+const _ = require('underscore');
 
 let config;
 let connection;
@@ -84,6 +85,41 @@ const retrieveProjects = (cb) => {
   });
 };
 
+const retrieveProjectsByTechs = (techs, cb) => {
+  const sql = 'SELECT * FROM projects LEFT JOIN technologies ON projects.id = technologies.project_id';
+
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('RESULTSSSS', results)
+      cb(formatProjectsWithTechs(results, techs));
+    }
+  });
+};
+
+const formatProjectsWithTechs = (data, techs) => {
+  console.log('techs in format', techs);
+  const storage = {};
+  const projects = [];
+  for (let i = 0; i < data.length; i += 1) {
+    const projectId = data[i].project_id;
+    if (!storage[projectId]) {
+      storage[projectId] = data[i];
+      storage[projectId].techs = [];
+      storage[projectId].techs.push(storage[projectId].tech_name);
+      delete storage[projectId].tech_name;
+      delete storage[projectId].id;
+    } else {
+      storage[projectId].techs.push(data[i].tech_name);
+    }
+  }
+  return _.filter(Object.entries(storage), (pair) => {
+    return JSON.stringify(pair[1].techs.sort()) === JSON.stringify(techs.sort());
+  });
+};
+
+
 const getUserInfo = (username, cb) => {
   connection.query(`SELECT * FROM users WHERE git_username ='${username}';`, (err, user) => {
     if (user.length === 0 || err) {
@@ -158,3 +194,4 @@ module.exports.getProjectByProjectId = getProjectByProjectId;
 module.exports.getUserByUserId = getUserByUserId;
 module.exports.getTechByProjectId = getTechByProjectId;
 module.exports.findProject = findProject;
+module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
