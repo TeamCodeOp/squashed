@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 const passport = require('passport');
 const session = require('express-session');
@@ -15,6 +14,7 @@ const url = require('url');
 const queryString = require('query-string');
 const _ = require('underscore');
 
+const app = express();
 const port = process.env.PORT || 3000;
 
 const server = app.listen(port, () => {
