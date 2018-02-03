@@ -1,8 +1,10 @@
 import React from 'react';
-import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input } from 'semantic-ui-react';
 import axios from 'axios';
-import UserProjectList from './UserProjectList.jsx';
 import io from 'socket.io-client';
+import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input } from 'semantic-ui-react';
+import UserProjectList from './UserProjectList.jsx';
+
+const socket = io.connect();
 
 class Developer extends React.Component {
   constructor(props) {
@@ -16,10 +18,13 @@ class Developer extends React.Component {
       messages: []
     };
 
-    this.socket = io().connect();
+    socket.on('chat', (data) =>
+      console.log(data)
+    );
   }
 
   componentDidMount() {
+
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
         this.setState({
@@ -32,18 +37,32 @@ class Developer extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-
   }
+
+
+
+  // handleStateChange() {
+  //   let newMSG = {
+  //     to: this.props.match.params.username,
+  //     from: this.state.username,
+  //     message: 'new message yay'
+  //   }
+
+  //   socket.emit('chat', newMSG);
+  // }
+
 
   render() {
     const firstName = this.state.name.split(' ')[0];
+    const messages = this.state.messages.map((msg) => {
+      return <li key={i}> msg </li>
+    });
 
     const Chatbox = (
       <div style={{ width: '300px'}}>
         <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2'}}>{firstName}</Header>
         <Segment attached>
-          <p>Dan: hello</p>
-          <p>Ralph: hi there!</p>
+          {messages}
         </Segment>
         <Segment attached>
         <Input
