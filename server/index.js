@@ -11,7 +11,12 @@ const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
 
+<<<<<<< HEAD
 const port = process.env.PORT || 3000;
+=======
+const app = express();
+const port = process.env.PORT || 8080;
+>>>>>>> resolved merge conflicts in package.json
 
 <<<<<<< HEAD
 =======
