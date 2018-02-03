@@ -15,7 +15,6 @@ const io = require('socket.io')(http);
 const app = express();
 const port = process.env.PORT || 3000;
 
-
 app.use(express.static('./react-client/dist'));
 
 app.use(require('cookie-parser')());
@@ -69,13 +68,24 @@ app.get('/developers/:username', (req, res) => {
 // GET request to database to project info and project's owner
 app.get('/projects/:id', (req, res) => {
   const projectId = req.params.id;
+
   mysqlDB.getProjectByProjectId(projectId, (project) => {
     mysqlDB.getUserByUserId(project.user_id, (user) => {
-      project.user = user;
-      res.send(project);
+      project.user = user; // <-- is this being used anywhere?
+      mysqlDB.getTechByProjectId(project.id, (data) => {
+        const response = [];
+        const techs = [];
+        data.forEach((element) => {
+          techs.push(element['tech_name']);
+        });
+        response.push(project);
+        response.push(techs);
+        res.send(response);
+      });
     });
   });
 });
+
 
 app.get('/checkSession', (req, res) => {
   mysqlDB.checkUserSession(req.sessionID, (user) => {
@@ -116,7 +126,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
-  // console.log('<><><><><><><><>: ', req.body);
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });
@@ -134,7 +143,6 @@ app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
-
 
 app.listen(port, () => {
   console.log(`listening on ${port}!`);
