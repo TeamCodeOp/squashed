@@ -78,7 +78,6 @@
     "redux": "^3.7.2",
     "semantic-ui-comment": "^2.2.14",
     "semantic-ui-react": "^0.77.2",
-    "sequelize": "^4.30.1",
     "session-memory-store": "^0.2.2",
     "sinon": "^4.2.1",
     "socket.io": "^2.0.4",

@@ -62,29 +62,23 @@ class Root extends React.Component {
       });
   }
 
- searchByUserInput(result) {
-  console.log('result in searchByUserProject', result[0].project_name);
-    // this.setState({
-    //   projects: result
-    // });
-
-  const that = this;
+  searchByUserInput(result) {
+    console.log('result in searchByUserProject', result[0].project_name);
+    const that = this;
     $.ajax({
       url: `/searchProjects?title=${result[0].project_name}`,
       success: (response) => {
         console.log('RESPONSE IN SearchBar', response);
 
         that.setState({
-          projects :response
+          projects: response
         });
-
       },
       error: () => {
         console.log('check access token error');
       }
     });
-
- }
+  }
 
   render() {
     return (

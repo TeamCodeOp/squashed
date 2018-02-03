@@ -11,9 +11,7 @@ const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
 
-const http = require('http').Server(express);
-
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 const server = app.listen(port, () => {
   console.log(`listening on ${port}!`);
@@ -156,17 +154,11 @@ app.delete('/projects/:id', (req, res) => {
   });
 });
 
-
-
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
 
-
-app.listen(port, () => {
-  console.log(`listening on ${port}!`);
-});
 
 
 module.exports = app;

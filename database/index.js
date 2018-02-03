@@ -148,17 +148,25 @@ const findProject = (query, callback) => {
 };
 
 const deleteProjectByProjectId = (query, callback) => {
-  const deleteQuery = `DELETE FROM projects WHERE id ='${query}';`;
-  connection.query(deleteQuery, (err, results) => {
-    if (err) {
-      console.log('err in database delete project', err);
-      callback(err, null);
+  const deleteTechQuery = `DELETE FROM technologies WHERE project_id = '${query}';`;
+  connection.query(deleteTechQuery, (err1, data) => {
+    if (err1) {
+      console.log('error in database technologies delete');
+      callback(err1, null);
     } else {
-      console.log('successfully deleted the entry from projects table', results);
-      callback(null, results);
+      const deleteQuery = `DELETE FROM projects WHERE id ='${query}';`;
+      connection.query(deleteQuery, (err, results) => {
+        if (err) {
+          console.log('err in database delete project', err);
+          callback(err, null);
+        } else {
+          callback(null, results);
+        }
+      });
     }
   });
 };
+
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
