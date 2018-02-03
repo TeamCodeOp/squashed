@@ -26,16 +26,17 @@ class Developer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    socket.emit('registerSocket', this.props.name);
-
+  componentWillMount() {
     socket.on('messageAdded', message =>
-      // console.log(message)
       this.setState({
         name: message.sender,
         messages: this.state.messages.concat(message)
       })
     );
+  }
+
+  componentDidMount() {
+    socket.emit('registerSocket', this.props.name);
 
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
@@ -53,7 +54,26 @@ class Developer extends React.Component {
       });
   }
 
-  handleChange(e) {
+  componentWillReceiveProps(nextProps) {
+    axios.get(`/developers/${nextProps.match.params.username}`)
+      .then((response) => {
+        this.setState({
+          name: response.data.name,
+          username: response.data.git_username,
+          userAvatar: response.data.avatar_url,
+          projects: response.data.projects
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  handleChange(e, { msgInput, value }) {
+    this.setState({
+      msgInput: value
+    });
+
     newMessage = {
       sender: this.props.name,
       receiver: this.state.name,
@@ -65,8 +85,10 @@ class Developer extends React.Component {
     e.preventDefault();
 
     this.setState({
-      messages: this.state.messages.concat(newMessage)
+      messages: this.state.messages.concat(newMessage),
+      msgInput: ''
     });
+
 
     // sends newMessage object to server
     socket.emit('messageAdded', newMessage);
@@ -77,6 +99,7 @@ class Developer extends React.Component {
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
     });
+    const { msgInput } = this.state
 
     return (
 
@@ -133,7 +156,7 @@ class Developer extends React.Component {
                 <Segment attached>
                 <Form onSubmit={this.handleSubmit}>
                   <Form.Group>
-                    <Form.Input placeholder='...' name='input' onChange={this.handleChange}/>
+                    <Form.Input placeholder='...' name='input' value={msgInput} onChange={this.handleChange}/>
                     <Form.Button content='Send' size='small'/>
                   </Form.Group>
                 </Form>

@@ -9,6 +9,10 @@ const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
+<<<<<<< HEAD
+=======
+const queryString = require('query-string');
+>>>>>>> Fix bugs in chat/MyProfile
 const _ = require('underscore');
 
 const app = express();
@@ -21,11 +25,17 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io').listen(server);
 
+<<<<<<< HEAD
 const socketIds = {};
 
 io.on('connection', (socket) => {
   console.log('socketId: ', socket.id);
 
+=======
+let socketIds = {};
+
+io.on('connection', (socket) => {
+>>>>>>> Fix bugs in chat/MyProfile
   // keep track of user's socketId
   socket.on('registerSocket', (name) => {
     socketIds[name] = socket.id;
