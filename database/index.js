@@ -85,7 +85,6 @@ const retrieveProjects = (cb) => {
 };
 
 const getUserInfo = (username, cb) => {
-  console.log('in database getUserInfo', username);
   connection.query(`SELECT * FROM users WHERE git_username ='${username}';`, (err, user) => {
     if (user.length === 0 || err) {
       console.log(err);
@@ -125,6 +124,16 @@ const getUserByUserId = (userId, cb) => {
   });
 };
 
+const getTechByProjectId = (projectId, cb) => {
+  connection.query(`SELECT * FROM technologies WHERE project_id ='${projectId}';`, (err, data) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(data);
+    }
+  });
+};
+
 const findProject = (query, callback) => {
   const selectQuery = "SELECT * FROM projects WHERE project_name like \'%" + query + "%\';";
   connection.query(selectQuery, (err, results) => {
@@ -147,4 +156,5 @@ module.exports.getUserInfo = getUserInfo;
 module.exports.getProjectsByUser = getProjectsByUser;
 module.exports.getProjectByProjectId = getProjectByProjectId;
 module.exports.getUserByUserId = getUserByUserId;
+module.exports.getTechByProjectId = getTechByProjectId;
 module.exports.findProject = findProject;

@@ -20,20 +20,28 @@ class Project extends React.Component {
 
   componentDidMount() {
     // console.log('thispropsmatch: ', this.props.match);
-
+    
     axios.get(`/projects/${this.props.match.params.id}`)
       .then((response) => {
-        // console.log('response data on line 20: ', response)
+
+        const techStackHtml = response.data[1].map((tech) =>
+        <li className="ui label" key={tech.toString()}>
+          {tech}
+        </li>
+        );
+
         this.setState({
-          projectName: response.data.project_name,
-          description: response.data.description,
-          githubRepo: response.data.repo_url,
-          techs: response.data.category,
-          githubUser: response.data.user.git_username,
-          projectThumb: response.data.image_Url
+          projectName: response.data[0].project_name,
+          description: response.data[0].description,
+          githubRepo: response.data[0].repo_url,
+          techs: techStackHtml,
+          githubUser: response.data[0].user.git_username,
+          projectThumb: response.data[0].image_Url
         });
       })
       .catch((error) => {
+        console.log('**************');
+        
         console.log(error);
       });
   }
@@ -42,6 +50,7 @@ class Project extends React.Component {
     return (
       <Grid columns='equal'>
         <Grid.Column></Grid.Column>
+
         <Grid.Column width={12}>
           <Item.Group>
             <Item style={{
@@ -55,19 +64,25 @@ class Project extends React.Component {
                 style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
               />
               </a>
+
               <Item.Content>
                 <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
                 <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
+
                 <Item.Description>
                   {this.state.description}
                 </Item.Description>
+
                 <Item.Extra style={{marginTop: '20px'}}>Tech Stack</Item.Extra>
+
                 <Item.Description>
-                  {this.state.techs}
+                  <ul id="project-techs">{this.state.techs}</ul>
                 </Item.Description>
               </Item.Content>
+
             </Item>
           </Item.Group>
+
           <ReactDisqusThread
             shortname="CodeOp"
             identifier={this.props.match.params.id}
@@ -75,6 +90,7 @@ class Project extends React.Component {
             url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${this.props.match.params.id}`}
             onNewComment={this.handleNewComment}
           />
+
         </Grid.Column>
         <Grid.Column></Grid.Column>
       </Grid>
