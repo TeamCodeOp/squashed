@@ -22,13 +22,16 @@ class Root extends React.Component {
       username: '',
       name: '',
       projects: [],
-      userId: null
+      userId: null,
+      techFilter: []
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
     this.getProjects = this.getProjects.bind(this);
     this.searchByUserInput = this.searchByUserInput.bind(this);
     this.getProjectsByTechs = this.getProjectsByTechs.bind(this);
+    this.handleTechs = this.handleTechs.bind(this);
+    this.handleGetLatest = this.handleGetLatest.bind(this);
   }
 
   componentDidMount() {
@@ -85,6 +88,20 @@ class Root extends React.Component {
       });
   }
 
+  handleTechs(e, data) {
+    this.setState({ techFilter: data.value }, function () {
+      this.getProjectsByTechs(this.state.techFilter);
+    });
+  }
+
+  handleGetLatest() {
+    this.setState({
+      techFilter: []
+    }, function () {
+      this.getProjects();
+    });
+  }
+
   render() {
     return (
       <Router>
@@ -103,10 +120,13 @@ class Root extends React.Component {
               username={this.state.username}
               name={this.state.name}
               projects={this.state.projects}
+              techFilter={this.state.techFilter}
               checkSignIn={this.checkSignIn}
               getProjects={this.getProjects}
               searchByUserInput={this.searchByUserInput}
               getProjectsByTechs={this.getProjectsByTechs}
+              handleGetLatest={this.handleGetLatest}
+              handleTechs={this.handleTechs}
             />
             <Route
               path="/create"

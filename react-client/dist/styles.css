@@ -21,6 +21,10 @@ body, textarea {
   margin-bottom: 10em;
 }
 
+.ui.container.techFilter div {
+
+}
+
 .dropZone {
   margin-top: .5em;
   text-align: center;
