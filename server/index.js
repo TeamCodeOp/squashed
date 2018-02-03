@@ -161,6 +161,7 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
+<<<<<<< 85a406bc113f6d15bac0d059ebeac5ca2f995d7e
 
 /***Delete request to projects Schemna**/
 
@@ -172,11 +173,18 @@ app.delete('/projects/:id', (req, res) => {
   });
 });
 
+=======
+/* ************************************ */
+>>>>>>> Setup getFollowersForUser function in DB index.js
 
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
 
+<<<<<<< 85a406bc113f6d15bac0d059ebeac5ca2f995d7e
+=======
+
+>>>>>>> Setup getFollowersForUser function in DB index.js
 module.exports = app;
 

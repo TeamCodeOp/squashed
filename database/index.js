@@ -179,9 +179,17 @@ const deleteProjectByProjectId = (query, callback) => {
           callback(null, results);
         }
       });
+const getFollowersForUser = (userId) => {
+  connection.query(`SELECT * FROM followers WHERE followed_user_id ='${userId}';`, (err, data) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(data);
     }
   });
 };
+
+getFollowersForUser(4);
 
 
 module.exports.connection = connection;
@@ -197,4 +205,4 @@ module.exports.getTechByProjectId = getTechByProjectId;
 module.exports.findProject = findProject;
 module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
 module.exports.deleteProjectByProjectId = deleteProjectByProjectId;
-
+module.exports.getFollowersForUser = getFollowersForUser;
