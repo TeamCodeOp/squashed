@@ -27,15 +27,16 @@ class Developer extends React.Component {
       bio:''
     };
 
-    console.log('line 26:', this.state.name);
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
+<<<<<<< HEAD
 
+=======
+>>>>>>> Fix bugs in chat/MyProfile
   }
 
-  // WHY IS THIS.STATE.NAME UNDEFINED???
+
   componentWillMount() {
     socket.on('broadcast', (data) => {
       if (data[this.state.name]) {
@@ -56,6 +57,7 @@ class Developer extends React.Component {
       });
     });
   }
+
 
   componentDidMount() {
     axios.get(`/developers/${this.props.match.params.username}`)
@@ -130,10 +132,27 @@ class Developer extends React.Component {
       });
   }
 
+  componentWillReceiveProps(nextProps) {
+    axios.get(`/developers/${nextProps.match.params.username}`)
+      .then((response) => {
+        this.setState({
+          fullName: response.data.name,
+          name: response.data.name,
+          username: response.data.git_username,
+          userAvatar: response.data.avatar_url,
+          projects: response.data.projects
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   componentWillUnmount() {
     console.log(this.state.fullName, ' is leaving');
     socket.emit('userDisconnect', this.state.fullName);
   }
+
 
   handleChange(e, { msgInput, value }) {
     this.setState({
