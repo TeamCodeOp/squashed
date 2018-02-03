@@ -11,15 +11,10 @@ const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
 
-<<<<<<< HEAD
-const port = process.env.PORT || 3000;
-=======
-const app = express();
-const port = process.env.PORT || 8080;
->>>>>>> resolved merge conflicts in package.json
+const http = require('http').Server(express);
 
-<<<<<<< HEAD
-=======
+const port = process.env.PORT || 3000;
+
 const server = app.listen(port, () => {
   console.log(`listening on ${port}!`);
 });
@@ -34,7 +29,7 @@ io.on('connection', (socket) => {
 });
 
 
->>>>>>> set up socket.io
+
 app.use(express.static('./react-client/dist'));
 
 app.use(require('cookie-parser')());
@@ -151,20 +146,27 @@ app.post('/projects', (req, res) => {
 });
 
 
+/***Delete request to projects Schemna**/
 
-/* ************************************ */
+app.delete('/projects/:id', (req, res) => {
+  console.log('delete in server', req.params.id);
+  const projectId = req.params.id;
+  mysqlDB.deleteProjectByProjectId(projectId, (project) => {
+    res.send(project);
+  });
+});
+
+
 
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
 
-<<<<<<< HEAD
+
 app.listen(port, () => {
   console.log(`listening on ${port}!`);
 });
-=======
 
->>>>>>> set up socket.io
 
 module.exports = app;
