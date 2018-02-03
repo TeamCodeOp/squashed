@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
-import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input } from 'semantic-ui-react';
+import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import UserProjectList from './UserProjectList.jsx';
 
 const socket = io.connect();
+let newMessage;
 
 class Developer extends React.Component {
   constructor(props) {
@@ -15,15 +16,22 @@ class Developer extends React.Component {
       username: '',
       userAvatar: '',
       projects: [],
-      messages: []
+      messages: [{
+        text: ''
+      }]
     };
 
-    socket.on('chat', (data) =>
-      console.log(data)
-    );
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
+    socket.on('messageAdded', message =>
+      // console.log(message)
+      this.setState({
+        messages: this.state.messages.concat(message)
+      })
+    );
 
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
@@ -40,22 +48,26 @@ class Developer extends React.Component {
   }
 
 
+  handleChange(e) {
+    newMessage = {
+      text: e.target.value
+    };
+  }
 
-  // handleStateChange() {
-  //   let newMSG = {
-  //     to: this.props.match.params.username,
-  //     from: this.state.username,
-  //     message: 'new message yay'
-  //   }
+  handleSubmit(e) {
+    e.preventDefault();
 
-  //   socket.emit('chat', newMSG);
-  // }
+    this.setState({
+      messages: this.state.messages.concat(newMessage)
+    });
 
+    socket.emit('messageAdded', newMessage);
+  }
 
   render() {
     const firstName = this.state.name.split(' ')[0];
-    const messages = this.state.messages.map((msg) => {
-      return <li key={i}> msg </li>
+    const messages = this.state.messages.map((msg, i) => {
+      return <p className='messageList' key={i}>{firstName}: {msg.text}</p>
     });
 
     const Chatbox = (
@@ -65,14 +77,12 @@ class Developer extends React.Component {
           {messages}
         </Segment>
         <Segment attached>
-        <Input
-          placeholder='...'
-          action='send'
-          style={{
-            width: '270px',
-            margin: '0 auto'
-          }}
-        />
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group>
+            <Form.Input placeholder='...' name='input' onChange={this.handleChange}/>
+            <Form.Button content='Submit' />
+          </Form.Group>
+        </Form>
         </Segment>
       </div>
     );

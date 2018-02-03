@@ -20,10 +20,12 @@ const server = app.listen(port, () => {
 const io = require('socket.io').listen(server);
 
 
-let users = {};
-
 io.on('connection', (socket) => {
-  socket.emit('chat', { hello: 'world' });
+  console.log('socketId: ', socket.id);
+  socket.on('messageAdded', message => {
+    console.log('message line 28 server: ', message);
+    socket.broadcast.emit('messageAdded', message);
+  });
 });
 
 
