@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
 const _ = require('underscore');
+const utils = require('./utils');
 
 let config;
 let connection;
@@ -92,30 +93,9 @@ const retrieveProjectsByTechs = (techs, cb) => {
     if (err) {
       console.log(err);
     } else {
-      cb(formatProjectsWithTechs(results, techs));
+      cb(utils.formatProjectsWithTechs(results, techs));
     }
   });
-};
-
-const formatProjectsWithTechs = (data, techs) => {
-  const storage = {};
-  const projects = [];
-  for (let i = 0; i < data.length; i += 1) {
-    const projectId = data[i].project_id;
-    if (!storage[projectId]) {
-      storage[projectId] = data[i];
-      storage[projectId].techs = [];
-      storage[projectId].techs.push(storage[projectId].tech_name);
-      delete storage[projectId].tech_name;
-      delete storage[projectId].id;
-    } else {
-      storage[projectId].techs.push(data[i].tech_name);
-    }
-  }
-  return _.filter(Object.entries(storage), (pair) => {
-    return JSON.stringify(pair[1].techs.sort()) === JSON.stringify(techs.sort());
-  })
-    .map(el => el[1]);
 };
 
 const getUserInfo = (username, cb) => {
