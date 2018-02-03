@@ -13,8 +13,6 @@ const url = require('url');
 
 const port = process.env.PORT || 3000;
 
-<<<<<<< HEAD
-=======
 const server = app.listen(port, () => {
   console.log(`listening on ${port}!`);
 });
@@ -22,14 +20,15 @@ const server = app.listen(port, () => {
 const io = require('socket.io').listen(server);
 
 
-let users = {};
-
 io.on('connection', (socket) => {
-  socket.emit('chat', { hello: 'world' });
+  console.log('socketId: ', socket.id);
+  socket.on('messageAdded', message => {
+    console.log('message line 28 server: ', message);
+    socket.broadcast.emit('messageAdded', message);
+  });
 });
 
 
->>>>>>> set up socket.io
 app.use(express.static('./react-client/dist'));
 
 app.use(require('cookie-parser')());
@@ -154,12 +153,5 @@ app.get('/testing', (req, res) => {
   res.send('GET request to testing');
 });
 
-<<<<<<< HEAD
-app.listen(port, () => {
-  console.log(`listening on ${port}!`);
-});
-=======
-
->>>>>>> set up socket.io
 
 module.exports = app;
