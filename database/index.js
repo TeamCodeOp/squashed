@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
+const _ = require('underscore');
+const utils = require('./utils');
 
 let config;
 let connection;
@@ -84,6 +86,18 @@ const retrieveProjects = (cb) => {
   });
 };
 
+const retrieveProjectsByTechs = (techs, cb) => {
+  const sql = 'SELECT * FROM projects LEFT JOIN technologies ON projects.id = technologies.project_id';
+
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(utils.formatProjectsWithTechs(results, techs));
+    }
+  });
+};
+
 const getUserInfo = (username, cb) => {
   connection.query(`SELECT * FROM users WHERE git_username ='${username}';`, (err, user) => {
     if (user.length === 0 || err) {
@@ -158,3 +172,4 @@ module.exports.getProjectByProjectId = getProjectByProjectId;
 module.exports.getUserByUserId = getUserByUserId;
 module.exports.getTechByProjectId = getTechByProjectId;
 module.exports.findProject = findProject;
+module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;

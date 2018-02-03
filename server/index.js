@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 const passport = require('passport');
 const session = require('express-session');
@@ -10,7 +9,12 @@ const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
+// const http = require('http').Server(express);
+// const io = require('socket.io')(http);
+const queryString = require('query-string');
+const _ = require('underscore');
 
+const app = express();
 const port = process.env.PORT || 3000;
 
 const server = app.listen(port, () => {
@@ -19,18 +23,15 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io').listen(server);
 
-
 io.on('connection', (socket) => {
   console.log('socketId: ', socket.id);
-  socket.on('messageAdded', message => {
+  socket.on('messageAdded', (message) => {
     console.log('message line 28 server: ', message);
     socket.broadcast.emit('messageAdded', message);
   });
 });
 
-
 app.use(express.static('./react-client/dist'));
-
 app.use(require('cookie-parser')());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -63,14 +64,22 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
 );
 
 app.get('/projects', (req, res) => {
-  mysqlDB.retrieveProjects((projects) => {
-    res.send(projects);
-  });
+  let techs;
+  if (req.query.techs === undefined) {
+    mysqlDB.retrieveProjects((projects) => {
+      res.send(projects);
+    });
+  } else {
+    techs = Array.isArray(req.query.techs) ? req.query.techs : [req.query.techs];
+    mysqlDB.retrieveProjectsByTechs(techs, (projects) => {
+      res.send(projects);
+    });
+  }
 });
 
 // GET request to database to get user info and user's projects
 app.get('/developers/:username', (req, res) => {
-  let username = req.params.username;
+  const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       user.projects = projects;
@@ -99,7 +108,6 @@ app.get('/projects/:id', (req, res) => {
     });
   });
 });
-
 
 app.get('/checkSession', (req, res) => {
   mysqlDB.checkUserSession(req.sessionID, (user) => {
@@ -144,14 +152,9 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-
-
-/* ************************************ */
-
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
-
 
 module.exports = app;
