@@ -5,6 +5,7 @@ import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Inp
 import UserProjectList from './UserProjectList.jsx';
 
 const socket = io.connect();
+
 let newMessage;
 
 class Developer extends React.Component {
@@ -16,9 +17,7 @@ class Developer extends React.Component {
       username: '',
       userAvatar: '',
       projects: [],
-      messages: [{
-        text: ''
-      }]
+      messages: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,9 +25,12 @@ class Developer extends React.Component {
   }
 
   componentDidMount() {
+    socket.emit('registerSocket', this.props.name);
+
     socket.on('messageAdded', message =>
       // console.log(message)
       this.setState({
+        name: message.sender,
         messages: this.state.messages.concat(message)
       })
     );
@@ -47,9 +49,10 @@ class Developer extends React.Component {
       });
   }
 
-
   handleChange(e) {
     newMessage = {
+      sender: this.props.name,
+      receiver: this.state.name,
       text: e.target.value
     };
   }
@@ -61,31 +64,15 @@ class Developer extends React.Component {
       messages: this.state.messages.concat(newMessage)
     });
 
+    // sends newMessage object to server
     socket.emit('messageAdded', newMessage);
   }
 
   render() {
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
-      return <p className='messageList' key={i}>{firstName}: {msg.text}</p>
+      return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
     });
-
-    const Chatbox = (
-      <div style={{ width: '300px'}}>
-        <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2'}}>{firstName}</Header>
-        <Segment attached>
-          {messages}
-        </Segment>
-        <Segment attached>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group>
-            <Form.Input placeholder='...' name='input' onChange={this.handleChange}/>
-            <Form.Button content='Submit' />
-          </Form.Group>
-        </Form>
-        </Segment>
-      </div>
-    );
 
     return (
 
@@ -114,15 +101,25 @@ class Developer extends React.Component {
                   22 Friends
                 </a>
               </Card.Content>
-              <Card.Content extra>
-                <Popup
-                  trigger={<Button color='green' content='Chat' floated='left' size='mini'/>}
-                  content={Chatbox}
-                  on='click'
-                  position='bottom left'
-                />
-              </Card.Content>
             </Card>
+
+            {(this.props.sessionId) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
+              <div style={{ width: '290px'}}>
+                <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2'}}>{firstName}</Header>
+                <Segment attached>
+                  {messages}
+                </Segment>
+                <Segment attached>
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Group>
+                    <Form.Input placeholder='...' name='input' onChange={this.handleChange}/>
+                    <Form.Button content='Send' size='small'/>
+                  </Form.Group>
+                </Form>
+                </Segment>
+              </div>
+            : null }
+
           </Grid.Column>
           <Grid.Column width={8}>
             <Container style={{ textAlign: 'center' }}>
@@ -140,6 +137,7 @@ class Developer extends React.Component {
           </Grid.Column>
           <Grid.Column width={2} />
         </Grid>
+
       </div>
     );
   }
