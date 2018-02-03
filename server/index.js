@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const path = require('path');
 const passport = require('passport');
 const session = require('express-session');
@@ -9,12 +10,26 @@ const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
-const http = require('http').Server(express);
-const io = require('socket.io')(http);
 
-const app = express();
 const port = process.env.PORT || 3000;
 
+<<<<<<< HEAD
+=======
+const server = app.listen(port, () => {
+  console.log(`listening on ${port}!`);
+});
+
+const io = require('socket.io').listen(server);
+
+
+let users = {};
+
+io.on('connection', (socket) => {
+  socket.emit('chat', { hello: 'world' });
+});
+
+
+>>>>>>> set up socket.io
 app.use(express.static('./react-client/dist'));
 
 app.use(require('cookie-parser')());
@@ -130,22 +145,21 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
 
-/* ************************************ */ 
+
+/* ************************************ */
 
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
 
+<<<<<<< HEAD
 app.listen(port, () => {
   console.log(`listening on ${port}!`);
 });
+=======
+
+>>>>>>> set up socket.io
 
 module.exports = app;
