@@ -173,10 +173,11 @@ app.delete('/projects/:id', (req, res) => {
   });
 });
 
-
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
 
+
 module.exports = app;
+
