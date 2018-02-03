@@ -23,11 +23,20 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io').listen(server);
 
+
+let socketIds = {};
+
 io.on('connection', (socket) => {
-  console.log('socketId: ', socket.id);
+  console.log('socketId: ', socket);
+
+  // keep track of user's socketId
+  socket.on('registerSocket', (name) => {
+    socketIds[name] = socket.id;
+  });
+
+  // server sends newMessage back to specific user.
   socket.on('messageAdded', (message) => {
-    console.log('message line 28 server: ', message);
-    socket.broadcast.emit('messageAdded', message);
+    io.to(socketIds[message.receiver]).emit('messageAdded', message);
   });
 });
 

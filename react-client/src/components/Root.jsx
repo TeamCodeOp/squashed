@@ -125,7 +125,13 @@ class Root extends React.Component {
             />
 
             <Route path="/apps/:id" component={Project} />
-            <Route path="/users/:username" component={Developer} />
+            <RouteProps
+              path="/users/:username"
+              component={Developer}
+              sessionId={this.state.session_id}
+              username={this.state.username}
+              name={this.state.name}
+            />
           </Switch>
         </div>
       </Router>
