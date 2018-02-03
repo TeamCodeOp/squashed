@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ReactDisqusThread from 'react-disqus-thread';
-import { Grid, Image, Item } from 'semantic-ui-react';
+import { Grid, Image, Item, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class Project extends React.Component {
@@ -16,6 +16,7 @@ class Project extends React.Component {
       githubUser: '',
       projectThumb: ''
     };
+    this.onDelete = this.onDelete.bind(this);
   }
 
   componentDidMount() {
@@ -45,6 +46,26 @@ class Project extends React.Component {
         console.log(error);
       });
   }
+
+  onDelete() {
+    console.log('AXIOS delete request');
+    axios.delete(`/projects/${this.props.match.params.id}`)
+      .then((response) => {
+        console.log('response data on line 45: ', response);
+        this.setState({
+          projectName: '',
+          description: '',
+          githubRepo: '',
+          techs: '',
+          githubUser: '',
+          projectThumb: ''
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
 
   render() {
     return (
@@ -81,6 +102,9 @@ class Project extends React.Component {
               </Item.Content>
 
             </Item>
+            <button className="ui primary button" onClick={this.onDelete}>
+             Delete
+            </button>
           </Item.Group>
 
           <ReactDisqusThread
