@@ -4,21 +4,10 @@ import { Dropdown } from 'semantic-ui-react';
 class TechsFilter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      techs: []
-    };
-
-    this.handleTechs = this.handleTechs.bind(this);
-  }
-
-  handleTechs(e, data) {
-    this.setState({ techs: data.value }, function () {
-      this.props.getProjectsByTechs(this.state.techs);
-    });
   }
 
   render() {
-    const techs = this.state.techs;
+    const techs = this.props.techs;
     const techOptions = [
       { key: 'angular', text: 'Angular', value: 'angular' },
       { key: 'backbone', text: 'Backbone', value: 'backbone' },
@@ -46,7 +35,7 @@ class TechsFilter extends React.Component {
         options={techOptions}
         value={techs}
         id="techDropdown"
-        onChange={this.handleTechs}
+        onChange={this.props.handleTechs}
       />
     );
   }
