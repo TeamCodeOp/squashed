@@ -17,7 +17,9 @@ class Developer extends React.Component {
       username: '',
       userAvatar: '',
       projects: [],
-      messages: []
+      messages: [],
+      following: [],
+      followers: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -41,7 +43,9 @@ class Developer extends React.Component {
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
-          projects: response.data.projects
+          projects: response.data.projects,
+          following: response.data.following,
+          followers: response.data.followers
         });
       })
       .catch((error) => {
@@ -96,10 +100,27 @@ class Developer extends React.Component {
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
-                <a>
+
+                {/* <div id="following">
                   <Icon name='user' />
-                  22 Friends
-                </a>
+                  {`${this.state.following.length}`}
+                </div>
+                <div id="followers">
+                  <Icon name='user' />
+                  {`${this.state.followers.length}`}
+                </div> */}
+
+              <div className="extra content">
+                <span className="left floated like">
+                  <i className="user icon"></i>
+                  Following: <b>{`${this.state.following.length}`}</b>
+                </span>
+                <span className="right floated star">
+                  <i className="user icon"></i>
+                  Followers: <b>{`${this.state.followers.length}`}</b>
+                </span>
+              </div>
+
               </Card.Content>
             </Card>
 

@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   connection = mysql.createConnection({
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'codeop'
   });
 
@@ -150,15 +150,15 @@ const getTechByProjectId = (projectId, cb) => {
   });
 };
 
-const findProject = (query, callback) => {
+const findProject = (query, cb) => {
   const selectQuery = "SELECT * FROM projects WHERE project_name like \'%" + query + "%\';";
   connection.query(selectQuery, (err, results) => {
     if (err) {
       console.log('err in database find project', err);
-      callback(err, null);
+      cb(err, null);
     } else {
       console.log('success in findProject', results);
-      callback(null, results);
+      cb(null, results);
     }
   });
 };
@@ -183,6 +183,25 @@ const deleteProjectByProjectId = (query, callback) => {
   });
 };
 
+const getFollowersForUser = (userId, cb) => {
+  connection.query(`SELECT * FROM followers WHERE followed_user_id ='${userId}';`, (err, data) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(data);
+    }
+  });
+};
+
+const getFollowingForUser = (userId, cb) => {
+  connection.query(`SELECT * FROM followers WHERE follower_id ='${userId}';`, (err, data) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(data);
+    }
+  });
+};
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
@@ -195,6 +214,11 @@ module.exports.getProjectByProjectId = getProjectByProjectId;
 module.exports.getUserByUserId = getUserByUserId;
 module.exports.getTechByProjectId = getTechByProjectId;
 module.exports.findProject = findProject;
+<<<<<<< c34294b7fde60a3e28757c2a8d347d1197fa5b16
 module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
 module.exports.deleteProjectByProjectId = deleteProjectByProjectId;
-
+module.exports.getFollowersForUser = getFollowersForUser;
+=======
+module.exports.getFollowersForUser = getFollowersForUser;
+module.exports.getFollowingForUser = getFollowingForUser;
+>>>>>>> DB and server functions written to return users following

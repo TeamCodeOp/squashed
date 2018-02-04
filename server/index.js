@@ -91,8 +91,31 @@ app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
     mysqlDB.getProjectsByUser(user.id, (projects) => {
-      user.projects = projects;
-      res.send(user);
+      mysqlDB.getFollowersForUser(user.id, (followers) => {
+        mysqlDB.getFollowingForUser(user.id, (following) => {
+        
+          // console.log('<><><><following', following);
+          // [ RowDataPacket { id: 7, followed_user_id: 1, follower_id: 3 },
+          //   RowDataPacket { id: 8, followed_user_id: 1, follower_id: 4 } ]
+          
+          let followersToReturn = [];
+          followers.forEach((dataPacket) => {
+            followersToReturn.push(dataPacket['follower_id']);
+          });
+
+          let followingToReturn = [];
+          following.forEach((dataPacket) => {
+            followingToReturn.push(dataPacket['followed_user_id']);
+          });
+
+          // console.log('user.id: \n', user.id, '\n');
+          // console.log('followingToReturn: \n', followingToReturn, '\n');
+          user.followers = followersToReturn;
+          user.following = followingToReturn;
+          user.projects = projects;
+          res.send(user);
+        });
+      });
     });
   });
 });
@@ -161,6 +184,7 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
+<<<<<<< 85a406bc113f6d15bac0d059ebeac5ca2f995d7e
 
 /***Delete request to projects Schemna**/
 
@@ -172,11 +196,18 @@ app.delete('/projects/:id', (req, res) => {
   });
 });
 
+=======
+/* ************************************ */
+>>>>>>> Setup getFollowersForUser function in DB index.js
 
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
 
+<<<<<<< 85a406bc113f6d15bac0d059ebeac5ca2f995d7e
+=======
+
+>>>>>>> Setup getFollowersForUser function in DB index.js
 module.exports = app;
 
