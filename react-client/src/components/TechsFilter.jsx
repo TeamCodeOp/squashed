@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Container } from 'semantic-ui-react';
 
 class TechsFilter extends React.Component {
   constructor(props) {
@@ -7,7 +7,7 @@ class TechsFilter extends React.Component {
   }
 
   render() {
-    const techs = this.props.techs;
+    const techs = this.props.techFilter;
     const techOptions = [
       { key: 'angular', text: 'Angular', value: 'angular' },
       { key: 'backbone', text: 'Backbone', value: 'backbone' },
@@ -27,16 +27,16 @@ class TechsFilter extends React.Component {
     ];
 
     return (
-      <Dropdown
-        placeholder="Techs"
-        fluid
-        multiple
-        selection
-        options={techOptions}
-        value={techs}
-        id="techDropdown"
-        onChange={this.props.handleTechs}
-      />
+      <Container className="techFilter">
+        <Dropdown
+          placeholder="Techs"
+          multiple
+          selection
+          options={techOptions}
+          value={techs}
+          onChange={this.props.handleTechs}
+        />
+      </Container>
     );
   }
 }

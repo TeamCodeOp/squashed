@@ -54,4 +54,8 @@ const insertProjectData = (projectData) => {
 //     });
 // };
 
+const selectAllFromTableWhere = (table, column, value, cb) => {
+
+};
+
 module.exports.insertProjectData = insertProjectData;

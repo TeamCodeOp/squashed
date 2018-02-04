@@ -3,6 +3,7 @@ import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
 import ProjectsMenu from './ProjectsMenu.jsx';
+import TechsFilter from './TechsFilter.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,7 +22,13 @@ class App extends React.Component {
       <div>
         <Search searchByUserInput={this.props.searchByUserInput}/>
         <ProjectsMenu getProjects={this.props.getProjects}
-        getProjectsByTechs={this.props.getProjectsByTechs} />
+          handleGetLatest={this.props.handleGetLatest}
+        />
+        <TechsFilter
+          getProjectsByTechs={this.props.getProjectsByTechs}
+          handleTechs={this.props.handleTechs}
+          techFilter={this.props.techFilter}
+        />
         <NewProjects
           projects={this.props.projects}
         />
