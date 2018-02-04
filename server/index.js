@@ -15,7 +15,7 @@ const queryString = require('query-string');
 const _ = require('underscore');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 const server = app.listen(port, () => {
   console.log(`listening on ${port}!`);

@@ -79,6 +79,7 @@ class Root extends React.Component {
       error: () => {
         console.log('check access token error');
       }
+    });
   }
 
   getProjectsByTechs(techs) {
