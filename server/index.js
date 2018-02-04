@@ -12,6 +12,7 @@ const url = require('url');
 const _ = require('underscore');
 
 const app = express();
+
 const port = process.env.PORT || 3000;
 
 const server = app.listen(port, () => {
@@ -169,11 +170,11 @@ app.delete('/projects/:id', (req, res) => {
   });
 });
 
+
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
-
 
 module.exports = app;
 

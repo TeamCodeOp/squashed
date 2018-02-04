@@ -183,7 +183,6 @@ const deleteProjectByProjectId = (query, callback) => {
   });
 };
 
-
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;

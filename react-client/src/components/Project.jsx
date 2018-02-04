@@ -68,7 +68,6 @@ class Project extends React.Component {
       });
   }
 
-
   render() {
     if (this.state.githubUser !== 1) {
       console.log('IF')
