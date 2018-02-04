@@ -1,4 +1,5 @@
 const db = require('./index.js');
+const mysql = require('mysql');
 const Promise = require('bluebird');
 const format = require('pg-format');
 
@@ -53,9 +54,25 @@ const insertProjectData = (projectData) => {
 //       return err;
 //     });
 // };
+const formatSelectAllWhere = (table, column, value) => {
+  const sql = 'SELECT * FROM ?? WHERE ?? = ?';
+  const inserts = [table, column, value];
+  return mysql.format(sql, inserts);
+};
 
-const selectAllFromTableWhere = (table, column, value, cb) => {
+const selectAllWhere = (table, column, value, isOne, cb) => {
+  const sql = formatSelectAllWhere(table, column, value);
 
+  db.connection.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    } else if (isOne === true) {
+      cb(results[0]);
+    } else {
+      cb(results);
+    }
+  });
 };
 
 module.exports.insertProjectData = insertProjectData;
+module.exports.selectAllWhere = selectAllWhere;

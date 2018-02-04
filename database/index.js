@@ -217,3 +217,4 @@ module.exports.findProject = findProject;
 module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
 module.exports.deleteProjectByProjectId = deleteProjectByProjectId;
 module.exports.getFollowersForUser = getFollowersForUser;
+module.exports.getFollowingForUser = getFollowingForUser;
