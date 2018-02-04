@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import ReactDisqusThread from 'react-disqus-thread';
-import { Grid, Image, Item } from 'semantic-ui-react';
+import { Grid, Image, Item, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router';
+import Developer from './Developer.jsx';
+
 
 class Project extends React.Component {
   constructor(props) {
@@ -14,16 +17,15 @@ class Project extends React.Component {
       githubRepo: '',
       techs: [],
       githubUser: '',
-      projectThumb: ''
+      projectThumb: '',
+      testUser:''
     };
+    this.onDelete = this.onDelete.bind(this);
   }
 
   componentDidMount() {
-    // console.log('thispropsmatch: ', this.props.match);
-    
     axios.get(`/projects/${this.props.match.params.id}`)
       .then((response) => {
-
         const techStackHtml = response.data[1].map((tech) =>
         <li className="ui label" key={tech.toString()}>
           {tech}
@@ -36,17 +38,40 @@ class Project extends React.Component {
           githubRepo: response.data[0].repo_url,
           techs: techStackHtml,
           githubUser: response.data[0].user.git_username,
-          projectThumb: response.data[0].image_Url
+          projectThumb: response.data[0].image_Url,
+          testUser: response.data[0].user.git_username
         });
       })
       .catch((error) => {
         console.log('**************');
-        
+
         console.log(error);
       });
   }
 
+  onDelete() {
+    console.log('AXIOS delete request');
+    axios.delete(`/projects/${this.props.match.params.id}`)
+      .then((response) => {
+        console.log('response data on line 45: ', response);
+        this.setState({
+          projectName: '',
+          description: '',
+          githubRepo: '',
+          techs: '',
+          githubUser: 1,
+          projectThumb: ''
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+
   render() {
+    if (this.state.githubUser !== 1) {
+      console.log('IF')
     return (
       <Grid columns='equal'>
         <Grid.Column></Grid.Column>
@@ -81,6 +106,9 @@ class Project extends React.Component {
               </Item.Content>
 
             </Item>
+            <button className="ui primary button" onClick={this.onDelete}>
+             Delete
+            </button>
           </Item.Group>
 
           <ReactDisqusThread
@@ -93,8 +121,71 @@ class Project extends React.Component {
 
         </Grid.Column>
         <Grid.Column></Grid.Column>
+
       </Grid>
-    );
+      );
+    } else if (this.state.githubUser === 1) {
+      console.log('else if');
+      return(
+        <Switch>
+          <Redirect from={`/apps/${this.props.match.params.id}`} to={`/users/${this.state.testUser}`} />
+          <Route path={`/users/${this.state.testUser}`} component={Developer}/>
+        </Switch>
+      );
+    } else {
+      console.log('last else');
+      return (
+        <Grid columns='equal'>
+          <Grid.Column></Grid.Column>
+          <Grid.Column width={12}>
+          <Item.Group>
+            <Item style={{
+              padding: '2em',
+              border: '1px solid rgba(0,0,0,.4)',
+            }}>
+              <a href={this.state.githubRepo} target="_blank">
+              <Item.Image
+                size='small'
+                src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
+                style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
+              />
+              </a>
+
+              <Item.Content>
+                <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
+                <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
+
+                <Item.Description>
+                  {this.state.description}
+                </Item.Description>
+
+                <Item.Extra style={{marginTop: '20px'}}>Tech Stack</Item.Extra>
+
+                <Item.Description>
+                  <ul id="project-techs">{this.state.techs}</ul>
+                </Item.Description>
+              </Item.Content>
+
+            </Item>
+            <button className="ui primary button" onClick={this.onDelete}>
+             Delete
+            </button>
+          </Item.Group>
+
+          <ReactDisqusThread
+            shortname="CodeOp"
+            identifier={this.props.match.params.id}
+            title="CodeOp"
+            url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${this.props.match.params.id}`}
+            onNewComment={this.handleNewComment}
+          />
+
+          </Grid.Column>
+          <Grid.Column></Grid.Column>
+
+        </Grid>
+      );
+    }
   }
 }
 

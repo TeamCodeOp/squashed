@@ -41,6 +41,7 @@ io.on('connection', (socket) => {
 });
 
 app.use(express.static('./react-client/dist'));
+
 app.use(require('cookie-parser')());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -161,9 +162,22 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
+
+/***Delete request to projects Schemna**/
+
+app.delete('/projects/:id', (req, res) => {
+  console.log('delete in server', req.params.id);
+  const projectId = req.params.id;
+  mysqlDB.deleteProjectByProjectId(projectId, (project) => {
+    res.send(project);
+  });
+});
+
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
 });
 
+
 module.exports = app;
+

@@ -161,6 +161,27 @@ const findProject = (query, callback) => {
   });
 };
 
+const deleteProjectByProjectId = (query, callback) => {
+  const deleteTechQuery = `DELETE FROM technologies WHERE project_id = '${query}';`;
+  connection.query(deleteTechQuery, (err1, data) => {
+    if (err1) {
+      console.log('error in database technologies delete');
+      callback(err1, null);
+    } else {
+      const deleteQuery = `DELETE FROM projects WHERE id ='${query}';`;
+      connection.query(deleteQuery, (err, results) => {
+        if (err) {
+          console.log('err in database delete project', err);
+          callback(err, null);
+        } else {
+          callback(null, results);
+        }
+      });
+    }
+  });
+};
+
+
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;
@@ -173,3 +194,5 @@ module.exports.getUserByUserId = getUserByUserId;
 module.exports.getTechByProjectId = getTechByProjectId;
 module.exports.findProject = findProject;
 module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
+module.exports.deleteProjectByProjectId = deleteProjectByProjectId;
+
