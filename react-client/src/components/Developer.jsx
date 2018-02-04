@@ -18,6 +18,7 @@ class Developer extends React.Component {
       userAvatar: '',
       projects: [],
       messages: [],
+      following: [],
       followers: []
     };
 
@@ -43,6 +44,7 @@ class Developer extends React.Component {
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
           projects: response.data.projects,
+          following: response.data.following,
           followers: response.data.followers
         });
       })
@@ -98,10 +100,27 @@ class Developer extends React.Component {
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
+
+                {/* <div id="following">
+                  <Icon name='user' />
+                  {`${this.state.following.length}`}
+                </div>
                 <div id="followers">
                   <Icon name='user' />
                   {`${this.state.followers.length}`}
-                </div>
+                </div> */}
+
+              <div className="extra content">
+                <span className="left floated like">
+                  <i className="user icon"></i>
+                  Following: <b>{`${this.state.following.length}`}</b>
+                </span>
+                <span className="right floated star">
+                  <i className="user icon"></i>
+                  Followers: <b>{`${this.state.followers.length}`}</b>
+                </span>
+              </div>
+
               </Card.Content>
             </Card>
 
