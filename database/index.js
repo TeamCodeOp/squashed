@@ -22,12 +22,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 
   connection.connect((err) => {
-  if (err) {
-    console.log('could not connect to database', err);
-  } else {
-    console.log('connected to database');
-  }
-});
+    if (err) {
+      console.log('could not connect to database', err);
+    } else {
+      console.log('connected to database');
+    }
+  });
 }
 
 // Uncomment below code for local testing

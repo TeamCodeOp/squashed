@@ -9,9 +9,6 @@ const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
-// const http = require('http').Server(express);
-// const io = require('socket.io')(http);
-const queryString = require('query-string');
 const _ = require('underscore');
 
 const app = express();
@@ -23,11 +20,10 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io').listen(server);
 
-
-let socketIds = {};
+const socketIds = {};
 
 io.on('connection', (socket) => {
-  console.log('socketId: ', socket);
+  console.log('socketId: ', socket.id);
 
   // keep track of user's socketId
   socket.on('registerSocket', (name) => {
