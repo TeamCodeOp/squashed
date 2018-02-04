@@ -91,8 +91,21 @@ app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
     mysqlDB.getProjectsByUser(user.id, (projects) => {
-      user.projects = projects;
-      res.send(user);
+      mysqlDB.getFollowersForUser(user.id, (followers) => {
+        // console.log('followers', followers);
+        // [ RowDataPacket { id: 7, followed_user_id: 1, follower_id: 3 },
+        //   RowDataPacket { id: 8, followed_user_id: 1, follower_id: 4 } ]
+        
+        let followersToReturn = [];
+        followers.forEach((dataPacket) => {
+          followersToReturn.push(dataPacket['follower_id']);
+        });
+        // console.log('user.id: \n', user.id, '\n');
+        // console.log('followersToReturn: \n', followersToReturn, '\n');
+        user.followers = followersToReturn;
+        user.projects = projects;
+        res.send(user);
+      });
     });
   });
 });

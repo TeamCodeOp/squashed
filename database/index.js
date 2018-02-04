@@ -150,15 +150,15 @@ const getTechByProjectId = (projectId, cb) => {
   });
 };
 
-const findProject = (query, callback) => {
+const findProject = (query, cb) => {
   const selectQuery = "SELECT * FROM projects WHERE project_name like \'%" + query + "%\';";
   connection.query(selectQuery, (err, results) => {
     if (err) {
       console.log('err in database find project', err);
-      callback(err, null);
+      cb(err, null);
     } else {
       console.log('success in findProject', results);
-      callback(null, results);
+      cb(null, results);
     }
   });
 };
@@ -179,7 +179,11 @@ const deleteProjectByProjectId = (query, callback) => {
           callback(null, results);
         }
       });
-const getFollowersForUser = (userId) => {
+    }
+  });
+};
+
+const getFollowersForUser = (userId, cb) => {
   connection.query(`SELECT * FROM followers WHERE followed_user_id ='${userId}';`, (err, data) => {
     if (err) {
       throw err;
@@ -188,9 +192,6 @@ const getFollowersForUser = (userId) => {
     }
   });
 };
-
-getFollowersForUser(4);
-
 
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
