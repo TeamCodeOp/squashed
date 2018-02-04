@@ -70,13 +70,21 @@ class Project extends React.Component {
 
 
   render() {
-    if (this.state.githubUser !== 1) {
-      console.log('IF')
-    return (
-      <Grid columns='equal'>
-        <Grid.Column></Grid.Column>
-
-        <Grid.Column width={12}>
+    console.log('props in project', this.props.username);
+    if (this.state.githubUser === 1) {
+      console.log(' 1 else if');
+      return (
+        <Switch>
+          <Redirect from={`/apps/${this.props.match.params.id}`} to={`/users/${this.state.testUser}`} />
+          <Route path={`/users/${this.state.testUser}`} component={Developer}/>
+        </Switch>
+      );
+    } else if (this.props.username === this.state.githubUser) {
+      console.log(' 2nd  else if');
+      return (
+        <Grid columns='equal'>
+          <Grid.Column></Grid.Column>
+          <Grid.Column width={12}>
           <Item.Group>
             <Item style={{
               padding: '2em',
@@ -119,18 +127,10 @@ class Project extends React.Component {
             onNewComment={this.handleNewComment}
           />
 
-        </Grid.Column>
-        <Grid.Column></Grid.Column>
+          </Grid.Column>
+          <Grid.Column></Grid.Column>
 
-      </Grid>
-      );
-    } else if (this.state.githubUser === 1) {
-      console.log('else if');
-      return(
-        <Switch>
-          <Redirect from={`/apps/${this.props.match.params.id}`} to={`/users/${this.state.testUser}`} />
-          <Route path={`/users/${this.state.testUser}`} component={Developer}/>
-        </Switch>
+        </Grid>
       );
     } else {
       console.log('last else');
@@ -167,11 +167,7 @@ class Project extends React.Component {
               </Item.Content>
 
             </Item>
-            <button className="ui primary button" onClick={this.onDelete}>
-             Delete
-            </button>
           </Item.Group>
-
           <ReactDisqusThread
             shortname="CodeOp"
             identifier={this.props.match.params.id}

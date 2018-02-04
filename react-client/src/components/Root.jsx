@@ -33,7 +33,7 @@ class Root extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('Root mounted');
+     //console.log('Root mounted', this.state.username);
   }
 
   checkSignIn() {
@@ -98,6 +98,7 @@ class Root extends React.Component {
   }
 
   render() {
+     console.log('Root mounted', this.state.username);
     return (
       <Router>
         <div>
@@ -136,7 +137,11 @@ class Root extends React.Component {
               )}
             />
 
-            <Route path="/apps/:id" component={Project} />
+            <RouteProps
+              path="/apps/:id"
+              component={Project}
+              username={this.state.username}
+            />
             <RouteProps
               path="/users/:username"
               component={Developer}
