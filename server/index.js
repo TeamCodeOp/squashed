@@ -122,10 +122,10 @@ app.get('/developers/:username', (req, res) => {
 app.get('/projects/:id', (req, res) => {
   const projectId = req.params.id;
 
-  mysqlDB.getProjectByProjectId(projectId, (project) => {
-    mysqlDB.getUserByUserId(project.user_id, (user) => {
+  mysqlModel.selectAllWhere('projects', 'id', projectId, true, (project) => {
+    mysqlModel.selectAllWhere('users', 'id', project.user_id, true, (user) => {
       project.user = user; // <-- is this being used anywhere?
-      mysqlDB.getTechByProjectId(project.id, (data) => {
+      mysqlModel.selectAllWhere('technologies', 'project_id', project.id, false, (data) => {
         const response = [];
         const techs = [];
         data.forEach((element) => {
