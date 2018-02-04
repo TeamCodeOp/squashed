@@ -30,6 +30,7 @@ class Developer extends React.Component {
 
   componentWillMount() {
     socket.on('broadcast', (users) => {
+      console.log(users);
       if (users[this.state.name].isOnline) {
         this.setState({
           onlineStatus: true
@@ -37,12 +38,19 @@ class Developer extends React.Component {
       }
     });
 
-    socket.on('messageAdded', (message) =>
+    socket.on('messageAdded', (message) => {
       this.setState({
         name: message.sender,
         messages: this.state.messages.concat(message)
-      })
-    );
+      });
+    });
+
+
+    // socket.on('disconnect', (user) => {
+    //   this.setState({
+    //     onlineStatus: user.isOnline
+    //   });
+    // });
   }
 
   componentDidMount() {
@@ -80,6 +88,13 @@ class Developer extends React.Component {
         console.log(error);
       });
   }
+
+
+  // componentWillUnmount() {
+  //   console.log(this.state.fullName, ' is leaving');
+  //   socket.emit('disconnect', this.state.fullName);
+  // }
+
 
   handleChange(e, { msgInput, value }) {
     this.setState({
@@ -170,14 +185,14 @@ class Developer extends React.Component {
 
             {(this.props.sessionId) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
               <div style={{ width: '290px'}}>
-                <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2'}}>{firstName}</Header>
+                <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2', textAlign: 'center'}}>Chat with {firstName}</Header>
                 <Segment attached>
                   {messages}
                 </Segment>
                 <Segment attached>
                 <Form onSubmit={this.handleSubmit}>
                   <Form.Group>
-                    <Form.Input placeholder='...' name='input' value={msgInput} onChange={this.handleChange}/>
+                    <Form.Input placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
                     <Form.Button content='Send' size='small'/>
                   </Form.Group>
                 </Form>

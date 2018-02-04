@@ -48,8 +48,13 @@ io.on('connection', (socket) => {
       isOnline: true
     };
 
-    socket.broadcast.emit('broadcast', sockets);
+    socket.emit('broadcast', sockets);
   });
+
+  // socket.on('disconnect', (name) => {
+  //   sockets[name].isOnline = false;
+  //   socket.emit('broadcast', sockets[name]);
+  // });
 
 
   socket.on('messageAdded', (message) => {
