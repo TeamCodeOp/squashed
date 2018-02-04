@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
-import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input } from 'semantic-ui-react';
+import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import UserProjectList from './UserProjectList.jsx';
 
 const socket = io.connect();
 
+let newMessage;
 
 class Developer extends React.Component {
   constructor(props) {
@@ -19,12 +20,20 @@ class Developer extends React.Component {
       messages: []
     };
 
-    socket.on('chat', (data) =>
-      console.log(data)
-    );
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
+    socket.emit('registerSocket', this.props.name);
+
+    socket.on('messageAdded', message =>
+      // console.log(message)
+      this.setState({
+        name: message.sender,
+        messages: this.state.messages.concat(message)
+      })
+    );
 
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
@@ -40,43 +49,30 @@ class Developer extends React.Component {
       });
   }
 
+  handleChange(e) {
+    newMessage = {
+      sender: this.props.name,
+      receiver: this.state.name,
+      text: e.target.value
+    };
+  }
 
+  handleSubmit(e) {
+    e.preventDefault();
 
-  // handleStateChange() {
-  //   let newMSG = {
-  //     to: this.props.match.params.username,
-  //     from: this.state.username,
-  //     message: 'new message yay'
-  //   }
+    this.setState({
+      messages: this.state.messages.concat(newMessage)
+    });
 
-  //   socket.emit('chat', newMSG);
-  // }
-
+    // sends newMessage object to server
+    socket.emit('messageAdded', newMessage);
+  }
 
   render() {
     const firstName = this.state.name.split(' ')[0];
-    const messages = this.state.messages.map((msg) => {
-      return <li key={i}> msg </li>
+    const messages = this.state.messages.map((msg, i) => {
+      return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
     });
-
-    const Chatbox = (
-      <div style={{ width: '300px'}}>
-        <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2'}}>{firstName}</Header>
-        <Segment attached>
-          {messages}
-        </Segment>
-        <Segment attached>
-        <Input
-          placeholder='...'
-          action='send'
-          style={{
-            width: '270px',
-            margin: '0 auto'
-          }}
-        />
-        </Segment>
-      </div>
-    );
 
     return (
 
@@ -105,15 +101,25 @@ class Developer extends React.Component {
                   22 Friends
                 </a>
               </Card.Content>
-              <Card.Content extra>
-                <Popup
-                  trigger={<Button color='green' content='Chat' floated='left' size='mini'/>}
-                  content={Chatbox}
-                  on='click'
-                  position='bottom left'
-                />
-              </Card.Content>
             </Card>
+
+            {(this.props.sessionId) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
+              <div style={{ width: '290px'}}>
+                <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2'}}>{firstName}</Header>
+                <Segment attached>
+                  {messages}
+                </Segment>
+                <Segment attached>
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Group>
+                    <Form.Input placeholder='...' name='input' onChange={this.handleChange}/>
+                    <Form.Button content='Send' size='small'/>
+                  </Form.Group>
+                </Form>
+                </Segment>
+              </div>
+            : null }
+
           </Grid.Column>
           <Grid.Column width={8}>
             <Container style={{ textAlign: 'center' }}>
@@ -131,6 +137,7 @@ class Developer extends React.Component {
           </Grid.Column>
           <Grid.Column width={2} />
         </Grid>
+
       </div>
     );
   }

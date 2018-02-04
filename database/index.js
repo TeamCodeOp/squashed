@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
+const _ = require('underscore');
+const utils = require('./utils');
 
 let config;
 let connection;
@@ -80,6 +82,18 @@ const retrieveProjects = (cb) => {
       console.log(err);
     } else {
       cb(projects);
+    }
+  });
+};
+
+const retrieveProjectsByTechs = (techs, cb) => {
+  const sql = 'SELECT * FROM projects LEFT JOIN technologies ON projects.id = technologies.project_id';
+
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(utils.formatProjectsWithTechs(results, techs));
     }
   });
 };
@@ -179,5 +193,6 @@ module.exports.getProjectByProjectId = getProjectByProjectId;
 module.exports.getUserByUserId = getUserByUserId;
 module.exports.getTechByProjectId = getTechByProjectId;
 module.exports.findProject = findProject;
+module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
 module.exports.deleteProjectByProjectId = deleteProjectByProjectId;
 

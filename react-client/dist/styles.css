@@ -54,3 +54,7 @@ span.imageUploadText {
   margin-right: auto;
   text-align: center;
 }
+
+ul {
+  list-style: none;
+}

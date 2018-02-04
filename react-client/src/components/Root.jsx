@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import RouteProps from 'react-route-props';
 import { Provider } from 'react-redux';
@@ -28,6 +29,7 @@ class Root extends React.Component {
     this.checkSignIn = this.checkSignIn.bind(this);
     this.getProjects = this.getProjects.bind(this);
     this.searchByUserInput = this.searchByUserInput.bind(this);
+    this.getProjectsByTechs = this.getProjectsByTechs.bind(this);
   }
 
   componentDidMount() {
@@ -77,7 +79,21 @@ class Root extends React.Component {
       error: () => {
         console.log('check access token error');
       }
+  }
+
+  getProjectsByTechs(techs) {
+    const techQuery = queryString.stringify({
+      techs
     });
+    axios.get(`/projects?${techQuery}`)
+      .then((response) => {
+        this.setState({
+          projects: response.data
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -101,6 +117,7 @@ class Root extends React.Component {
               checkSignIn={this.checkSignIn}
               getProjects={this.getProjects}
               searchByUserInput={this.searchByUserInput}
+              getProjectsByTechs={this.getProjectsByTechs}
             />
             <Route
               path="/create"
@@ -119,7 +136,13 @@ class Root extends React.Component {
             />
 
             <Route path="/apps/:id" component={Project} />
-            <Route path="/users/:username" component={Developer} />
+            <RouteProps
+              path="/users/:username"
+              component={Developer}
+              sessionId={this.state.session_id}
+              username={this.state.username}
+              name={this.state.name}
+            />
           </Switch>
         </div>
       </Router>
@@ -128,4 +151,3 @@ class Root extends React.Component {
 }
 
 export default Root;
-
