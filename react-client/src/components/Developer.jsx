@@ -8,7 +8,6 @@ const socket = io.connect();
 
 let newMessage;
 
-
 class Developer extends React.Component {
   constructor(props) {
     super(props);

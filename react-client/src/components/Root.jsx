@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import RouteProps from 'react-route-props';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import $ from 'jquery';
 
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
