@@ -92,19 +92,29 @@ app.get('/developers/:username', (req, res) => {
   mysqlDB.getUserInfo(username, (user) => {
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
-        // console.log('followers', followers);
-        // [ RowDataPacket { id: 7, followed_user_id: 1, follower_id: 3 },
-        //   RowDataPacket { id: 8, followed_user_id: 1, follower_id: 4 } ]
+        mysqlDB.getFollowingForUser(user.id, (following) => {
         
-        let followersToReturn = [];
-        followers.forEach((dataPacket) => {
-          followersToReturn.push(dataPacket['follower_id']);
+          // console.log('<><><><following', following);
+          // [ RowDataPacket { id: 7, followed_user_id: 1, follower_id: 3 },
+          //   RowDataPacket { id: 8, followed_user_id: 1, follower_id: 4 } ]
+          
+          let followersToReturn = [];
+          followers.forEach((dataPacket) => {
+            followersToReturn.push(dataPacket['follower_id']);
+          });
+
+          let followingToReturn = [];
+          following.forEach((dataPacket) => {
+            followingToReturn.push(dataPacket['followed_user_id']);
+          });
+
+          // console.log('user.id: \n', user.id, '\n');
+          // console.log('followingToReturn: \n', followingToReturn, '\n');
+          user.followers = followersToReturn;
+          user.following = followingToReturn;
+          user.projects = projects;
+          res.send(user);
         });
-        // console.log('user.id: \n', user.id, '\n');
-        // console.log('followersToReturn: \n', followersToReturn, '\n');
-        user.followers = followersToReturn;
-        user.projects = projects;
-        res.send(user);
       });
     });
   });

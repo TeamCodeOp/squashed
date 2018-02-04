@@ -193,6 +193,16 @@ const getFollowersForUser = (userId, cb) => {
   });
 };
 
+const getFollowingForUser = (userId, cb) => {
+  connection.query(`SELECT * FROM followers WHERE follower_id ='${userId}';`, (err, data) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(data);
+    }
+  });
+};
+
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;
@@ -204,6 +214,11 @@ module.exports.getProjectByProjectId = getProjectByProjectId;
 module.exports.getUserByUserId = getUserByUserId;
 module.exports.getTechByProjectId = getTechByProjectId;
 module.exports.findProject = findProject;
+<<<<<<< c34294b7fde60a3e28757c2a8d347d1197fa5b16
 module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
 module.exports.deleteProjectByProjectId = deleteProjectByProjectId;
 module.exports.getFollowersForUser = getFollowersForUser;
+=======
+module.exports.getFollowersForUser = getFollowersForUser;
+module.exports.getFollowingForUser = getFollowingForUser;
+>>>>>>> DB and server functions written to return users following
