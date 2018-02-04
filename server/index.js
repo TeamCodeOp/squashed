@@ -26,6 +26,7 @@ const server = app.listen(port, () => {
 const io = require('socket.io').listen(server);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const socketIds = {};
 
 io.on('connection', (socket) => {
@@ -33,17 +34,26 @@ io.on('connection', (socket) => {
 
 =======
 let socketIds = {};
+=======
+let sockets = {};
+let isOnline;
+>>>>>>> Fix buggy username issue in Developer component
 
 io.on('connection', (socket) => {
 >>>>>>> Fix bugs in chat/MyProfile
   // keep track of user's socketId
   socket.on('registerSocket', (name) => {
-    socketIds[name] = socket.id;
+    sockets[name] = {
+      id: socket.id,
+      isOnline: true
+    };
+
+    socket.broadcast.emit('broadcast', sockets);
   });
 
-  // server sends newMessage back to specific user.
+
   socket.on('messageAdded', (message) => {
-    io.to(socketIds[message.receiver]).emit('messageAdded', message);
+    io.to(sockets[message.receiver].id).emit('messageAdded', message);
   });
 });
 

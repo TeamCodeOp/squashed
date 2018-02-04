@@ -13,13 +13,15 @@ class Developer extends React.Component {
     super(props);
 
     this.state = {
+      fullName: '',
       name: '',
       username: '',
       userAvatar: '',
       projects: [],
       messages: [],
       following: [],
-      followers: []
+      followers: [],
+      onlineStatus: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,7 +29,15 @@ class Developer extends React.Component {
   }
 
   componentWillMount() {
-    socket.on('messageAdded', message =>
+    socket.on('broadcast', (users) => {
+      if (users[this.state.name].isOnline) {
+        this.setState({
+          onlineStatus: true
+        });
+      }
+    });
+
+    socket.on('messageAdded', (message) =>
       this.setState({
         name: message.sender,
         messages: this.state.messages.concat(message)
@@ -41,6 +51,7 @@ class Developer extends React.Component {
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
         this.setState({
+          fullName: response.data.name,
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
@@ -58,6 +69,7 @@ class Developer extends React.Component {
     axios.get(`/developers/${nextProps.match.params.username}`)
       .then((response) => {
         this.setState({
+          fullName: response.data.name,
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
@@ -89,7 +101,6 @@ class Developer extends React.Component {
       msgInput: ''
     });
 
-
     // sends newMessage object to server
     socket.emit('messageAdded', newMessage);
   }
@@ -111,7 +122,17 @@ class Developer extends React.Component {
               <Image src={`${this.state.userAvatar}`} />
               <Card.Content>
                 <Card.Header>
-                  {this.state.name}
+                  <span>{this.state.fullName}</span>
+                {this.state.onlineStatus ?
+                  <span style={{fontSize: '.5em', float: 'right', color: 'green'}}>
+                    <Icon color='green' size='large' name='check circle'/>
+                    ONLINE
+                  </span> :
+                  <span style={{fontSize: '.5em', float: 'right', color: 'red'}}>
+                    <Icon color='red' size='large' name='remove circle'/>
+                    OFFLINE
+                  </span>
+                }
                 </Card.Header>
                 <Card.Meta>
                   <span className='githubUsername'>

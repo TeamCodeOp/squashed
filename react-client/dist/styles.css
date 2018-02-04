@@ -62,3 +62,7 @@ span.imageUploadText {
 ul {
   list-style: none;
 }
+
+.onlineStatus {
+  font-size: .7em !important;
+}
