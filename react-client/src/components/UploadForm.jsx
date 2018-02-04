@@ -46,7 +46,7 @@ class UploadForm extends React.Component {
   }
 
   handleImageUpload(file) {
-
+    console.log(process.env.CLOUDINARY_UPLOAD_URL);
     let upload = request.post(process.env.CLOUDINARY_UPLOAD_URL)
       .field('upload_preset', 'yqyt31zl')
       .field('file', file);
