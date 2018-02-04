@@ -49,7 +49,6 @@ class List extends React.Component {
                       <p></p>
                       Techs: {project.category}{' '}
                       </p>
-
                   </div>
                 </Link>
               </div>
