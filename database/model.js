@@ -53,9 +53,24 @@ const insertProjectData = (projectData) => {
 //       return err;
 //     });
 // };
+const formatSelectAllWhere = (table, column, value) => {
+  const sql = 'SELECT * FROM ?? WHERE ?? = ?';
+  const inserts = [table, column, value];
+  return mysql.format(sql, inserts);
+};
 
-const selectAllFromTableWhere = (table, column, value, cb) => {
+const selectAllFromTableWhere = (table, column, value, quantity, cb) => {
+  const sql = formatSelectAllWhere(table, column, value);
 
+  connection.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    } else if (quantity === 1) {
+      cb(results[0]);
+    } else {
+      cb(results);
+    }
+  });
 };
 
 module.exports.insertProjectData = insertProjectData;
