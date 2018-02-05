@@ -6,18 +6,18 @@ import request from 'superagent';
 
 import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
 
-// // let config;
-// // let CLOUDINARY_UPLOAD_URL;
-// // let CLOUDINARY_UPLOAD_PRESET;
+let config;
+let CLOUDINARY_UPLOAD_URL;
+let CLOUDINARY_UPLOAD_PRESET;
 
-// if (process.env.NODE_ENV === 'production') {
-//   CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
-//   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
-// } else {
-//   config = require('../../../config/configvars.js');
-//   CLOUDINARY_UPLOAD_URL = config.CLOUDINARY_UPLOAD_URL;
-//   CLOUDINARY_UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET;
-// };
+if (process.env.NODE_ENV === 'production') {
+  CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
+  CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
+} else {
+  config = require('../../../config/configvars.js');
+  CLOUDINARY_UPLOAD_URL = config.CLOUDINARY_UPLOAD_URL;
+  CLOUDINARY_UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET;
+}
 
 class UploadForm extends React.Component {
   constructor(props) {
@@ -46,9 +46,11 @@ class UploadForm extends React.Component {
   }
 
   handleImageUpload(file) {
-    console.log(process.env.CLOUDINARY_UPLOAD_URL);
-    let upload = request.post(process.env.CLOUDINARY_UPLOAD_URL)
-      .field('upload_preset', 'yqyt31zl')
+    console.log('NODE_ENV', process.env.NODE_ENV);
+    console.log('URL: ', CLOUDINARY_UPLOAD_URL);
+    console.log('PRESET', CLOUDINARY_UPLOAD_PRESET);
+    let upload = request.post(CLOUDINARY_UPLOAD_URL)
+      .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
       .field('file', file);
 
     upload.end((err, response) => {
@@ -138,46 +140,77 @@ class UploadForm extends React.Component {
 
     return (
       <div>
-        <p>{this.props.sessionId}</p>
-        <Header as='h3' icon textAlign='center' id='createProjectHeader'>
-          <Icon name='code' size='small' />
+        <Header as="h3" icon textAlign="center" id="createProjectHeader">
+          <Icon name="code" size="small" />
           Add A Project
           <Header.Subheader>
             Provide details about your project so it can be discovered!
           </Header.Subheader>
         </Header>
-        <Grid columns='equal'>
-          <Grid.Column></Grid.Column>
+        <Grid columns="equal">
+          <Grid.Column />
           <Grid.Column width={6}>
-            <Form className='addProject' onSubmit={this.handleSubmit}>
-              <Form.Input label='Name' placeholder='Project Name' name='Project Name' value={projectName} onChange={this.handleProjectName} />
-              <Form.Input label='Github' placeholder='Project repo link' name='Github Repo' value={githubRepo} onChange={this.handleGitHubRepo} />
+            <Form className="addProject" onSubmit={this.handleSubmit}>
+              <Form.Input
+                label="Name"
+                placeholder="Project Name"
+                name="Project Name"
+                value={projectName}
+                onChange={this.handleProjectName}
+              />
+              <Form.Input
+                label="Github"
+                placeholder="Project repo link"
+                name="Github Repo"
+                value={githubRepo}
+                onChange={this.handleGitHubRepo}
+              />
               <label>Tech Stack</label>
-              <Dropdown placeholder='Select' fluid multiple selection options={techOptions} value={techs} id='techDropdown' onChange={this.handleTechs}/>
-              <p></p>
-              <Form.TextArea label='Description' placeholder='Tell us more about your project...' value={description} onChange={this.handleDescription} />
+              <Dropdown
+                placeholder="Select"
+                fluid
+                multiple
+                selection
+                options={techOptions}
+                value={techs}
+                id="techDropdown"
+                onChange={this.handleTechs}
+              />
+              <p />
+              <Form.TextArea
+                label="Description"
+                placeholder="Tell us more about your project..."
+                value={description}
+                onChange={this.handleDescription}
+              />
               <label>Project Screenshot</label>
-              <div className='fileUpload'>
+              <div className="fileUpload">
                 <Dropzone
-                  className='dropZone'
+                  className="dropZone"
                   onDrop={this.onImageDrop.bind(this)}
                   multiple={false}
-                  accept='image/*'>
-                  <span className='imageUploadText'><Icon name='upload' size='large' />Drop an image or click to select a file to upload.</span>
+                  accept="image/*"
+                >
+                  <span className="imageUploadText">
+                    <Icon
+                      name="upload"
+                      size="large"
+                    />Drop an image or click to select a file to upload.
+                  </span>
                 </Dropzone>
               </div>
 
               <div>
                 {this.state.uploadedFileCloudinaryUrl === '' ? null :
-                <div style={{textAlign: 'center'}}>
-                  <p>{this.state.uploadedFile.name}</p>
-                  <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }}/>
-                </div>}
+                  <div style={{textAlign: 'center'}}>
+                    <p>{this.state.uploadedFile.name}</p>
+                    <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }} />
+                  </div>}
               </div>
-              <Form.Button content='Submit' floated='right' />
+              <Form.Button content="Submit" floated="right" />
             </Form>
           </Grid.Column>
-          <Grid.Column></Grid.Column>
+          <Grid.Column />
         </Grid>
       </div>
     );

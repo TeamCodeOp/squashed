@@ -6,7 +6,6 @@ import RouteProps from 'react-route-props';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import $ from 'jquery';
-import { LastLocationProvider } from 'react-router-last-location';
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
 import AddProject from './AddProject.jsx';
@@ -51,18 +50,18 @@ class Root extends React.Component {
       isCheckingLogIn: true
     }, function () {
       axios.get('/checkSession')
-      .then((response) => {
-        this.setState({
-          isCheckingLogIn: false,
-          session_id: response.data.session_id,
-          username: response.data.git_username,
-          name: response.data.name,
-          userId: response.data.id
+        .then((response) => {
+          this.setState({
+            isCheckingLogIn: false,
+            session_id: response.data.session_id,
+            username: response.data.git_username,
+            name: response.data.name,
+            userId: response.data.id
+          });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     });
   }
 
@@ -127,7 +126,7 @@ class Root extends React.Component {
   }
 
   render() {
-     console.log('Root mounted', this.state.username);
+    console.log('Root mounted', this.state.username);
     return (
       <Router>
         <div>
