@@ -27,6 +27,7 @@ class Developer extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFollowRequest = this.handleFollowRequest.bind(this);
   }
 
   // WHY IS THIS.STATE.NAME UNDEFINED???
@@ -119,6 +120,11 @@ class Developer extends React.Component {
     socket.emit('messageAdded', newMessage);
   }
 
+  handleFollowRequest(e) {
+    e.preventDefault();
+    console.log('follow button clicked');
+  }
+
   render() {
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
@@ -179,7 +185,7 @@ class Developer extends React.Component {
 
               <Card.Content extra>
                 <div>
-                  <Button primary>+ Follow</Button>
+                  <Button primary onClick={this.handleFollowRequest} >+ Follow</Button>
                   {/* <button id="follow-button" className="ui right floated primary basic button">Follow</button> */}
                 </div>
               </Card.Content>
