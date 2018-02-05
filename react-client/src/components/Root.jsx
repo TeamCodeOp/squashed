@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import $ from 'jquery';
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
-import AddProject from './AddProject.jsx';
 import Developer from './Developer.jsx';
 import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
@@ -34,11 +33,6 @@ class Root extends React.Component {
     this.getProjectsByTechs = this.getProjectsByTechs.bind(this);
     this.handleTechs = this.handleTechs.bind(this);
     this.handleGetLatest = this.handleGetLatest.bind(this);
-
-  }
-
-  componentDidMount() {
-     //console.log('Root mounted', this.state.username);
   }
 
   componentWillMount() {
@@ -158,29 +152,11 @@ class Root extends React.Component {
               sessionId={this.state.session_id}
               username={this.state.username}
               userId={this.state.userId}
-              //       username={this.state.username}
-              //       name={this.state.name}
-              //       userId={this.state.userId}
-              // render={() => (
-              //   this.state.username ? (
-              //     <UploadForm
-              //       sessionId={this.state.session_id}
-              //       username={this.state.username}
-              //       name={this.state.name}
-              //       userId={this.state.userId}
-              //     />
-              //   ) : (
-              //     <AddProject
-              //     sessionId={this.state.session_id}
-              //     isCheckingLogIn={this.state.isCheckingLogIn} />
-              //   )
-              // )}
             />
             <Route
               path="/PleaseLogIn"
               component={PleaseLogIn}
             />
-
             <RouteProps
               path="/apps/:id"
               component={Project}
