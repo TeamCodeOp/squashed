@@ -123,6 +123,10 @@ class Developer extends React.Component {
   handleFollowRequest(e) {
     e.preventDefault();
     console.log('follow button clicked');
+
+    // axios post
+    // then update state
+      // or error message
   }
 
   render() {

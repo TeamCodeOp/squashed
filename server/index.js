@@ -117,10 +117,6 @@ app.get('/developers/:username', (req, res) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
 
-          // console.log('<><><><following', following);
-          // [ RowDataPacket { id: 7, followed_user_id: 1, follower_id: 3 },
-          //   RowDataPacket { id: 8, followed_user_id: 1, follower_id: 4 } ]
-
           let followersToReturn = [];
           followers.forEach((dataPacket) => {
             followersToReturn.push(dataPacket['follower_id']);
@@ -131,8 +127,6 @@ app.get('/developers/:username', (req, res) => {
             followingToReturn.push(dataPacket['followed_user_id']);
           });
 
-          // console.log('user.id: \n', user.id, '\n');
-          // console.log('followingToReturn: \n', followingToReturn, '\n');
           user.followers = followersToReturn;
           user.following = followingToReturn;
           user.projects = projects;
@@ -203,6 +197,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
+  mysqlModel.insertProjectData(req.body);
+  res.status(201).json();
+});
+
+app.post('/followRequest', (req, res) => {
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });
