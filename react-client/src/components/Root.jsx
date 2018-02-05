@@ -38,7 +38,7 @@ class Root extends React.Component {
   }
 
   componentDidMount() {
-     //console.log('Root mounted', this.state.username);
+     //console.log('Root mounted',  this.state.username);
   }
 
   componentWillMount() {
