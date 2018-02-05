@@ -38,6 +38,17 @@ CREATE TABLE IF NOT EXISTS followers (
   follower_id int NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS github_repos (
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  name varchar(50) NOT NULL,
+  description varchar(100),
+  url varchar(100) NOT NULL,
+  creation_date date,
+  owner_id int,
+  owner_image varchar(100)
+);
+
+
 -- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql
 
 /* Create other tables and define schemas for them here!

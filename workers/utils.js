@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const formatQueryString = (days, forks, stars, helpIssues) => {
   const current = new Date();
   const past = new Date(current.getTime() - (60 * 60 * 24 * days * 1000));
@@ -15,4 +17,11 @@ const formatQueryString = (days, forks, stars, helpIssues) => {
   return `https://api.github.com/search/repositories?q=created:>${queryDate}+stars:>=${stars}+forks:>=${forks}+help-wanted-issues:>=${helpIssues}`;
 };
 
+const fetchGithubRepos = (queryString, cb) => {
+  axios.get(queryString)
+    .then(response => cb(response.data))
+    .catch(error => console.log(error));
+};
+
 module.exports.formatQueryString = formatQueryString;
+module.exports.fetchGithubRepos = fetchGithubRepos;
