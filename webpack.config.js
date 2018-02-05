@@ -30,6 +30,7 @@ module.exports = {
       'process.env': {
         CLOUDINARY_UPLOAD_URL: JSON.stringify(process.env.CLOUDINARY_UPLOAD_URL)
       },
+      CLOUDINARY_UPLOAD_PRESET: JSON.stringify(process.env.CLOUDINARY_UPLOAD_PRESET)
     })
   ]
 };
