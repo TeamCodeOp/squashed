@@ -126,6 +126,11 @@ class Developer extends React.Component {
   }
 
   render() {
+
+    // console.log('--------------------state: ', this.state);
+    // console.log('--------------------props: ', this.props);
+    
+    const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
@@ -133,7 +138,6 @@ class Developer extends React.Component {
     const { msgInput } = this.state
 
     return (
-
       <div>
         <Grid columns='equal'>
           <Grid.Column width={2} />
@@ -185,7 +189,8 @@ class Developer extends React.Component {
 
               <Card.Content extra>
                 <div>
-                  <Button primary onClick={this.handleFollowRequest} >+ Follow</Button>
+                  {  showFollowButton ? <Button primary onClick={this.handleFollowRequest} >+ Follow</Button> : null }
+
                   {/* <button id="follow-button" className="ui right floated primary basic button">Follow</button> */}
                 </div>
               </Card.Content>
