@@ -3,21 +3,23 @@ import axios from 'axios';
 import cloudinary from 'cloudinary';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
-
 import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
+import config from '../../../config/configvars.js';
 
-let config;
-let CLOUDINARY_UPLOAD_URL;
-let CLOUDINARY_UPLOAD_PRESET;
+const CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL || config.CLOUDINARY_UPLOAD_URL;
+const CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET || config.CLOUDINARY_UPLOAD_PRESET;
+// let config;
+// let CLOUDINARY_UPLOAD_URL;
+// let CLOUDINARY_UPLOAD_PRESET;
 
-if (process.env.NODE_ENV === 'production') {
-  CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
-  CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
-} else {
-  config = require('../../../config/configvars.js');
-  CLOUDINARY_UPLOAD_URL = config.CLOUDINARY_UPLOAD_URL;
-  CLOUDINARY_UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET;
-}
+// if (process.env.NODE_ENV === 'production') {
+//   CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
+//   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
+// } else {
+//   config = require('../../../config/configvars.js');
+//   CLOUDINARY_UPLOAD_URL = config.CLOUDINARY_UPLOAD_URL;
+//   CLOUDINARY_UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET;
+// }
 
 class UploadForm extends React.Component {
   constructor(props) {
