@@ -30,14 +30,15 @@ class Developer extends React.Component {
 
   componentWillMount() {
     socket.on('broadcast', (users) => {
-      if (users[this.state.name].isOnline) {
+
+      if (Object.keys(users).length === 2) {
         this.setState({
           onlineStatus: true
         });
       } else {
         this.setState({
           onlineStatus: false
-        })
+        });
       }
     });
 
@@ -48,17 +49,13 @@ class Developer extends React.Component {
       });
     });
 
-
-    // socket.on('disconnect', (user) => {
-    //   console.log(user);
-    //   this.setState({
-    //     onlineStatus: user.isOnline
-    //   });
-    // });
   }
 
+
   componentDidMount() {
-    socket.emit('registerSocket', this.props.name);
+    if (this.props.name) {
+      socket.emit('registerSocket', this.props.name);
+    }
 
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
@@ -93,12 +90,10 @@ class Developer extends React.Component {
       });
   }
 
-
   componentWillUnmount() {
     console.log(this.state.fullName, ' is leaving');
     socket.emit('disconnect', this.state.fullName);
   }
-
 
   handleChange(e, { msgInput, value }) {
     this.setState({
@@ -187,7 +182,7 @@ class Developer extends React.Component {
               </Card.Content>
             </Card>
 
-            {(this.props.sessionId) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
+            {(this.props.sessionId) && (this.state.onlineStatus) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
               <div style={{ width: '290px'}}>
                 <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2', textAlign: 'center'}}>Chat with {firstName}</Header>
                 <Segment attached>

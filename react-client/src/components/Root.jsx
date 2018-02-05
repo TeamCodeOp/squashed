@@ -120,7 +120,6 @@ class Root extends React.Component {
   }
 
   render() {
-    console.log('Root mounted', this.state.username);
     return (
       <Router>
         <div>

@@ -9,10 +9,8 @@ const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
-<<<<<<< HEAD
-=======
+
 const queryString = require('query-string');
->>>>>>> Fix bugs in chat/MyProfile
 const _ = require('underscore');
 
 const app = express();
@@ -25,22 +23,10 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io').listen(server);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-const socketIds = {};
-
-io.on('connection', (socket) => {
-  console.log('socketId: ', socket.id);
-
-=======
-let socketIds = {};
-=======
 let sockets = {};
 let isOnline;
->>>>>>> Fix buggy username issue in Developer component
 
 io.on('connection', (socket) => {
->>>>>>> Fix bugs in chat/MyProfile
   // keep track of user's socketId
   socket.on('registerSocket', (name) => {
     sockets[name] = {
@@ -53,9 +39,9 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', (name) => {
     if (sockets[name]) {
-      sockets[name].isOnline = false;
-      socket.emit('broadcast', sockets[name]);
+      sockets[name] = null;
     }
+    socket.emit('broadcast', sockets);
   });
 
 
@@ -232,4 +218,3 @@ app.get('/testing', (req, res) => {
 });
 
 module.exports = app;
-
