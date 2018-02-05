@@ -40,10 +40,6 @@ io.on('connection', (socket) => {
 app.use(express.static('./react-client/dist'));
 
 app.use(require('cookie-parser')());
-app.use((req, res, next) => {
-  console.log(req.cookies);
-  next();
-});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -64,9 +60,7 @@ app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
-    console.log('cookie', req.cookies.INTERCEPTED_ROUTE)
-    const path = req.cookies.INTERCEPTED_ROUTE === undefined ? '/' : req.cookies.INTERCEPTED_ROUTE;
-    console.log('PATH-----', path);
+    const lastPath = req.cookies.INTERCEPTED_ROUTE === undefined ? '/' : req.cookies.INTERCEPTED_ROUTE;
     cache.put(req.sessionID, req.user);
 
     // res.redirect(url.format({
@@ -75,8 +69,8 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
     //     session: req.sessionID
     //   }
     // }));
-    res.clearCookie("INTERCEPTED_ROUTE")
-    .redirect(`${path}?session=${req.sessionID}`);
+    res.clearCookie('INTERCEPTED_ROUTE')
+      .redirect(`${lastPath}?session=${req.sessionID}`);
   }
 );
 
