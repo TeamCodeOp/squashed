@@ -134,6 +134,7 @@ class Developer extends React.Component {
           <Grid.Column width={4}>
             <Card>
               <Image src={`${this.state.userAvatar}`} />
+
               <Card.Content>
                 <Card.Header>
                   <span>{this.state.fullName}</span>
@@ -148,25 +149,19 @@ class Developer extends React.Component {
                   </span>
                 }
                 </Card.Header>
+
                 <Card.Meta>
                   <span className='githubUsername'>
                     <a href={`https://github.com/${this.state.username}`}>{this.state.username}</a>
                   </span>
                 </Card.Meta>
+
                 <Card.Description>
                   Full-stack engineer with a background in UI/UX.
                 </Card.Description>
+
               </Card.Content>
               <Card.Content extra>
-
-                {/* <div id="following">
-                  <Icon name='user' />
-                  {`${this.state.following.length}`}
-                </div>
-                <div id="followers">
-                  <Icon name='user' />
-                  {`${this.state.followers.length}`}
-                </div> */}
 
               <div className="extra content">
                 <span className="left floated like">
@@ -177,9 +172,18 @@ class Developer extends React.Component {
                   <i className="user icon"></i>
                   Followers: <b>{`${this.state.followers.length}`}</b>
                 </span>
+
               </div>
 
               </Card.Content>
+
+              <Card.Content extra>
+                <div>
+                  <Button primary>+ Follow</Button>
+                  {/* <button id="follow-button" className="ui right floated primary basic button">Follow</button> */}
+                </div>
+              </Card.Content>
+
             </Card>
 
             {(this.props.sessionId) && (this.state.onlineStatus) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
