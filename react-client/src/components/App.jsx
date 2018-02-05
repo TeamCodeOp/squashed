@@ -11,7 +11,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.checkSignIn();
     this.props.getProjects();
 
     // console.log('App mounted');

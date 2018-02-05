@@ -6,13 +6,13 @@ import RouteProps from 'react-route-props';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import $ from 'jquery';
-
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
 import AddProject from './AddProject.jsx';
 import Developer from './Developer.jsx';
 import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
+import PleaseLogIn from './PleaseLogIn.jsx';
 
 class Root extends React.Component {
   constructor(props) {
@@ -24,7 +24,8 @@ class Root extends React.Component {
       name: '',
       projects: [],
       userId: null,
-      techFilter: []
+      techFilter: [],
+      isCheckingLogIn: false
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -33,25 +34,35 @@ class Root extends React.Component {
     this.getProjectsByTechs = this.getProjectsByTechs.bind(this);
     this.handleTechs = this.handleTechs.bind(this);
     this.handleGetLatest = this.handleGetLatest.bind(this);
+
   }
 
   componentDidMount() {
      //console.log('Root mounted', this.state.username);
   }
 
+  componentWillMount() {
+    this.checkSignIn();
+  }
+
   checkSignIn() {
-    axios.get('/checkSession')
-      .then((response) => {
-        this.setState({
-          session_id: response.data.session_id,
-          username: response.data.git_username,
-          name: response.data.name,
-          userId: response.data.id
+    this.setState({
+      isCheckingLogIn: true
+    }, function () {
+      axios.get('/checkSession')
+        .then((response) => {
+          this.setState({
+            isCheckingLogIn: false,
+            session_id: response.data.session_id,
+            username: response.data.git_username,
+            name: response.data.name,
+            userId: response.data.id
+          });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    });
   }
 
   getProjects() {
@@ -115,7 +126,7 @@ class Root extends React.Component {
   }
 
   render() {
-     console.log('Root mounted', this.state.username);
+    console.log('Root mounted', this.state.username);
     return (
       <Router>
         <div>
@@ -141,20 +152,33 @@ class Root extends React.Component {
               handleGetLatest={this.handleGetLatest}
               handleTechs={this.handleTechs}
             />
-            <Route
+            <RouteProps
               path="/create"
-              render={() => (
-                this.state.username ? (
-                  <UploadForm
-                    sessionId={this.state.session_id}
-                    username={this.state.username}
-                    name={this.state.name}
-                    userId={this.state.userId}
-                  />
-                ) : (
-                  <AddProject />
-                )
-              )}
+              component={UploadForm}
+              sessionId={this.state.session_id}
+              username={this.state.username}
+              userId={this.state.userId}
+              //       username={this.state.username}
+              //       name={this.state.name}
+              //       userId={this.state.userId}
+              // render={() => (
+              //   this.state.username ? (
+              //     <UploadForm
+              //       sessionId={this.state.session_id}
+              //       username={this.state.username}
+              //       name={this.state.name}
+              //       userId={this.state.userId}
+              //     />
+              //   ) : (
+              //     <AddProject
+              //     sessionId={this.state.session_id}
+              //     isCheckingLogIn={this.state.isCheckingLogIn} />
+              //   )
+              // )}
+            />
+            <Route
+              path="/PleaseLogIn"
+              component={PleaseLogIn}
             />
 
             <RouteProps

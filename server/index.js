@@ -60,13 +60,17 @@ app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
+    const lastPath = req.cookies.INTERCEPTED_ROUTE === undefined ? '/' : req.cookies.INTERCEPTED_ROUTE;
     cache.put(req.sessionID, req.user);
-    res.redirect(url.format({
-      pathname: '/',
-      query: {
-        session: req.sessionID
-      }
-    }));
+
+    // res.redirect(url.format({
+    //   pathname: path,
+    //   query: {
+    //     session: req.sessionID
+    //   }
+    // }));
+    res.clearCookie('INTERCEPTED_ROUTE')
+      .redirect(`${lastPath}?session=${req.sessionID}`);
   }
 );
 
@@ -91,11 +95,11 @@ app.get('/developers/:username', (req, res) => {
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
-        
+
           // console.log('<><><><following', following);
           // [ RowDataPacket { id: 7, followed_user_id: 1, follower_id: 3 },
           //   RowDataPacket { id: 8, followed_user_id: 1, follower_id: 4 } ]
-          
+
           let followersToReturn = [];
           followers.forEach((dataPacket) => {
             followersToReturn.push(dataPacket['follower_id']);

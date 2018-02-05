@@ -10,7 +10,7 @@
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --require babel-register test/*/*.js --exit",
     "react-prod": "webpack -d --watch",
     "server-prod": "nodemon server/index.js",
-    "build": "webpack --config ./webpack.config.js --progress --colors",
+    "build": "webpack --config ./webpack.config.prod.js --progress --colors",
     "postinstall": "npm run build"
   },
   "author": "Beth Johnson",
@@ -69,8 +69,8 @@
     "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
     "react": "^15.4.2",
-    "react-disqus-thread": "^0.4.0",
     "react-bootstrap-typeahead": "^2.3.0",
+    "react-disqus-thread": "^0.4.0",
     "react-dom": "^15.4.2",
     "react-dropzone": "^4.2.7",
     "react-redux": "^5.0.6",

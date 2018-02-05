@@ -28,7 +28,9 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
+        NODE_ENV: JSON.stringify('production'),
+        CLOUDINARY_URL: JSON.stringify(process.env.CLOUDINARY_URL),
+        CLOUDINARY_UPLOAD_PRESET: JSON.stringify(process.env.CLOUDINARY_UPLOAD_PRESET)
       }
     })
   ]
