@@ -30,11 +30,14 @@ class Developer extends React.Component {
 
   componentWillMount() {
     socket.on('broadcast', (users) => {
-      console.log(users);
       if (users[this.state.name].isOnline) {
         this.setState({
           onlineStatus: true
         });
+      } else {
+        this.setState({
+          onlineStatus: false
+        })
       }
     });
 
@@ -47,6 +50,7 @@ class Developer extends React.Component {
 
 
     // socket.on('disconnect', (user) => {
+    //   console.log(user);
     //   this.setState({
     //     onlineStatus: user.isOnline
     //   });
@@ -90,10 +94,10 @@ class Developer extends React.Component {
   }
 
 
-  // componentWillUnmount() {
-  //   console.log(this.state.fullName, ' is leaving');
-  //   socket.emit('disconnect', this.state.fullName);
-  // }
+  componentWillUnmount() {
+    console.log(this.state.fullName, ' is leaving');
+    socket.emit('disconnect', this.state.fullName);
+  }
 
 
   handleChange(e, { msgInput, value }) {

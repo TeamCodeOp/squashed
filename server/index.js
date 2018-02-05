@@ -51,10 +51,12 @@ io.on('connection', (socket) => {
     socket.emit('broadcast', sockets);
   });
 
-  // socket.on('disconnect', (name) => {
-  //   sockets[name].isOnline = false;
-  //   socket.emit('broadcast', sockets[name]);
-  // });
+  socket.on('disconnect', (name) => {
+    if (sockets[name]) {
+      sockets[name].isOnline = false;
+      socket.emit('broadcast', sockets[name]);
+    }
+  });
 
 
   socket.on('messageAdded', (message) => {
