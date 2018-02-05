@@ -10,7 +10,7 @@ let CLOUDINARY_UPLOAD_URL;
 let CLOUDINARY_UPLOAD_PRESET;
 
 if (process.env.NODE_ENV === 'production') {
-  CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
+  CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_URL;
   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
 } else {
   config = require('../../../config/configvars.js');
@@ -45,9 +45,6 @@ class UploadForm extends React.Component {
   }
 
   handleImageUpload(file) {
-    console.log('NODE_ENV:', process.env.NODE_ENV);
-    console.log('URL: ', CLOUDINARY_UPLOAD_URL);
-    console.log('PRESET', CLOUDINARY_UPLOAD_PRESET);
     let upload = request.post(CLOUDINARY_UPLOAD_URL)
       .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
       .field('file', file);
@@ -93,7 +90,6 @@ class UploadForm extends React.Component {
       userId: this.props.userId
     })
       .then((response) => {
-        console.log(response);
         this.setState({
           projectName: '',
           description: '',
@@ -110,7 +106,6 @@ class UploadForm extends React.Component {
   }
 
   handleTechs(e, data) {
-    console.log(data);
     this.setState({ techs: data.value });
   }
 
