@@ -56,6 +56,7 @@ app.use(passport.initialize());
 // Restore Session
 app.use(passport.session());
 
+
 app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/' }),
@@ -149,6 +150,7 @@ app.get('/checkSession', (req, res) => {
   });
 });
 
+// logout endpoint and deleting the user from users table
 app.get('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -157,7 +159,6 @@ app.get('/logout', (req, res) => {
     mysqlDB.deleteUserSession(req.sessionID, (user) => {
     });
     req.logout();
-
     res.redirect('/');
   });
 });
@@ -186,9 +187,7 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-
-/***Delete request to projects Schemna**/
-
+// delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   console.log('delete in server', req.params.id);
   const projectId = req.params.id;
