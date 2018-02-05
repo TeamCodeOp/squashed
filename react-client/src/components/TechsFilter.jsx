@@ -27,16 +27,18 @@ class TechsFilter extends React.Component {
     ];
 
     return (
-      <Container className="techFilter">
-        <Dropdown
-          placeholder="Techs"
-          multiple
-          selection
-          options={techOptions}
-          value={techs}
-          onChange={this.props.handleTechs}
-        />
-      </Container>
+      <div style={{textAlign: 'center'}}>
+        <Container className="techFilter">
+          <Dropdown
+            placeholder="Techs"
+            multiple
+            selection
+            options={techOptions}
+            value={techs}
+            onChange={this.props.handleTechs}
+          />
+        </Container>
+      </div>
     );
   }
 }

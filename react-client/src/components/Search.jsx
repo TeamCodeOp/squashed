@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Header } from 'semantic-ui-react';
 import $ from 'jquery';
 import _ from 'underscore';
-import {Typeahead} from 'react-bootstrap-typeahead';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import { Button } from 'semantic-ui-react';
 
 
@@ -55,23 +55,20 @@ class Search extends React.Component {
     console.log('render', this.state.projects);
 
     return (
-      <div>
+      <div id='searchInput'>
       <Typeahead
         options={this.state.projects}
         multiple={false}
         onInputChange={this.handleChange}
-         onChange={(selected) => {
+        onChange={(selected) => {
            this.setState({
             selectedProject: selected
            });
          }}
         labelKey={option=> `${option.project_name}`}
       />
-      <button className="ui button" onClick={this.handleSearch}>
-        Button
-      </button>
+      <Button onClick={this.handleSearch}>Search</Button>
       </div>
-
     );
   }
 }

@@ -5,9 +5,11 @@ import TechsFilter from './TechsFilter.jsx';
 class ProjectsMenu extends React.Component {
   constructor(props) {
     super(props);
+
   }
 
   render() {
+
     return (
       <Menu className="projectMenu">
         <Menu.Item className="projectMenuItem" onClick={this.props.handleGetLatest}>

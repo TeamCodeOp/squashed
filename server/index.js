@@ -41,9 +41,7 @@ io.on('connection', (socket) => {
     if (sockets[name]) {
       sockets[name] = null;
     }
-    socket.emit('broadcast', sockets);
   });
-
 
   socket.on('messageAdded', (message) => {
     io.to(sockets[message.receiver].id).emit('messageAdded', message);

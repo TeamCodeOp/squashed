@@ -66,3 +66,12 @@ ul {
 .onlineStatus {
   font-size: .7em !important;
 }
+
+#searchInput {
+  width: 350px;
+  margin: auto;
+}
+
+.ui.container.techFilter {
+  margin-bottom: 20px;
+}

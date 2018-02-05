@@ -5,7 +5,6 @@ import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Inp
 import UserProjectList from './UserProjectList.jsx';
 
 const socket = io.connect();
-
 let newMessage;
 
 class Developer extends React.Component {
@@ -30,7 +29,6 @@ class Developer extends React.Component {
 
   componentWillMount() {
     socket.on('broadcast', (users) => {
-
       if (Object.keys(users).length === 2) {
         this.setState({
           onlineStatus: true
@@ -48,9 +46,7 @@ class Developer extends React.Component {
         messages: this.state.messages.concat(message)
       });
     });
-
   }
-
 
   componentDidMount() {
     if (this.props.name) {
@@ -72,13 +68,14 @@ class Developer extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+
   }
 
   componentWillReceiveProps(nextProps) {
     axios.get(`/developers/${nextProps.match.params.username}`)
       .then((response) => {
         this.setState({
-          fullName: response.data.name,
+          // fullName: response.data.name,
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
@@ -185,14 +182,17 @@ class Developer extends React.Component {
             {(this.props.sessionId) && (this.state.onlineStatus) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
               <div style={{ width: '290px'}}>
                 <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2', textAlign: 'center'}}>Chat with {firstName}</Header>
-                <Segment attached>
+                <Segment
+                  attached
+                  style={{ height: '230px', overflowY: 'scroll'}}
+                >
                   {messages}
                 </Segment>
                 <Segment attached>
                 <Form onSubmit={this.handleSubmit}>
-                  <Form.Group>
-                    <Form.Input placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
-                    <Form.Button content='Send' size='small'/>
+                  <Form.Group style={{ margin: 'auto'}}>
+                    <Form.Input style={{ height: '35px'}}placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
+                    <Form.Button style={{ height: '35px'}}content='Send' size='small'/>
                   </Form.Group>
                 </Form>
                 </Segment>
