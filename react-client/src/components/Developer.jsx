@@ -36,10 +36,16 @@ class Developer extends React.Component {
 >>>>>>> Fix bugs in chat/MyProfile
   }
 
+<<<<<<< HEAD
 
   componentWillMount() {
     socket.on('broadcast', (data) => {
       if (data[this.state.name]) {
+=======
+  componentWillMount() {
+    socket.on('broadcast', (users) => {
+      if (Object.keys(users).length === 2) {
+>>>>>>> Fix styling for upload form
         this.setState({
           onlineStatus: true
         });
@@ -57,7 +63,6 @@ class Developer extends React.Component {
       });
     });
   }
-
 
   componentDidMount() {
     axios.get(`/developers/${this.props.match.params.username}`)
@@ -112,14 +117,17 @@ class Developer extends React.Component {
         console.log(error);
       });
 
+<<<<<<< HEAD
     console.log('Component done mounting (Dev.jsx)');
+=======
+>>>>>>> Fix styling for upload form
   }
 
   componentWillReceiveProps(nextProps) {
     axios.get(`/developers/${nextProps.match.params.username}`)
       .then((response) => {
         this.setState({
-          fullName: response.data.name,
+          // fullName: response.data.name,
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
