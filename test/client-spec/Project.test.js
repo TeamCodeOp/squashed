@@ -1,14 +1,11 @@
 import { JSDOM } from 'jsdom';
-
 import React from 'react';
 import { expect } from 'chai';
 import { mount, shallow } from 'enzyme';
 import { spy } from 'sinon';
-
 import Project from '../../react-client/src/components/Project.jsx';
 
-describe('<Project />', () => {
-
+xdescribe('<Project />', () => {
   const props = {
     match: {
       params: ''
