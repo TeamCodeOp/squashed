@@ -46,6 +46,19 @@ const insertProjectData = (projectData) => {
   });
 };
 
+const getCurrentUserProfileId = (username) => {
+  return new Promise((resolve, reject) => {
+    const insertQuery = `SELECT id FROM users WHERE name = '${username}'`;
+    db.connection.query(insertQuery, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(results);
+    }
+  });
+};
+
 const createFollowerConnection = (followRequestData) => {
   return new Promise((resolve, reject) => {
     const insertQuery =
@@ -59,19 +72,13 @@ const createFollowerConnection = (followRequestData) => {
 
     db.connection.query(insertQuery, (err, results) => {
       if (err) {
-        return reject(err);
+        console.log('error: \n', err);
       }
-
-      db.connection.query(insertQuery, (err, results) => {
-        if (err) {
-          console.log('error: \n', err);
-        }
-        console.log('Created a follower connection (from modex/index.js): \n', results);
-      });
-
-      return resolve(results);
+      console.log('Created a follower connection (from modex/index.js): \n', results);
     });
-  }
+
+    return resolve(results);
+  });
 };
 
 const formatSelectAllWhere = (table, column, value) => {

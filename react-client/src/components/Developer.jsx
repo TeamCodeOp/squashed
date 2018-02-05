@@ -124,15 +124,30 @@ class Developer extends React.Component {
     e.preventDefault();
     console.log('follow button clicked');
 
-    // axios post
-    // then update state
-      // or error message
+    // axios.post('/followRequest', {
+    //   followed_user_id: this.props.userId,
+    //   follower_id: this.props.userId
+    // })
+    //   .then((response) => {
+    //     this.setState({
+    //       projectName: '',
+    //       description: '',
+    //       githubRepo: '',
+    //       techs: [],
+    //       uploadedFileCloudinaryUrl: '',
+    //       uploadedFile: ''
+    //     });
+    //     alert('Project added successfully');
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
   render() {
 
-    // console.log('--------------------state: ', this.state);
-    // console.log('--------------------props: ', this.props);
+    console.log('--------------------state: ', this.state);
+    console.log('--------------------props: ', this.props);
     
     const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
     const firstName = this.state.name.split(' ')[0];

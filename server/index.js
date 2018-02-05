@@ -201,8 +201,13 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
+app.post('/getCurrentUserProfileId', (req, res) => {
+  mysqlModel.getCurrentUserProfileId(req.body);
+  res.status(201).json();
+});
+
 app.post('/followRequest', (req, res) => {
-  mysqlModel.insertProjectData(req.body);
+  mysqlModel.createFollowerConnection(req.body);
   res.status(201).json();
 });
 
