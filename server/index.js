@@ -40,6 +40,10 @@ io.on('connection', (socket) => {
 app.use(express.static('./react-client/dist'));
 
 app.use(require('cookie-parser')());
+app.use((req, res, next) => {
+  console.log(req.cookies);
+  next();
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -60,13 +64,19 @@ app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
+    console.log('cookie', req.cookies.INTERCEPTED_ROUTE)
+    const path = req.cookies.INTERCEPTED_ROUTE === undefined ? '/' : req.cookies.INTERCEPTED_ROUTE;
+    console.log('PATH-----', path);
     cache.put(req.sessionID, req.user);
-    res.redirect(url.format({
-      pathname: '/',
-      query: {
-        session: req.sessionID
-      }
-    }));
+
+    // res.redirect(url.format({
+    //   pathname: path,
+    //   query: {
+    //     session: req.sessionID
+    //   }
+    // }));
+    res.clearCookie("INTERCEPTED_ROUTE")
+    .redirect(`${path}?session=${req.sessionID}`);
   }
 );
 
@@ -91,11 +101,11 @@ app.get('/developers/:username', (req, res) => {
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
-        
+
           // console.log('<><><><following', following);
           // [ RowDataPacket { id: 7, followed_user_id: 1, follower_id: 3 },
           //   RowDataPacket { id: 8, followed_user_id: 1, follower_id: 4 } ]
-          
+
           let followersToReturn = [];
           followers.forEach((dataPacket) => {
             followersToReturn.push(dataPacket['follower_id']);

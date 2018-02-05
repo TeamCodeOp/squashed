@@ -19,7 +19,7 @@ class NavHeader extends Component {
         />
         <Menu.Item
           as={Link}
-          to="/create"
+          to={this.props.sessionId ? '/create' : '/PleaseLogIn'}
           name="Add Project"
         />
         {this.props.username ?
