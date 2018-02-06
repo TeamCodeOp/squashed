@@ -19,7 +19,7 @@ const formatQueryString = (days, forks, stars, helpIssues) => {
 
 const fetchGithubRepos = (queryString, cb) => {
   axios.get(queryString)
-    .then(response => cb(response.data))
+    .then(response => cb(response.data.items))
     .catch(error => console.log(error));
 };
 
