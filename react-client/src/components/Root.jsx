@@ -27,7 +27,8 @@ class Root extends React.Component {
       techFilter: [],
       isCheckingLogIn: false,
       shouldRedirectProject: false,
-      shouldRedirectBrainstorm: false
+      shouldRedirectBrainstorm: false,
+      githubRepos: []
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -38,6 +39,7 @@ class Root extends React.Component {
     this.handleGetLatest = this.handleGetLatest.bind(this);
     this.handleProjectRedirect = this.handleProjectRedirect.bind(this);
     this.handleBrainstormRedirect = this.handleBrainstormRedirect.bind(this);
+    this.getGithubRepos = this.getGithubRepos.bind(this);
   }
 
   componentWillMount() {
@@ -108,6 +110,12 @@ class Root extends React.Component {
       });
   }
 
+  getGithubRepos() {
+    axios.get('/githubRepos')
+      .then(response => this.setState({ githubRepos: response.data }))
+      .catch(err => console.log(err));
+  }
+
   handleTechs(e, data) {
     this.setState({ techFilter: data.value }, function () {
       this.getProjectsByTechs(this.state.techFilter);
@@ -156,6 +164,7 @@ class Root extends React.Component {
               getProjectsByTechs={this.getProjectsByTechs}
               handleGetLatest={this.handleGetLatest}
               handleTechs={this.handleTechs}
+              githubRepos={this.state.githubRepos}
             />
             <RouteProps
               path="/create"
