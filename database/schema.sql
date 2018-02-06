@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS github_repos (
   url varchar(100) NOT NULL,
   creation_date date,
   owner_id int,
-  owner_image varchar(100)
+  owner_image varchar(100),
+  language varchar(50)
 );
 
 

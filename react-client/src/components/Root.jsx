@@ -165,6 +165,7 @@ class Root extends React.Component {
               handleGetLatest={this.handleGetLatest}
               handleTechs={this.handleTechs}
               githubRepos={this.state.githubRepos}
+              getGithubRepos={this.getGithubRepos}
             />
             <RouteProps
               path="/create"
