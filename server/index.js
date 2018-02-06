@@ -29,19 +29,23 @@ let isOnline;
 io.on('connection', (socket) => {
   // keep track of user's socketId
   socket.on('registerSocket', (name) => {
-    sockets[name] = {
-      id: socket.id,
-      isOnline: true
-    };
+    if (name.length > 0) {
+      sockets[name] = {
+        id: socket.id,
+        isOnline: true
+      };
+    }
 
+    socket.broadcast.emit('broadcast', sockets);
     socket.emit('broadcast', sockets);
   });
 
-  socket.on('disconnect', (name) => {
+  socket.on('userDisconnect', (name) => {
     if (sockets[name]) {
-      sockets[name].isOnline = false;
+      sockets[name] = undefined;
     }
 
+    socket.broadcast.emit('broadcast', sockets);
     socket.emit('broadcast', sockets);
   });
 

@@ -14,7 +14,7 @@ class Ideas extends React.Component {
     super(props);
 
     this.state = {
-      users: [],
+      userSockets: {},
       messages: []
     };
 
@@ -23,12 +23,9 @@ class Ideas extends React.Component {
   }
 
   componentWillMount() {
-
     socket.on('broadcast', (data) => {
-      (Object.keys(data)).forEach((user) => {
-        if (user.length > 0) {
-          this.state.users.push(user);
-        }
+      this.setState({
+        userSockets: data
       });
     });
 
@@ -105,10 +102,10 @@ class Ideas extends React.Component {
           <Segment>
             <Grid.Column width={2}>
               <Header as="h4" style={{textAlign: 'center'}}>
-              There are {this.state.users.length} users online.
+              There are {Object.keys(this.state.userSockets).length} users online.
               </Header>
               <ul style={{height: '500px'}}>
-                  {this.state.users.map((user, i) => {
+                  {Object.keys(this.state.userSockets).map((user, i) => {
                     return <li key={i}><Icon color='green' size='large' name='check circle'/>{user}</li>;
                   })}
               </ul>
