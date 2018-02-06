@@ -128,8 +128,9 @@ class Project extends React.Component {
                       description: this.state.description,
                       techStack: JSON.stringify(this.state.techs, null, 3)
                     }
-            });
-          }}
+             });
+            }
+          }
             >
              Edit
             </button>
