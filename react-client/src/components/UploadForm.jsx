@@ -37,6 +37,12 @@ class UploadForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.shouldRedirectProject) {
+      this.props.handleProjectRedirect();
+    }
+  }
+
   onImageDrop(files) {
     this.setState({
       uploadedFile: files[0]

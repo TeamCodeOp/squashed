@@ -125,14 +125,10 @@ class Root extends React.Component {
   }
 
   handleProjectRedirect() {
-    if (!this.state.sessionId) {
-      this.setState({ shouldRedirectProject: true });
-    }
+    this.setState({ shouldRedirectProject: !this.state.shouldRedirectProject });
   }
   handleBrainstormRedirect() {
-    if (!this.state.sessionId) {
-      this.setState({ shouldRedirectBrainstorm: true });
-    }
+    this.setState({ shouldRedirectBrainstorm: !this.state.shouldRedirectProject });
   }
 
   render() {
@@ -169,6 +165,8 @@ class Root extends React.Component {
               sessionId={this.state.session_id}
               username={this.state.username}
               userId={this.state.userId}
+              handleProjectRedirect={this.handleProjectRedirect}
+              shouldRedirectProject={this.state.shouldRedirectProject}
             />
             <RouteProps
               path="/PleaseLogIn"
@@ -193,6 +191,8 @@ class Root extends React.Component {
               component={Ideas}
               username={this.state.username}
               name={this.state.name}
+              handleBrainstormRedirect={this.handleBrainstormRedirect}
+              shouldRedirectBrainstorm={this.shouldRedirectBrainstorm}
             />
           </Switch>
         </div>

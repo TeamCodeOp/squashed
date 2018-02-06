@@ -20,13 +20,13 @@ class NavHeader extends Component {
           as={Link}
           to={this.props.sessionId ? '/create' : '/PleaseLogIn'}
           name="Add Project"
-          onClick={this.props.handleProjectRedirect}
+          onClick={!this.props.sessionId ? this.props.handleProjectRedirect : () => {}}
         />
         <Menu.Item
           as={Link}
           to={this.props.sessionId ? '/ideas' : '/PleaseLogIn'}
           name="Brainstorm"
-          onClick={this.props.handleBrainstormRedirect}
+          onClick={!this.props.sessionId ? this.props.handleBrainstormRedirect : () => {}}
         />
         {this.props.username ?
           <Menu.Menu position="right">

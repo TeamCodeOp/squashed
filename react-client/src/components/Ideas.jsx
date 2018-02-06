@@ -27,6 +27,9 @@ class Ideas extends React.Component {
       this.setState({
         userSockets: data
       });
+      if (this.props.shouldRedirectBrainstorm) {
+        this.props.handleBrainstormRedirect();
+      }
     });
 
     socket.on('groupMessageAdded', (message) => {
