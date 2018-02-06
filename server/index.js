@@ -183,9 +183,16 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
+  console.log('here in projects')
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });
+
+app.put('/projects', (req, res) => {
+  console.log('here in projects', req.body);
+
+});
+
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {

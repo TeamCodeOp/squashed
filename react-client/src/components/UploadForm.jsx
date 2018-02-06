@@ -4,6 +4,7 @@ import cloudinary from 'cloudinary';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
+import _ from 'underscore';
 
 let config;
 let CLOUDINARY_UPLOAD_URL;
@@ -105,6 +106,32 @@ class UploadForm extends React.Component {
       });
   }
 
+  handleUpdate(e) {
+    e.preventDefault();
+    axios.put('/projects', {
+      projectName: this.state.projectName,
+      description: this.state.description,
+      githubRepo: this.state.githubRepo,
+      techs: this.state.techs,
+      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
+      userId: this.props.userId
+    })
+      .then((response) => {
+        // this.setState({
+        //   projectName: '',
+        //   description: '',
+        //   githubRepo: '',
+        //   techs: [],
+        //   uploadedFileCloudinaryUrl: '',
+        //   uploadedFile: ''
+        // });
+        alert('Project updated successfully');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   handleTechs(e, data) {
     this.setState({ techs: data.value });
   }
@@ -132,7 +159,6 @@ class UploadForm extends React.Component {
       { key: 'ruby', text: 'Ruby', value: 'ruby' },
       { key: 'vue', text: 'Vue', value: 'vue' },
     ];
-
     return (
       <div>
         <Header as="h3" icon textAlign="center" id="createProjectHeader">
@@ -157,7 +183,7 @@ class UploadForm extends React.Component {
                 label="Github"
                 placeholder="Project repo link"
                 name="Github Repo"
-                value={githubRepo}
+                value={this.props.history.location.state ? this.props.history.location.state.githubUrl: githubRepo}
                 onChange={this.handleGitHubRepo}
               />
               <label>Tech Stack</label>
@@ -167,7 +193,7 @@ class UploadForm extends React.Component {
                 multiple
                 selection
                 options={techOptions}
-                value={techs}
+                value={this.props.history.location.state ? this.props.history.location.state.techStack :techs}
                 id="techDropdown"
                 onChange={this.handleTechs}
               />
@@ -175,7 +201,7 @@ class UploadForm extends React.Component {
               <Form.TextArea
                 label="Description"
                 placeholder="Tell us more about your project..."
-                value={description}
+                value={this.props.history.location.state ? this.props.history.location.state.description : description}
                 onChange={this.handleDescription}
               />
               <label>Project Screenshot</label>
@@ -202,7 +228,7 @@ class UploadForm extends React.Component {
                     <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }} />
                   </div>}
               </div>
-              <Form.Button content="Submit" floated="right" />
+              {this.props.history.location.state ? <Form.Button content="Update" floated="right" /> : <Form.Button content="Submit" floated="right" />}
             </Form>
           </Grid.Column>
           <Grid.Column />
