@@ -1,8 +1,14 @@
 import React from 'react';
 import { Header, Menu, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
 
-const PleaseLogIn = () => {
-  document.cookie = 'INTERCEPTED_ROUTE=/create';
+const PleaseLogIn = (props) => {
+  if (props.shouldRedirectProject) {
+    document.cookie = 'INTERCEPTED_ROUTE=/create';
+  }
+  if (props.shouldRedirectBrainstorm) {
+    document.cookie = 'INTERCEPTED_ROUTE=/ideas';
+  }
+
   return (
     <div>
       <Grid columns="equal">

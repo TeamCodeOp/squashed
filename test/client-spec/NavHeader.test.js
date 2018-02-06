@@ -11,12 +11,12 @@ global.window = dom.window;
 global.document = dom.window.document;
 
 describe('<NavHeader />', () => {
-  it('should contain 3 Menu Items', () => {
+  it('should contain 4 Menu Items', () => {
     const wrapper = mount(
       <MemoryRouter>
         <NavHeader />
       </MemoryRouter>);
-    expect(wrapper.find('MenuItem')).to.have.length(3);
+    expect(wrapper.find('MenuItem')).to.have.length(4);
     wrapper.unmount();
   });
 

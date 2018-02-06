@@ -24,10 +24,7 @@ describe('test database', () => {
      * (or repeated runs of the tests) won't screw each other up: */
     // also reset auto increment
     dbConnection.query('TRUNCATE users', () => {
-<<<<<<< HEAD
-=======
       console.log('im closing');
->>>>>>> implemented Typeahead
       dbConnection.query('ALTER TABLE users AUTO_INCREMENT = 1', done);
     });
   });

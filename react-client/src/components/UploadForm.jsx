@@ -37,6 +37,12 @@ class UploadForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.shouldRedirectProject) {
+      this.props.handleProjectRedirect();
+    }
+  }
+
   onImageDrop(files) {
     this.setState({
       uploadedFile: files[0]
@@ -110,7 +116,6 @@ class UploadForm extends React.Component {
   }
 
   render() {
-    document.cookie = 'INTERCEPTED_ROUTE=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     const {
       projectName, description, githubRepo, techs, screenshot
     } = this.state;

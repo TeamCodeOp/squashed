@@ -25,7 +25,9 @@ class Root extends React.Component {
       projects: [],
       userId: null,
       techFilter: [],
-      isCheckingLogIn: false
+      isCheckingLogIn: false,
+      shouldRedirectProject: false,
+      shouldRedirectBrainstorm: false
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -34,6 +36,8 @@ class Root extends React.Component {
     this.getProjectsByTechs = this.getProjectsByTechs.bind(this);
     this.handleTechs = this.handleTechs.bind(this);
     this.handleGetLatest = this.handleGetLatest.bind(this);
+    this.handleProjectRedirect = this.handleProjectRedirect.bind(this);
+    this.handleBrainstormRedirect = this.handleBrainstormRedirect.bind(this);
   }
 
   componentWillMount() {
@@ -51,7 +55,7 @@ class Root extends React.Component {
             session_id: response.data.session_id,
             username: response.data.git_username,
             name: response.data.name,
-            userId: response.data.id
+            userId: response.data.id,
           });
         })
         .catch((error) => {
@@ -120,6 +124,13 @@ class Root extends React.Component {
     });
   }
 
+  handleProjectRedirect() {
+    this.setState({ shouldRedirectProject: !this.state.shouldRedirectProject });
+  }
+  handleBrainstormRedirect() {
+    this.setState({ shouldRedirectBrainstorm: !this.state.shouldRedirectProject });
+  }
+
   render() {
     return (
       <Router>
@@ -128,6 +139,8 @@ class Root extends React.Component {
             sessionId={this.state.session_id}
             username={this.state.username}
             name={this.state.name}
+            handleProjectRedirect={this.handleProjectRedirect}
+            handleBrainstormRedirect={this.handleBrainstormRedirect}
           />
           <Switch>
             <RouteProps
@@ -152,10 +165,14 @@ class Root extends React.Component {
               sessionId={this.state.session_id}
               username={this.state.username}
               userId={this.state.userId}
+              handleProjectRedirect={this.handleProjectRedirect}
+              shouldRedirectProject={this.state.shouldRedirectProject}
             />
-            <Route
+            <RouteProps
               path="/PleaseLogIn"
               component={PleaseLogIn}
+              shouldRedirectProject={this.state.shouldRedirectProject}
+              shouldRedirectBrainstorm={this.state.shouldRedirectBrainstorm}
             />
             <RouteProps
               path="/apps/:id"
@@ -174,6 +191,8 @@ class Root extends React.Component {
               component={Ideas}
               username={this.state.username}
               name={this.state.name}
+              handleBrainstormRedirect={this.handleBrainstormRedirect}
+              shouldRedirectBrainstorm={this.shouldRedirectBrainstorm}
             />
           </Switch>
         </div>
