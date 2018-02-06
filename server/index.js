@@ -206,7 +206,6 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-<<<<<<< HEAD
 
 
 app.post('/getCurrentUserProfileId', (req, res) => {
@@ -257,6 +256,13 @@ app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 
 });
+
+
+app.put('/projects', (req, res) => {
+  console.log('here in projects', req.body);
+
+});
+
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
