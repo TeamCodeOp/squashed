@@ -27,9 +27,10 @@ class Developer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // WHY IS THIS.STATE.NAME UNDEFINED???
   componentWillMount() {
-    socket.on('broadcast', (users) => {
-      if (Object.keys(users).length === 2) {
+    socket.on('broadcast', (data) => {
+      if (Object.keys(data).length === 2) {
         this.setState({
           onlineStatus: true
         });

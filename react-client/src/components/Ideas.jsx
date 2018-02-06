@@ -14,6 +14,7 @@ class Ideas extends React.Component {
     super(props);
 
     this.state = {
+      users: [],
       messages: []
     };
 
@@ -22,6 +23,15 @@ class Ideas extends React.Component {
   }
 
   componentWillMount() {
+
+    socket.on('broadcast', (data) => {
+      (Object.keys(data)).forEach((user) => {
+        if (user.length > 0) {
+          this.state.users.push(user);
+        }
+      });
+    });
+
     socket.on('groupMessageAdded', (message) => {
       this.setState({
         messages: this.state.messages.concat(message)
@@ -30,7 +40,7 @@ class Ideas extends React.Component {
   }
 
   componentDidMount() {
-    // socket.emit('registerSocket', this.props.name);
+    socket.emit('registerSocket', this.props.name);
   }
 
   handleChange(e, { msgInput, value }) {
@@ -43,6 +53,7 @@ class Ideas extends React.Component {
       text: e.target.value
     };
   }
+
 
   handleSubmit(e) {
     e.preventDefault();
@@ -70,24 +81,40 @@ class Ideas extends React.Component {
         </Header>
         <Grid columns="equal">
           <Grid.Column />
-          <Grid.Column width={8}>
-            <div style={{ width: '100%'}}>
-              <Segment
-                attached
-                style={{ height: '500px', overflowY: 'scroll'}}
-              >
-                {messages}
-              </Segment>
-              <div id="groupChatInput">
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Group>
-                  <Form.Input placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
-                  <Form.Button content='Send' size='small' floated='right'/>
-                </Form.Group>
-              </Form>
+          <Segment.Group horizontal style={{ width: '70%'}}>
+            <Segment>
+            <Grid.Column width={8}>
+              <div style={{ width: '100%'}}>
+                <Segment
+                  attached
+                  style={{ height: '500px', overflowY: 'scroll'}}
+                >
+                  {messages}
+                </Segment>
+                <Segment attached id="groupChatInput">
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Group>
+                    <Form.Input placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
+                    <Form.Button content='Send' size='small' floated='right'/>
+                  </Form.Group>
+                </Form>
+                </Segment>
               </div>
-            </div>
-          </Grid.Column>
+            </Grid.Column>
+          </Segment>
+          <Segment>
+            <Grid.Column width={2}>
+              <Header as="h4" style={{textAlign: 'center'}}>
+              There are {this.state.users.length} users online.
+              </Header>
+              <ul style={{height: '500px'}}>
+                  {this.state.users.map((user, i) => {
+                    return <li key={i}><Icon color='green' size='large' name='check circle'/>{user}</li>;
+                  })}
+              </ul>
+            </Grid.Column>
+          </Segment>
+          </Segment.Group>
           <Grid.Column />
         </Grid>
     </div>

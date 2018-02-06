@@ -39,8 +39,10 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', (name) => {
     if (sockets[name]) {
-      sockets[name] = null;
+      sockets[name].isOnline = false;
     }
+
+    socket.emit('broadcast', sockets);
   });
 
   socket.on('messageAdded', (message) => {
