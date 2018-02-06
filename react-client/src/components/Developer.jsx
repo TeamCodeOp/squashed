@@ -36,7 +36,6 @@ class Developer extends React.Component {
 >>>>>>> Fix bugs in chat/MyProfile
   }
 
-
   componentWillMount() {
     socket.on('broadcast', (data) => {
       if (data[this.state.name]) {
