@@ -211,7 +211,7 @@ class Developer extends React.Component {
     let buttonJsxToRender = <Button primary onClick={this.handleFollowRequest} >+ Follow</Button>;
     
     if (this.state.currentlyFollowing) {
-      buttonJsxToRender = <Button secondary onClick={this.handleFollowRequest} >Following</Button>;
+      buttonJsxToRender = <Button primary basic onClick={this.handleFollowRequest} >Following</Button>;
     }
 
     // console.log('showFollowButton: ', showFollowButton);
@@ -271,8 +271,6 @@ class Developer extends React.Component {
               <Card.Content extra>
                 <div id="follow-button">
                   {  showFollowButton ? buttonJsxToRender : null }
-
-                  {/* <button id="follow-button" className="ui right floated primary basic button">Follow</button> */}
                 </div>
               </Card.Content>
 
