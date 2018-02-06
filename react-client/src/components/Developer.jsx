@@ -21,6 +21,7 @@ class Developer extends React.Component {
       following: [],
       followers: [],
       onlineStatus: false
+      currentUserProfileId: ''
     };
 
     console.log('line 26:', this.state.name);
@@ -123,6 +124,33 @@ class Developer extends React.Component {
   handleFollowRequest(e) {
     e.preventDefault();
     console.log('follow button clicked');
+    // console.log('props: ', this.props);
+    // console.log('props.userId: ', this.props.userId);
+    // console.log('this.state.username: ', this.state.username);
+    axios.post('/getCurrentUserProfileId', {
+      username: this.state.username,
+    })
+    .then((response) => {
+      this.setState({
+        currentUserProfileId: response.data
+      });
+      axios.post('/followRequest', {
+        followed_user_id: this.state.currentUserProfileId,
+        follower_id: this.props.id
+      })
+      .then((response) => {
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    
+  
 
     // axios.post('/followRequest', {
     //   followed_user_id: this.props.userId,
@@ -146,8 +174,8 @@ class Developer extends React.Component {
 
   render() {
 
-    console.log('--------------------state: ', this.state);
-    console.log('--------------------props: ', this.props);
+    // console.log('--------------------state: ', this.state);
+    // console.log('--------------------props: ', this.props);
     
     const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
     const firstName = this.state.name.split(' ')[0];

@@ -46,41 +46,6 @@ const insertProjectData = (projectData) => {
   });
 };
 
-const getCurrentUserProfileId = (username) => {
-  return new Promise((resolve, reject) => {
-    const insertQuery = `SELECT id FROM users WHERE name = '${username}'`;
-    db.connection.query(insertQuery, (err, results) => {
-      if (err) {
-        return reject(err);
-      }
-
-      return resolve(results);
-    }
-  });
-};
-
-const createFollowerConnection = (followRequestData) => {
-  return new Promise((resolve, reject) => {
-    const insertQuery =
-    `INSERT INTO followers (
-      followed_user_id,
-      follower_id
-    ) VALUES(
-      '${followRequestData.followed_user_id}',
-      ${followRequestData.follower_id}
-    )`;
-
-    db.connection.query(insertQuery, (err, results) => {
-      if (err) {
-        console.log('error: \n', err);
-      }
-      console.log('Created a follower connection (from modex/index.js): \n', results);
-    });
-
-    return resolve(results);
-  });
-};
-
 const formatSelectAllWhere = (table, column, value) => {
   const sql = 'SELECT * FROM ?? WHERE ?? = ?';
   const inserts = [table, column, value];

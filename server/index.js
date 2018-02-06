@@ -202,15 +202,27 @@ app.post('/projects', (req, res) => {
 });
 
 app.post('/getCurrentUserProfileId', (req, res) => {
-  mysqlModel.getCurrentUserProfileId(req.body);
-  res.status(201).json();
+  console.log('get request /getCurrentUserProfileId');
+  mysqlDB.getCurrentUserProfileId(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).json(data);
+    }
+  });
 });
 
 app.post('/followRequest', (req, res) => {
-  mysqlModel.createFollowerConnection(req.body);
-  res.status(201).json();
-});
+  console.log('-------------------\n\n\n\npost request at /followRequest received.\nreq.body is: ', req.body);
 
+  mysqlDB.createFollowerConnection(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).json(data);
+    }
+  });
+});
 
 /***Delete request to projects Schemna**/
 

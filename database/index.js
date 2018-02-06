@@ -183,6 +183,46 @@ const deleteProjectByProjectId = (query, callback) => {
   });
 };
 
+const getCurrentUserProfileId = (query, cb) => {
+  console.log('getCurrentUserProfileId in db/index.js');
+
+  const insertQuery = `SELECT id FROM users WHERE git_username = '${query.username}'`;
+  connection.query(insertQuery, (err, results) => {
+    if (err) {
+      console.log('err in database (getCurrentUserProfileId)', err);
+      cb(err, null);
+    } else {
+      console.log('success (getCurrentUserProfileId)', results);
+      cb(null, results[0]['id']);
+    }
+  });
+};
+
+
+const createFollowerConnection = (followRequestData) => {
+  console.log('createFollowerConnection in db/index.js');
+  console.log('followRequestData is: ', followRequestData);
+  
+  return new Promise((resolve, reject) => {
+    const insertQuery =
+    `INSERT INTO followers (
+      followed_user_id,
+      follower_id
+    ) VALUES(
+      '${followRequestData.followed_user_id}',
+      ${followRequestData.follower_id}
+    )`;
+
+    connection.query(insertQuery, (err, results) => {
+      if (err) {
+        console.log('error: \n', err);
+      }
+      console.log('Created a follower connection (from modex/index.js): \n', results);
+      return resolve(results);
+    });
+  });
+};
+
 const getFollowersForUser = (userId, cb) => {
   connection.query(`SELECT * FROM followers WHERE followed_user_id ='${userId}';`, (err, data) => {
     if (err) {
@@ -218,3 +258,5 @@ module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
 module.exports.deleteProjectByProjectId = deleteProjectByProjectId;
 module.exports.getFollowersForUser = getFollowersForUser;
 module.exports.getFollowingForUser = getFollowingForUser;
+module.exports.getCurrentUserProfileId = getCurrentUserProfileId;
+module.exports.createFollowerConnection = createFollowerConnection;
