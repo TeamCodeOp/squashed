@@ -27,6 +27,8 @@ class Developer extends React.Component {
       bio:''
     };
 
+    console.log('line 26:', this.state.name);
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
@@ -74,6 +76,7 @@ class Developer extends React.Component {
         if (this.props.name) {
           socket.emit('registerSocket', this.props.name);
         }
+
         axios.post('/getCurrentUserProfileId', {
           username: this.state.username
         })
@@ -115,7 +118,7 @@ class Developer extends React.Component {
     axios.get(`/developers/${nextProps.match.params.username}`)
       .then((response) => {
         this.setState({
-          // fullName: response.data.name,
+          fullName: response.data.name,
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
