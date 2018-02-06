@@ -203,6 +203,7 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
+<<<<<<< HEAD
 
 
 app.post('/getCurrentUserProfileId', (req, res) => {
@@ -247,6 +248,7 @@ app.post('/unfollowRequest', (req, res) => {
     }
   });
 });
+
 
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
