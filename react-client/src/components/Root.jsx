@@ -65,7 +65,6 @@ class Root extends React.Component {
   }
 
   getProjects() {
-    console.log('checking for projects...');
     axios.get('/projects')
       .then((response) => {
         this.setState({
@@ -78,7 +77,6 @@ class Root extends React.Component {
   }
 
   searchByUserInput(result) {
-    console.log('result in searchByUserProject', result[0].project_name);
     const that = this;
     $.ajax({
       url: `/searchProjects?title=${result[0].project_name}`,
@@ -185,6 +183,7 @@ class Root extends React.Component {
               sessionId={this.state.session_id}
               username={this.state.username}
               name={this.state.name}
+              id={this.state.userId}
             />
             <RouteProps
               path="/ideas"

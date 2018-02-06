@@ -117,10 +117,6 @@ app.get('/developers/:username', (req, res) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
 
-          // console.log('<><><><following', following);
-          // [ RowDataPacket { id: 7, followed_user_id: 1, follower_id: 3 },
-          //   RowDataPacket { id: 8, followed_user_id: 1, follower_id: 4 } ]
-
           let followersToReturn = [];
           followers.forEach((dataPacket) => {
             followersToReturn.push(dataPacket['follower_id']);
@@ -131,8 +127,6 @@ app.get('/developers/:username', (req, res) => {
             followingToReturn.push(dataPacket['followed_user_id']);
           });
 
-          // console.log('user.id: \n', user.id, '\n');
-          // console.log('followingToReturn: \n', followingToReturn, '\n');
           user.followers = followersToReturn;
           user.following = followingToReturn;
           user.projects = projects;
@@ -207,6 +201,48 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
+app.post('/getCurrentUserProfileId', (req, res) => {
+  console.log('get request /getCurrentUserProfileId in (server / index.js)');
+  
+  mysqlDB.getCurrentUserProfileId(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).json(data);
+    }
+  });
+});
+
+app.post('/checkIfCurrentlyFollowing', (req, res) => {
+  mysqlDB.checkIfCurrentlyFollowing(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.send(data);
+    }
+  });
+});
+
+app.post('/followRequest', (req, res) => {
+  mysqlDB.createFollowerConnection(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).json(data);
+    }
+  });
+});
+
+app.post('/unfollowRequest', (req, res) => {
+  console.log('-------------------\n\n\n\npost request at /unfollowRequest received.\nreq.body is: ', req.body);
+  mysqlDB.removeFollowerConnection(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).json(data);
+    }
+  });
+});
 
 /***Delete request to projects Schemna**/
 

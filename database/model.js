@@ -38,7 +38,7 @@ const insertProjectData = (projectData) => {
         if (err2) {
           console.log('error: \n', err2);
         }
-        console.log('............results: \n', results2);
+        console.log('Inserted into technologies (from modex/index.js): \n', results2);
       });
 
       return resolve(results);
@@ -46,16 +46,6 @@ const insertProjectData = (projectData) => {
   });
 };
 
-// const insertProjectData = (params) => {
-//   console.log(params, 'params');
-//   const insertQuery = 'INSERT INTO projects (project_name) VALUES (?);';
-//   return db.queryAsync(insertQuery, params)
-//     .then(data => data)
-//     .catch((err) => {
-//       console.error(err);
-//       return err;
-//     });
-// };
 const formatSelectAllWhere = (table, column, value) => {
   const sql = 'SELECT * FROM ?? WHERE ?? = ?';
   const inserts = [table, column, value];

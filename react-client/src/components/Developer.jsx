@@ -3,6 +3,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import UserProjectList from './UserProjectList.jsx';
+import $ from 'jquery'; 
 
 const socket = io.connect();
 let newMessage;
@@ -20,13 +21,17 @@ class Developer extends React.Component {
       messages: [],
       following: [],
       followers: [],
-      onlineStatus: false
+      onlineStatus: false,
+      currentUserProfileId: '',
+      currentlyFollowing: false
     };
 
     console.log('line 26:', this.state.name);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFollowRequest = this.handleFollowRequest.bind(this);
+    
   }
 
   // WHY IS THIS.STATE.NAME UNDEFINED???
@@ -67,10 +72,43 @@ class Developer extends React.Component {
         if (this.props.name) {
           socket.emit('registerSocket', this.props.name);
         }
+        axios.post('/getCurrentUserProfileId', {
+          username: this.state.username
+        })
+          .then((profileIdResponse) => {
+            console.log('Current profile ID is (Dev.jsx): ', profileIdResponse.data);
+            this.setState({
+              currentUserProfileId: profileIdResponse.data
+            });
+            axios.post('/checkIfCurrentlyFollowing', {
+              loggedInUserId: this.props.id,
+              currentUserProfileId: this.state.currentUserProfileId
+            })
+              .then((ifFollowingResponse) => {
+                console.log(':::::::::::checkIfCurrentlyFollowing response.data (Dev.jsx): ', ifFollowingResponse);
+                let bool = false;
+                if (ifFollowingResponse.data[0]) {
+                  bool = true;
+                }
+                this.setState({
+                  currentlyFollowing: bool
+                });
+                console.log('State set to (currentlyFollowing)', this.state.currentlyFollowing);
+                
+              })
+              .catch((ifFollowingRrror) => {
+                console.log(ifFollowingRrror);
+              });
+          })
+          .catch((profileIdError) => {
+            console.log(profileIdError);
+          });
       })
       .catch((error) => {
         console.log(error);
       });
+
+    console.log('Component done mounting (Dev.jsx)');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -119,21 +157,75 @@ class Developer extends React.Component {
     socket.emit('messageAdded', newMessage);
   }
 
+
+  handleFollowRequest(e) {
+    e.preventDefault();
+    console.log('follow button clicked');
+    console.log('currentlyFollowing?: ', this.state.currentlyFollowing);
+    
+    if (!this.state.currentlyFollowing) {
+      axios.post('/followRequest', {
+        followed_user_id: this.state.currentUserProfileId,
+        follower_id: this.props.id
+      })
+        .then((followRequestResponse) => {
+          this.setState({
+            currentlyFollowing: true
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    if (this.state.currentlyFollowing) {
+      axios.post('/unfollowRequest', {
+        followed_user_id: this.state.currentUserProfileId,
+        follower_id: this.props.id
+      })
+        .then((unfollowRequestResponse) => {
+          this.setState({
+            currentlyFollowing: false
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+  }
+
   render() {
+
+    console.log('--------------------state(Dev.jsx): ', this.state);
+    console.log('--------------------props(Dev.jsx): ', this.props);
+    // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId);
+      
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
     });
     const { msgInput } = this.state
+    
+    const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
+    let buttonJsxToRender = <Button primary onClick={this.handleFollowRequest} >+ Follow</Button>;
+    
+    if (this.state.currentlyFollowing) {
+      buttonJsxToRender = <Button primary basic onClick={this.handleFollowRequest} >Following</Button>;
+    }
+
+    // console.log('showFollowButton: ', showFollowButton);
+    // console.log('buttonJsxToRender: ', buttonJsxToRender);
+    // console.log('this.state.currentlyFollowing: ', this.state.currentlyFollowing);
 
     return (
-
       <div>
         <Grid columns='equal'>
           <Grid.Column width={2} />
           <Grid.Column width={4}>
             <Card>
               <Image src={`${this.state.userAvatar}`} />
+
               <Card.Content>
                 <Card.Header>
                   <span>{this.state.fullName}</span>
@@ -148,25 +240,19 @@ class Developer extends React.Component {
                   </span>
                 }
                 </Card.Header>
+
                 <Card.Meta>
                   <span className='githubUsername'>
                     <a href={`https://github.com/${this.state.username}`}>{this.state.username}</a>
                   </span>
                 </Card.Meta>
+
                 <Card.Description>
                   Full-stack engineer with a background in UI/UX.
                 </Card.Description>
+
               </Card.Content>
               <Card.Content extra>
-
-                {/* <div id="following">
-                  <Icon name='user' />
-                  {`${this.state.following.length}`}
-                </div>
-                <div id="followers">
-                  <Icon name='user' />
-                  {`${this.state.followers.length}`}
-                </div> */}
 
               <div className="extra content">
                 <span className="left floated like">
@@ -177,9 +263,17 @@ class Developer extends React.Component {
                   <i className="user icon"></i>
                   Followers: <b>{`${this.state.followers.length}`}</b>
                 </span>
+
               </div>
 
               </Card.Content>
+
+              <Card.Content extra>
+                <div id="follow-button">
+                  {  showFollowButton ? buttonJsxToRender : null }
+                </div>
+              </Card.Content>
+
             </Card>
 
             {(this.props.sessionId) && (this.state.onlineStatus) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
