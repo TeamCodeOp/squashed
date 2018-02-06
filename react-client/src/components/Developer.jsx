@@ -23,7 +23,7 @@ class Developer extends React.Component {
       followers: [],
       onlineStatus: false,
       currentUserProfileId: '',
-      currentlyFollowing: false
+      currentlyFollowing: false,
       bio:''
     };
 

@@ -112,6 +112,7 @@ class UploadForm extends React.Component {
       });
   }
 
+  //  not using it anywhere, wrote this to send put req to server for edit form
   handleUpdate(e) {
     e.preventDefault();
     axios.put('/projects', {
@@ -135,20 +136,9 @@ class UploadForm extends React.Component {
     this.setState({ techs: data.value });
   }
 
-  // editTheProject(this.props.history.location.state) {
-  //   this.setState({
-  //     projectName: this.props.history.location.state.projectName,
-  //     description: this.props.history.location.state.description,
-  //     githubRepo: '',
-  //     techs: [],
-  //     uploadedFileCloudinaryUrl: '',
-  //   })
-  // }
-
   render() {
     let techStackArray = [];
     if (this.props.history.location.state) {
-    console.log('project id in UploadForm',this.props.history.location.state.projectId);
       const newTechStack = JSON.parse(this.props.history.location.state.techStack);
       if (this.props.history.location.state) {
         for (let i = 0; i < newTechStack.length; i++) {
