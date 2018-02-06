@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const { expect } = require('chai');
-const db = require('../../database/index.js');
+// const db = require('../../database/index.js');
 const model = require('../../database/model.js');
 const dbIndex = require('../../database/index.js');
 
