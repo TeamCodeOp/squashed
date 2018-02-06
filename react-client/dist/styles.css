@@ -62,3 +62,24 @@ span.imageUploadText {
 ul {
   list-style: none;
 }
+
+.onlineStatus {
+  font-size: .7em !important;
+}
+
+#searchInput {
+  width: 350px;
+  margin: auto;
+}
+
+.ui.container.techFilter {
+  margin-bottom: 20px;
+}
+
+#groupChatInput {
+  width: 100%;
+}
+
+.ui.form .fields>.field {
+  width: 100%;
+}

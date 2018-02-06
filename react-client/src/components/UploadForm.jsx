@@ -159,7 +159,7 @@ class UploadForm extends React.Component {
                 value={githubRepo}
                 onChange={this.handleGitHubRepo}
               />
-              <label>Tech Stack</label>
+              <label style={{fontWeight: 'bold', marginBottom: '-2px'}}>Tech Stack</label>
               <Dropdown
                 placeholder="Select"
                 fluid

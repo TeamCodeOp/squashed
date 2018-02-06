@@ -5,7 +5,6 @@ import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Inp
 import UserProjectList from './UserProjectList.jsx';
 
 const socket = io.connect();
-
 let newMessage;
 
 class Developer extends React.Component {
@@ -13,33 +12,50 @@ class Developer extends React.Component {
     super(props);
 
     this.state = {
+      fullName: '',
       name: '',
       username: '',
       userAvatar: '',
       projects: [],
       messages: [],
       following: [],
-      followers: []
+      followers: [],
+      onlineStatus: false
     };
+
+    console.log('line 26:', this.state.name);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    socket.emit('registerSocket', this.props.name);
+  // WHY IS THIS.STATE.NAME UNDEFINED???
+  componentWillMount() {
+    socket.on('broadcast', (data) => {
+      if (data[this.state.name]) {
+        this.setState({
+          onlineStatus: true
+        });
+      } else {
+        this.setState({
+          onlineStatus: false
+        });
+      }
+    });
 
-    socket.on('messageAdded', message =>
-      // console.log(message)
+    socket.on('messageAdded', (message) => {
       this.setState({
         name: message.sender,
         messages: this.state.messages.concat(message)
-      })
-    );
+      });
+    });
+  }
 
+  componentDidMount() {
     axios.get(`/developers/${this.props.match.params.username}`)
       .then((response) => {
         this.setState({
+          fullName: response.data.name,
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
@@ -47,13 +63,43 @@ class Developer extends React.Component {
           following: response.data.following,
           followers: response.data.followers
         });
+
+        if (this.props.name) {
+          socket.emit('registerSocket', this.props.name);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  handleChange(e) {
+  componentWillReceiveProps(nextProps) {
+    axios.get(`/developers/${nextProps.match.params.username}`)
+      .then((response) => {
+        this.setState({
+          fullName: response.data.name,
+          name: response.data.name,
+          username: response.data.git_username,
+          userAvatar: response.data.avatar_url,
+          projects: response.data.projects
+        });
+        console.log('line 89:', this.state.name);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  componentWillUnmount() {
+    console.log(this.state.fullName, ' is leaving');
+    socket.emit('userDisconnect', this.state.fullName);
+  }
+
+  handleChange(e, { msgInput, value }) {
+    this.setState({
+      msgInput: value
+    });
+
     newMessage = {
       sender: this.props.name,
       receiver: this.state.name,
@@ -65,7 +111,8 @@ class Developer extends React.Component {
     e.preventDefault();
 
     this.setState({
-      messages: this.state.messages.concat(newMessage)
+      messages: this.state.messages.concat(newMessage),
+      msgInput: ''
     });
 
     // sends newMessage object to server
@@ -77,6 +124,7 @@ class Developer extends React.Component {
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
     });
+    const { msgInput } = this.state
 
     return (
 
@@ -88,7 +136,17 @@ class Developer extends React.Component {
               <Image src={`${this.state.userAvatar}`} />
               <Card.Content>
                 <Card.Header>
-                  {this.state.name}
+                  <span>{this.state.fullName}</span>
+                {this.state.onlineStatus ?
+                  <span style={{fontSize: '.5em', float: 'right', color: 'green'}}>
+                    <Icon color='green' size='large' name='check circle'/>
+                    ONLINE
+                  </span> :
+                  <span style={{fontSize: '.5em', float: 'right', color: 'red'}}>
+                    <Icon color='red' size='large' name='remove circle'/>
+                    OFFLINE
+                  </span>
+                }
                 </Card.Header>
                 <Card.Meta>
                   <span className='githubUsername'>
@@ -124,17 +182,20 @@ class Developer extends React.Component {
               </Card.Content>
             </Card>
 
-            {(this.props.sessionId) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
+            {(this.props.sessionId) && (this.state.onlineStatus) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
               <div style={{ width: '290px'}}>
-                <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2'}}>{firstName}</Header>
-                <Segment attached>
+                <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2', textAlign: 'center'}}>Chat with {firstName}</Header>
+                <Segment
+                  attached
+                  style={{ height: '230px', overflowY: 'scroll'}}
+                >
                   {messages}
                 </Segment>
                 <Segment attached>
                 <Form onSubmit={this.handleSubmit}>
-                  <Form.Group>
-                    <Form.Input placeholder='...' name='input' onChange={this.handleChange}/>
-                    <Form.Button content='Send' size='small'/>
+                  <Form.Group style={{ margin: 'auto'}}>
+                    <Form.Input style={{ height: '35px'}}placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
+                    <Form.Button style={{ height: '35px'}}content='Send' size='small'/>
                   </Form.Group>
                 </Form>
                 </Segment>

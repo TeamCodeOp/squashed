@@ -9,6 +9,8 @@ const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
+
+const queryString = require('query-string');
 const _ = require('underscore');
 
 const app = express();
@@ -21,19 +23,38 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io').listen(server);
 
-const socketIds = {};
+let sockets = {};
+let isOnline;
 
 io.on('connection', (socket) => {
-  console.log('socketId: ', socket.id);
-
   // keep track of user's socketId
   socket.on('registerSocket', (name) => {
-    socketIds[name] = socket.id;
+    if (name.length > 0) {
+      sockets[name] = {
+        id: socket.id,
+        isOnline: true
+      };
+    }
+
+    socket.broadcast.emit('broadcast', sockets);
+    socket.emit('broadcast', sockets);
   });
 
-  // server sends newMessage back to specific user.
+  socket.on('userDisconnect', (name) => {
+    if (sockets[name]) {
+      sockets[name] = undefined;
+    }
+
+    socket.broadcast.emit('broadcast', sockets);
+    socket.emit('broadcast', sockets);
+  });
+
   socket.on('messageAdded', (message) => {
-    io.to(socketIds[message.receiver]).emit('messageAdded', message);
+    io.to(sockets[message.receiver].id).emit('messageAdded', message);
+  });
+
+  socket.on('groupMessageAdded', (message) => {
+    socket.broadcast.emit('groupMessageAdded', message);
   });
 });
 
@@ -205,4 +226,3 @@ app.get('/testing', (req, res) => {
 });
 
 module.exports = app;
-
