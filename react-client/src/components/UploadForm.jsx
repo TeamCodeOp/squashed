@@ -4,6 +4,7 @@ import cloudinary from 'cloudinary';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
+import _ from 'underscore';
 
 let config;
 let CLOUDINARY_UPLOAD_URL;
@@ -111,11 +112,41 @@ class UploadForm extends React.Component {
       });
   }
 
+  //  not using it anywhere, wrote this to send put req to server for edit form
+  handleUpdate(e) {
+    e.preventDefault();
+    axios.put('/projects', {
+      projectName: this.state.projectName,
+      description: this.state.description,
+      githubRepo: this.state.githubRepo,
+      techs: this.state.techs,
+      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
+      userId: this.props.userId,
+      projectId: this.props.history.location.state.projectId
+    })
+      .then((response) => {
+        alert('Project updated successfully');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   handleTechs(e, data) {
     this.setState({ techs: data.value });
   }
 
   render() {
+    let techStackArray = [];
+    if (this.props.history.location.state) {
+      const newTechStack = JSON.parse(this.props.history.location.state.techStack);
+      if (this.props.history.location.state) {
+        for (let i = 0; i < newTechStack.length; i++) {
+          techStackArray.push(newTechStack[i].key);
+        }
+      }
+    }
+    document.cookie = 'INTERCEPTED_ROUTE=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     const {
       projectName, description, githubRepo, techs, screenshot
     } = this.state;
@@ -136,7 +167,6 @@ class UploadForm extends React.Component {
       { key: 'ruby', text: 'Ruby', value: 'ruby' },
       { key: 'vue', text: 'Vue', value: 'vue' },
     ];
-
     return (
       <div>
         <Header as="h3" icon textAlign="center" id="createProjectHeader">
@@ -154,14 +184,14 @@ class UploadForm extends React.Component {
                 label="Name"
                 placeholder="Project Name"
                 name="Project Name"
-                value={projectName}
+                value={this.props.history.location.state ? "hello" : projectName}
                 onChange={this.handleProjectName}
               />
               <Form.Input
                 label="Github"
                 placeholder="Project repo link"
                 name="Github Repo"
-                value={githubRepo}
+                value={this.props.history.location.state ? this.props.history.location.state.githubUrl: githubRepo}
                 onChange={this.handleGitHubRepo}
               />
               <label style={{fontWeight: 'bold', marginBottom: '-2px'}}>Tech Stack</label>
@@ -171,7 +201,7 @@ class UploadForm extends React.Component {
                 multiple
                 selection
                 options={techOptions}
-                value={techs}
+                value={this.props.history.location.state ? techStackArray : techs}
                 id="techDropdown"
                 onChange={this.handleTechs}
               />
@@ -179,7 +209,7 @@ class UploadForm extends React.Component {
               <Form.TextArea
                 label="Description"
                 placeholder="Tell us more about your project..."
-                value={description}
+                value={this.props.history.location.state ? this.props.history.location.state.description : description}
                 onChange={this.handleDescription}
               />
               <label>Project Screenshot</label>
@@ -206,7 +236,7 @@ class UploadForm extends React.Component {
                     <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }} />
                   </div>}
               </div>
-              <Form.Button content="Submit" floated="right" />
+              {this.props.history.location.state ? <Form.Button content="Update" floated="right" /> : <Form.Button content="Submit" floated="right" />}
             </Form>
           </Grid.Column>
           <Grid.Column />

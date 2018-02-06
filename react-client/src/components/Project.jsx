@@ -5,6 +5,7 @@ import { Grid, Image, Item, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Route, Redirect, Switch } from 'react-router';
 import Developer from './Developer.jsx';
+import UploadForm from './UploadForm.jsx';
 
 
 class Project extends React.Component {
@@ -18,9 +19,10 @@ class Project extends React.Component {
       techs: [],
       githubUser: '',
       projectThumb: '',
-      testUser:''
+      testUser:'',
     };
     this.onDelete = this.onDelete.bind(this);
+
   }
 
   componentDidMount() {
@@ -68,8 +70,9 @@ class Project extends React.Component {
       });
   }
 
+
   render() {
-    console.log('props in project', this.props.username);
+    console.log('props in project', this.props.match.params.id);
     if (this.state.githubUser === 1) {
       console.log(' 1 else if');
       return (
@@ -81,6 +84,7 @@ class Project extends React.Component {
     } else if (this.props.username === this.state.githubUser) {
       console.log(' 2nd  else if');
       return (
+
         <Grid columns='equal'>
           <Grid.Column></Grid.Column>
           <Grid.Column width={12}>
@@ -116,15 +120,30 @@ class Project extends React.Component {
             <button className="ui primary button" onClick={this.onDelete}>
              Delete
             </button>
+            <button className="ui primary button" className="olive" onClick={() => { this.props.history.push({
+              pathname:'/create',
+              state:{ gitUser:this.state.githubUser,
+                      projectName: this.state.projectName,
+                      githubUrl: this.state.githubRepo,
+                      description: this.state.description,
+                      techStack: JSON.stringify(this.state.techs, null, 3),
+                      projectId: this.props.match.params.id
+                    }
+             });
+            }
+          }
+            >
+             Edit
+            </button>
           </Item.Group>
 
-          <ReactDisqusThread
-            shortname="CodeOp"
-            identifier={this.props.match.params.id}
-            title="CodeOp"
-            url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${this.props.match.params.id}`}
-            onNewComment={this.handleNewComment}
-          />
+            <ReactDisqusThread
+              shortname="CodeOp"
+              identifier={this.props.match.params.id}
+              title="CodeOp"
+              url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${  this.props.match.params.id}`}
+              onNewComment={this.handleNewComment}
+            />
 
           </Grid.Column>
           <Grid.Column></Grid.Column>

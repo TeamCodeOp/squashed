@@ -3,7 +3,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import UserProjectList from './UserProjectList.jsx';
-import $ from 'jquery'; 
+import $ from 'jquery';
 
 const socket = io.connect();
 let newMessage;
@@ -23,7 +23,8 @@ class Developer extends React.Component {
       followers: [],
       onlineStatus: false,
       currentUserProfileId: '',
-      currentlyFollowing: false
+      currentlyFollowing: false,
+      bio:''
     };
 
     console.log('line 26:', this.state.name);
@@ -31,7 +32,7 @@ class Developer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
-    
+
   }
 
   // WHY IS THIS.STATE.NAME UNDEFINED???
@@ -66,7 +67,8 @@ class Developer extends React.Component {
           userAvatar: response.data.avatar_url,
           projects: response.data.projects,
           following: response.data.following,
-          followers: response.data.followers
+          followers: response.data.followers,
+          bio: response.data.user_bio
         });
 
         if (this.props.name) {
@@ -94,7 +96,7 @@ class Developer extends React.Component {
                   currentlyFollowing: bool
                 });
                 console.log('State set to (currentlyFollowing)', this.state.currentlyFollowing);
-                
+
               })
               .catch((ifFollowingRrror) => {
                 console.log(ifFollowingRrror);
@@ -162,7 +164,7 @@ class Developer extends React.Component {
     e.preventDefault();
     console.log('follow button clicked');
     console.log('currentlyFollowing?: ', this.state.currentlyFollowing);
-    
+
     if (!this.state.currentlyFollowing) {
       axios.post('/followRequest', {
         followed_user_id: this.state.currentUserProfileId,
@@ -200,16 +202,16 @@ class Developer extends React.Component {
     console.log('--------------------state(Dev.jsx): ', this.state);
     console.log('--------------------props(Dev.jsx): ', this.props);
     // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId);
-      
+
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
     });
     const { msgInput } = this.state
-    
+
     const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
     let buttonJsxToRender = <Button primary onClick={this.handleFollowRequest} >+ Follow</Button>;
-    
+
     if (this.state.currentlyFollowing) {
       buttonJsxToRender = <Button primary basic onClick={this.handleFollowRequest} >Following</Button>;
     }
@@ -248,7 +250,7 @@ class Developer extends React.Component {
                 </Card.Meta>
 
                 <Card.Description>
-                  Full-stack engineer with a background in UI/UX.
+                  <p>{this.state.bio}</p>
                 </Card.Description>
 
               </Card.Content>

@@ -10,7 +10,8 @@ CREATE TABLE users (
   name varchar(20) NOT NULL UNIQUE,
   git_username varchar(20) NOT NULL,
   session_id varchar(64),
-  avatar_url varchar(100)
+  avatar_url varchar(100),
+  bio varchar(200)
 );
 
 CREATE TABLE projects (
