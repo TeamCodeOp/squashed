@@ -1,4 +1,5 @@
 const _ = require('underscore');
+const dbModel = require('./model');
 
 const compareTechStacks = (techs, techs2) => {
   for (let i = 0; i < techs2.length; i += 1) {
@@ -29,4 +30,24 @@ const formatProjectsWithTechs = (data, techs) => {
   );
 };
 
+const formatGithubRepos = (repos) => {
+  formattedRepos = repos.map((repo) => {
+    return {
+      repo_id: repo.id,
+      name: repo.name,
+      description: repo.description,
+      url: repo.html_url,
+      creation_date: repo.created_at.slice(0, 10),
+      owner_id: repo.owner.id,
+      owner_image: repo.owner.avatar_url
+    };
+  });
+  const columns = Object.entries(formattedRepos[0]).map(tuple => tuple[0]);
+  const values = formattedRepos.map((repo) => {
+    return Object.entries(repo).map(tuple => tuple[1]);
+  });
+  return [columns, values];
+};
+
 module.exports.formatProjectsWithTechs = formatProjectsWithTechs;
+module.exports.formatGithubRepos = formatGithubRepos;

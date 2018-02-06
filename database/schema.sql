@@ -1,5 +1,5 @@
--- DROP DATABASE IF EXISTS codeop;
--- CREATE DATABASE codeop;
+DROP DATABASE IF EXISTS codeop;
+CREATE DATABASE codeop;
 -- USE heroku_a9ded5de1ff1c8b;
 
 USE codeop;
@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS followers (
 
 CREATE TABLE IF NOT EXISTS github_repos (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  repo_id int,
   name varchar(50) NOT NULL,
   description varchar(100),
   url varchar(100) NOT NULL,

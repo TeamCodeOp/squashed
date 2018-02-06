@@ -1,7 +1,9 @@
 const db = require('./index.js');
 const mysql = require('mysql');
+const utils = require('./utils');
 const Promise = require('bluebird');
 const format = require('pg-format');
+const _ = require('underscore');
 
 const insertProjectData = (projectData) => {
   return new Promise((resolve, reject) => {
@@ -74,5 +76,37 @@ const selectAllWhere = (table, column, value, isOne, cb) => {
   });
 };
 
+const insertGithubRepos = (repos) => {
+  let filteredRepos;
+  let cols;
+  let values;
+  let resultsIds;
+
+  db.connection.query('SELECT repo_id from github_repos', (err, results) => {
+    if (err) {
+      throw err;
+    }
+    resultsIds = _.map(results, el => el.repo_id);
+    filteredRepos = _.filter(repos, repo => !_.contains(resultsIds, repo.id));
+
+    if (filteredRepos.length === 0) {
+      console.log('No new repos to add');
+      return;
+    }
+
+    cols = utils.formatGithubRepos(filteredRepos)[0];
+    values = utils.formatGithubRepos(filteredRepos)[1];
+
+    db.connection.query(`INSERT INTO github_repos (${cols}) VALUES ?`, [values], (err, results) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('github repos added');
+      }
+    });
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
+module.exports.insertGithubRepos = insertGithubRepos;
