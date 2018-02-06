@@ -28,6 +28,11 @@ class NavHeader extends Component {
           name="Brainstorm"
           onClick={!this.props.sessionId ? this.props.handleBrainstormRedirect : () => {}}
         />
+        <Menu.Item
+          as={Link}
+          to={this.props.sessionId ? '/ideas' : '/PleaseLogIn'}
+          name="Brainstorm"
+        />
         {this.props.username ?
           <Menu.Menu position="right">
             <Menu.Item

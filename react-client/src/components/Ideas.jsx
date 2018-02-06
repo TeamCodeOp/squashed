@@ -54,7 +54,6 @@ class Ideas extends React.Component {
     };
   }
 
-
   handleSubmit(e) {
     e.preventDefault();
 
@@ -115,6 +114,24 @@ class Ideas extends React.Component {
             </Grid.Column>
           </Segment>
           </Segment.Group>
+          <Grid.Column width={8}>
+            <div style={{ width: '100%'}}>
+              <Segment
+                attached
+                style={{ height: '500px', overflowY: 'scroll'}}
+              >
+                {messages}
+              </Segment>
+              <div id="groupChatInput">
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Group>
+                  <Form.Input placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
+                  <Form.Button content='Send' size='small' floated='right'/>
+                </Form.Group>
+              </Form>
+              </div>
+            </div>
+          </Grid.Column>
           <Grid.Column />
         </Grid>
     </div>

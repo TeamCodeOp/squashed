@@ -36,16 +36,10 @@ class Developer extends React.Component {
 >>>>>>> Fix bugs in chat/MyProfile
   }
 
-<<<<<<< HEAD
 
   componentWillMount() {
     socket.on('broadcast', (data) => {
       if (data[this.state.name]) {
-=======
-  componentWillMount() {
-    socket.on('broadcast', (users) => {
-      if (Object.keys(users).length === 2) {
->>>>>>> Fix styling for upload form
         this.setState({
           onlineStatus: true
         });
@@ -116,11 +110,6 @@ class Developer extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-
-<<<<<<< HEAD
-    console.log('Component done mounting (Dev.jsx)');
-=======
->>>>>>> Fix styling for upload form
   }
 
   componentWillReceiveProps(nextProps) {
@@ -205,7 +194,6 @@ class Developer extends React.Component {
           console.log(error);
         });
     }
-
   }
 
   render() {
