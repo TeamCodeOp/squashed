@@ -114,6 +114,8 @@ app.get('/projects', (req, res) => {
 app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
+    let bio = user.user_bio;
+    console.log('bio', bio);
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
@@ -131,6 +133,7 @@ app.get('/developers/:username', (req, res) => {
           user.followers = followersToReturn;
           user.following = followingToReturn;
           user.projects = projects;
+          user.user_bio = bio;
           res.send(user);
         });
       });
