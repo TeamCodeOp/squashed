@@ -19,7 +19,8 @@ class Developer extends React.Component {
       projects: [],
       messages: [],
       following: [],
-      followers: []
+      followers: [],
+      bio:''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -45,7 +46,8 @@ class Developer extends React.Component {
           userAvatar: response.data.avatar_url,
           projects: response.data.projects,
           following: response.data.following,
-          followers: response.data.followers
+          followers: response.data.followers,
+          bio: response.data.user_bio
         });
       })
       .catch((error) => {
@@ -96,7 +98,7 @@ class Developer extends React.Component {
                   </span>
                 </Card.Meta>
                 <Card.Description>
-                  Full-stack engineer with a background in UI/UX.
+                  <p>{this.state.bio}</p>
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
