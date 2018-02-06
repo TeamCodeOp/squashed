@@ -110,7 +110,6 @@ class UploadForm extends React.Component {
   }
 
   render() {
-    document.cookie = 'INTERCEPTED_ROUTE=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     const {
       projectName, description, githubRepo, techs, screenshot
     } = this.state;
