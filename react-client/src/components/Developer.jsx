@@ -163,21 +163,30 @@ class Developer extends React.Component {
     console.log('follow button clicked');
     console.log('currentlyFollowing?: ', this.state.currentlyFollowing);
     
-    // console.log('props: ', this.props);
-    // console.log('props.userId: ', this.props.userId);
-    // console.log('this.state.username: ', this.state.username);
-
     if (!this.state.currentlyFollowing) {
       axios.post('/followRequest', {
         followed_user_id: this.state.currentUserProfileId,
         follower_id: this.props.id
       })
         .then((followRequestResponse) => {
-          // console.log('followRequestResponse: ', followRequestResponse);
           this.setState({
             currentlyFollowing: true
           });
-          // console.log('Set currentlyFollowing to: ', this.state.currentlyFollowing);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    if (this.state.currentlyFollowing) {
+      axios.post('/unfollowRequest', {
+        followed_user_id: this.state.currentUserProfileId,
+        follower_id: this.props.id
+      })
+        .then((unfollowRequestResponse) => {
+          this.setState({
+            currentlyFollowing: false
+          });
         })
         .catch((error) => {
           console.log(error);

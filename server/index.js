@@ -214,23 +214,28 @@ app.post('/getCurrentUserProfileId', (req, res) => {
 });
 
 app.post('/checkIfCurrentlyFollowing', (req, res) => {
-  // console.log('get request /checkIfCurrentlyFollowing in (server / index.js)');
-  // console.log('req.body here is ', req.body + '\n\n');
   mysqlDB.checkIfCurrentlyFollowing(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      // console.log('----------------RETURNING DATA---------------');
-      // res.status(200).json(data);
       res.send(data);
     }
   });
 });
 
 app.post('/followRequest', (req, res) => {
-  // console.log('-------------------\n\n\n\npost request at /followRequest received.\nreq.body is: ', req.body);
-
   mysqlDB.createFollowerConnection(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).json(data);
+    }
+  });
+});
+
+app.post('/unfollowRequest', (req, res) => {
+  console.log('-------------------\n\n\n\npost request at /unfollowRequest received.\nreq.body is: ', req.body);
+  mysqlDB.removeFollowerConnection(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
