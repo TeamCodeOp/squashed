@@ -39,7 +39,8 @@ const formatGithubRepos = (repos) => {
       url: repo.html_url,
       creation_date: repo.created_at.slice(0, 10),
       owner_id: repo.owner.id,
-      owner_image: repo.owner.avatar_url
+      owner_image: repo.owner.avatar_url,
+      language: repo.language
     };
   });
   const columns = Object.entries(formattedRepos[0]).map(tuple => tuple[0]);
