@@ -116,6 +116,8 @@ class UploadForm extends React.Component {
   }
 
   render() {
+    console.log('im called in upload form', this.props.history.location.state);
+    document.cookie = 'INTERCEPTED_ROUTE=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     const {
       projectName, description, githubRepo, techs, screenshot
     } = this.state;
@@ -154,7 +156,7 @@ class UploadForm extends React.Component {
                 label="Name"
                 placeholder="Project Name"
                 name="Project Name"
-                value={projectName}
+                value={this.props.history.location.state ? this.props.history.location.state.projectName : projectName}
                 onChange={this.handleProjectName}
               />
               <Form.Input
