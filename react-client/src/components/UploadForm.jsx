@@ -114,17 +114,10 @@ class UploadForm extends React.Component {
       githubRepo: this.state.githubRepo,
       techs: this.state.techs,
       uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
-      userId: this.props.userId
+      userId: this.props.userId,
+      projectId: this.props.history.location.state.projectId
     })
       .then((response) => {
-        // this.setState({
-        //   projectName: '',
-        //   description: '',
-        //   githubRepo: '',
-        //   techs: [],
-        //   uploadedFileCloudinaryUrl: '',
-        //   uploadedFile: ''
-        // });
         alert('Project updated successfully');
       })
       .catch((error) => {
@@ -136,8 +129,21 @@ class UploadForm extends React.Component {
     this.setState({ techs: data.value });
   }
 
+  // editTheProject(this.props.history.location.state) {
+  //   this.setState
+  // }
+
   render() {
-    console.log('im called in upload form', this.props.history.location.state);
+    let techStackArray = [];
+    if (this.props.history.location.state) {
+    console.log('project id in UploadForm',this.props.history.location.state.projectId);
+      const newTechStack = JSON.parse(this.props.history.location.state.techStack);
+      if (this.props.history.location.state) {
+        for (let i = 0; i < newTechStack.length; i++) {
+          techStackArray.push(newTechStack[i].key);
+        }
+      }
+    }
     document.cookie = 'INTERCEPTED_ROUTE=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     const {
       projectName, description, githubRepo, techs, screenshot
@@ -171,7 +177,7 @@ class UploadForm extends React.Component {
         <Grid columns="equal">
           <Grid.Column />
           <Grid.Column width={6}>
-            <Form className="addProject" onSubmit={this.handleSubmit}>
+            <Form className="addProject" onSubmit={this.handleUpdate}>
               <Form.Input
                 label="Name"
                 placeholder="Project Name"
@@ -193,7 +199,7 @@ class UploadForm extends React.Component {
                 multiple
                 selection
                 options={techOptions}
-                value={this.props.history.location.state ? this.props.history.location.state.techStack :techs}
+                value={this.props.history.location.state ? techStackArray : techs}
                 id="techDropdown"
                 onChange={this.handleTechs}
               />

@@ -20,6 +20,7 @@ module.exports = {
     "prefer-destructuring": "off",
     "no-undef": "off",
     "function-paren-newline":"off",
-    "import/extensions":"off"
+    "import/extensions":"off",
+    "react/prop-types":"off"
   }
 }
