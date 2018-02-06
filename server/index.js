@@ -202,7 +202,6 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-<<<<<<< HEAD
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
 
@@ -245,6 +244,7 @@ app.post('/unfollowRequest', (req, res) => {
     }
   });
 });
+
 
 
 // delete request to the projects schema
