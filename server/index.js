@@ -188,7 +188,6 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 
