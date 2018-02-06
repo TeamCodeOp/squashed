@@ -15,7 +15,8 @@ describe('<App />', () => {
 
   const props = {
     checkSignIn: () => {},
-    getProjects: () => {}
+    getProjects: () => {},
+    getGithubRepos: () => {}
   };
 
   it('renders without exploding', () => {

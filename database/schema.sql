@@ -1,9 +1,9 @@
 -- DROP DATABASE IF EXISTS codeop;
 -- CREATE DATABASE codeop;
 
- USE codeop;
+--  USE codeop;
 
--- USE heroku_a9ded5de1ff1c8b;
+USE heroku_a9ded5de1ff1c8b;
 
 CREATE TABLE IF NOT EXISTS users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS github_repos (
   url varchar(100) NOT NULL,
   creation_date date,
   owner_id int,
-  owner_image varchar(100)
+  owner_image varchar(100),
+  language varchar(50)
 );
 
 

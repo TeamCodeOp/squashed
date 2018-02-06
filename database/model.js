@@ -97,6 +97,20 @@ const insertGithubRepos = (repos) => {
   });
 };
 
+const retrieveGithubRepos = (cb) => {
+  const sql = 'SELECT * from github_repos LIMIT 5';
+
+  db.connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('repo results', results);
+      cb(results);
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
+module.exports.retrieveGithubRepos = retrieveGithubRepos;
