@@ -202,7 +202,8 @@ app.post('/projects', (req, res) => {
 });
 
 app.post('/getCurrentUserProfileId', (req, res) => {
-  console.log('get request /getCurrentUserProfileId');
+  console.log('get request /getCurrentUserProfileId in (server / index.js)');
+  
   mysqlDB.getCurrentUserProfileId(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -212,8 +213,22 @@ app.post('/getCurrentUserProfileId', (req, res) => {
   });
 });
 
+app.post('/checkIfCurrentlyFollowing', (req, res) => {
+  // console.log('get request /checkIfCurrentlyFollowing in (server / index.js)');
+  // console.log('req.body here is ', req.body + '\n\n');
+  mysqlDB.checkIfCurrentlyFollowing(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      // console.log('----------------RETURNING DATA---------------');
+      // res.status(200).json(data);
+      res.send(data);
+    }
+  });
+});
+
 app.post('/followRequest', (req, res) => {
-  console.log('-------------------\n\n\n\npost request at /followRequest received.\nreq.body is: ', req.body);
+  // console.log('-------------------\n\n\n\npost request at /followRequest received.\nreq.body is: ', req.body);
 
   mysqlDB.createFollowerConnection(req.body, (err, data) => {
     if (err) {

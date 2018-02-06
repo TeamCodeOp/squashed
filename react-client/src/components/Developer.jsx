@@ -3,6 +3,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import UserProjectList from './UserProjectList.jsx';
+import $ from 'jquery'; 
 
 const socket = io.connect();
 let newMessage;
@@ -20,8 +21,9 @@ class Developer extends React.Component {
       messages: [],
       following: [],
       followers: [],
-      onlineStatus: false
-      currentUserProfileId: ''
+      onlineStatus: false,
+      currentUserProfileId: '',
+      currentlyFollowing: false
     };
 
     console.log('line 26:', this.state.name);
@@ -29,6 +31,7 @@ class Developer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
+    
   }
 
   // WHY IS THIS.STATE.NAME UNDEFINED???
@@ -69,10 +72,43 @@ class Developer extends React.Component {
         if (this.props.name) {
           socket.emit('registerSocket', this.props.name);
         }
+        axios.post('/getCurrentUserProfileId', {
+          username: this.state.username
+        })
+          .then((profileIdResponse) => {
+            console.log('Current profile ID is (Dev.jsx): ', profileIdResponse.data);
+            this.setState({
+              currentUserProfileId: profileIdResponse.data
+            });
+            axios.post('/checkIfCurrentlyFollowing', {
+              loggedInUserId: this.props.id,
+              currentUserProfileId: this.state.currentUserProfileId
+            })
+              .then((ifFollowingResponse) => {
+                console.log(':::::::::::checkIfCurrentlyFollowing response.data (Dev.jsx): ', ifFollowingResponse);
+                let bool = false;
+                if (ifFollowingResponse.data[0]) {
+                  bool = true;
+                }
+                this.setState({
+                  currentlyFollowing: bool
+                });
+                console.log('State set to (currentlyFollowing)', this.state.currentlyFollowing);
+                
+              })
+              .catch((ifFollowingRrror) => {
+                console.log(ifFollowingRrror);
+              });
+          })
+          .catch((profileIdError) => {
+            console.log(profileIdError);
+          });
       })
       .catch((error) => {
         console.log(error);
       });
+
+    console.log('Component done mounting (Dev.jsx)');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -121,68 +157,57 @@ class Developer extends React.Component {
     socket.emit('messageAdded', newMessage);
   }
 
+
   handleFollowRequest(e) {
     e.preventDefault();
     console.log('follow button clicked');
+    console.log('currentlyFollowing?: ', this.state.currentlyFollowing);
+    
     // console.log('props: ', this.props);
     // console.log('props.userId: ', this.props.userId);
     // console.log('this.state.username: ', this.state.username);
-    axios.post('/getCurrentUserProfileId', {
-      username: this.state.username,
-    })
-    .then((response) => {
-      this.setState({
-        currentUserProfileId: response.data
-      });
+
+    if (!this.state.currentlyFollowing) {
       axios.post('/followRequest', {
         followed_user_id: this.state.currentUserProfileId,
         follower_id: this.props.id
       })
-      .then((response) => {
+        .then((followRequestResponse) => {
+          // console.log('followRequestResponse: ', followRequestResponse);
+          this.setState({
+            currentlyFollowing: true
+          });
+          // console.log('Set currentlyFollowing to: ', this.state.currentlyFollowing);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-    
-  
-
-    // axios.post('/followRequest', {
-    //   followed_user_id: this.props.userId,
-    //   follower_id: this.props.userId
-    // })
-    //   .then((response) => {
-    //     this.setState({
-    //       projectName: '',
-    //       description: '',
-    //       githubRepo: '',
-    //       techs: [],
-    //       uploadedFileCloudinaryUrl: '',
-    //       uploadedFile: ''
-    //     });
-    //     alert('Project added successfully');
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }
 
   render() {
 
-    // console.log('--------------------state: ', this.state);
-    // console.log('--------------------props: ', this.props);
-    
-    const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
+    console.log('--------------------state(Dev.jsx): ', this.state);
+    console.log('--------------------props(Dev.jsx): ', this.props);
+    // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId);
+      
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
     });
     const { msgInput } = this.state
+    
+    const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
+    let buttonJsxToRender = <Button primary onClick={this.handleFollowRequest} >+ Follow</Button>;
+    
+    if (this.state.currentlyFollowing) {
+      buttonJsxToRender = <Button secondary onClick={this.handleFollowRequest} >Following</Button>;
+    }
+
+    // console.log('showFollowButton: ', showFollowButton);
+    // console.log('buttonJsxToRender: ', buttonJsxToRender);
+    // console.log('this.state.currentlyFollowing: ', this.state.currentlyFollowing);
 
     return (
       <div>
@@ -235,8 +260,8 @@ class Developer extends React.Component {
               </Card.Content>
 
               <Card.Content extra>
-                <div>
-                  {  showFollowButton ? <Button primary onClick={this.handleFollowRequest} >+ Follow</Button> : null }
+                <div id="follow-button">
+                  {  showFollowButton ? buttonJsxToRender : null }
 
                   {/* <button id="follow-button" className="ui right floated primary basic button">Follow</button> */}
                 </div>

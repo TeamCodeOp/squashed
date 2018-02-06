@@ -184,24 +184,42 @@ const deleteProjectByProjectId = (query, callback) => {
 };
 
 const getCurrentUserProfileId = (query, cb) => {
-  console.log('getCurrentUserProfileId in db/index.js');
+  // console.log('<><>><><>getCurrentUserProfileId (db/index.js)');
+  // console.log('<><>><><>query (db/index.js)', query);
 
   const insertQuery = `SELECT id FROM users WHERE git_username = '${query.username}'`;
+  // console.log('<><>><><>insertQuery (db/index.js)', insertQuery);
+  
   connection.query(insertQuery, (err, results) => {
+    // console.log('<><>><><> RESULTS: ', results);
     if (err) {
-      console.log('err in database (getCurrentUserProfileId)', err);
+      // console.log('err in database (getCurrentUserProfileId)', err);
       cb(err, null);
     } else {
-      console.log('success (getCurrentUserProfileId)', results);
+      // console.log('^^^^^^^^^^^^^^^^^^^^success (getCurrentUserProfileId)', results);
       cb(null, results[0]['id']);
     }
   });
 };
 
+const checkIfCurrentlyFollowing = (followRequestData, cb) => {
+  // console.log('checkIfCurrentlyFollowing in (db/index.js)');
+  // console.log('followRequestData is: ', followRequestData);
+  // { loggedInUserId: 1, currentUserProfileId: 6 }
 
-const createFollowerConnection = (followRequestData) => {
-  console.log('createFollowerConnection in db/index.js');
-  console.log('followRequestData is: ', followRequestData);
+  const insertQuery = `SELECT followed_user_id FROM followers WHERE followed_user_id ='${followRequestData.currentUserProfileId}' AND follower_id='${followRequestData.loggedInUserId}'`;
+
+  // console.log('<><>><><>checkIfCurrentlyFollowing insertQuery (db/index.js)\n\n', insertQuery + '\n');
+  connection.query(insertQuery, (err, data) => {
+    // console.log('--- return data from db/index.js');
+    // console.log('Data: ', data);
+    cb(err, data);
+  });
+};
+
+const createFollowerConnection = (followRequestData, cb) => {
+  // console.log('createFollowerConnection in db/index.js');
+  // console.log('followRequestData is: ', followRequestData);
   
   return new Promise((resolve, reject) => {
     const insertQuery =
@@ -218,6 +236,7 @@ const createFollowerConnection = (followRequestData) => {
         console.log('error: \n', err);
       }
       console.log('Created a follower connection (from modex/index.js): \n', results);
+      cb(null, results);
       return resolve(results);
     });
   });
@@ -260,3 +279,4 @@ module.exports.getFollowersForUser = getFollowersForUser;
 module.exports.getFollowingForUser = getFollowingForUser;
 module.exports.getCurrentUserProfileId = getCurrentUserProfileId;
 module.exports.createFollowerConnection = createFollowerConnection;
+module.exports.checkIfCurrentlyFollowing = checkIfCurrentlyFollowing;
