@@ -12,6 +12,7 @@ import Developer from './Developer.jsx';
 import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
 import PleaseLogIn from './PleaseLogIn.jsx';
+import Ideas from './Ideas.jsx';
 
 class Root extends React.Component {
   constructor(props) {
@@ -165,6 +166,12 @@ class Root extends React.Component {
               path="/users/:username"
               component={Developer}
               sessionId={this.state.session_id}
+              username={this.state.username}
+              name={this.state.name}
+            />
+            <RouteProps
+              path="/ideas"
+              component={Ideas}
               username={this.state.username}
               name={this.state.name}
             />

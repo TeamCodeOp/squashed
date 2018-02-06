@@ -22,6 +22,11 @@ class NavHeader extends Component {
           to={this.props.sessionId ? '/create' : '/PleaseLogIn'}
           name="Add Project"
         />
+        <Menu.Item
+          as={Link}
+          to={this.props.sessionId ? '/ideas' : '/PleaseLogIn'}
+          name="Brainstorm"
+        />
         {this.props.username ?
           <Menu.Menu position="right">
             <Menu.Item

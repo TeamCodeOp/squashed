@@ -46,6 +46,10 @@ io.on('connection', (socket) => {
   socket.on('messageAdded', (message) => {
     io.to(sockets[message.receiver].id).emit('messageAdded', message);
   });
+
+  socket.on('groupMessageAdded', (message) => {
+    socket.broadcast.emit('groupMessageAdded', message);
+  });
 });
 
 app.use(express.static('./react-client/dist'));

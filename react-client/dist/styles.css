@@ -75,3 +75,11 @@ ul {
 .ui.container.techFilter {
   margin-bottom: 20px;
 }
+
+#groupChatInput {
+  width: 100%;
+}
+
+.ui.form .fields>.field {
+  width: 100%;
+}
