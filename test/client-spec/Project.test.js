@@ -5,14 +5,14 @@ import { mount, shallow } from 'enzyme';
 import { spy } from 'sinon';
 import Project from '../../react-client/src/components/Project.jsx';
 
-xdescribe('<Project />', () => {
+describe('<Project />', () => {
   const props = {
     match: {
       params: ''
     }
   };
 
-  xit('renders without exploding', () => {
+  it('renders without exploding', () => {
     expect(
       shallow(
         <Project {...props} />
