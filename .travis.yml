@@ -4,7 +4,8 @@ node_js:
 cache:
   directories:
     - node_modules
-script: npm run travis-build
+env:
+  - NODE_ENV=development
 services:
   - mysql
 before_install:
