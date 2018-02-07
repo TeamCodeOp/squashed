@@ -203,18 +203,6 @@ class Root extends React.Component {
               handleBrainstormRedirect={this.handleBrainstormRedirect}
               shouldRedirectBrainstorm={this.shouldRedirectBrainstorm}
             />
-            <RouteProps
-              path="/ideas"
-              component={Ideas}
-              username={this.state.username}
-              name={this.state.name}
-            />
-            <RouteProps
-              path="/ideas"
-              component={Ideas}
-              username={this.state.username}
-              name={this.state.name}
-            />
           </Switch>
         </div>
       </Router>
