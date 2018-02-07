@@ -72,12 +72,17 @@ ul {
   margin-bottom: 20px;
 }
 
-#groupChatInput .ui.button {
-  background: #fbbd08 !important;
-}
 
 #messageBox .ui.segment, .ui.segments .segment {
     padding-left: 20px !important;
+}
+
+#groupChatInput {
+  width: 100%;
+}
+
+#groupChatInput button.ui.button {
+  background-color: #fbbd08;
 }
 
 .ui.form .fields>.field {

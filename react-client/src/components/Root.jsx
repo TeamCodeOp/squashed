@@ -209,6 +209,12 @@ class Root extends React.Component {
               username={this.state.username}
               name={this.state.name}
             />
+            <RouteProps
+              path="/ideas"
+              component={Ideas}
+              username={this.state.username}
+              name={this.state.name}
+            />
           </Switch>
         </div>
       </Router>

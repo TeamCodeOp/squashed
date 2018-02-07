@@ -40,6 +40,7 @@ io.on('connection', (socket) => {
     socket.emit('broadcast', sockets);
   });
 
+
   socket.on('drawing', (data) => {
     socket.broadcast.emit('drawing', data);
   });

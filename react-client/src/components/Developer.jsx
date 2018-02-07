@@ -27,6 +27,8 @@ class Developer extends React.Component {
       bio:''
     };
 
+    console.log('line 26:', this.state.name);
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
@@ -118,7 +120,26 @@ class Developer extends React.Component {
           userAvatar: response.data.avatar_url,
           projects: response.data.projects
         });
-        console.log('line 89:', this.state.name);
+
+        if (this.props.name) {
+          socket.emit('registerSocket', this.props.name);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    axios.get(`/developers/${nextProps.match.params.username}`)
+      .then((response) => {
+        this.setState({
+          fullName: response.data.name,
+          name: response.data.name,
+          username: response.data.git_username,
+          userAvatar: response.data.avatar_url,
+          projects: response.data.projects
+        });
       })
       .catch((error) => {
         console.log(error);
