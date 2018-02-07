@@ -115,6 +115,7 @@ class UploadForm extends React.Component {
 
 
 
+
   //  not using it anywhere, wrote this to send put req to server for edit form
   handleUpdate(e) {
     e.preventDefault();
