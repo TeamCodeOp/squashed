@@ -203,7 +203,6 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-<<<<<<< HEAD
 
 
 
@@ -263,17 +262,11 @@ app.put('/viewCount', (req, res) => {
 
 
 
-=======
->>>>>>> made changes to the upload form, for Edit functionality
+
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 });
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> made changes to the upload form, for Edit functionality
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;
