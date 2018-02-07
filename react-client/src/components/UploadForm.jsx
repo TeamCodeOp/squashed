@@ -139,6 +139,10 @@ class UploadForm extends React.Component {
     this.setState({ techs: data.value });
   }
 
+  // editTheProject(this.props.history.location.state) {
+  //   this.setState
+  // }
+
   render() {
     let techStackArray = [];
     if (this.props.history.location.state) {
@@ -182,7 +186,7 @@ class UploadForm extends React.Component {
         <Grid columns="equal">
           <Grid.Column />
           <Grid.Column width={6}>
-            <Form className="addProject" onSubmit={this.handleSubmit}>
+            <Form className="addProject" onSubmit={this.handleUpdate}>
               <Form.Input
                 label="Name"
                 placeholder="Project Name"
