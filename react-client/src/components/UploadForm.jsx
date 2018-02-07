@@ -114,6 +114,7 @@ class UploadForm extends React.Component {
   }
 
 
+
   //  not using it anywhere, wrote this to send put req to server for edit form
   handleUpdate(e) {
     e.preventDefault();
@@ -125,9 +126,6 @@ class UploadForm extends React.Component {
       uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
       userId: this.props.userId,
       projectId: this.props.history.location.state.projectId
-    })
-      .then((response) => {
-      userId: this.props.userId
     })
       .then((response) => {
         alert('Project updated successfully');
@@ -142,7 +140,6 @@ class UploadForm extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
     let techStackArray = [];
     if (this.props.history.location.state) {
       const newTechStack = JSON.parse(this.props.history.location.state.techStack);
@@ -152,9 +149,6 @@ class UploadForm extends React.Component {
         }
       }
     }
-=======
-    console.log('im called in upload form', this.props.history.location.state);
->>>>>>> added the edit functionality to the project
     document.cookie = 'INTERCEPTED_ROUTE=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     const {
       projectName, description, githubRepo, techs, screenshot
