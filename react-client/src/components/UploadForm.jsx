@@ -197,7 +197,7 @@ class UploadForm extends React.Component {
                 label="Name"
                 placeholder="Project Name"
                 name="Project Name"
-                value={this.props.history.location.state ? "hello" : projectName}
+                value={this.props.history.location.state ? this.props.history.location.state.projectName : projectName}
                 onChange={this.handleProjectName}
               />
               <Form.Input
