@@ -271,8 +271,6 @@ app.put('/projects', (req, res) => {
 });
 
 
-
-
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   console.log('delete in server', req.params.id);
