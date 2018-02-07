@@ -27,6 +27,7 @@ class Ideas extends React.Component {
       this.setState({
         userSockets: data
       });
+
       if (this.props.shouldRedirectBrainstorm) {
         this.props.handleBrainstormRedirect();
       }
@@ -69,7 +70,7 @@ class Ideas extends React.Component {
 
   render() {
     const messages = this.state.messages.map((msg, i) => {
-      return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
+      return <p className='messageList' key={i}><span style={{fontWeight: 'bold'}}>{msg.sender}:</span> <span>{msg.text}</span></p>
     });
     const { msgInput } = this.state
 
@@ -81,22 +82,20 @@ class Ideas extends React.Component {
         </Header>
         <Grid columns="equal">
           <Grid.Column />
-          <Segment.Group horizontal style={{ width: '70%'}}>
-            <Segment>
-            <Grid.Column width={8}>
-              <div style={{ width: '100%'}}>
+          <Segment.Group horizontal style={{ width: '70%'}} >
+            <Segment style={{ width: '70%'}}>
+            <Grid.Column width={10}>
+              <div style={{ width: '100%'}} >
                 <Segment
+                  id="messageBox"
                   attached
-                  style={{ height: '500px', overflowY: 'scroll'}}
+                  style={{ height: '500px', overflowY: 'scroll', border:'none'}}
                 >
                   {messages}
                 </Segment>
-                <Segment attached id="groupChatInput">
-                <Form onSubmit={this.handleSubmit}>
-                  <Form.Group>
-                    <Form.Input placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
-                    <Form.Button content='Send' size='small' floated='right'/>
-                  </Form.Group>
+                <Segment attached style={{ border: 'none' }}>
+                <Form onSubmit={this.handleSubmit} id="groupChatInput">
+                  <Form.Input style={{width: '100%'}} placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange} action='Send'/>
                 </Form>
                 </Segment>
               </div>
@@ -109,7 +108,7 @@ class Ideas extends React.Component {
               </Header>
               <ul style={{height: '500px'}}>
                   {Object.keys(this.state.userSockets).map((user, i) => {
-                    return <li key={i}><Icon color='green' size='large' name='check circle'/>{user}</li>;
+                    return <li key={i} ><Icon color='green' size='large' name='check circle'/><Link to={`/users/${this.props.username}`} style={{ color: 'black' }}>{user}</Link></li>;
                   })}
               </ul>
             </Grid.Column>

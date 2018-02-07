@@ -67,19 +67,65 @@ ul {
   font-size: .7em !important;
 }
 
-#searchInput {
-  width: 350px;
-  margin: auto;
-}
 
 .ui.container.techFilter {
   margin-bottom: 20px;
+}
+
+
+#messageBox .ui.segment, .ui.segments .segment {
+    padding-left: 20px !important;
 }
 
 #groupChatInput {
   width: 100%;
 }
 
+#groupChatInput button.ui.button {
+  background-color: #fbbd08;
+}
+
 .ui.form .fields>.field {
   width: 100%;
+}
+
+/*Scrollbar */
+body ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 6px;
+  background-color: #F5F5F5;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background-color: ;
+}
+
+body ::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+  display: none;
+}
+
+
+/*Search bar */
+#searchInput {
+  width: 600px;
+  margin: auto;
+}
+
+div.rbt.open.clearfix {
+  display: inline-block;
+  width: 70%;
+}
+
+div.rbt-input.form-control {
+  display: inline-flex;
+}
+
+/*Project Thumbnails*/
+.ui.image.imgThumb {
+  object-fit: cover !important;
+  object-position: center top;
+  height: 120px;
+  width: 200px;
 }

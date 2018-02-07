@@ -32,10 +32,8 @@ class Developer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
-
   }
 
-  // WHY IS THIS.STATE.NAME UNDEFINED???
   componentWillMount() {
     socket.on('broadcast', (data) => {
       if (data[this.state.name]) {
@@ -74,6 +72,7 @@ class Developer extends React.Component {
         if (this.props.name) {
           socket.emit('registerSocket', this.props.name);
         }
+
         axios.post('/getCurrentUserProfileId', {
           username: this.state.username
         })
@@ -109,8 +108,6 @@ class Developer extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-
-    console.log('Component done mounting (Dev.jsx)');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -123,7 +120,26 @@ class Developer extends React.Component {
           userAvatar: response.data.avatar_url,
           projects: response.data.projects
         });
-        console.log('line 89:', this.state.name);
+
+        if (this.props.name) {
+          socket.emit('registerSocket', this.props.name);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    axios.get(`/developers/${nextProps.match.params.username}`)
+      .then((response) => {
+        this.setState({
+          fullName: response.data.name,
+          name: response.data.name,
+          username: response.data.git_username,
+          userAvatar: response.data.avatar_url,
+          projects: response.data.projects
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -134,6 +150,7 @@ class Developer extends React.Component {
     console.log(this.state.fullName, ' is leaving');
     socket.emit('userDisconnect', this.state.fullName);
   }
+
 
   handleChange(e, { msgInput, value }) {
     this.setState({
@@ -194,15 +211,9 @@ class Developer extends React.Component {
           console.log(error);
         });
     }
-
   }
 
   render() {
-
-    console.log('--------------------state(Dev.jsx): ', this.state);
-    console.log('--------------------props(Dev.jsx): ', this.props);
-    // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId);
-
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
@@ -216,11 +227,8 @@ class Developer extends React.Component {
       buttonJsxToRender = <Button primary basic onClick={this.handleFollowRequest} >Following</Button>;
     }
 
-    // console.log('showFollowButton: ', showFollowButton);
-    // console.log('buttonJsxToRender: ', buttonJsxToRender);
-    // console.log('this.state.currentlyFollowing: ', this.state.currentlyFollowing);
-
     return (
+
       <div>
         <Grid columns='equal'>
           <Grid.Column width={2} />

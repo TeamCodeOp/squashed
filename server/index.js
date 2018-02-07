@@ -11,6 +11,7 @@ const cache = require('memory-cache');
 const url = require('url');
 
 const queryString = require('query-string');
+
 const _ = require('underscore');
 
 const app = express();
@@ -24,7 +25,6 @@ const server = app.listen(port, () => {
 const io = require('socket.io').listen(server);
 
 let sockets = {};
-let isOnline;
 
 io.on('connection', (socket) => {
   // keep track of user's socketId
@@ -38,6 +38,11 @@ io.on('connection', (socket) => {
 
     socket.broadcast.emit('broadcast', sockets);
     socket.emit('broadcast', sockets);
+  });
+
+
+  socket.on('drawing', (data) => {
+    socket.broadcast.emit('drawing', data);
   });
 
   socket.on('userDisconnect', (name) => {
