@@ -268,8 +268,6 @@ app.put('/viewCount', (req, res) => {
 
 
 
-
-
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;
