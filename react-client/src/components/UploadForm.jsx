@@ -13,13 +13,10 @@ let CLOUDINARY_UPLOAD_PRESET;
 if (process.env.NODE_ENV === 'production') {
   CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_URL;
   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
-} else if (process.env.NODE_ENV === 'development') {
+} else {
   config = require('../../../config/configvars.js');
   CLOUDINARY_UPLOAD_URL = config.CLOUDINARY_UPLOAD_URL;
   CLOUDINARY_UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET;
-} else {
-  CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_URL;
-  CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
 }
 
 class UploadForm extends React.Component {
