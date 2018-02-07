@@ -199,11 +199,6 @@ class Developer extends React.Component {
   }
 
   render() {
-
-    console.log('--------------------state(Dev.jsx): ', this.state);
-    console.log('--------------------props(Dev.jsx): ', this.props);
-    // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId);
-
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
@@ -217,11 +212,10 @@ class Developer extends React.Component {
       buttonJsxToRender = <Button primary basic onClick={this.handleFollowRequest} >Following</Button>;
     }
 
-    // console.log('showFollowButton: ', showFollowButton);
-    // console.log('buttonJsxToRender: ', buttonJsxToRender);
-    // console.log('this.state.currentlyFollowing: ', this.state.currentlyFollowing);
+    console.log('line 209', this.state.projects);
 
     return (
+
       <div>
         <Grid columns='equal'>
           <Grid.Column width={2} />
