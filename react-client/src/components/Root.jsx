@@ -13,6 +13,7 @@ import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
 import PleaseLogIn from './PleaseLogIn.jsx';
 import Ideas from './Ideas.jsx';
+// import Notifications from './Notifications.jsx';
 
 class Root extends React.Component {
   constructor(props) {
