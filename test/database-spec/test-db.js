@@ -57,14 +57,14 @@ describe('test database', () => {
       displayName: 'Bob Miller',
       gitLogin: 'bmiller',
       avatarUrl: 'https://avatars0.githubusercontent.com/u/30578313?v=4',
-      session_id: 'bdhjsdf68'
+      session_id: 'bdhjsdf68',
+      user_bio: 'Hi I am Bob'
     };
 
     const userLogin = (userProfile, cb) => {
       dbConnection.query(`SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`, (err, user) => {
         if (user.length === 0 || err) {
-          dbConnection.query(`INSERT INTO users (name,git_username,session_id,avatar_url) VALUES ("${userProfile.displayName}",
-      "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}");`, (err, results) => {
+          dbConnection.query(`INSERT INTO users (name,git_username,session_id,avatar_url,user_bio) VALUES ("${userProfile.displayName}",         "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}", "${userProfile.user_bio}");`, (err, results) => {
             if (err) {
               cb(err, null);
             } else {
@@ -87,7 +87,6 @@ describe('test database', () => {
               throw err;
             } else {
               expect(results.length).to.equal(1);
-              done();
             }
           });
         }
