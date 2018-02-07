@@ -8,11 +8,13 @@ import $ from 'jquery';
 // const socket = io.connect();
 let newMessage;
 let socket;
-if (process.env.NODE_ENV === 'testing') {
-  socket = io.connect('http://localhost:3000');
-} else {
+
+if (process.env.NODE_ENV === 'production') {
   socket = io.connect();
+} else {
+  socket = io.connect('http://localhost:3000');
 }
+
 
 class Developer extends React.Component {
   constructor(props) {

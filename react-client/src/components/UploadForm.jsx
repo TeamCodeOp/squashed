@@ -10,7 +10,7 @@ let config;
 let CLOUDINARY_UPLOAD_URL;
 let CLOUDINARY_UPLOAD_PRESET;
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing') {
   CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_URL;
   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
 } else {

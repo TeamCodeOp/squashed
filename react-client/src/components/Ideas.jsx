@@ -10,10 +10,10 @@ import { Route, Redirect, Switch } from 'react-router';
 let groupMessage;
 
 let socket;
-if (process.env.NODE_ENV === 'testing') {
-  socket = io.connect('http://localhost:3000');
-} else {
+if (process.env.NODE_ENV === 'production') {
   socket = io.connect();
+} else {
+  socket = io.connect('http://localhost:3000');
 }
 
 class Ideas extends React.Component {
