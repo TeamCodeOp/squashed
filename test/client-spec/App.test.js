@@ -29,18 +29,33 @@ describe('<App />', () => {
 
   it('calls componentDidMount', () => {
     spy(App.prototype, 'componentDidMount');
-    const wrapper = shallow(<App {...props}/>);
+    const wrapper = shallow(<App {...props} />);
     expect(App.prototype.componentDidMount.calledOnce).to.equal(true);
     wrapper.unmount();
   });
 
   it('renders Search', () => {
-    const wrapper = shallow(<App {...props}/>);
+    const wrapper = shallow(<App {...props} />);
     expect(wrapper.find('Search')).to.have.length(1);
   });
 
+  it('renders ProjectsMenu', () => {
+    const wrapper = shallow(<App {...props} />);
+    expect(wrapper.find('ProjectsMenu')).to.have.length(1);
+  });
+
+  it('renders TechsFilter', () => {
+    const wrapper = shallow(<App {...props} />);
+    expect(wrapper.find('TechsFilter')).to.have.length(1);
+  });
+
   it('renders NewProjects', () => {
-    const wrapper = shallow(<App {...props}/>);
+    const wrapper = shallow(<App {...props} />);
     expect(wrapper.find('NewProjects')).to.have.length(1);
+  });
+
+  it('renders RepoList', () => {
+    const wrapper = shallow(<App {...props} />);
+    expect(wrapper.find('RepoList')).to.have.length(1);
   });
 });

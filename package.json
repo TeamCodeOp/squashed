@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
+    "travis-build": "webpack -d",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --require babel-register test/*/*.js --exit",
@@ -76,6 +77,7 @@
     "react-dropzone": "^4.2.7",
     "react-redux": "^5.0.6",
     "react-route-props": "^1.0.4",
+    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "semantic-ui-comment": "^2.2.14",

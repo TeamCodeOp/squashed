@@ -1,8 +1,8 @@
 const utils = require('./utils');
 const dbModel = require('../database/model');
 
-// Once a day fetch repos from github
-// */1 * * * * /usr/local/bin/node /Users/Dan/desktop/hrr_28/hrr28-web-historian/workers/htmlfetcher.js -update -config=myconfig
+// Every 8 hours fetch repos from github
+// 0 */8 * * * * /usr/local/bin/node /Users/Dan/Desktop/HRR_Thesis/CodeOp/thesis/workers/githubRepoFetcher.js
 
 console.log('Worker fetching repos...');
 

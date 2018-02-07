@@ -6,8 +6,15 @@ import { Grid, Header, Icon, Segment, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Route, Redirect, Switch } from 'react-router';
 
-const socket = io.connect();
+// const socket = io.connect();
 let groupMessage;
+
+let socket;
+if (process.env.NODE_ENV === 'production') {
+  socket = io.connect();
+} else {
+  socket = io.connect('http://localhost:3000');
+}
 
 class Ideas extends React.Component {
   constructor(props) {
