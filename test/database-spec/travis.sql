@@ -11,7 +11,7 @@ CREATE TABLE users (
   git_username varchar(20) NOT NULL,
   session_id varchar(64),
   avatar_url varchar(100),
-  bio varchar(200)
+  user_bio varchar(200)
 );
 
 CREATE TABLE projects (
