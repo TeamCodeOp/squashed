@@ -266,9 +266,6 @@ app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 });
 
-
-
-
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;

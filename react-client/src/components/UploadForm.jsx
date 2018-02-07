@@ -113,6 +113,7 @@ class UploadForm extends React.Component {
       });
   }
 
+
   //  not using it anywhere, wrote this to send put req to server for edit form
   handleUpdate(e) {
     e.preventDefault();
@@ -124,6 +125,9 @@ class UploadForm extends React.Component {
       uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
       userId: this.props.userId,
       projectId: this.props.history.location.state.projectId
+    })
+      .then((response) => {
+      userId: this.props.userId
     })
       .then((response) => {
         alert('Project updated successfully');
