@@ -16,7 +16,7 @@ class List extends React.Component {
             <Grid.Column key={i}>
               <div style={{ float: 'left', position: 'relative' }}>
                 <Link to={`/apps/${item.id}`}>
-                  <Card style={{ maxWidth: '250px' }}>
+                  <Card style={{ maxWidth: '210px' }}>
                   <Image
                     className='imgThumb'
                     src={item.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}

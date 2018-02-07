@@ -212,8 +212,6 @@ class Developer extends React.Component {
       buttonJsxToRender = <Button primary basic onClick={this.handleFollowRequest} >Following</Button>;
     }
 
-    console.log('line 209', this.state.projects);
-
     return (
 
       <div>
