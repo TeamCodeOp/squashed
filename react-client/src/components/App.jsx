@@ -4,6 +4,7 @@ import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
 import ProjectsMenu from './ProjectsMenu.jsx';
 import TechsFilter from './TechsFilter.jsx';
+import RepoList from './RepoList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.getProjects();
+    this.props.getGithubRepos();
 
     // console.log('App mounted');
     // GET request to '/projects' to get projects
@@ -27,6 +29,9 @@ class App extends React.Component {
           getProjectsByTechs={this.props.getProjectsByTechs}
           handleTechs={this.props.handleTechs}
           techFilter={this.props.techFilter}
+        />
+        <RepoList
+          repos={this.props.githubRepos}
         />
         <NewProjects
           projects={this.props.projects}

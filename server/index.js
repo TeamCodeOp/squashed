@@ -162,6 +162,10 @@ app.get('/projects/:id', (req, res) => {
   });
 });
 
+app.get('/githubRepos', (req, res) => {
+  mysqlModel.retrieveGithubRepos(repos => res.send(repos));
+});
+
 app.get('/checkSession', (req, res) => {
   mysqlDB.checkUserSession(req.sessionID, (user) => {
     res.send(user);

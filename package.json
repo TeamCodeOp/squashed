@@ -11,7 +11,8 @@
     "react-prod": "webpack -d --watch",
     "server-prod": "nodemon server/index.js",
     "build": "webpack --config ./webpack.config.prod.js --progress --colors",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "fetch-repos": "node workers/githubRepoFetcher.js"
   },
   "author": "Beth Johnson",
   "license": "ISC",
