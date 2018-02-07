@@ -28,7 +28,7 @@ class TechsFilter extends React.Component {
     ];
 
     return (
-      <div style={{textAlign: 'center'}}>
+      <div>
         <Container className="techFilter">
           <Dropdown
             placeholder="Techs"

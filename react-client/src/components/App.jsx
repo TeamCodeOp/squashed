@@ -22,6 +22,9 @@ class App extends React.Component {
     return (
       <div>
         <Search searchByUserInput={this.props.searchByUserInput}/>
+        <NewProjects
+          projects={this.props.projects}
+        />
         <ProjectsMenu getProjects={this.props.getProjects}
           handleGetLatest={this.props.handleGetLatest}
         />
@@ -29,9 +32,6 @@ class App extends React.Component {
           getProjectsByTechs={this.props.getProjectsByTechs}
           handleTechs={this.props.handleTechs}
           techFilter={this.props.techFilter}
-        />
-        <NewProjects
-          projects={this.props.projects}
         />
         <RepoList
           repos={this.props.githubRepos}

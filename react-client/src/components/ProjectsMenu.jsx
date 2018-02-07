@@ -11,7 +11,8 @@ class ProjectsMenu extends React.Component {
   render() {
 
     return (
-      <Menu className="projectMenu">
+      <div style={{ textAlign: 'center', marginTop: '5em', marginBottom: '1em' }}>
+      <Menu compact className="projectMenu">
         <Menu.Item className="projectMenuItem" onClick={this.props.handleGetLatest}>
           Latest
         </Menu.Item>
@@ -19,6 +20,7 @@ class ProjectsMenu extends React.Component {
           Popular
         </Menu.Item>
       </Menu>
+      </div>
     );
   }
 }
