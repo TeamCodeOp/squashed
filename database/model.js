@@ -7,22 +7,23 @@ const _ = require('underscore');
 
 const insertProjectData = (projectData) => {
   return new Promise((resolve, reject) => {
-    const insertQuery =
-    `INSERT INTO projects (
-      project_name,
-      description,
-      repo_url,
-      image_Url,
-      user_id
-    ) VALUES(
-      '${projectData.projectName}',
-      '${projectData.description}',
-      '${projectData.githubRepo}',
-      '${projectData.uploadedFileCloudinaryUrl}',
-      ${projectData.userId}
-    )`;
+    // const insertQuery =
+    // `INSERT INTO projects (
+    //   project_name,
+    //   description,
+    //   repo_url,
+    //   image_Url,
+    //   user_id
+    // ) VALUES(
+    //   '${projectData.projectName}',
+    //   '${projectData.description}',
+    //   '${projectData.githubRepo}',
+    //   '${projectData.uploadedFileCloudinaryUrl}',
+    //   ${projectData.userId}
+    // )`;
+    const sql = formatInsertProjectData(projectData);
 
-    db.connection.query(insertQuery, (err, results) => {
+    db.connection.query(sql, (err, results) => {
       if (err) {
         return reject(err);
       }
@@ -64,6 +65,13 @@ const selectAllWhere = (table, column, value, isOne, cb) => {
       cb(results);
     }
   });
+};
+
+const formatInsertProjectData = (data) => {
+  const sql = 'INSERT INTO projects (project_name, description, repo_url, image_Url, creation_date, user_id) VALUES(?,?,?,?,CURDATE(),?)';
+  const inserts = [data.projectName, data.description, data.githubRepo,
+    data.uploadedFileCloudinaryUrl, data.userId];
+  return mysql.format(sql, inserts);
 };
 
 const insertGithubRepos = (repos) => {
