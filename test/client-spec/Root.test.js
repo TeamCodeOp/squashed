@@ -5,13 +5,13 @@ import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 import Root from '../../react-client/src/components/Root.jsx';
 
-spy(Root.prototype, 'componentDidMount');
+spy(Root.prototype, 'componentWillMount');
 
 describe('<Root />', () => {
 
-  it('calls componentDidMount', () => {
+  it('calls componentWillMount', () => {
     const wrapper = shallow(<Root />);
-    expect(Root.prototype.componentDidMount.calledOnce).to.equal(true);
+    expect(Root.prototype.componentWillMount.calledOnce).to.equal(true);
   });
 
   it('sets the initial state', () => {
