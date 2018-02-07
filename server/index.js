@@ -39,8 +39,7 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('broadcast', sockets);
     socket.emit('broadcast', sockets);
   });
-
-
+  
   socket.on('userDisconnect', (name) => {
     if (sockets[name]) {
       sockets[name] = undefined;
