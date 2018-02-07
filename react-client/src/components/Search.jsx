@@ -67,7 +67,7 @@ class Search extends React.Component {
          }}
         labelKey={option=> `${option.project_name}`}
       />
-      <Button onClick={this.handleSearch}>Search</Button>
+      <Button onClick={this.handleSearch} style={{marginLeft: '2px', lineHeight: '.9em'}}>Search</Button>
       </div>
     );
   }

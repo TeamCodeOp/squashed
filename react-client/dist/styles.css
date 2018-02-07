@@ -67,10 +67,6 @@ ul {
   font-size: .7em !important;
 }
 
-#searchInput {
-  width: 350px;
-  margin: auto;
-}
 
 .ui.container.techFilter {
   margin-bottom: 20px;
@@ -88,6 +84,7 @@ ul {
   width: 100%;
 }
 
+/*Scrollbar */
 body ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 6px;
@@ -105,6 +102,22 @@ body ::-webkit-scrollbar-track {
 }
 
 
+/*Search bar */
+#searchInput {
+  width: 600px;
+  margin: auto;
+}
+
+div.rbt.open.clearfix {
+  display: inline-block;
+  width: 70%;
+}
+
+div.rbt-input.form-control {
+  display: inline-flex;
+}
+
+/*Project Thumbnails*/
 .ui.image.imgThumb {
   object-fit: cover !important;
   object-position: center top;
