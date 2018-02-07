@@ -11,7 +11,7 @@ let CLOUDINARY_UPLOAD_URL;
 let CLOUDINARY_UPLOAD_PRESET;
 
 console.log('NODE_ENV: ',process.env.NODE_ENV);
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
   CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_URL;
   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
 } else {
