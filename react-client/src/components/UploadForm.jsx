@@ -128,6 +128,7 @@ class UploadForm extends React.Component {
       projectId: this.props.history.location.state.projectId
     })
       .then((response) => {
+
         alert('Project updated successfully');
       })
       .catch((error) => {
