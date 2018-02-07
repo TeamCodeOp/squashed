@@ -142,6 +142,7 @@ class UploadForm extends React.Component {
   }
 
   render() {
+<<<<<<< HEAD
     let techStackArray = [];
     if (this.props.history.location.state) {
       const newTechStack = JSON.parse(this.props.history.location.state.techStack);
@@ -151,6 +152,9 @@ class UploadForm extends React.Component {
         }
       }
     }
+=======
+    console.log('im called in upload form', this.props.history.location.state);
+>>>>>>> added the edit functionality to the project
     document.cookie = 'INTERCEPTED_ROUTE=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     const {
       projectName, description, githubRepo, techs, screenshot
