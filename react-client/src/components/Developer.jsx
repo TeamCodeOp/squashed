@@ -5,8 +5,14 @@ import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Inp
 import UserProjectList from './UserProjectList.jsx';
 import $ from 'jquery';
 
-const socket = io.connect();
+// const socket = io.connect('http://localhost:3000');
 let newMessage;
+let socket;
+if (process.env.NODE_ENV === 'production') {
+  socket = io.connect();
+} else {
+  socket = io.connect('http://localhost:3000');
+}
 
 class Developer extends React.Component {
   constructor(props) {
