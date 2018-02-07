@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
+    "travis-build": "webpack -d",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --require babel-register test/*/*.js --exit",
