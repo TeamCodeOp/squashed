@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
 
   socket.on('drawing', (data) => {
     socket.broadcast.emit('drawing', data);
-  }
+  });
 
   socket.on('userDisconnect', (name) => {
     if (sockets[name]) {

@@ -30,11 +30,11 @@ class App extends React.Component {
           handleTechs={this.props.handleTechs}
           techFilter={this.props.techFilter}
         />
-        <RepoList
-          repos={this.props.githubRepos}
-        />
         <NewProjects
           projects={this.props.projects}
+        />
+        <RepoList
+          repos={this.props.githubRepos}
         />
       </div>);
   }
