@@ -204,7 +204,7 @@ const checkIfCurrentlyFollowing = (followRequestData, cb) => {
 };
 
 const createFollowerConnection = (followRequestData, cb) => {
-  
+
   return new Promise((resolve, reject) => {
     const insertQuery =
     `INSERT INTO followers (
@@ -231,9 +231,9 @@ const removeFollowerConnection = (unfollowRequestData, cb) => {
   console.log('unfollowRequestData is: ', unfollowRequestData);
 
   const insertQuery = `DELETE FROM followers WHERE followed_user_id ='${unfollowRequestData.followed_user_id}' AND follower_id='${unfollowRequestData.follower_id}'`;
-  
+
   console.log('Query is: \n', insertQuery);
-  
+
   connection.query(insertQuery, (err, data) => {
     console.log('--- return data from db/index.js');
     console.log('Data: ', data);
