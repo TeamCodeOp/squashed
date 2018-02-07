@@ -8,6 +8,7 @@ class NavHeader extends Component {
 
     this.state = {};
   }
+
   render() {
     return (
       <Menu>
