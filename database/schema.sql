@@ -1,9 +1,15 @@
 -- DROP DATABASE IF EXISTS codeop;
 -- CREATE DATABASE codeop;
 
+<<<<<<< HEAD
 --  USE codeop;
+=======
+-- USE heroku_a9ded5de1ff1c8b;
 
-USE heroku_a9ded5de1ff1c8b;
+USE codeop;
+
+>>>>>>> Merge Conflict
+
 
 CREATE TABLE IF NOT EXISTS users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -34,8 +40,17 @@ CREATE TABLE IF NOT EXISTS technologies (
 
 CREATE TABLE IF NOT EXISTS followers (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+<<<<<<< HEAD
   followed_user_id int NOT NULL,
   follower_id int NOT NULL
+=======
+  -- followed_user_id int NOT NULL,
+  -- follower_id int NOT NULL,
+  user_id int NOT NULL,
+  follower_id int NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (follower_id) REFERENCES users(id)
+>>>>>>> Merge Conflict
 );
 
 CREATE TABLE IF NOT EXISTS github_repos (
@@ -50,6 +65,30 @@ CREATE TABLE IF NOT EXISTS github_repos (
   language varchar(50)
 );
 
+<<<<<<< HEAD
+=======
+CREATE TABLE IF NOT EXISTS notifications (
+
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  event text NOT NULL,
+  user_id int NOT NULL,
+  -- follower_id int NOT NULL,
+
+  -- FOREIGN KEY (follower_id) REFERENCES followers(follower_id)
+);
+
+-- notifications
+-- 1   event1  Thuan(2)
+-- 2   event2  Thuan(2)
+-- 3   event3  Ralph
+
+
+-- followers (tj and dan are following thuan)
+-- 1  2(Thuan) 3(TJ)
+-- 2  2(Thuan) 4(Dan)
+
+
+>>>>>>> Merge Conflict
 
 -- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql
 
