@@ -27,8 +27,6 @@ class Developer extends React.Component {
       bio:''
     };
 
-    console.log('line 26:', this.state.name);
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);

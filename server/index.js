@@ -40,6 +40,10 @@ io.on('connection', (socket) => {
     socket.emit('broadcast', sockets);
   });
 
+  socket.on('drawing', (data) => {
+    socket.broadcast.emit('drawing', data);
+  }
+
   socket.on('userDisconnect', (name) => {
     if (sockets[name]) {
       sockets[name] = undefined;
