@@ -136,15 +136,6 @@ class UploadForm extends React.Component {
     this.setState({ techs: data.value });
   }
 
-  // editTheProject(this.props.history.location.state) {
-  //   this.setState({
-  //     projectName: this.props.history.location.state.projectName,
-  //     description: this.props.history.location.state.description,
-  //     githubRepo: '',
-  //     techs: [],
-  //     uploadedFileCloudinaryUrl: '',
-  //   })
-  // }
 
   render() {
     let techStackArray = [];
@@ -189,7 +180,7 @@ class UploadForm extends React.Component {
         <Grid columns="equal">
           <Grid.Column />
           <Grid.Column width={6}>
-            <Form className="addProject" onSubmit={this.handleSubmit}>
+            <Form className="addProject" onSubmit={this.handleUpdate}>
               <Form.Input
                 label="Name"
                 placeholder="Project Name"
@@ -213,7 +204,6 @@ class UploadForm extends React.Component {
                 selection
                 options={techOptions}
                 value={this.props.history.location.state ? techStackArray : techs}
-                value={this.props.history.location.state ? this.props.history.location.state.techStack :techs}
                 id="techDropdown"
                 onChange={this.handleTechs}
               />
