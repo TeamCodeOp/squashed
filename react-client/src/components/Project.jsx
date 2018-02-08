@@ -131,8 +131,12 @@ class Project extends React.Component {
           <button className="ui primary button" className="olive" onClick={() => { this.props.history.push({
               pathname:'/create',
               state:{ gitUser:this.state.githubUser,
-                      projectName: this.state.projectName }
-            })
+                      projectName: this.state.projectName,
+                      githubUrl: this.state.githubRepo,
+                      description: this.state.description,
+                      techStack: JSON.stringify(this.state.techs, null, 3)
+                    }
+            });
           }}
             >
              Edit
