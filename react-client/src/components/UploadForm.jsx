@@ -113,8 +113,6 @@ class UploadForm extends React.Component {
       });
   }
 
-
-
   handleUpdate(e) {
     e.preventDefault();
     axios.put('/projects', {
@@ -215,6 +213,7 @@ class UploadForm extends React.Component {
                 selection
                 options={techOptions}
                 value={this.props.history.location.state ? techStackArray : techs}
+                value={this.props.history.location.state ? this.props.history.location.state.techStack :techs}
                 id="techDropdown"
                 onChange={this.handleTechs}
               />

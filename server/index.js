@@ -203,6 +203,7 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
+
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
 
@@ -248,13 +249,6 @@ app.post('/unfollowRequest', (req, res) => {
 
 
 
-app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
-});
-
-app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
-});
 
 app.put('/viewCount', (req, res) => {
   mysqlModel.incrementViewCount(req.body.id, (count) => {
@@ -269,21 +263,10 @@ app.put('/projects', (req, res) => {
 
 
 
-app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
-
-});
 
 
 
 
-
-
-
-app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
-
-});
 
 
 
