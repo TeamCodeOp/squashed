@@ -276,6 +276,9 @@ class Developer extends React.Component {
                 <div id="follow-button">
                   {  showFollowButton ? buttonJsxToRender : null }
                 </div>
+                <div id="pm-button">
+                  <Button primary floated="right">PM</Button>
+                </div>
               </Card.Content>
 
             </Card>
