@@ -202,6 +202,7 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
+
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
 
@@ -259,6 +260,7 @@ app.put('/viewCount', (req, res) => {
     res.send(count);
   });
 });
+
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
