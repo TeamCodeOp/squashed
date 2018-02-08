@@ -69,6 +69,7 @@ class Project extends React.Component {
 
 
   render() {
+    console.log('props in project', this.state.projectName);
     if (this.state.githubUser === 1) {
       return (
         <Switch>

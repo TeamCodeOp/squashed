@@ -108,7 +108,7 @@ app.get('/projects', (req, res) => {
 app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
-    const bio = user.user_bio;
+    let bio = user.user_bio;
     console.log('bio', bio);
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
@@ -198,9 +198,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
+  console.log('here in projects')
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });
+
 
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
@@ -245,13 +247,14 @@ app.post('/unfollowRequest', (req, res) => {
   });
 });
 
-app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
-});
 
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
+  mysqlDB.updateProjectByProjectId(req.body, (err, data) =>{
+    res.status(201).json(data);
+  });
 });
+
 
 app.put('/viewCount', (req, res) => {
   mysqlModel.incrementViewCount(req.body.id, (count) => {
@@ -259,6 +262,8 @@ app.put('/viewCount', (req, res) => {
     res.send(count);
   });
 });
+
+
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
