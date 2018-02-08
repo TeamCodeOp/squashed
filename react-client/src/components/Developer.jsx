@@ -29,10 +29,14 @@ class Developer extends React.Component {
       messages: [],
       following: [],
       followers: [],
+<<<<<<< HEAD
       onlineStatus: false,
       currentUserProfileId: '',
       currentlyFollowing: false,
       bio: ''
+=======
+      bio:''
+>>>>>>> fetched the bio information from github and rendered on to the page
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -72,7 +76,11 @@ class Developer extends React.Component {
           projects: response.data.projects,
           following: response.data.following,
           followers: response.data.followers,
+<<<<<<< HEAD
           bio: response.data.user_bio || ''
+=======
+          bio: response.data.user_bio
+>>>>>>> fetched the bio information from github and rendered on to the page
         });
 
         if (this.props.name) {
@@ -247,7 +255,11 @@ class Developer extends React.Component {
                 </Card.Meta>
 
                 <Card.Description>
+<<<<<<< HEAD
                   <p>{this.state.bio === null ? '' : this.state.bio }</p>
+=======
+                  <p>{this.state.bio}</p>
+>>>>>>> fetched the bio information from github and rendered on to the page
                 </Card.Description>
 
               </Card.Content>

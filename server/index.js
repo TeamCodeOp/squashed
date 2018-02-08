@@ -108,7 +108,11 @@ app.get('/projects', (req, res) => {
 app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
+<<<<<<< HEAD
     const bio = user.user_bio;
+=======
+    let bio = user.user_bio;
+>>>>>>> fetched the bio information from github and rendered on to the page
     console.log('bio', bio);
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {

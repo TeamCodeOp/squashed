@@ -31,7 +31,6 @@ passport.use(new GitHubStrategy(options, (req, accessToken, refreshToken, profil
     user_bio: profile._json.bio
 
   };
-
   mysqlDB.userLogin(userProfile, (err, user) => {
     if (err) {
       return done(err, null);
