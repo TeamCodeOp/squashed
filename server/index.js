@@ -203,6 +203,7 @@ app.post('/projects', (req, res) => {
 });
 
 
+
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
 
