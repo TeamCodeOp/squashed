@@ -38,15 +38,7 @@ const userLogin = (userProfile, cb) => {
   connection.query(`SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`, (err, user) => {
     if (user.length === 0 || err) {
       connection.query(`INSERT INTO users (name,git_username,session_id,avatar_url,user_bio) VALUES ("${userProfile.displayName}",
-<<<<<<< HEAD
-<<<<<<< HEAD
         "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}", "${userBio}");`, (err, results) => {
-=======
-        "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}", "${userProfile.user_bio}");`, (err, results) => {
->>>>>>> fetched the bio information from github and rendered on to the page
-=======
-        "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}", "${userProfile.user_bio}");`, (err, results) => {
->>>>>>> resolved conflicts
         if (err) {
           cb(err, null);
         } else {
