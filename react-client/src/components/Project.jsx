@@ -23,7 +23,6 @@ class Project extends React.Component {
     };
 
     this.onDelete = this.onDelete.bind(this);
-
   }
 
   componentDidMount() {
@@ -79,7 +78,6 @@ class Project extends React.Component {
       );
     } else if (this.props.username === this.state.githubUser) {
       return (
-
         <Grid columns='equal'>
           <Grid.Column></Grid.Column>
           <Grid.Column width={12}>
@@ -127,17 +125,6 @@ class Project extends React.Component {
              });
             }
           }
-          >
-            <button className="ui primary button" className="olive" onClick={() => { this.props.history.push({
-              pathname:'/create',
-              state:{ gitUser:this.state.githubUser,
-                      projectName: this.state.projectName,
-                      githubUrl: this.state.githubRepo,
-                      description: this.state.description,
-                      techStack: JSON.stringify(this.state.techs, null, 3)
-                    }
-            });
-          }}
             >
              Edit
             </button>
