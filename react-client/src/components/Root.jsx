@@ -236,6 +236,7 @@ class Root extends React.Component {
               shouldRedirectBrainstorm={this.shouldRedirectBrainstorm}
             />
           </Switch>
+
         </div>
       </Router>
     );
