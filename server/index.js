@@ -198,6 +198,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
+  console.log('here in projects')
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });
@@ -260,6 +261,9 @@ app.put('/viewCount', (req, res) => {
     console.log(count);
     res.send(count);
   });
+
+app.put('/projects', (req, res) => {
+  console.log('here in projects', req.body);
 });
 
 
