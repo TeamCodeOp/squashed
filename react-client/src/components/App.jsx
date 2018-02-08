@@ -18,6 +18,10 @@ class App extends React.Component {
     // console.log('App mounted');
     // GET request to '/projects' to get projects
   }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps',nextProps);
+  }
   render() {
     return (
       <div>
@@ -33,6 +37,8 @@ class App extends React.Component {
         />
         <NewProjects
           projects={this.props.projects}
+          isViewFilter={this.props.isViewFilter}
+          toggleViewFilter={this.props.toggleViewFilter}
         />
         <RepoList
           repos={this.props.githubRepos}

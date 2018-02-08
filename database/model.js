@@ -137,11 +137,12 @@ const incrementViewCount = (projectId, cb) => {
 };
 
 const getProjectsByViews = (cb) => {
-  const sql = 'SELECT * FROM projects ORDER BY view_count';
+  const sql = 'SELECT * FROM projects ORDER BY view_count DESC';
   db.connection.query(sql, (err, results) => {
     if (err) {
       console.log(err);
     } else {
+      console.log('viewResults----', results)
       cb(results);
     }
   });

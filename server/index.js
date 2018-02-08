@@ -89,12 +89,13 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
 
 app.get('/projects', (req, res) => {
   let techs;
-  if (req.query.techs === undefined) {
+  console.log('req.query', req.query);
+  if (!req.query.techs && !req.query.views) {
     mysqlDB.retrieveProjects((projects) => {
       res.send(projects);
     });
   } else if (req.query.views) {
-    mysql.Model.getProjectsByViews(projects => res.send(projects));
+    mysqlModel.getProjectsByViews(projects => res.send(projects));
   } else {
     techs = Array.isArray(req.query.techs) ? req.query.techs : [req.query.techs];
     mysqlDB.retrieveProjectsByTechs(techs, (projects) => {
@@ -112,7 +113,6 @@ app.get('/developers/:username', (req, res) => {
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
-
           const followersToReturn = [];
           followers.forEach((dataPacket) => {
             followersToReturn.push(dataPacket['follower_id']);

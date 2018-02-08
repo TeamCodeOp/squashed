@@ -10,6 +10,13 @@ class List extends React.Component {
     this.state = { viewCount: 0 };
   }
 
+  componentWillUnmount() {
+    console.log('unmounting');
+    if (this.props.isViewFilter) {
+      this.props.toggleViewFilter();
+    }
+  }
+
   updateViewCount(id) {
     console.log('id', id);
     axios.put('/viewCount', { id })
@@ -46,10 +53,12 @@ class List extends React.Component {
                       {project.category}
                     </Card.Description>
                   </Card.Content>
+                  {this.props.isViewFilter &&
                   <Card.Content extra textAlign="right">
                     <Icon name="eye" style={{ float: 'right'}} />
                         {project.view_count}
-                  </Card.Content>
+
+                  </Card.Content> }
                 </Card>
                 </Link>
               </div>
