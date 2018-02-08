@@ -9,9 +9,7 @@ const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
 const url = require('url');
-
 const queryString = require('query-string');
-
 const _ = require('underscore');
 
 const app = express();
@@ -24,7 +22,7 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io').listen(server);
 
-let sockets = {};
+const sockets = {};
 
 io.on('connection', (socket) => {
   // keep track of user's socketId
@@ -84,13 +82,6 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
   (req, res) => {
     const lastPath = req.cookies.INTERCEPTED_ROUTE === undefined ? '/' : req.cookies.INTERCEPTED_ROUTE;
     cache.put(req.sessionID, req.user);
-
-    // res.redirect(url.format({
-    //   pathname: path,
-    //   query: {
-    //     session: req.sessionID
-    //   }
-    // }));
     res.clearCookie('INTERCEPTED_ROUTE')
       .redirect(`${lastPath}?session=${req.sessionID}`);
   }
@@ -98,10 +89,13 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
 
 app.get('/projects', (req, res) => {
   let techs;
-  if (req.query.techs === undefined) {
+  console.log('req.query', req.query);
+  if (!req.query.techs && !req.query.views) {
     mysqlDB.retrieveProjects((projects) => {
       res.send(projects);
     });
+  } else if (req.query.views) {
+    mysqlModel.getProjectsByViews(projects => res.send(projects));
   } else {
     techs = Array.isArray(req.query.techs) ? req.query.techs : [req.query.techs];
     mysqlDB.retrieveProjectsByTechs(techs, (projects) => {
@@ -114,18 +108,17 @@ app.get('/projects', (req, res) => {
 app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
-    let bio = user.user_bio;
+    const bio = user.user_bio;
     console.log('bio', bio);
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
-
-          let followersToReturn = [];
+          const followersToReturn = [];
           followers.forEach((dataPacket) => {
             followersToReturn.push(dataPacket['follower_id']);
           });
 
-          let followingToReturn = [];
+          const followingToReturn = [];
           following.forEach((dataPacket) => {
             followingToReturn.push(dataPacket['followed_user_id']);
           });
@@ -205,12 +198,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
-  console.log('here in projects')
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });
-
-
 
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
@@ -255,22 +245,23 @@ app.post('/unfollowRequest', (req, res) => {
   });
 });
 
+app.put('/projects', (req, res) => {
+  console.log('here in projects', req.body);
+});
 
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
-
 });
 
-
-app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
-
+app.put('/viewCount', (req, res) => {
+  mysqlModel.incrementViewCount(req.body.id, (count) => {
+    console.log(count);
+    res.send(count);
+  });
 });
-
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
-  console.log('delete in server', req.params.id);
   const projectId = req.params.id;
   mysqlDB.deleteProjectByProjectId(projectId, (project) => {
     res.send(project);

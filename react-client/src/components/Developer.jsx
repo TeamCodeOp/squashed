@@ -72,7 +72,7 @@ class Developer extends React.Component {
           projects: response.data.projects,
           following: response.data.following,
           followers: response.data.followers,
-          bio: response.data.user_bio
+          bio: response.data.user_bio || ''
         });
 
         if (this.props.name) {

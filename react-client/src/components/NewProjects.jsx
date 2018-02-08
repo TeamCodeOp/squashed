@@ -8,7 +8,14 @@ const NewProjects = props => (
     <Grid>
       {props.projects.map((project, i) => {
         if (i % 4 === 0 && i <= props.projects.length - 1) {
-          return <List key={i} projects={props.projects.slice(i, i + 4)} />;
+          return (
+            <List
+              key={i}
+              projects={props.projects.slice(i, i + 4)}
+              isViewFilter={props.isViewFilter}
+              toggleViewFilter={props.toggleViewFilter}
+              techFilter={props.techFilter}
+            />);
         }
       })}
     </Grid>

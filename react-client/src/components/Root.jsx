@@ -28,7 +28,8 @@ class Root extends React.Component {
       isCheckingLogIn: false,
       shouldRedirectProject: false,
       shouldRedirectBrainstorm: false,
-      githubRepos: []
+      githubRepos: [],
+      isViewFilter: false
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -41,6 +42,8 @@ class Root extends React.Component {
     this.handleBrainstormRedirect = this.handleBrainstormRedirect.bind(this);
     this.getGithubRepos = this.getGithubRepos.bind(this);
     this.getProjectInfoByProjectId = this.getProjectInfoByProjectId.bind(this);
+    this.filterByViews = this.filterByViews.bind(this);
+    this.toggleViewFilter = this.toggleViewFilter.bind(this);
   }
 
   componentWillMount() {
@@ -143,11 +146,7 @@ class Root extends React.Component {
   }
 
   handleGetLatest() {
-    this.setState({
-      techFilter: []
-    }, function () {
-      this.getProjects();
-    });
+    this.setState({ techFilter: [], isViewFilter: false }, () => this.getProjects());
   }
 
   handleProjectRedirect() {
@@ -155,6 +154,15 @@ class Root extends React.Component {
   }
   handleBrainstormRedirect() {
     this.setState({ shouldRedirectBrainstorm: !this.state.shouldRedirectProject });
+  }
+  filterByViews() {
+    axios.get('/projects?views=true')
+      .then(response => this.setState({ projects: response.data, isViewFilter: true }))
+      .catch(err => console.log(err));
+  }
+
+  toggleViewFilter() {
+    this.setState({ isViewFilter: !this.state.isViewFilter });
   }
 
   render() {
@@ -186,6 +194,9 @@ class Root extends React.Component {
               handleTechs={this.handleTechs}
               githubRepos={this.state.githubRepos}
               getGithubRepos={this.getGithubRepos}
+              filterByViews={this.filterByViews}
+              isViewFilter={this.state.isViewFilter}
+              toggleViewFilter={this.toggleViewFilter}
             />
             <RouteProps
               path="/create"

@@ -1,12 +1,9 @@
 -- DROP DATABASE IF EXISTS codeop;
 -- CREATE DATABASE codeop;
 
-
 USE heroku_a9ded5de1ff1c8b;
 
 -- USE codeop;
-
-
 
 CREATE TABLE IF NOT EXISTS users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -25,6 +22,7 @@ CREATE TABLE IF NOT EXISTS projects (
   image_Url varchar(100),
   creation_date date,
   user_id int,
+  view_count int,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

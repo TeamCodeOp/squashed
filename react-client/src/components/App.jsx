@@ -18,12 +18,14 @@ class App extends React.Component {
     // console.log('App mounted');
     // GET request to '/projects' to get projects
   }
+
   render() {
     return (
       <div>
         <Search searchByUserInput={this.props.searchByUserInput}/>
         <ProjectsMenu getProjects={this.props.getProjects}
           handleGetLatest={this.props.handleGetLatest}
+          filterByViews={this.props.filterByViews}
         />
         <TechsFilter
           getProjectsByTechs={this.props.getProjectsByTechs}
@@ -32,6 +34,9 @@ class App extends React.Component {
         />
         <NewProjects
           projects={this.props.projects}
+          isViewFilter={this.props.isViewFilter}
+          toggleViewFilter={this.props.toggleViewFilter}
+          techFilter={this.props.techFilter}
         />
         <RepoList
           repos={this.props.githubRepos}
