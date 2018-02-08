@@ -113,7 +113,7 @@ class Project extends React.Component {
             <button className="ui primary button" onClick={this.onDelete}>
              Delete
             </button>
-            <button className="ui primary button" className="olive" onClick={() => { this.props.history.push({
+            <button className="ui primary button" onClick={() => { this.props.history.push({
               pathname:'/create',
               state:{ gitUser:this.state.githubUser,
                       projectName: this.state.projectName,

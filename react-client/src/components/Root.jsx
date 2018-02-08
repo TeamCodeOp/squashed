@@ -40,6 +40,7 @@ class Root extends React.Component {
     this.handleProjectRedirect = this.handleProjectRedirect.bind(this);
     this.handleBrainstormRedirect = this.handleBrainstormRedirect.bind(this);
     this.getGithubRepos = this.getGithubRepos.bind(this);
+    this.getProjectInfoByProjectId = this.getProjectInfoByProjectId.bind(this);
   }
 
   componentWillMount() {
@@ -87,6 +88,30 @@ class Root extends React.Component {
       })
       .catch((error) => {
         console.log('check access token error');
+      });
+  }
+
+  getProjectInfoByProjectId(projectId) {
+    axios.get(`/projects/${projectId}`)
+      .then((response) => {
+        const techStackHtml = response.data[1].map((tech) =>
+        <li className="ui label" key={tech.toString()}>
+          {tech}
+        </li>
+        );
+
+        this.setState({
+          projectName: response.data[0].project_name,
+          description: response.data[0].description,
+          githubRepo: response.data[0].repo_url,
+          techs: techStackHtml,
+          githubUser: response.data[0].user.git_username,
+          projectThumb: response.data[0].image_Url,
+          testUser: response.data[0].user.git_username
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
@@ -181,6 +206,7 @@ class Root extends React.Component {
               path="/apps/:id"
               component={Project}
               username={this.state.username}
+              getProjectInfoByProjectId={this.state.getProjectInfoByProjectId}
             />
             <RouteProps
               path="/users/:username"

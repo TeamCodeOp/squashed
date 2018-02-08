@@ -8,7 +8,6 @@ class TechsFilter extends React.Component {
 
   render() {
     const techs = this.props.techFilter;
-    console.log('techs', techs);
     const techOptions = [
       { key: 'angular', text: 'Angular', value: 'angular' },
       { key: 'backbone', text: 'Backbone', value: 'backbone' },

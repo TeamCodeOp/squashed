@@ -10,7 +10,6 @@ class List extends React.Component {
 
 
   render() {
-    console.log(this.props.projects);
     return (
       <Grid.Row columns={4}>
         {this.props.projects.map((project, i) => {
