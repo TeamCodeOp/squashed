@@ -206,6 +206,7 @@ app.post('/projects', (req, res) => {
 
 
 
+
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
 
@@ -279,11 +280,11 @@ app.put('/projects', (req, res) => {
 
 
 
+
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 
 });
-
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
