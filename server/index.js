@@ -108,11 +108,7 @@ app.get('/projects', (req, res) => {
 app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
-<<<<<<< HEAD
-    const bio = user.user_bio;
-=======
     let bio = user.user_bio;
->>>>>>> fetched the bio information from github and rendered on to the page
     console.log('bio', bio);
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
@@ -207,15 +203,6 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-<<<<<<< HEAD
-
-
-
-
-
-=======
-<<<<<<< HEAD
->>>>>>> rebased the changes
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
 
@@ -260,6 +247,7 @@ app.post('/unfollowRequest', (req, res) => {
 });
 
 
+
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 });
@@ -296,6 +284,7 @@ app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 
 });
+
 
 
 // delete request to the projects schema
