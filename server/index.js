@@ -251,6 +251,12 @@ app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 });
 
+app.put('/viewCount', (req, res) => {
+  mysqlModel.incrementViewCount(req.body.id, (count) => {
+    res.send(count);
+  });
+});
+
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;

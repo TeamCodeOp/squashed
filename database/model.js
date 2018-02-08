@@ -39,7 +39,6 @@ const insertProjectData = (projectData) => {
         if (err2) {
           console.log('error: \n', err2);
         }
-        console.log('Inserted into technologies (from modex/index.js): \n', results2);
       });
 
       return resolve(results);
@@ -112,7 +111,28 @@ const retrieveGithubRepos = (cb) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('repo results', results);
+      cb(results);
+    }
+  });
+};
+
+const incrementViewCount = (projectId, cb) => {
+  const sql = `UPDATE projects SET view_count = view_count + 1 WHERE id = ${projectId}`;
+  const inserts = [projectId];
+  const query = mysql.format(sql, inserts);
+
+  db.connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      db.connection.query(`SELECT view_count FROM projects WHERE id=${projectId}`, (err, results) => {
+        if (err) {
+          console.log(err);
+        } else {
+          cb(results[0]);
+        }
+      });
+
       cb(results);
     }
   });
@@ -122,3 +142,4 @@ module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
 module.exports.retrieveGithubRepos = retrieveGithubRepos;
+module.exports.incrementViewCount = incrementViewCount;

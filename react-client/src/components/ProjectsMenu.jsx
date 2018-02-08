@@ -16,7 +16,7 @@ class ProjectsMenu extends React.Component {
         <Menu.Item className="projectMenuItem" onClick={this.props.handleGetLatest}>
           Latest
         </Menu.Item>
-        <Menu.Item className="projectMenuItem" onClick={this.props.getProjects}>
+        <Menu.Item className="projectMenuItem" onClick={this.props.filterByViews}>
           Popular
         </Menu.Item>
       </Menu>
