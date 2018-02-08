@@ -37,9 +37,27 @@ class UploadForm extends React.Component {
     this.handleProjectName = this.handleProjectName.bind(this);
     this.handleDescription = this.handleDescription.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   componentWillMount() {
+     let techStackArray = [];
+    if (this.props.history.location.state) {
+      const newTechStack = JSON.parse(this.props.history.location.state.techStack);
+      if (this.props.history.location.state) {
+        for (let i = 0; i < newTechStack.length; i++) {
+          techStackArray.push(newTechStack[i].key);
+        }
+      }
+    }
+    if (this.props.history.location.state) {
+      this.setState({
+        projectName: this.props.history.location.state.projectName,
+        description: this.props.history.location.state.description,
+        githubRepo: this.props.history.location.state.githubUrl,
+        techs: techStackArray
+      });
+    }
     if (this.props.shouldRedirectProject) {
       this.props.handleProjectRedirect();
     }
@@ -116,6 +134,7 @@ class UploadForm extends React.Component {
   //  not using it anywhere, wrote this to send put req to server for edit form
   handleUpdate(e) {
     e.preventDefault();
+    console.log('hurray', this.state);
     axios.put('/projects', {
       projectName: this.state.projectName,
       description: this.state.description,
@@ -137,16 +156,9 @@ class UploadForm extends React.Component {
     this.setState({ techs: data.value });
   }
 
+
+
   render() {
-    let techStackArray = [];
-    if (this.props.history.location.state) {
-      const newTechStack = JSON.parse(this.props.history.location.state.techStack);
-      if (this.props.history.location.state) {
-        for (let i = 0; i < newTechStack.length; i++) {
-          techStackArray.push(newTechStack[i].key);
-        }
-      }
-    }
     document.cookie = 'INTERCEPTED_ROUTE=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     const {
       projectName, description, githubRepo, techs, screenshot
@@ -180,19 +192,19 @@ class UploadForm extends React.Component {
         <Grid columns="equal">
           <Grid.Column />
           <Grid.Column width={6}>
-            <Form className="addProject" onSubmit={this.handleSubmit}>
+            <Form className="addProject">
               <Form.Input
                 label="Name"
                 placeholder="Project Name"
                 name="Project Name"
-                value={this.props.history.location.state ? "hello" : projectName}
+                value={this.state.projectName}
                 onChange={this.handleProjectName}
               />
               <Form.Input
                 label="Github"
                 placeholder="Project repo link"
                 name="Github Repo"
-                value={this.props.history.location.state ? this.props.history.location.state.githubUrl: githubRepo}
+                value={this.state.githubRepo}
                 onChange={this.handleGitHubRepo}
               />
               <label style={{fontWeight: 'bold', marginBottom: '-2px'}}>Tech Stack</label>
@@ -202,7 +214,7 @@ class UploadForm extends React.Component {
                 multiple
                 selection
                 options={techOptions}
-                value={this.props.history.location.state ? techStackArray : techs}
+                value={this.state.techs}
                 id="techDropdown"
                 onChange={this.handleTechs}
               />
@@ -210,7 +222,7 @@ class UploadForm extends React.Component {
               <Form.TextArea
                 label="Description"
                 placeholder="Tell us more about your project..."
-                value={this.props.history.location.state ? this.props.history.location.state.description : description}
+                value={this.state.description}
                 onChange={this.handleDescription}
               />
               <label>Project Screenshot</label>
@@ -229,7 +241,6 @@ class UploadForm extends React.Component {
                   </span>
                 </Dropzone>
               </div>
-
               <div>
                 {this.state.uploadedFileCloudinaryUrl === '' ? null :
                   <div style={{textAlign: 'center'}}>
@@ -237,7 +248,7 @@ class UploadForm extends React.Component {
                     <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }} />
                   </div>}
               </div>
-              {this.props.history.location.state ? <Form.Button content="Update" floated="right" /> : <Form.Button content="Submit" floated="right" />}
+              {this.props.history.location.state ? <Form.Button content="Update" floated="right" onClick={this.handleUpdate} /> : <Form.Button content="Submit" floated="right" onClick={this.handleSubmit}/>}
             </Form>
           </Grid.Column>
           <Grid.Column />

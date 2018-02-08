@@ -203,7 +203,7 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-<<<<<<< HEAD
+
 
 
 app.post('/getCurrentUserProfileId', (req, res) => {
@@ -252,8 +252,11 @@ app.post('/unfollowRequest', (req, res) => {
 
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
-
+  mysqlDB.updateProjectByProjectId(req.body, (err, data) =>{
+    res.status(201).json(data);
+  });
 });
+
 
 
 
@@ -272,6 +275,7 @@ app.put('/viewCount', (req, res) => {
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 });
+
 
 
 // delete request to the projects schema
