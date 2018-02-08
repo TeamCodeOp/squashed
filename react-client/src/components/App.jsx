@@ -24,6 +24,7 @@ class App extends React.Component {
         <Search searchByUserInput={this.props.searchByUserInput}/>
         <ProjectsMenu getProjects={this.props.getProjects}
           handleGetLatest={this.props.handleGetLatest}
+          filterByViews={this.props.filterByViews}
         />
         <TechsFilter
           getProjectsByTechs={this.props.getProjectsByTechs}

@@ -93,6 +93,8 @@ app.get('/projects', (req, res) => {
     mysqlDB.retrieveProjects((projects) => {
       res.send(projects);
     });
+  } else if (req.query.views) {
+    mysql.Model.getProjectsByViews(projects => res.send(projects));
   } else {
     techs = Array.isArray(req.query.techs) ? req.query.techs : [req.query.techs];
     mysqlDB.retrieveProjectsByTechs(techs, (projects) => {
@@ -253,7 +255,8 @@ app.put('/projects', (req, res) => {
 
 app.put('/viewCount', (req, res) => {
   mysqlModel.incrementViewCount(req.body.id, (count) => {
-    res.send(count);
+    console.log(count);
+    res.send(count[0]);
   });
 });
 

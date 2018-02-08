@@ -46,6 +46,10 @@ class List extends React.Component {
                       {project.category}
                     </Card.Description>
                   </Card.Content>
+                  <Card.Content extra textAlign="right">
+                    <Icon name="eye" style={{ float: 'right'}} />
+                        {project.view_count}
+                  </Card.Content>
                 </Card>
                 </Link>
               </div>

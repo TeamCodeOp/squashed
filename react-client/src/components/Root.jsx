@@ -41,6 +41,7 @@ class Root extends React.Component {
     this.handleBrainstormRedirect = this.handleBrainstormRedirect.bind(this);
     this.getGithubRepos = this.getGithubRepos.bind(this);
     this.getProjectInfoByProjectId = this.getProjectInfoByProjectId.bind(this);
+    this.filterByViews = this.filterByViews.bind(this);
   }
 
   componentWillMount() {
@@ -143,11 +144,7 @@ class Root extends React.Component {
   }
 
   handleGetLatest() {
-    this.setState({
-      techFilter: []
-    }, function () {
-      this.getProjects();
-    });
+    this.setState({ techFilter: [] }, () => this.getProjects());
   }
 
   handleProjectRedirect() {
@@ -155,6 +152,11 @@ class Root extends React.Component {
   }
   handleBrainstormRedirect() {
     this.setState({ shouldRedirectBrainstorm: !this.state.shouldRedirectProject });
+  }
+  filterByViews() {
+    axios.get('/projects?views')
+      .then(response => this.setState({ projects: response.data }))
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -186,6 +188,7 @@ class Root extends React.Component {
               handleTechs={this.handleTechs}
               githubRepos={this.state.githubRepos}
               getGithubRepos={this.getGithubRepos}
+              filterByViews={this.filterByViews}
             />
             <RouteProps
               path="/create"

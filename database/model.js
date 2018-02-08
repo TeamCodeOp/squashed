@@ -138,8 +138,20 @@ const incrementViewCount = (projectId, cb) => {
   });
 };
 
+const getProjectsByViews = (cb) => {
+  const sql = 'SELECT * FROM projects ORDER BY view_count';
+  db.connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(results);
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
 module.exports.retrieveGithubRepos = retrieveGithubRepos;
 module.exports.incrementViewCount = incrementViewCount;
+module.exports.getProjectsByViews = getProjectsByViews;
