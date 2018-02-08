@@ -113,6 +113,7 @@ class UploadForm extends React.Component {
       });
   }
 
+  //  not using it anywhere, wrote this to send put req to server for edit form
   handleUpdate(e) {
     e.preventDefault();
     axios.put('/projects', {
@@ -135,7 +136,6 @@ class UploadForm extends React.Component {
   handleTechs(e, data) {
     this.setState({ techs: data.value });
   }
-
 
   render() {
     let techStackArray = [];
