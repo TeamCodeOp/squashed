@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS projects (
   image_Url varchar(100),
   creation_date date,
   user_id int,
+  view_count int
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
