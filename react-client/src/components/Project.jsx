@@ -72,7 +72,7 @@ class Project extends React.Component {
 
 
   render() {
-    console.log('props in project', this.props.match.params.id);
+    console.log('props in project', this.state.projectName);
     if (this.state.githubUser === 1) {
       console.log(' 1 else if');
       return (

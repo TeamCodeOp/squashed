@@ -261,6 +261,17 @@ const getFollowingForUser = (userId, cb) => {
   });
 };
 
+const updateProjectByProjectId = (projectData, cb) => {
+  console.log('update projects');
+  connection.query(`UPDATE projects SET project_name ='${projectData.projectName}', description='${projectData.description}',repo_url='${projectData.githubRepo}' WHERE id = '${projectData.projectId}';`, (err, user) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(null, user);
+    }
+  });
+};
+
 module.exports.connection = connection;
 module.exports.userLogin = userLogin;
 module.exports.checkUserSession = checkUserSession;
@@ -280,3 +291,4 @@ module.exports.getCurrentUserProfileId = getCurrentUserProfileId;
 module.exports.createFollowerConnection = createFollowerConnection;
 module.exports.removeFollowerConnection = removeFollowerConnection;
 module.exports.checkIfCurrentlyFollowing = checkIfCurrentlyFollowing;
+module.exports.updateProjectByProjectId = updateProjectByProjectId;
