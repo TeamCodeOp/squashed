@@ -138,22 +138,6 @@ class Developer extends React.Component {
       });
   }
 
-  componentWillReceiveProps(nextProps) {
-    axios.get(`/developers/${nextProps.match.params.username}`)
-      .then((response) => {
-        this.setState({
-          fullName: response.data.name,
-          name: response.data.name,
-          username: response.data.git_username,
-          userAvatar: response.data.avatar_url,
-          projects: response.data.projects
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   componentWillUnmount() {
     console.log(this.state.fullName, ' is leaving');
     socket.emit('userDisconnect', this.state.fullName);
