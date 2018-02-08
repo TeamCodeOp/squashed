@@ -204,9 +204,6 @@ app.post('/projects', (req, res) => {
 });
 
 
-
-
-
 app.post('/getCurrentUserProfileId', (req, res) => {
   console.log('get request /getCurrentUserProfileId in (server / index.js)');
 
@@ -253,6 +250,11 @@ app.post('/unfollowRequest', (req, res) => {
 
 
 
+app.put('/projects', (req, res) => {
+  console.log('here in projects', req.body);
+
+});
+
 
 
 app.put('/viewCount', (req, res) => {
@@ -260,14 +262,11 @@ app.put('/viewCount', (req, res) => {
     console.log(count);
     res.send(count);
   });
-
-
-
-
-
-app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
 });
+
+
+
+
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
