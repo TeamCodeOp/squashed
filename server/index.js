@@ -250,6 +250,7 @@ app.post('/unfollowRequest', (req, res) => {
 
 
 
+
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
 
@@ -265,6 +266,11 @@ app.put('/viewCount', (req, res) => {
 });
 
 
+
+
+app.put('/projects', (req, res) => {
+  console.log('here in projects', req.body);
+});
 
 
 
