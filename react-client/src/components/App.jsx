@@ -39,6 +39,7 @@ class App extends React.Component {
           projects={this.props.projects}
           isViewFilter={this.props.isViewFilter}
           toggleViewFilter={this.props.toggleViewFilter}
+          techFilter={this.props.techFilter}
         />
         <RepoList
           repos={this.props.githubRepos}

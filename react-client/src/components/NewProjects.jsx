@@ -14,6 +14,7 @@ const NewProjects = props => (
               projects={props.projects.slice(i, i + 4)}
               isViewFilter={props.isViewFilter}
               toggleViewFilter={props.toggleViewFilter}
+              techFilter={props.techFilter}
             />);
         }
       })}
