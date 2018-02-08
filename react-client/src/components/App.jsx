@@ -19,9 +19,6 @@ class App extends React.Component {
     // GET request to '/projects' to get projects
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps',nextProps);
-  }
   render() {
     return (
       <div>
