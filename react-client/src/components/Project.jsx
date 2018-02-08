@@ -125,6 +125,10 @@ class Project extends React.Component {
              });
             }
           }
+                      techStack: JSON.stringify(this.state.techs, null, 3)
+                    }
+            });
+          }}
             >
              Edit
             </button>
