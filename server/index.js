@@ -256,9 +256,6 @@ app.put('/projects', (req, res) => {
 });
 
 
-
-
-
 app.put('/viewCount', (req, res) => {
   mysqlModel.incrementViewCount(req.body.id, (count) => {
     console.log(count);
