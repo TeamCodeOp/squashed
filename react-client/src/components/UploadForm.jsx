@@ -180,12 +180,11 @@ class UploadForm extends React.Component {
         <Grid columns="equal">
           <Grid.Column />
           <Grid.Column width={6}>
-            <Form className="addProject" onSubmit={this.handleUpdate}>
+            <Form className="addProject" onSubmit={this.handleSubmit}>
               <Form.Input
                 label="Name"
                 placeholder="Project Name"
                 name="Project Name"
-                value={this.props.history.location.state ? "hello" : projectName}
                 value={this.props.history.location.state ? this.props.history.location.state.projectName : projectName}
                 onChange={this.handleProjectName}
               />
