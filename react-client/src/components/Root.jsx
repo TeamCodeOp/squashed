@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import RouteProps from 'react-route-props';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import $ from 'jquery';
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
 import Developer from './Developer.jsx';
@@ -80,20 +79,15 @@ class Root extends React.Component {
   }
 
   searchByUserInput(result) {
-    const that = this;
-    $.ajax({
-      url: `/searchProjects?title=${result[0].project_name}`,
-      success: (response) => {
-        console.log('RESPONSE IN SearchBar', response);
-
-        that.setState({
-          projects: response
+    axios.get(`/searchProjects?title=${result[0].project_name}`)
+      .then((response) => {
+        this.setState({
+          projects: response.data
         });
-      },
-      error: () => {
+      })
+      .catch((error) => {
         console.log('check access token error');
-      }
-    });
+      });
   }
 
   getProjectsByTechs(techs) {

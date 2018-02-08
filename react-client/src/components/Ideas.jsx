@@ -71,7 +71,6 @@ class Ideas extends React.Component {
       msgInput: ''
     });
 
-    // sends newMessage object to server
     socket.emit('groupMessageAdded', groupMessage);
   }
 
@@ -115,7 +114,7 @@ class Ideas extends React.Component {
               </Header>
               <ul style={{height: '500px'}}>
                   {Object.keys(this.state.userSockets).map((user, i) => {
-                    return <li key={i} ><Icon color='green' size='large' name='check circle'/><Link to={`/users/${this.props.username}`} style={{ color: 'black' }}>{user}</Link></li>;
+                    return <li key={i} ><Icon color='green' size='large' name='check circle'/>{user}</li>;
                   })}
               </ul>
             </Grid.Column>
