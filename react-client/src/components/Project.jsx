@@ -19,10 +19,10 @@ class Project extends React.Component {
       techs: [],
       githubUser: '',
       projectThumb: '',
-      testUser:'',
+      testUser: '',
     };
-    this.onDelete = this.onDelete.bind(this);
 
+    this.onDelete = this.onDelete.bind(this);
   }
 
   componentDidMount() {
@@ -45,14 +45,11 @@ class Project extends React.Component {
         });
       })
       .catch((error) => {
-        console.log('**************');
-
         console.log(error);
       });
   }
 
   onDelete() {
-    console.log('AXIOS delete request');
     axios.delete(`/projects/${this.props.match.params.id}`)
       .then((response) => {
         console.log('response data on line 45: ', response);
@@ -72,9 +69,7 @@ class Project extends React.Component {
 
 
   render() {
-    console.log('props in project', this.props.match.params.id);
     if (this.state.githubUser === 1) {
-      console.log(' 1 else if');
       return (
         <Switch>
           <Redirect from={`/apps/${this.props.match.params.id}`} to={`/users/${this.state.testUser}`} />
@@ -82,9 +77,7 @@ class Project extends React.Component {
         </Switch>
       );
     } else if (this.props.username === this.state.githubUser) {
-      console.log(' 2nd  else if');
       return (
-
         <Grid columns='equal'>
           <Grid.Column></Grid.Column>
           <Grid.Column width={12}>
@@ -120,7 +113,7 @@ class Project extends React.Component {
             <button className="ui primary button" onClick={this.onDelete}>
              Delete
             </button>
-            <button className="ui primary button" className="olive" onClick={() => { this.props.history.push({
+            <button className="ui primary button" onClick={() => { this.props.history.push({
               pathname:'/create',
               state:{ gitUser:this.state.githubUser,
                       projectName: this.state.projectName,
@@ -136,7 +129,6 @@ class Project extends React.Component {
              Edit
             </button>
           </Item.Group>
-
             <ReactDisqusThread
               shortname="CodeOp"
               identifier={this.props.match.params.id}
@@ -151,7 +143,6 @@ class Project extends React.Component {
         </Grid>
       );
     } else {
-      console.log('last else');
       return (
         <Grid columns='equal'>
           <Grid.Column></Grid.Column>

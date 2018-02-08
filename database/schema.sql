@@ -1,9 +1,12 @@
 -- DROP DATABASE IF EXISTS codeop;
 -- CREATE DATABASE codeop;
 
---  USE codeop;
 
 USE heroku_a9ded5de1ff1c8b;
+
+-- USE codeop;
+
+
 
 CREATE TABLE IF NOT EXISTS users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -49,7 +52,6 @@ CREATE TABLE IF NOT EXISTS github_repos (
   owner_image varchar(100),
   language varchar(50)
 );
-
 
 -- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql
 

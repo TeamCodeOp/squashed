@@ -32,10 +32,8 @@ class Developer extends React.Component {
       onlineStatus: false,
       currentUserProfileId: '',
       currentlyFollowing: false,
-      bio:''
+      bio: ''
     };
-
-    console.log('line 26:', this.state.name);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -103,7 +101,6 @@ class Developer extends React.Component {
                   currentlyFollowing: bool
                 });
                 console.log('State set to (currentlyFollowing)', this.state.currentlyFollowing);
-
               })
               .catch((ifFollowingRrror) => {
                 console.log(ifFollowingRrror);
@@ -250,7 +247,7 @@ class Developer extends React.Component {
                 </Card.Meta>
 
                 <Card.Description>
-                  <p>{this.state.bio}</p>
+                  <p>{this.state.bio === null ? '' : this.state.bio }</p>
                 </Card.Description>
 
               </Card.Content>

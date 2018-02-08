@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import RouteProps from 'react-route-props';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import $ from 'jquery';
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
 import Developer from './Developer.jsx';
@@ -41,6 +40,7 @@ class Root extends React.Component {
     this.handleProjectRedirect = this.handleProjectRedirect.bind(this);
     this.handleBrainstormRedirect = this.handleBrainstormRedirect.bind(this);
     this.getGithubRepos = this.getGithubRepos.bind(this);
+    this.getProjectInfoByProjectId = this.getProjectInfoByProjectId.bind(this);
   }
 
   componentWillMount() {
@@ -80,20 +80,39 @@ class Root extends React.Component {
   }
 
   searchByUserInput(result) {
-    const that = this;
-    $.ajax({
-      url: `/searchProjects?title=${result[0].project_name}`,
-      success: (response) => {
-        console.log('RESPONSE IN SearchBar', response);
-
-        that.setState({
-          projects: response
+    axios.get(`/searchProjects?title=${result[0].project_name}`)
+      .then((response) => {
+        this.setState({
+          projects: response.data
         });
-      },
-      error: () => {
+      })
+      .catch((error) => {
         console.log('check access token error');
-      }
-    });
+      });
+  }
+
+  getProjectInfoByProjectId(projectId) {
+    axios.get(`/projects/${projectId}`)
+      .then((response) => {
+        const techStackHtml = response.data[1].map((tech) =>
+        <li className="ui label" key={tech.toString()}>
+          {tech}
+        </li>
+        );
+
+        this.setState({
+          projectName: response.data[0].project_name,
+          description: response.data[0].description,
+          githubRepo: response.data[0].repo_url,
+          techs: techStackHtml,
+          githubUser: response.data[0].user.git_username,
+          projectThumb: response.data[0].image_Url,
+          testUser: response.data[0].user.git_username
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getProjectsByTechs(techs) {
@@ -187,6 +206,7 @@ class Root extends React.Component {
               path="/apps/:id"
               component={Project}
               username={this.state.username}
+              getProjectInfoByProjectId={this.state.getProjectInfoByProjectId}
             />
             <RouteProps
               path="/users/:username"
