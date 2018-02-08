@@ -132,8 +132,6 @@ const incrementViewCount = (projectId, cb) => {
           cb(results[0]);
         }
       });
-
-      cb(results);
     }
   });
 };
