@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { spy } from 'sinon';
@@ -8,7 +7,6 @@ import Root from '../../react-client/src/components/Root.jsx';
 spy(Root.prototype, 'componentWillMount');
 
 describe('<Root />', () => {
-
   it('calls componentWillMount', () => {
     const wrapper = shallow(<Root />);
     expect(Root.prototype.componentWillMount.calledOnce).to.equal(true);
@@ -22,5 +20,4 @@ describe('<Root />', () => {
     expect(wrapper.state().projects).to.deep.equal([]);
     expect(wrapper.state().userID).to.equal(undefined);
   });
-
 });
