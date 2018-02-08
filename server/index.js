@@ -250,11 +250,14 @@ app.post('/unfollowRequest', (req, res) => {
 
 
 
+
 app.put('/viewCount', (req, res) => {
   mysqlModel.incrementViewCount(req.body.id, (count) => {
     console.log(count);
     res.send(count);
   });
+
+
 
 app.put('/projects', (req, res) => {
   console.log('here in projects', req.body);
