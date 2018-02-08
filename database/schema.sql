@@ -1,8 +1,6 @@
 -- DROP DATABASE IF EXISTS codeop;
 -- CREATE DATABASE codeop;
 
-
-
  USE codeop;
 
 -- USE heroku_a9ded5de1ff1c8b;
