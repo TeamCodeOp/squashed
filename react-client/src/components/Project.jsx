@@ -134,7 +134,8 @@ class Project extends React.Component {
                       projectName: this.state.projectName,
                       githubUrl: this.state.githubRepo,
                       description: this.state.description,
-                      techStack: JSON.stringify(this.state.techs, null, 3)
+                      techStack: JSON.stringify(this.state.techs, null, 3),
+                      projectId: this.props.match.params.id
                     }
             });
           }}

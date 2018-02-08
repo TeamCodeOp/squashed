@@ -113,12 +113,8 @@ class UploadForm extends React.Component {
       });
   }
 
-<<<<<<< HEAD
 
 
-  //  not using it anywhere, wrote this to send put req to server for edit form
-=======
->>>>>>> made changes to the upload form, for Edit functionality
   handleUpdate(e) {
     e.preventDefault();
     axios.put('/projects', {
@@ -141,6 +137,10 @@ class UploadForm extends React.Component {
   handleTechs(e, data) {
     this.setState({ techs: data.value });
   }
+
+  // editTheProject(this.props.history.location.state) {
+  //   this.setState
+  // }
 
   render() {
     let techStackArray = [];
@@ -185,7 +185,7 @@ class UploadForm extends React.Component {
         <Grid columns="equal">
           <Grid.Column />
           <Grid.Column width={6}>
-            <Form className="addProject" onSubmit={this.handleSubmit}>
+            <Form className="addProject" onSubmit={this.handleUpdate}>
               <Form.Input
                 label="Name"
                 placeholder="Project Name"
@@ -208,7 +208,6 @@ class UploadForm extends React.Component {
                 selection
                 options={techOptions}
                 value={this.props.history.location.state ? techStackArray : techs}
-                value={this.props.history.location.state ? this.props.history.location.state.techStack :techs}
                 id="techDropdown"
                 onChange={this.handleTechs}
               />
