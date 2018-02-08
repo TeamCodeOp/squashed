@@ -139,7 +139,6 @@ class UploadForm extends React.Component {
       description: this.state.description,
       githubRepo: this.state.githubRepo,
       techs: this.state.techs,
-      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
       userId: this.props.userId,
       projectId: this.props.history.location.state.projectId
     })
