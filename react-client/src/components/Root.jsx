@@ -166,6 +166,13 @@ class Root extends React.Component {
     this.setState({ isViewFilter: !this.state.isViewFilter });
   }
 
+  handleSendMessage(messageInfo) {
+    console.log('sending message :', messageInfo);
+    axios.post('/privateMessages', {
+      messageInfo
+    });
+  }
+
   render() {
     return (
       <Router>
@@ -239,6 +246,8 @@ class Root extends React.Component {
             <RouteProps
               path="/sendMessage"
               component={PrivateMessageForm}
+              handleSendMessage={this.handleSendMessage}
+              userId={this.state.userId}
             />
           </Switch>
 

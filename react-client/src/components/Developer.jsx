@@ -280,7 +280,7 @@ class Developer extends React.Component {
                 <div id="pm-button">
                   <Button
                     as={Link}
-                    to={'/sendMessage'}
+                    to={`/sendMessage?to=${this.state.username}`}
                     primary
                     floated="right">PM</Button>
                 </div>

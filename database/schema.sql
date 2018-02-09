@@ -1,5 +1,5 @@
--- DROP DATABASE IF EXISTS codeop;
--- CREATE DATABASE codeop;
+DROP DATABASE IF EXISTS codeop;
+CREATE DATABASE codeop;
 
  USE codeop;
 
