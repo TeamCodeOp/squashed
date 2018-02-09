@@ -62,6 +62,15 @@ CREATE TABLE IF NOT EXISTS notifications (
   -- FOREIGN KEY (follower_id) REFERENCES followers(follower_id)
 );
 
+CREATE TABLE IF NOT EXISTS private_messages(
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  sender_id int,
+  recipient_id int,
+  time_sent DATETIME,
+  content text,
+  read boolean
+);
+
 -- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql
 
 /* Create other tables and define schemas for them here!
