@@ -34,6 +34,7 @@ class Developer extends React.Component {
       currentlyFollowing: false,
       bio: ''
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
@@ -202,9 +203,6 @@ class Developer extends React.Component {
   }
 
   render() {
-    console.log('--------------------state(Dev.jsx): ', this.state);
-    console.log('--------------------props(Dev.jsx): ', this.props);
-    // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId)
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
@@ -250,8 +248,6 @@ class Developer extends React.Component {
 
                 <Card.Description>
                   <p>{this.state.bio === null ? '' : this.state.bio }</p>
-                  <p>{this.state.bio}</p>
-                  <p>{this.state.bio}</p>
                 </Card.Description>
 
               </Card.Content>

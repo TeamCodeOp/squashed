@@ -12,7 +12,9 @@ import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
 import PleaseLogIn from './PleaseLogIn.jsx';
 import Ideas from './Ideas.jsx';
-// import Notifications from './Notifications.jsx';
+//import Notifications from './Notifications.jsx';
+
+
 
 class Root extends React.Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class Root extends React.Component {
       shouldRedirectProject: false,
       shouldRedirectBrainstorm: false,
       githubRepos: [],
-      isViewFilter: false
+      isViewFilter: false,
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -61,7 +63,7 @@ class Root extends React.Component {
             session_id: response.data.session_id,
             username: response.data.git_username,
             name: response.data.name,
-            userId: response.data.id,
+            userId: response.data.id
           });
         })
         .catch((error) => {
