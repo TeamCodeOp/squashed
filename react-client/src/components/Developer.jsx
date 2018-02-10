@@ -28,8 +28,8 @@ class Developer extends React.Component {
       userAvatar: '',
       projects: [],
       messages: [],
-      following: [],
-      followers: [],
+      following: 0,
+      followers: 0,
       onlineStatus: false,
       currentUserProfileId: '',
       currentlyFollowing: false,
@@ -70,8 +70,8 @@ class Developer extends React.Component {
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
           projects: response.data.projects,
-          following: response.data.following,
-          followers: response.data.followers,
+          following: response.data.following.length,
+          followers: response.data.followers.length,
           bio: response.data.user_bio || ''
         });
 
@@ -83,7 +83,7 @@ class Developer extends React.Component {
           username: this.state.username
         })
           .then((profileIdResponse) => {
-            console.log('Current profile ID is (Dev.jsx): ', profileIdResponse.data);
+            // console.log('Current profile ID is (Dev.jsx): ', profileIdResponse.data);
             this.setState({
               currentUserProfileId: profileIdResponse.data
             });
@@ -92,7 +92,7 @@ class Developer extends React.Component {
               currentUserProfileId: this.state.currentUserProfileId
             })
               .then((ifFollowingResponse) => {
-                console.log(':::::::::::checkIfCurrentlyFollowing response.data (Dev.jsx): ', ifFollowingResponse);
+                // console.log(':::::::::::checkIfCurrentlyFollowing response.data (Dev.jsx): ', ifFollowingResponse);
                 let bool = false;
                 if (ifFollowingResponse.data[0]) {
                   bool = true;
@@ -100,7 +100,7 @@ class Developer extends React.Component {
                 this.setState({
                   currentlyFollowing: bool
                 });
-                console.log('State set to (currentlyFollowing)', this.state.currentlyFollowing);
+                // console.log('State set to (currentlyFollowing)', this.state.currentlyFollowing);
               })
               .catch((ifFollowingRrror) => {
                 console.log(ifFollowingRrror);
@@ -136,7 +136,7 @@ class Developer extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log(this.state.fullName, ' is leaving');
+    // console.log(this.state.fullName, ' is leaving');
     socket.emit('userDisconnect', this.state.fullName);
   }
 
@@ -178,7 +178,8 @@ class Developer extends React.Component {
       })
         .then((followRequestResponse) => {
           this.setState({
-            currentlyFollowing: true
+            currentlyFollowing: true,
+            followers: this.state.followers + 1
           });
         })
         .catch((error) => {
@@ -193,7 +194,8 @@ class Developer extends React.Component {
       })
         .then((unfollowRequestResponse) => {
           this.setState({
-            currentlyFollowing: false
+            currentlyFollowing: false,
+            followers: this.state.followers - 1
           });
         })
         .catch((error) => {
@@ -262,11 +264,11 @@ class Developer extends React.Component {
               <div className="extra content">
                 <span className="left floated like">
                   <i className="user icon"></i>
-                  Following: <b>{`${this.state.following.length}`}</b>
+                  Following: <b>{`${this.state.following}`}</b> 
                 </span>
                 <span className="right floated star">
                   <i className="user icon"></i>
-                  Followers: <b>{`${this.state.followers.length}`}</b>
+                  Followers: <b>{`${this.state.followers}`}</b>
                 </span>
 
               </div>

@@ -89,7 +89,7 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
 
 app.get('/projects', (req, res) => {
   let techs;
-  console.log('req.query', req.query);
+  // console.log('req.query', req.query);
   if (!req.query.techs && !req.query.views) {
     mysqlDB.retrieveProjects((projects) => {
       res.send(projects);
@@ -109,7 +109,7 @@ app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
     let bio = user.user_bio;
-    console.log('bio', bio);
+    // console.log('bio', bio);
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
@@ -198,14 +198,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
-  console.log('here in projects')
+  // console.log('here in projects')
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });
 
 
 app.post('/getCurrentUserProfileId', (req, res) => {
-  console.log('get request /getCurrentUserProfileId in (server / index.js)');
+  // console.log('get request /getCurrentUserProfileId in (server / index.js)');
 
   mysqlDB.getCurrentUserProfileId(req.body, (err, data) => {
     if (err) {
@@ -227,18 +227,19 @@ app.post('/checkIfCurrentlyFollowing', (req, res) => {
 });
 
 app.post('/followRequest', (req, res) => {
-  console.log(':::::::::::::req.body: ', req.body);
+  // console.log(':::::::::::::req.body: ', req.body);
   mysqlDB.createFollowerConnection(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
+      // console.log('<><>DATA: ', data);
       res.status(200).json(data);
     }
   });
 });
 
 app.post('/unfollowRequest', (req, res) => {
-  console.log('-------------------\n\n\n\npost request at /unfollowRequest received.\nreq.body is: ', req.body);
+  // console.log('-------------------\n\n\n\npost request at /unfollowRequest received.\nreq.body is: ', req.body);
   mysqlDB.removeFollowerConnection(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -250,7 +251,7 @@ app.post('/unfollowRequest', (req, res) => {
 
 
 app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
+  // console.log('here in projects', req.body);
   mysqlDB.updateProjectByProjectId(req.body, (err, data) =>{
     res.status(201).json(data);
   });
@@ -259,7 +260,7 @@ app.put('/projects', (req, res) => {
 
 app.put('/viewCount', (req, res) => {
   mysqlModel.incrementViewCount(req.body.id, (count) => {
-    console.log(count);
+    // console.log(count);
     res.send(count);
   });
 });
