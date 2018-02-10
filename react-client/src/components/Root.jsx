@@ -31,7 +31,7 @@ class Root extends React.Component {
       shouldRedirectBrainstorm: false,
       githubRepos: [],
       isViewFilter: false,
-      unreadMessages: 0
+      unreadMessages: []
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -198,6 +198,7 @@ class Root extends React.Component {
             name={this.state.name}
             handleProjectRedirect={this.handleProjectRedirect}
             handleBrainstormRedirect={this.handleBrainstormRedirect}
+            unreadMessages={this.state.unreadMessages}
           />
           <Switch>
             <RouteProps
@@ -249,6 +250,7 @@ class Root extends React.Component {
               username={this.state.username}
               name={this.state.name}
               id={this.state.userId}
+              unreadMessages={this.state.unreadMessages}
             />
             <RouteProps
               path="/ideas"

@@ -289,13 +289,16 @@ class Developer extends React.Component {
                   {  showFollowButton ? buttonJsxToRender : null }
                 </div>
                 <div id="pm-button">
+                  {this.props.id && (this.props.id !== this.state.currentUserProfileId) &&
                   <Button
                     as={Link}
                     to={`/sendMessage?to=${this.state.username}`}
                     primary
                     floated="right"
                     >Message</Button>
+                  }
                 </div>
+              }
               </Card.Content>
 
             </Card>
