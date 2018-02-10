@@ -20,7 +20,7 @@ class PrivateMessageForm extends React.Component {
     e.preventDefault();
     const messageInfo = {
       senderId: this.props.userId,
-      recipientId: this.props.location.search.slice(4),
+      recipientUsername: this.props.location.search.slice(4),
       content: this.state.messageText
     };
     this.props.handleSendMessage(messageInfo);

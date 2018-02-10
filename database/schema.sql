@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS private_messages(
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   sender_id int,
   recipient_id int,
-  time_sent DATETIME,
+  time_sent TIMESTAMP,
   content text,
   opened boolean
 );

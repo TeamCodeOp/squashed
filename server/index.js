@@ -273,7 +273,8 @@ app.delete('/projects/:id', (req, res) => {
 });
 
 app.post('/privateMessages', (req, res) => {
-  mysqlModel.insertMessage(req.body, results => res.send(results));
+  console.log('body', req.body.messageInfo);
+  mysqlModel.formatInsertMessage(req.body.messageInfo, results => res.send(results));
 });
 
 /* ************************************ */

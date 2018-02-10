@@ -282,7 +282,8 @@ class Developer extends React.Component {
                     as={Link}
                     to={`/sendMessage?to=${this.state.username}`}
                     primary
-                    floated="right">PM</Button>
+                    floated="right"
+                    >Message</Button>
                 </div>
               </Card.Content>
 
