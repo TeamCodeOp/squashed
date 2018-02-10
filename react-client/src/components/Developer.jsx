@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import UserProjectList from './UserProjectList.jsx';
 import $ from 'jquery';
 
@@ -275,6 +276,14 @@ class Developer extends React.Component {
               <Card.Content extra>
                 <div id="follow-button">
                   {  showFollowButton ? buttonJsxToRender : null }
+                </div>
+                <div id="pm-button">
+                  <Button
+                    as={Link}
+                    to={`/sendMessage?to=${this.state.username}`}
+                    primary
+                    floated="right"
+                    >Message</Button>
                 </div>
               </Card.Content>
 
