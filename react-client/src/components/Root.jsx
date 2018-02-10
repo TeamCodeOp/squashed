@@ -13,7 +13,7 @@ import UploadForm from './UploadForm.jsx';
 import PleaseLogIn from './PleaseLogIn.jsx';
 import Ideas from './Ideas.jsx';
 import UserFeed from './UserFeed.jsx';
-
+import PrivateMessageForm from './PrivateMessageForm.jsx'
 
 
 class Root extends React.Component {
@@ -167,6 +167,15 @@ class Root extends React.Component {
     this.setState({ isViewFilter: !this.state.isViewFilter });
   }
 
+  handleSendMessage(messageInfo) {
+    console.log('sending message :', messageInfo);
+    axios.post('/privateMessages', {
+      messageInfo
+    })
+      .then(response => console.log('Message Sent!'))
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <Router>
@@ -236,6 +245,12 @@ class Root extends React.Component {
               name={this.state.name}
               handleBrainstormRedirect={this.handleBrainstormRedirect}
               shouldRedirectBrainstorm={this.shouldRedirectBrainstorm}
+            />
+            <RouteProps
+              path="/sendMessage"
+              component={PrivateMessageForm}
+              handleSendMessage={this.handleSendMessage}
+              userId={this.state.userId}
             />
           </Switch>
          <UserFeed />

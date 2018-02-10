@@ -7,20 +7,6 @@ const _ = require('underscore');
 
 const insertProjectData = (projectData) => {
   return new Promise((resolve, reject) => {
-    // const insertQuery =
-    // `INSERT INTO projects (
-    //   project_name,
-    //   description,
-    //   repo_url,
-    //   image_Url,
-    //   user_id
-    // ) VALUES(
-    //   '${projectData.projectName}',
-    //   '${projectData.description}',
-    //   '${projectData.githubRepo}',
-    //   '${projectData.uploadedFileCloudinaryUrl}',
-    //   ${projectData.userId}
-    // )`;
     const sql = formatInsertProjectData(projectData);
 
     db.connection.query(sql, (err, results) => {
@@ -148,6 +134,7 @@ const getProjectsByViews = (cb) => {
   });
 };
 
+
 const insertNotification = (data, cb) => {
   console.log('database: insertNotification');
   const insert = `INSERT INTO notifications(event, user_id) VALUES('project has been added ${data.projectName}', ${data.userId})`;
@@ -158,6 +145,50 @@ const insertNotification = (data, cb) => {
     } else {
       console.log('notification inserted');
       cb(results);
+
+const formatInsertMessage = (messageInfo, cb) => {
+  let recipientId;
+  const userQuery = 'SELECT id FROM users WHERE git_username = ?';
+  const userSql = mysql.format(userQuery, messageInfo.recipientUsername);
+
+  db.connection.query(userSql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      recipientId = results[0].id;
+      console.log(results[0].id);
+
+      const sql = 'INSERT INTO private_messages (sender_id, recipient_id, time_sent, content, opened) VALUES(?, ?, CURRENT_TIMESTAMP(), ?, false)';
+
+      const inserts = [messageInfo.senderId, recipientId, messageInfo.content];
+      const sqlQuery = mysql.format(sql, inserts);
+
+      db.connection.query(sqlQuery, (err, results) => {
+    if (err) {
+      console.log(err);
+      cb(err, null);
+    } else {
+      console.log('in else results');
+      cb(null, results);
+    }
+  });
+    }
+  });
+
+};
+
+
+const insertMessage = (messageInfo, cb) => {
+  const sql = formatInsertMessage(messageInfo);
+  console.log('insertfunc msgInfo', messageInfo);
+  console.log('sql query:', sql)
+  db.connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+      cb(err, null);
+    } else {
+      console.log('in else results');
+      cb(null, results);
     }
   });
 };
@@ -169,3 +200,6 @@ module.exports.retrieveGithubRepos = retrieveGithubRepos;
 module.exports.incrementViewCount = incrementViewCount;
 module.exports.getProjectsByViews = getProjectsByViews;
 module.exports.insertNotification = insertNotification;
+module.exports.insertMessage = insertMessage;
+module.exports.formatInsertMessage = formatInsertMessage;
+

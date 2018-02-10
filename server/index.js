@@ -264,14 +264,17 @@ app.put('/viewCount', (req, res) => {
   });
 });
 
-
-
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;
   mysqlDB.deleteProjectByProjectId(projectId, (project) => {
     res.send(project);
   });
+});
+
+app.post('/privateMessages', (req, res) => {
+  console.log('body', req.body.messageInfo);
+  mysqlModel.formatInsertMessage(req.body.messageInfo, results => res.send(results));
 });
 
 /* ************************************ */

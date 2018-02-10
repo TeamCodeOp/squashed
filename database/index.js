@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   connection = mysql.createConnection({
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'codeop'
   });
 
@@ -186,6 +186,7 @@ const deleteProjectByProjectId = (query, callback) => {
 
 const getCurrentUserProfileId = (query, cb) => {
   const insertQuery = `SELECT id FROM users WHERE git_username = '${query.username}'`;
+  console.log('Line189',query.username)
   connection.query(insertQuery, (err, results) => {
     if (err) {
       cb(err, null);
