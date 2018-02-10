@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedActiveItem: 'home'
+      feedActiveItem: 'popular'
     };
     this.handleFeedClick = this.handleFeedClick.bind(this);
   }
@@ -41,7 +41,7 @@ class App extends React.Component {
         {/* This is the main content area */}
         <Grid columns={2} stackable>
           {/* Left area for projects */}
-          <Grid.Column width={10}>
+          <Grid.Column width={12}>
             <Segment>
               <NewProjects
                 projects={this.props.projects}
@@ -52,19 +52,20 @@ class App extends React.Component {
             </Segment>
           </Grid.Column>
           {/* Right area for our feeds (Following activities, popular, latest) */}
-          <Grid.Column width={6}>
+          <Grid.Column width={4}>
 
             <div>
-            <Menu pointing secondary>
-              <Menu.Item name="home" active={feedActiveItem === 'home'} onClick={this.handleFeedClick} />
-              <Menu.Item name="messages" active={feedActiveItem === 'messages'} onClick={this.handleFeedClick} />
-              <Menu.Item name="friends" active={feedActiveItem === 'friends'} onClick={this.handleFeedClick} />
-            </Menu>
-
-            <Segment>
-
-            </Segment>
-          </div>
+              <div id="feedmenu">
+                <Menu pointing secondary>
+                  <div id="feedmenu1"><Menu.Item name="Popular" active={feedActiveItem === 'popular'} onClick={this.handleFeedClick} /></div>
+                  <div id="feedmenu2"><Menu.Item name="Friends" active={feedActiveItem === 'friends'} onClick={this.handleFeedClick} /></div>
+                  <div id="feedmenu3"><Menu.Item name="On Github" active={feedActiveItem === 'github'} onClick={this.handleFeedClick} /></div>
+                </Menu>
+              </div>
+              <Segment>
+                {/* feed here */}
+              </Segment>
+            </div>
 
           </Grid.Column>
         </Grid>

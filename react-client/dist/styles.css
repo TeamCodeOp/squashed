@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 
+.ui.container {
+  width: 1400px;
+}
+
 #titleHeader {
   font-family: 'Pacifico', cursive;
   color: orange;
@@ -53,13 +57,12 @@ body, textarea {
   box-shadow: none;
   border: none;
   border-radius: 0;
-  background-color: beige;
+  /* background-color: beige; */
 }
 
 .ui.secondary.menu .item {
   color: #ccc;
 }
-
 
 /* ***************** ???????????????? ***************** */
 
