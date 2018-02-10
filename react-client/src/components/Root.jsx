@@ -31,6 +31,7 @@ class Root extends React.Component {
       shouldRedirectBrainstorm: false,
       githubRepos: [],
       isViewFilter: false,
+      unreadMessages: 0
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -45,6 +46,7 @@ class Root extends React.Component {
     this.getProjectInfoByProjectId = this.getProjectInfoByProjectId.bind(this);
     this.filterByViews = this.filterByViews.bind(this);
     this.toggleViewFilter = this.toggleViewFilter.bind(this);
+    this.checkMessages = this.checkMessages.bind(this);
   }
 
   componentWillMount() {
@@ -63,6 +65,8 @@ class Root extends React.Component {
             username: response.data.git_username,
             name: response.data.name,
             userId: response.data.id
+          }, function () {
+            this.checkMessages(this.state.userId);
           });
         })
         .catch((error) => {
@@ -98,10 +102,12 @@ class Root extends React.Component {
   getProjectInfoByProjectId(projectId) {
     axios.get(`/projects/${projectId}`)
       .then((response) => {
-        const techStackHtml = response.data[1].map((tech) =>
-        <li className="ui label" key={tech.toString()}>
-          {tech}
-        </li>
+        const techStackHtml = response.data[1].map(tech =>
+          (
+            <li className="ui label" key={tech.toString()}>
+              {tech}
+            </li>
+          )
         );
 
         this.setState({
@@ -172,6 +178,13 @@ class Root extends React.Component {
       messageInfo
     })
       .then(response => console.log('Message Sent!'))
+      .catch(err => console.log(err));
+  }
+
+  checkMessages(userId) {
+    console.log(`checking messages for ${userId}`);
+    axios.get(`/privateMessages?userId=${userId}`)
+      .then(response => this.setState({ unreadMessages: response.data }))
       .catch(err => console.log(err));
   }
 

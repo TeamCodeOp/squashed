@@ -180,21 +180,6 @@ const formatInsertMessage = (messageInfo, cb) => {
 };
 
 
-const insertMessage = (messageInfo, cb) => {
-  const sql = formatInsertMessage(messageInfo);
-  console.log('insertfunc msgInfo', messageInfo);
-  console.log('sql query:', sql)
-  db.connection.query(sql, (err, results) => {
-    if (err) {
-      console.log(err);
-      cb(err, null);
-    } else {
-      console.log('in else results');
-      cb(null, results);
-    }
-  });
-};
-
 const insertFollowerNotification = (followerInfo, cb) => {
   const selectQuery = `SELECT id,git_username FROM users WHERE id in (${followerInfo.user_id}, ${followerInfo.follower_id});`;
   db.connection.query(selectQuery, (err, results) => {
@@ -237,7 +222,6 @@ module.exports.retrieveGithubRepos = retrieveGithubRepos;
 module.exports.incrementViewCount = incrementViewCount;
 module.exports.getProjectsByViews = getProjectsByViews;
 module.exports.insertNotification = insertNotification;
-module.exports.insertMessage = insertMessage;
 module.exports.formatInsertMessage = formatInsertMessage;
 module.exports.insertFollowerNotification = insertFollowerNotification;
 module.exports.usersJoinNotifications = usersJoinNotifications;

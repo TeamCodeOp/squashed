@@ -289,6 +289,13 @@ app.post('/privateMessages', (req, res) => {
   mysqlModel.formatInsertMessage(req.body.messageInfo, results => res.send(results));
 });
 
+app.get('/privateMessages', (req, res) => {
+  console.log('userId: ', req.query.userId);
+  const userId = req.query.userId;
+
+  mysqlModel.selectAllWhere('private_messages', 'recipient_id', userId, false, messages => res.send(messages));
+});
+
 /* ************************************ */
 
 app.get('/testing', (req, res) => {
