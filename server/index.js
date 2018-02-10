@@ -284,4 +284,15 @@ app.get('/testing', (req, res) => {
   res.send('GET request to testing');
 });
 
+app.post('/notifications', (req, res) => {
+  console.log('im triggered: notifications in server');
+  mysqlModel.insertNotification(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).json(data);
+    }
+  });
+});
+
 module.exports = app;

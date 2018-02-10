@@ -134,6 +134,21 @@ const getProjectsByViews = (cb) => {
   });
 };
 
+
+const insertNotification = (data, cb) => {
+  console.log('database: insertNotification');
+  const insert = `INSERT INTO notifications(event, user_id) VALUES('project has been added ${data.projectName}', ${data.userId})`;
+  console.log('insert', insert);
+  db.connection.query(insert, (err, results) => {
+    if(err) {
+      console.log(err);
+    } else {
+      console.log('notification inserted');
+      cb(results);
+    }
+  });
+};
+
 const formatInsertMessage = (messageInfo, cb) => {
   let recipientId;
   const userQuery = 'SELECT id FROM users WHERE git_username = ?';
@@ -187,5 +202,6 @@ module.exports.insertGithubRepos = insertGithubRepos;
 module.exports.retrieveGithubRepos = retrieveGithubRepos;
 module.exports.incrementViewCount = incrementViewCount;
 module.exports.getProjectsByViews = getProjectsByViews;
+module.exports.insertNotification = insertNotification;
 module.exports.insertMessage = insertMessage;
 module.exports.formatInsertMessage = formatInsertMessage;
