@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS private_messages(
   recipient_id int,
   time_sent DATETIME,
   content text,
-  read boolean
+  opened boolean
 );
 
 -- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql

@@ -21,7 +21,6 @@ class PrivateMessageForm extends React.Component {
     const messageInfo = {
       senderId: this.props.userId,
       recipientId: this.props.location.search.slice(4),
-      timeStamp: new Date(),
       content: this.state.messageText
     };
     this.props.handleSendMessage(messageInfo);

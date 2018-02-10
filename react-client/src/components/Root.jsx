@@ -170,7 +170,9 @@ class Root extends React.Component {
     console.log('sending message :', messageInfo);
     axios.post('/privateMessages', {
       messageInfo
-    });
+    })
+      .then(response => console.log('Message Sent!'))
+      .catch(err => console.log(err));
   }
 
   render() {

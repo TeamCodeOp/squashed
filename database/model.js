@@ -148,9 +148,29 @@ const getProjectsByViews = (cb) => {
   });
 };
 
+const formatInsertMessage = (message) => {
+  const recipientId = db.getCurrentUserProfileId(message.recipient, id => id);
+  const sql = 'INSERT INTO private_messages (sender_id, recipient_id, time_sent, content, read) VALUES(?, ?, CURRENT_TIMESTAMP, ?, false)';
+  const inserts = [messageInfo.senderId, recipientId, messageInfo.content];
+  return mysql.format(sql, inserts);
+};
+
+const insertMessage = (messageInfo, cb) => {
+  const sql = formatInsertMessage(messageInfo);
+
+  db.connection.query(sql, (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results);
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
 module.exports.retrieveGithubRepos = retrieveGithubRepos;
 module.exports.incrementViewCount = incrementViewCount;
 module.exports.getProjectsByViews = getProjectsByViews;
+module.exports.insertMessage = insertMessage;
