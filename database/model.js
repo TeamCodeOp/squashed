@@ -7,20 +7,6 @@ const _ = require('underscore');
 
 const insertProjectData = (projectData) => {
   return new Promise((resolve, reject) => {
-    // const insertQuery =
-    // `INSERT INTO projects (
-    //   project_name,
-    //   description,
-    //   repo_url,
-    //   image_Url,
-    //   user_id
-    // ) VALUES(
-    //   '${projectData.projectName}',
-    //   '${projectData.description}',
-    //   '${projectData.githubRepo}',
-    //   '${projectData.uploadedFileCloudinaryUrl}',
-    //   ${projectData.userId}
-    // )`;
     const sql = formatInsertProjectData(projectData);
 
     db.connection.query(sql, (err, results) => {
