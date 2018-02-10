@@ -1,5 +1,5 @@
-import React from 'react';
-import { Header } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Header, Grid, Segment, Menu } from 'semantic-ui-react';
 import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
@@ -28,6 +28,28 @@ class App extends React.Component {
     return (
       <div>
         <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
+
+        {/* This is the main content area */}
+        <Grid columns={2} stackable>
+          {/* Left area for projects */}
+          <Grid.Column width={10}>
+            <Segment>
+              <NewProjects
+                projects={this.props.projects}
+                isViewFilter={this.props.isViewFilter}
+                toggleViewFilter={this.props.toggleViewFilter}
+                techFilter={this.props.techFilter}
+              />
+            </Segment>
+          </Grid.Column>
+          {/* Right area for our feeds (Following activities, popular, latest) */}
+          <Grid.Column width={6}>
+            <Segment>Content</Segment>
+          </Grid.Column>
+        </Grid>
+
+
+
         <Search searchByUserInput={this.props.searchByUserInput}/>
         <ProjectsMenu getProjects={this.props.getProjects}
           handleGetLatest={this.props.handleGetLatest}
@@ -38,12 +60,7 @@ class App extends React.Component {
           handleTechs={this.props.handleTechs}
           techFilter={this.props.techFilter}
         />
-        <NewProjects
-          projects={this.props.projects}
-          isViewFilter={this.props.isViewFilter}
-          toggleViewFilter={this.props.toggleViewFilter}
-          techFilter={this.props.techFilter}
-        />
+
         <RepoList
           repos={this.props.githubRepos}
         />
