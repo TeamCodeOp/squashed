@@ -200,8 +200,13 @@ app.get('/notifications', (req, res) => {
       res.status(201).json(data);
     }
   });
-});
 
+app.get('/privateMessages', (req, res) => {
+  console.log('userId: ', req.query.userId);
+  const userId = req.query.userId;
+
+  mysqlModel.selectAllWhere('private_messages', 'recipient_id', userId, false, messages => res.send(messages));
+});
 
 app.get('/', (req, res) => {
   res.status(200).json();
@@ -274,8 +279,6 @@ app.put('/viewCount', (req, res) => {
   });
 });
 
-
-
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;
@@ -287,13 +290,6 @@ app.delete('/projects/:id', (req, res) => {
 app.post('/privateMessages', (req, res) => {
   console.log('body', req.body.messageInfo);
   mysqlModel.formatInsertMessage(req.body.messageInfo, results => res.send(results));
-});
-
-app.get('/privateMessages', (req, res) => {
-  console.log('userId: ', req.query.userId);
-  const userId = req.query.userId;
-
-  mysqlModel.selectAllWhere('private_messages', 'recipient_id', userId, false, messages => res.send(messages));
 });
 
 /* ************************************ */
@@ -325,9 +321,8 @@ app.post('/notifications', (req, res) => {
   }
 });
 
-
-
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
+
 module.exports = app;
