@@ -35,8 +35,10 @@ CREATE TABLE IF NOT EXISTS technologies (
 
 CREATE TABLE IF NOT EXISTS followers (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  followed_user_id int NOT NULL,
-  follower_id int NOT NULL
+  user_id int NOT NULL,
+  follower_id int NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (follower_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS github_repos (
@@ -49,6 +51,15 @@ CREATE TABLE IF NOT EXISTS github_repos (
   owner_id int,
   owner_image varchar(100),
   language varchar(50)
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  event text NOT NULL,
+  user_id int NOT NULL
+  -- follower_id int NOT NULL,
+
+  -- FOREIGN KEY (follower_id) REFERENCES followers(follower_id)
 );
 
 -- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql

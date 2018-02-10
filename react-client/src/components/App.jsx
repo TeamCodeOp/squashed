@@ -1,4 +1,5 @@
 import React from 'react';
+import { Header } from 'semantic-ui-react';
 import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
@@ -22,6 +23,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
         <Search searchByUserInput={this.props.searchByUserInput}/>
         <ProjectsMenu getProjects={this.props.getProjects}
           handleGetLatest={this.props.handleGetLatest}

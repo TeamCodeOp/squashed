@@ -120,7 +120,7 @@ app.get('/developers/:username', (req, res) => {
 
           const followingToReturn = [];
           following.forEach((dataPacket) => {
-            followingToReturn.push(dataPacket['followed_user_id']);
+            followingToReturn.push(dataPacket['user_id']);
           });
 
           user.followers = followersToReturn;
@@ -227,6 +227,7 @@ app.post('/checkIfCurrentlyFollowing', (req, res) => {
 });
 
 app.post('/followRequest', (req, res) => {
+  console.log(':::::::::::::req.body: ', req.body);
   mysqlDB.createFollowerConnection(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -278,6 +279,17 @@ app.delete('/projects/:id', (req, res) => {
 app.get('/testing', (req, res) => {
   res.status(200);
   res.send('GET request to testing');
+});
+
+app.post('/notifications', (req, res) => {
+  console.log('im triggered: notifications in server');
+  mysqlModel.insertNotification(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).json(data);
+    }
+  });
 });
 
 module.exports = app;

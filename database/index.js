@@ -197,7 +197,7 @@ const getCurrentUserProfileId = (query, cb) => {
 
 const checkIfCurrentlyFollowing = (followRequestData, cb) => {
 
-  const insertQuery = `SELECT followed_user_id FROM followers WHERE followed_user_id ='${followRequestData.currentUserProfileId}' AND follower_id='${followRequestData.loggedInUserId}'`;
+  const insertQuery = `SELECT user_id FROM followers WHERE user_id ='${followRequestData.currentUserProfileId}' AND follower_id='${followRequestData.loggedInUserId}'`;
 
   connection.query(insertQuery, (err, data) => {
     cb(err, data);
@@ -205,14 +205,14 @@ const checkIfCurrentlyFollowing = (followRequestData, cb) => {
 };
 
 const createFollowerConnection = (followRequestData, cb) => {
-
+  console.log('followRequestData:');
   return new Promise((resolve, reject) => {
     const insertQuery =
     `INSERT INTO followers (
-      followed_user_id,
+      user_id,
       follower_id
     ) VALUES(
-      '${followRequestData.followed_user_id}',
+      ${followRequestData.user_id},
       ${followRequestData.follower_id}
     )`;
 
@@ -231,7 +231,7 @@ const removeFollowerConnection = (unfollowRequestData, cb) => {
   console.log('removeFollowerConnection in db/index.js');
   console.log('unfollowRequestData is: ', unfollowRequestData);
 
-  const insertQuery = `DELETE FROM followers WHERE followed_user_id ='${unfollowRequestData.followed_user_id}' AND follower_id='${unfollowRequestData.follower_id}'`;
+  const insertQuery = `DELETE FROM followers WHERE user_id ='${unfollowRequestData.user_id}' AND follower_id='${unfollowRequestData.follower_id}'`;
 
   console.log('Query is: \n', insertQuery);
 
@@ -243,7 +243,8 @@ const removeFollowerConnection = (unfollowRequestData, cb) => {
 };
 
 const getFollowersForUser = (userId, cb) => {
-  connection.query(`SELECT * FROM followers WHERE followed_user_id ='${userId}';`, (err, data) => {
+  console.log(':::::::::::::::::::::::::::::::::::::::::::::::::');
+  connection.query(`SELECT * FROM followers WHERE user_id ='${userId}';`, (err, data) => {
     if (err) {
       throw err;
     } else {

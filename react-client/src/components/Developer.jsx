@@ -167,12 +167,12 @@ class Developer extends React.Component {
 
   handleFollowRequest(e) {
     e.preventDefault();
-    console.log('follow button clicked');
-    console.log('currentlyFollowing?: ', this.state.currentlyFollowing);
+    // console.log('follow button clicked');
+    // console.log('currentlyFollowing?: ', this.state.currentlyFollowing);
 
     if (!this.state.currentlyFollowing) {
       axios.post('/followRequest', {
-        followed_user_id: this.state.currentUserProfileId,
+        user_id: this.state.currentUserProfileId,
         follower_id: this.props.id
       })
         .then((followRequestResponse) => {
@@ -187,7 +187,7 @@ class Developer extends React.Component {
 
     if (this.state.currentlyFollowing) {
       axios.post('/unfollowRequest', {
-        followed_user_id: this.state.currentUserProfileId,
+        user_id: this.state.currentUserProfileId,
         follower_id: this.props.id
       })
         .then((unfollowRequestResponse) => {
@@ -202,13 +202,14 @@ class Developer extends React.Component {
   }
 
   render() {
-    console.log('--------------------state(Dev.jsx): ', this.state);
-    console.log('--------------------props(Dev.jsx): ', this.props);
+    // console.log('--------------------state(Dev.jsx): ', this.state);
+    // console.log('--------------------props(Dev.jsx): ', this.props);
     // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId)
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
     });
+
     const { msgInput } = this.state
 
     const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
@@ -250,8 +251,6 @@ class Developer extends React.Component {
 
                 <Card.Description>
                   <p>{this.state.bio === null ? '' : this.state.bio }</p>
-                  <p>{this.state.bio}</p>
-                  <p>{this.state.bio}</p>
                 </Card.Description>
 
               </Card.Content>
