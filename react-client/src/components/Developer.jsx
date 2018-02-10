@@ -253,8 +253,6 @@ class Developer extends React.Component {
 
                 <Card.Description>
                   <p>{this.state.bio === null ? '' : this.state.bio }</p>
-                  <p>{this.state.bio}</p>
-                  <p>{this.state.bio}</p>
                 </Card.Description>
 
               </Card.Content>

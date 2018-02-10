@@ -12,8 +12,9 @@ import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
 import PleaseLogIn from './PleaseLogIn.jsx';
 import Ideas from './Ideas.jsx';
+import UserFeed from './UserFeed.jsx';
 import PrivateMessageForm from './PrivateMessageForm.jsx'
-// import Notifications from './Notifications.jsx';
+
 
 class Root extends React.Component {
   constructor(props) {
@@ -252,7 +253,7 @@ class Root extends React.Component {
               userId={this.state.userId}
             />
           </Switch>
-
+         <UserFeed />
         </div>
       </Router>
     );

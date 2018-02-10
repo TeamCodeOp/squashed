@@ -129,6 +129,17 @@ class UploadForm extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+
+    axios.post('/notifications', {
+      projectName: this.state.projectName,
+      userId: this.props.userId,
+    })
+      .then((response) => {
+        alert('Notifications schema added successfully');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   handleUpdate(e) {
