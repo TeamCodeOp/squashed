@@ -12,7 +12,9 @@ import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
 import PleaseLogIn from './PleaseLogIn.jsx';
 import Ideas from './Ideas.jsx';
-// import Notifications from './Notifications.jsx';
+import UserFeed from './UserFeed.jsx';
+import PrivateMessageForm from './PrivateMessageForm.jsx'
+
 
 class Root extends React.Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class Root extends React.Component {
       shouldRedirectProject: false,
       shouldRedirectBrainstorm: false,
       githubRepos: [],
-      isViewFilter: false
+      isViewFilter: false,
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -61,7 +63,7 @@ class Root extends React.Component {
             session_id: response.data.session_id,
             username: response.data.git_username,
             name: response.data.name,
-            userId: response.data.id,
+            userId: response.data.id
           });
         })
         .catch((error) => {
@@ -165,6 +167,15 @@ class Root extends React.Component {
     this.setState({ isViewFilter: !this.state.isViewFilter });
   }
 
+  handleSendMessage(messageInfo) {
+    console.log('sending message :', messageInfo);
+    axios.post('/privateMessages', {
+      messageInfo
+    })
+      .then(response => console.log('Message Sent!'))
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <Router>
@@ -235,8 +246,14 @@ class Root extends React.Component {
               handleBrainstormRedirect={this.handleBrainstormRedirect}
               shouldRedirectBrainstorm={this.shouldRedirectBrainstorm}
             />
+            <RouteProps
+              path="/sendMessage"
+              component={PrivateMessageForm}
+              handleSendMessage={this.handleSendMessage}
+              userId={this.state.userId}
+            />
           </Switch>
-
+         <UserFeed />
         </div>
       </Router>
     );
