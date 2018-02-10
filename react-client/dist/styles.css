@@ -56,6 +56,10 @@ body, textarea {
   background-color: beige;
 }
 
+.ui.secondary.menu .item {
+  color: #ccc;
+}
+
 
 /* ***************** ???????????????? ***************** */
 

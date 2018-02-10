@@ -11,6 +11,10 @@ import UserFeed from './UserFeed.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      feedActiveItem: 'home'
+    };
+    this.handleFeedClick = this.handleFeedClick.bind(this);
   }
 
   componentDidMount() {
@@ -19,14 +23,19 @@ class App extends React.Component {
     if (this.props.userId) {
       this.props.checkMessages(this.props.userId);
     }
+  }
 
-    // console.log('App mounted');
-    // GET request to '/projects' to get projects
+  handleFeedClick(e, { name }) {
+    this.setState({
+      feedActiveItem: name
+    });
   }
 
   render() {
+    const { feedActiveItem } = this.state.feedActiveItem;
+
     return (
-      <div>
+      <div className="ui container">
         <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
 
         {/* This is the main content area */}
@@ -44,14 +53,26 @@ class App extends React.Component {
           </Grid.Column>
           {/* Right area for our feeds (Following activities, popular, latest) */}
           <Grid.Column width={6}>
-            <Segment>Content</Segment>
+
+            <div>
+            <Menu pointing secondary>
+              <Menu.Item name="home" active={feedActiveItem === 'home'} onClick={this.handleFeedClick} />
+              <Menu.Item name="messages" active={feedActiveItem === 'messages'} onClick={this.handleFeedClick} />
+              <Menu.Item name="friends" active={feedActiveItem === 'friends'} onClick={this.handleFeedClick} />
+            </Menu>
+
+            <Segment>
+
+            </Segment>
+          </div>
+
           </Grid.Column>
         </Grid>
 
 
-
-        <Search searchByUserInput={this.props.searchByUserInput}/>
-        <ProjectsMenu getProjects={this.props.getProjects}
+        <Search searchByUserInput={this.props.searchByUserInput} />
+        <ProjectsMenu
+getProjects={this.props.getProjects}
           handleGetLatest={this.props.handleGetLatest}
           filterByViews={this.props.filterByViews}
         />
