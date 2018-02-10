@@ -158,7 +158,7 @@ const findProject = (query, cb) => {
       console.log('err in database find project', err);
       cb(err, null);
     } else {
-      console.log('success in findProject', results);
+      // console.log('success in findProject', results);
       cb(null, results);
     }
   });
@@ -205,7 +205,7 @@ const checkIfCurrentlyFollowing = (followRequestData, cb) => {
 };
 
 const createFollowerConnection = (followRequestData, cb) => {
-  console.log('followRequestData:');
+  // console.log('followRequestData (from modex/index.js):');
   return new Promise((resolve, reject) => {
     const insertQuery =
     `INSERT INTO followers (
@@ -220,7 +220,7 @@ const createFollowerConnection = (followRequestData, cb) => {
       if (err) {
         console.log('error: \n', err);
       }
-      console.log('Created a follower connection (from modex/index.js): \n', results);
+      // console.log('Created a follower connection (from modex/index.js): \n', results);
       cb(null, results);
       return resolve(results);
     });
@@ -228,8 +228,8 @@ const createFollowerConnection = (followRequestData, cb) => {
 };
 
 const removeFollowerConnection = (unfollowRequestData, cb) => {
-  console.log('removeFollowerConnection in db/index.js');
-  console.log('unfollowRequestData is: ', unfollowRequestData);
+  // console.log('removeFollowerConnection in db/index.js');
+  // console.log('unfollowRequestData is: ', unfollowRequestData);
 
   const insertQuery = `DELETE FROM followers WHERE user_id ='${unfollowRequestData.user_id}' AND follower_id='${unfollowRequestData.follower_id}'`;
 
@@ -243,7 +243,7 @@ const removeFollowerConnection = (unfollowRequestData, cb) => {
 };
 
 const getFollowersForUser = (userId, cb) => {
-  console.log(':::::::::::::::::::::::::::::::::::::::::::::::::');
+  // console.log(':::::::::::::::::::::::::::::::::::::::::::::::::');
   connection.query(`SELECT * FROM followers WHERE user_id ='${userId}';`, (err, data) => {
     if (err) {
       throw err;
