@@ -145,6 +145,9 @@ const insertNotification = (data, cb) => {
     } else {
       console.log('notification inserted');
       cb(results);
+    }
+  });
+};
 
 const formatInsertMessage = (messageInfo, cb) => {
   let recipientId;
@@ -202,4 +205,3 @@ module.exports.getProjectsByViews = getProjectsByViews;
 module.exports.insertNotification = insertNotification;
 module.exports.insertMessage = insertMessage;
 module.exports.formatInsertMessage = formatInsertMessage;
-
