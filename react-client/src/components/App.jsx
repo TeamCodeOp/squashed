@@ -7,6 +7,9 @@ import ProjectsMenu from './ProjectsMenu.jsx';
 import TechsFilter from './TechsFilter.jsx';
 import RepoList from './RepoList.jsx';
 import UserFeed from './UserFeed.jsx';
+import FeedPopular from './FeedPopular.jsx';
+import FeedFriends from './FeedFriends.jsx';
+import FeedGithub from './FeedGithub.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,14 +28,40 @@ class App extends React.Component {
     }
   }
 
+  setFeedToRender() {
+    let feed;
+    if (this.state.feedActiveItem === 'popular') {
+      feed = <FeedPopular />;
+    } else if (this.state.feedActiveItem === 'friends') {
+      feed = <FeedFriends />;
+    } else if (this.state.feedActiveItem === 'github') {
+      feed = <FeedGithub />;
+    }
+    console.log('returning: ', feed);
+    
+    return feed;
+  }
+
   handleFeedClick(e, { name }) {
+    console.log('CLICKED', name);
     this.setState({
       feedActiveItem: name
+    }, () => {
+      console.log('State is now: ', this.state);
+      this.feedToRender = this.setFeedToRender();
+      console.log('feedToRender is now: ', this.feedToRender);
     });
   }
 
   render() {
     const { feedActiveItem } = this.state.feedActiveItem;
+    // const { feedToRender } = this.setFeedToRender;
+    // let test = this.setFeedToRender();
+    // console.log('test: ', test);
+    
+    const feedToRender = this.setFeedToRender();
+    console.log('feedToRender is: ', feedToRender);
+    
 
     return (
       <div className="ui container">
@@ -63,7 +92,8 @@ class App extends React.Component {
                 </Menu>
               </div>
               <Segment>
-                {/* feed here */}
+                {feedToRender}                              
+                {/* <FeedPopular /> */}
               </Segment>
             </div>
 
