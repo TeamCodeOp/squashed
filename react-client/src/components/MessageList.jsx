@@ -1,15 +1,12 @@
 import React from 'react';
-import { Image, List } from 'semantic-ui-react';
+import { List } from 'semantic-ui-react';
+import MessageListItem from './MessageListItem.jsx';
 
-const MessageList = () => (
+const MessageList = ({ messages }) => (
   <List celled>
-    <List.Item>
-      <Image avatar src='/assets/images/avatar/small/helen.jpg' />
-      <List.Content>
-        <List.Header>Snickerdoodle</List.Header>
-        An excellent companion
-      </List.Content>
-    </List.Item>
+    {messages.map((message, i) =>
+      <MessageListItem key={i} message={message} style={{ width: '500px' }} />
+    )}
   </List>
 );
 

@@ -31,7 +31,7 @@ class Root extends React.Component {
       shouldRedirectBrainstorm: false,
       githubRepos: [],
       isViewFilter: false,
-      unreadMessages: []
+      privateMessages: []
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -184,7 +184,7 @@ class Root extends React.Component {
   checkMessages(userId) {
     console.log(`checking messages for ${userId}`);
     axios.get(`/privateMessages?userId=${userId}`)
-      .then(response => this.setState({ unreadMessages: response.data }))
+      .then(response => this.setState({ privateMessages: response.data }))
       .catch(err => console.log(err));
   }
 
@@ -198,7 +198,7 @@ class Root extends React.Component {
             name={this.state.name}
             handleProjectRedirect={this.handleProjectRedirect}
             handleBrainstormRedirect={this.handleBrainstormRedirect}
-            unreadMessages={this.state.unreadMessages}
+            privateMessages={this.state.privateMessages}
           />
           <Switch>
             <RouteProps
@@ -207,6 +207,7 @@ class Root extends React.Component {
               component={App}
               sessionId={this.state.session_id}
               username={this.state.username}
+              userId={this.state.userId}
               name={this.state.name}
               projects={this.state.projects}
               techFilter={this.state.techFilter}
@@ -221,6 +222,7 @@ class Root extends React.Component {
               filterByViews={this.filterByViews}
               isViewFilter={this.state.isViewFilter}
               toggleViewFilter={this.toggleViewFilter}
+              checkMessages={this.checkMessages}
             />
             <RouteProps
               path="/create"
@@ -250,7 +252,7 @@ class Root extends React.Component {
               username={this.state.username}
               name={this.state.name}
               id={this.state.userId}
-              unreadMessages={this.state.unreadMessages}
+              privateMessages={this.state.privateMessages}
             />
             <RouteProps
               path="/ideas"
@@ -265,6 +267,8 @@ class Root extends React.Component {
               component={PrivateMessageForm}
               handleSendMessage={this.handleSendMessage}
               userId={this.state.userId}
+              username={this.state.username}
+              name={this.state.name}
             />
           </Switch>
         </div>

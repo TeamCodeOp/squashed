@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import UserProjectList from './UserProjectList.jsx';
+import MessageList from './MessageList.jsx';
 
 // const socket = io.connect();
 let newMessage;
@@ -340,6 +341,9 @@ class Developer extends React.Component {
           </Grid.Column>
           <Grid.Column width={2} />
         </Grid>
+        <MessageList
+          messages={this.props.privateMessages}
+        />
 
       </div>
     );

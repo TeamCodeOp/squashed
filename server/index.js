@@ -213,7 +213,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
-  console.log('here in projects')
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });

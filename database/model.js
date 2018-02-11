@@ -2,6 +2,8 @@ const db = require('./index.js');
 const mysql = require('mysql');
 const utils = require('./utils');
 const Promise = require('bluebird');
+Promise.promisifyAll(require('mysql/lib/Connection').prototype);
+Promise.promisifyAll(require('mysql/lib/Pool').prototype);
 const format = require('pg-format');
 const _ = require('underscore');
 
@@ -140,7 +142,7 @@ const insertNotification = (data, cb) => {
   const insert = `INSERT INTO notifications(event, user_id) VALUES(' added a new project ${data.projectName}', ${data.userId})`;
   console.log('insert', insert);
   db.connection.query(insert, (err, results) => {
-    if(err) {
+    if (err) {
       console.log(err);
     } else {
       console.log('notification inserted');
@@ -151,28 +153,36 @@ const insertNotification = (data, cb) => {
 
 const formatInsertMessage = (messageInfo, cb) => {
   let recipientId;
+  let sender;
   const userQuery = 'SELECT id FROM users WHERE git_username = ?';
   const userSql = mysql.format(userQuery, messageInfo.recipientUsername);
-
-  db.connection.query(userSql, (err, results) => {
+  const senderSql = `SELECT avatar_url FROM users WHERE id = ${messageInfo.senderId}`;
+  db.connection.query(senderSql, (err, senderInfo) => {
     if (err) {
       console.log(err);
     } else {
-      recipientId = results[0].id;
-      console.log(results[0].id);
+      sender = senderInfo[0];
 
-      const sql = 'INSERT INTO private_messages (sender_id, recipient_id, time_sent, content, opened) VALUES(?, ?, CURRENT_TIMESTAMP(), ?, false)';
 
-      const inserts = [messageInfo.senderId, recipientId, messageInfo.content];
-      const sqlQuery = mysql.format(sql, inserts);
-
-      db.connection.query(sqlQuery, (err, results) => {
+      db.connection.query(userSql, (err, userInfo) => {
         if (err) {
           console.log(err);
-          cb(err, null);
         } else {
-          console.log('in else results');
-          cb(null, results);
+          recipientId = userInfo[0].id;
+          const sql = 'INSERT INTO private_messages (sender_id, sender_name, sender_username, sender_img, recipient_id, time_sent, content, subject, opened) VALUES(?, ?, ?, ?, ?, CURRENT_TIMESTAMP(), ?, ?, false)';
+
+          const inserts = [messageInfo.senderId, messageInfo.senderName, messageInfo.senderUsername, sender.avatar_url, recipientId, messageInfo.content, messageInfo.subject];
+          const sqlQuery = mysql.format(sql, inserts);
+
+          db.connection.query(sqlQuery, (err, results) => {
+            if (err) {
+              console.log(err);
+              cb(err, null);
+            } else {
+              console.log('in else results');
+              cb(null, results);
+            }
+          });
         }
       });
     }

@@ -35,7 +35,7 @@ class NavHeader extends Component {
               as={Link}
               icon="mail"
               to={`/users/${this.props.username}`}
-              name={this.props.unreadMessages.length}
+              name={this.props.privateMessages.filter(msg => !msg.opened).length}
             />
 
             <Menu.Item
