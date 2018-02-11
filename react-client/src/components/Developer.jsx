@@ -341,9 +341,11 @@ class Developer extends React.Component {
           </Grid.Column>
           <Grid.Column width={2} />
         </Grid>
+        { this.props.id && (this.props.id === this.state.currentUserProfileId) &&
         <MessageList
           messages={this.props.privateMessages}
         />
+      }
 
       </div>
     );
