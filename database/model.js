@@ -136,8 +136,8 @@ const getProjectsByViews = (cb) => {
 
 
 const insertNotification = (data, cb) => {
-  console.log('database: insertNotification');
-  const insert = `INSERT INTO notifications(event, user_id) VALUES('project has been added ${data.projectName}', ${data.userId})`;
+  //console.log('database: insertNotification');
+  const insert = `INSERT INTO notifications(event, user_id) VALUES(' added a new project ${data.projectName}', ${data.userId})`;
   console.log('insert', insert);
   db.connection.query(insert, (err, results) => {
     if(err) {
@@ -167,17 +167,16 @@ const formatInsertMessage = (messageInfo, cb) => {
       const sqlQuery = mysql.format(sql, inserts);
 
       db.connection.query(sqlQuery, (err, results) => {
-    if (err) {
-      console.log(err);
-      cb(err, null);
-    } else {
-      console.log('in else results');
-      cb(null, results);
+        if (err) {
+          console.log(err);
+          cb(err, null);
+        } else {
+          console.log('in else results');
+          cb(null, results);
+        }
+      });
     }
   });
-    }
-  });
-
 };
 
 
@@ -196,6 +195,41 @@ const insertMessage = (messageInfo, cb) => {
   });
 };
 
+const insertFollowerNotification = (followerInfo, cb) => {
+  const selectQuery = `SELECT id,git_username FROM users WHERE id in (${followerInfo.user_id}, ${followerInfo.follower_id});`;
+  db.connection.query(selectQuery, (err, results) => {
+    let followerName ='';
+    let userName = '';
+    if (err) {
+      console.log(err);
+    } else {
+      followerName = results[0].id === followerInfo.user_id ? results[0].git_username : results[1].git_username;
+      userName = results[1].id === followerInfo.follower_id ? results[1].git_username : results[0].git_username;
+    }
+     const insertQuery = `INSERT INTO notifications(event, user_id) VALUES('is following ${followerName}', ${followerInfo.follower_id})`;
+    db.connection.query(insertQuery, (err, results) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('notification inserted', results);
+        cb(results);
+      }
+    });
+  });
+};
+
+const usersJoinNotifications = (userData, cb) => {
+  let queryStr = `select users.git_username,users.avatar_url,notifications.event from users right join notifications on users.id = notifications.user_id`;
+  db.connection.query(queryStr, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('all notifications', results);
+      cb(err, results);
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
@@ -205,3 +239,5 @@ module.exports.getProjectsByViews = getProjectsByViews;
 module.exports.insertNotification = insertNotification;
 module.exports.insertMessage = insertMessage;
 module.exports.formatInsertMessage = formatInsertMessage;
+module.exports.insertFollowerNotification = insertFollowerNotification;
+module.exports.usersJoinNotifications = usersJoinNotifications;

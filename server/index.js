@@ -189,9 +189,19 @@ app.get('/searchProjects', (req, res) => {
   });
 });
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
+app.get('/notifications', (req, res) => {
+  console.log('get /notifications');
+  mysqlModel.usersJoinNotifications(req.body, (err, data) => {
+    if (err) {
+      console.log('err....', err);
+      res.status(500).send(err);
+    } else {
+      console.log('data of all notifications', data);
+      res.status(201).json(data);
+    }
+  });
 });
+
 
 app.get('/', (req, res) => {
   res.status(200).json();
@@ -287,14 +297,30 @@ app.get('/testing', (req, res) => {
 });
 
 app.post('/notifications', (req, res) => {
-  console.log('im triggered: notifications in server');
-  mysqlModel.insertNotification(req.body, (err, data) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(201).json(data);
-    }
-  });
+  if (req.body.follower_id) {
+    console.log('if in /notifications');
+    mysqlModel.insertFollowerNotification(req.body, (err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(201).json(data);
+      }
+    });
+  } else {
+    console.log('else in /notifications');
+    mysqlModel.insertNotification(req.body, (err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(201).json(data);
+      }
+    });
+  }
 });
 
+
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
+});
 module.exports = app;

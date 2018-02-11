@@ -1,38 +1,35 @@
 import React from 'react';
 import { Feed, Image } from 'semantic-ui-react';
+import axios from 'axios';
+import UserFeedList from './UserFeedList.jsx';
 
 class UserFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userAvatar: 'https://avatars0.githubusercontent.com/u/30578313?v=4',
-      gitUser: 'tguvvala'
+      userFeeds: [],
     };
+  }
+
+  componentDidMount() {
+    axios.get('/notifications')
+      .then((response) => {
+        this.setState({
+          userFeeds: response.data
+        });
+        console.log('&&&&', response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
     return (
-      <div className="ui feed">
-        <div className="event">
-          <div className="label">
-            <Image src={this.state.userAvatar} />
-          </div>
-          <div className="content">
-           <div className="summary">
-             <a className="user">
-             {this.state.gitUser}
-             </a> added you as a friend
-             <div className="date">
-              1 Hour Ago
-             </div>
-            </div>
-          <div className="meta">
-            <a className="like">
-             <i className="like icon"></i> 4 Likes
-            </a>
-          </div>
-        </div>
-      </div>
+      <div style={{ margin: 'auto', width: '40%', marginTop: '5em', borderRadius: '10px', border: '1px solid rgba(34,36,38,.15)', padding: '2em' }}>
+        {this.state.userFeeds.map((feed, i) =>
+          <UserFeedList key={i} feed={feed} />
+      )}
       </div>
     );
   }

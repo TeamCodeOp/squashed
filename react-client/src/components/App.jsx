@@ -6,6 +6,7 @@ import NewProjects from './NewProjects.jsx';
 import ProjectsMenu from './ProjectsMenu.jsx';
 import TechsFilter from './TechsFilter.jsx';
 import RepoList from './RepoList.jsx';
+import UserFeed from './UserFeed.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class App extends React.Component {
         <RepoList
           repos={this.props.githubRepos}
         />
+        <UserFeed />
       </div>);
   }
 }
