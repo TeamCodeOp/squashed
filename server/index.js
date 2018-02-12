@@ -209,6 +209,7 @@ app.get('/privateMessages', (req, res) => {
   mysqlModel.selectAllWhere('private_messages', 'recipient_id', userId, false, messages => res.send(messages));
 });
 
+
 app.get('/', (req, res) => {
   res.status(200).json();
 });
@@ -279,12 +280,14 @@ app.put('/viewCount', (req, res) => {
   });
 });
 
+
 app.put('/privateMessages', (req, res) => {
   const messages = req.body.messages;
   const recipientId = req.query.recipient;
   console.log('MESSAGES---', messages);
   mysqlModel.markAllOpened(messages, recipientId, results => res.send(results));
 });
+
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
@@ -334,8 +337,8 @@ app.post('/notifications', (req, res) => {
   }
 });
 
+
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
-
 module.exports = app;

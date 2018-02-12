@@ -53,9 +53,4 @@ describe('<App />', () => {
     const wrapper = shallow(<App {...props} />);
     expect(wrapper.find('NewProjects')).to.have.length(1);
   });
-
-  it('renders RepoList', () => {
-    const wrapper = shallow(<App {...props} />);
-    expect(wrapper.find('RepoList')).to.have.length(1);
-  });
 });
