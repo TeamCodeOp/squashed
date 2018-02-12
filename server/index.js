@@ -200,6 +200,7 @@ app.get('/notifications', (req, res) => {
       res.status(201).json(data);
     }
   });
+});
 
 app.get('/privateMessages', (req, res) => {
   console.log('userId: ', req.query.userId);
