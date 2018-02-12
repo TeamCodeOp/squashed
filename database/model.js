@@ -2,6 +2,8 @@ const db = require('./index.js');
 const mysql = require('mysql');
 const utils = require('./utils');
 const Promise = require('bluebird');
+Promise.promisifyAll(require('mysql/lib/Connection').prototype);
+Promise.promisifyAll(require('mysql/lib/Pool').prototype);
 const format = require('pg-format');
 const _ = require('underscore');
 
@@ -140,7 +142,7 @@ const insertNotification = (data, cb) => {
   const insert = `INSERT INTO notifications(event, user_id) VALUES(' added a new project ${data.projectName}', ${data.userId})`;
   console.log('insert', insert);
   db.connection.query(insert, (err, results) => {
-    if(err) {
+    if (err) {
       console.log(err);
     } else {
       console.log('notification inserted');
@@ -151,46 +153,38 @@ const insertNotification = (data, cb) => {
 
 const formatInsertMessage = (messageInfo, cb) => {
   let recipientId;
+  let sender;
   const userQuery = 'SELECT id FROM users WHERE git_username = ?';
   const userSql = mysql.format(userQuery, messageInfo.recipientUsername);
-
-  db.connection.query(userSql, (err, results) => {
+  const senderSql = `SELECT avatar_url FROM users WHERE id = ${messageInfo.senderId}`;
+  db.connection.query(senderSql, (err, senderInfo) => {
     if (err) {
       console.log(err);
     } else {
-      recipientId = results[0].id;
-      console.log(results[0].id);
+      sender = senderInfo[0];
 
-      const sql = 'INSERT INTO private_messages (sender_id, recipient_id, time_sent, content, opened) VALUES(?, ?, CURRENT_TIMESTAMP(), ?, false)';
 
-      const inserts = [messageInfo.senderId, recipientId, messageInfo.content];
-      const sqlQuery = mysql.format(sql, inserts);
-
-      db.connection.query(sqlQuery, (err, results) => {
+      db.connection.query(userSql, (err, userInfo) => {
         if (err) {
           console.log(err);
-          cb(err, null);
         } else {
-          console.log('in else results');
-          cb(null, results);
+          recipientId = userInfo[0].id;
+          const sql = 'INSERT INTO private_messages (sender_id, sender_name, sender_username, sender_img, recipient_id, time_sent, content, subject, opened) VALUES(?, ?, ?, ?, ?, CURRENT_TIMESTAMP(), ?, ?, false)';
+
+          const inserts = [messageInfo.senderId, messageInfo.senderName, messageInfo.senderUsername, sender.avatar_url, recipientId, messageInfo.content, messageInfo.subject];
+          const sqlQuery = mysql.format(sql, inserts);
+
+          db.connection.query(sqlQuery, (err, results) => {
+            if (err) {
+              console.log(err);
+              cb(err, null);
+            } else {
+              console.log('in else results');
+              cb(null, results);
+            }
+          });
         }
       });
-    }
-  });
-};
-
-
-const insertMessage = (messageInfo, cb) => {
-  const sql = formatInsertMessage(messageInfo);
-  console.log('insertfunc msgInfo', messageInfo);
-  console.log('sql query:', sql)
-  db.connection.query(sql, (err, results) => {
-    if (err) {
-      console.log(err);
-      cb(err, null);
-    } else {
-      console.log('in else results');
-      cb(null, results);
     }
   });
 };
@@ -230,6 +224,31 @@ const usersJoinNotifications = (userData, cb) => {
   });
 };
 
+const deleteMessage = (messageId, recipientId, cb) => {
+  const sql = 'DELETE FROM private_messages WHERE id = ?';
+  const formattedSql = mysql.format(sql, messageId);
+  db.connection.query(formattedSql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      selectAllWhere('private_messages', 'recipient_id', recipientId, false, messages => cb(messages));
+    }
+  });
+};
+
+const markAllOpened = (messages, recipientId, cb) => {
+  const cols = utils.formatMessages(messages)[0];
+  const values = utils.formatMessages(messages)[1];
+
+  db.connection.query(`INSERT INTO private_messages (${cols}) VALUES ? ON DUPLICATE KEY UPDATE ${cols[1]} = true`, [values], (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      selectAllWhere('private_messages', 'recipient_id', recipientId, false, msgs => cb(msgs));
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
@@ -237,7 +256,8 @@ module.exports.retrieveGithubRepos = retrieveGithubRepos;
 module.exports.incrementViewCount = incrementViewCount;
 module.exports.getProjectsByViews = getProjectsByViews;
 module.exports.insertNotification = insertNotification;
-module.exports.insertMessage = insertMessage;
 module.exports.formatInsertMessage = formatInsertMessage;
 module.exports.insertFollowerNotification = insertFollowerNotification;
 module.exports.usersJoinNotifications = usersJoinNotifications;
+module.exports.deleteMessage = deleteMessage;
+module.exports.markAllOpened = markAllOpened;

@@ -16,6 +16,9 @@ class App extends React.Component {
   componentDidMount() {
     this.props.getProjects();
     this.props.getGithubRepos();
+    if (this.props.userId) {
+      this.props.checkMessages(this.props.userId);
+    }
 
     // console.log('App mounted');
     // GET request to '/projects' to get projects
