@@ -287,8 +287,10 @@ app.delete('/projects/:id', (req, res) => {
 });
 
 app.delete('/privateMessages', (req, res) => {
+  console.log('QUERY: ', req.query)
   const messageId = req.query.id;
-  mysqlModel.deleteMessage(messageId, results => console.log(results));
+  const recipientId = req.query.to;
+  mysqlModel.deleteMessage(messageId, recipientId, messages => res.send(messages));
 });
 
 app.post('/privateMessages', (req, res) => {

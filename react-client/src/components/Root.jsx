@@ -189,10 +189,10 @@ class Root extends React.Component {
       .catch(err => console.log(err));
   }
 
-  handleDeleteMessage(messageId) {
+  handleDeleteMessage(messageId, recipientId) {
     console.log('Deleting messageId: ', messageId);
-    axios.delete(`/privateMessages?id=${messageId}`)
-      .then(response => alert('Message deleted.'))
+    axios.delete(`/privateMessages?id=${messageId}&to=${recipientId}`)
+      .then(response => this.setState({ privateMessages: response.data }, () => alert('Message deleted')))
       .catch(err => console.log(err));
   }
 

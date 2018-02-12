@@ -17,7 +17,7 @@ const MessageListItem = ({ message, handleDeleteMessage }) => (
           <Dropdown icon="vertical ellipsis" floating className="icon">
             <Dropdown.Menu>
               <Dropdown.Item>Reply</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleDeleteMessage(message.id)}>
+              <Dropdown.Item onClick={() => handleDeleteMessage(message.id, message.recipient_id)}>
                 Delete
               </Dropdown.Item>
             </Dropdown.Menu>

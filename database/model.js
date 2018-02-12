@@ -224,14 +224,14 @@ const usersJoinNotifications = (userData, cb) => {
   });
 };
 
-const deleteMessage = (messageId, cb) => {
+const deleteMessage = (messageId, recipientId, cb) => {
   const sql = 'DELETE FROM private_messages WHERE id = ?';
   const formattedSql = mysql.format(sql, messageId);
   db.connection.query(formattedSql, (err, results) => {
     if (err) {
       console.log(err);
     } else {
-      cb(results[0]);
+      selectAllWhere('private_messages', 'recipient_id', recipientId, false, messages => cb(messages));
     }
   });
 };
