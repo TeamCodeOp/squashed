@@ -50,5 +50,14 @@ const formatGithubRepos = (repos) => {
   return [columns, values];
 };
 
+const formatMessages = (messages) => {
+  const filtered = _.map(messages, msg => ({ id: msg.id, opened: msg.opened }));
+  const cols = _.map(Object.entries(filtered[0]), tuple => tuple[0]);
+  const vals = _.map(filtered, msg => _.map(Object.entries(msg), tuple => tuple[1]));
+
+  return [cols, vals];
+};
+
 module.exports.formatProjectsWithTechs = formatProjectsWithTechs;
 module.exports.formatGithubRepos = formatGithubRepos;
+module.exports.formatMessages = formatMessages;

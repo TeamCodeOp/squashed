@@ -65,9 +65,13 @@ CREATE TABLE IF NOT EXISTS notifications (
 CREATE TABLE IF NOT EXISTS private_messages(
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   sender_id int,
+  sender_name varchar(50),
+  sender_username varchar(35),
+  sender_img varchar(100),
   recipient_id int,
   time_sent TIMESTAMP,
   content text,
+  subject varchar(50),
   opened boolean
 );
 

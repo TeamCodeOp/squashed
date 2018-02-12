@@ -5,6 +5,7 @@ import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Inp
 import { Link } from 'react-router-dom';
 import UserProjectList from './UserProjectList.jsx';
 import moment from 'moment';
+import MessageList from './MessageList.jsx';
 
 // const socket = io.connect();
 let newMessage;
@@ -92,7 +93,6 @@ class Developer extends React.Component {
               currentUserProfileId: this.state.currentUserProfileId
             })
               .then((ifFollowingResponse) => {
-                // console.log(':::::::::::checkIfCurrentlyFollowing response.data (Dev.jsx): ', ifFollowingResponse);
                 let bool = false;
                 if (ifFollowingResponse.data[0]) {
                   bool = true;
@@ -100,7 +100,6 @@ class Developer extends React.Component {
                 this.setState({
                   currentlyFollowing: bool
                 });
-                // console.log('State set to (currentlyFollowing)', this.state.currentlyFollowing);
               })
               .catch((ifFollowingRrror) => {
                 console.log(ifFollowingRrror);
@@ -136,10 +135,8 @@ class Developer extends React.Component {
   }
 
   componentWillUnmount() {
-    // console.log(this.state.fullName, ' is leaving');
     socket.emit('userDisconnect', this.state.fullName);
   }
-
 
   handleChange(e, { msgInput, value }) {
     this.setState({
@@ -165,12 +162,8 @@ class Developer extends React.Component {
     socket.emit('messageAdded', newMessage);
   }
 
-
   handleFollowRequest(e) {
     e.preventDefault();
-    // console.log('follow button clicked');
-    // console.log('currentlyFollowing?: ', this.state.currentlyFollowing);
-
     if (!this.state.currentlyFollowing) {
       console.log('174: here in if');
       axios.post('/followRequest', {
@@ -217,15 +210,12 @@ class Developer extends React.Component {
   }
 
   render() {
-    // console.log('--------------------state(Dev.jsx): ', this.state);
-    // console.log('--------------------props(Dev.jsx): ', this.props);
-    // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId)
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
-      return <p className='messageList' key={i}>{msg.sender}: {msg.text}</p>
+      return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;
     });
 
-    const { msgInput } = this.state
+    const { msgInput } = this.state;
 
     const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
     let buttonJsxToRender = <Button primary onClick={this.handleFollowRequest} >+ Follow</Button>;
@@ -246,16 +236,16 @@ class Developer extends React.Component {
               <Card.Content>
                 <Card.Header>
                   <span>{this.state.fullName}</span>
-                {this.state.onlineStatus ?
-                  <span style={{fontSize: '.5em', float: 'right', color: 'green'}}>
-                    <Icon color='green' size='large' name='check circle'/>
+                  {this.state.onlineStatus ?
+                    <span style={{ fontSize: '.5em', float: 'right', color: 'green' }}>
+                      <Icon color="green" size="large" name="check circle" />
                     ONLINE
-                  </span> :
-                  <span style={{fontSize: '.5em', float: 'right', color: 'red'}}>
-                    <Icon color='red' size='large' name='remove circle'/>
+                    </span> :
+                    <span style={{ fontSize: '.5em', float: 'right', color: 'red' }}>
+                      <Icon color="red" size="large" name="remove circle" />
                     OFFLINE
-                  </span>
-                }
+                    </span>
+                  }
                 </Card.Header>
 
                 <Card.Meta>
@@ -271,60 +261,61 @@ class Developer extends React.Component {
               </Card.Content>
               <Card.Content extra>
 
-              <div className="extra content">
-                <span className="left floated like">
-                  <i className="user icon"></i>
+                <div className="extra content">
+                  <span className="left floated like">
+                    <i className="user icon" />
                   Following: <b>{`${this.state.following}`}</b>
-                </span>
-                <span className="right floated star">
-                  <i className="user icon"></i>
+                  </span>
+                  <span className="right floated star">
+                    <i className="user icon" />
                   Followers: <b>{`${this.state.followers}`}</b>
-                </span>
-
-              </div>
-
+                  </span>
+                </div>
               </Card.Content>
 
               <Card.Content extra>
                 <div id="follow-button">
-                  {  showFollowButton ? buttonJsxToRender : null }
+                  { showFollowButton ? buttonJsxToRender : null }
                 </div>
                 <div id="pm-button">
+                  {this.props.id && (this.props.id !== this.state.currentUserProfileId) &&
                   <Button
                     as={Link}
                     to={`/sendMessage?to=${this.state.username}`}
                     primary
                     floated="right"
-                    >Message</Button>
+                  >Message
+                  </Button>
+                  }
                 </div>
               </Card.Content>
 
             </Card>
 
             {(this.props.sessionId) && (this.state.onlineStatus) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
-              <div style={{ width: '290px'}}>
-                <Header as='h4' attached='top' style={{backgroundColor: '#e0e1e2', textAlign: 'center'}}>Chat with {firstName}</Header>
+              <div style={{ width: '290px' }}>
+                <Header as="h4" attached="top" style={{ backgroundColor: '#e0e1e2', textAlign: 'center' }}>Chat with {firstName}</Header>
                 <Segment
                   attached
-                  style={{ height: '230px', overflowY: 'scroll'}}
+                  style={{ height: '230px', overflowY: 'scroll' }}
                 >
                   {messages}
                 </Segment>
                 <Segment attached>
-                <Form onSubmit={this.handleSubmit}>
-                  <Form.Group style={{ margin: 'auto'}}>
-                    <Form.Input style={{ height: '35px'}}placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange}/>
-                    <Form.Button style={{ height: '35px'}}content='Send' size='small'/>
-                  </Form.Group>
-                </Form>
+                  <Form onSubmit={this.handleSubmit}>
+                    <Form.Group style={{ margin: 'auto' }}>
+                      <Form.Input style={{ height: '35px' }}placeholder="Type something..." name="input" value={msgInput} onChange={this.handleChange} />
+                      <Form.Button style={{ height: '35px' }}content="Send" size="small" />
+                    </Form.Group>
+                  </Form>
                 </Segment>
               </div>
-            : null }
+              : null }
 
           </Grid.Column>
           <Grid.Column width={8}>
             <Container style={{ textAlign: 'center' }}>
-              <Header as='h3' textAlign='center'>
+              <Header as="h3" textAlign="center">
                 Projects
               </Header>
               <Grid>
@@ -338,7 +329,12 @@ class Developer extends React.Component {
           </Grid.Column>
           <Grid.Column width={2} />
         </Grid>
-
+        { this.props.id && (this.props.id === this.state.currentUserProfileId) &&
+        <MessageList
+          messages={this.props.privateMessages}
+          handleDeleteMessage={this.props.handleDeleteMessage}
+        />
+        }
       </div>
     );
   }

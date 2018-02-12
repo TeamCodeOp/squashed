@@ -31,6 +31,7 @@ class Root extends React.Component {
       shouldRedirectBrainstorm: false,
       githubRepos: [],
       isViewFilter: false,
+      privateMessages: []
     };
 
     this.checkSignIn = this.checkSignIn.bind(this);
@@ -45,6 +46,9 @@ class Root extends React.Component {
     this.getProjectInfoByProjectId = this.getProjectInfoByProjectId.bind(this);
     this.filterByViews = this.filterByViews.bind(this);
     this.toggleViewFilter = this.toggleViewFilter.bind(this);
+    this.checkMessages = this.checkMessages.bind(this);
+    this.handleDeleteMessage = this.handleDeleteMessage.bind(this);
+    this.markAllOpened = this.markAllOpened.bind(this);
   }
 
   componentWillMount() {
@@ -63,6 +67,8 @@ class Root extends React.Component {
             username: response.data.git_username,
             name: response.data.name,
             userId: response.data.id
+          }, function () {
+            this.checkMessages(this.state.userId);
           });
         })
         .catch((error) => {
@@ -98,10 +104,12 @@ class Root extends React.Component {
   getProjectInfoByProjectId(projectId) {
     axios.get(`/projects/${projectId}`)
       .then((response) => {
-        const techStackHtml = response.data[1].map((tech) =>
-        <li className="ui label" key={tech.toString()}>
-          {tech}
-        </li>
+        const techStackHtml = response.data[1].map(tech =>
+          (
+            <li className="ui label" key={tech.toString()}>
+              {tech}
+            </li>
+          )
         );
 
         this.setState({
@@ -171,7 +179,29 @@ class Root extends React.Component {
     axios.post('/privateMessages', {
       messageInfo
     })
-      .then(response => console.log('Message Sent!'))
+      .then(response => alert('Message Sent!'))
+      .catch(err => console.log(err));
+  }
+
+  checkMessages(userId) {
+    console.log(`checking messages for ${userId}`);
+    axios.get(`/privateMessages?userId=${userId}`)
+      .then(response => this.setState({ privateMessages: response.data }))
+      .catch(err => console.log(err));
+  }
+
+  handleDeleteMessage(messageId, recipientId) {
+    console.log('Deleting messageId: ', messageId);
+    axios.delete(`/privateMessages?id=${messageId}&to=${recipientId}`)
+      .then(response => this.setState({ privateMessages: response.data }, () => alert('Message deleted')))
+      .catch(err => console.log(err));
+  }
+
+  markAllOpened() {
+    axios.put(`/privateMessages?recipient=${this.state.userId}`, {
+      messages: this.state.privateMessages
+    })
+      .then(response => this.setState({ privateMessages: response.data }))
       .catch(err => console.log(err));
   }
 
@@ -185,6 +215,8 @@ class Root extends React.Component {
             name={this.state.name}
             handleProjectRedirect={this.handleProjectRedirect}
             handleBrainstormRedirect={this.handleBrainstormRedirect}
+            privateMessages={this.state.privateMessages}
+            markAllOpened={this.markAllOpened}
           />
           <Switch>
             <RouteProps
@@ -193,6 +225,7 @@ class Root extends React.Component {
               component={App}
               sessionId={this.state.session_id}
               username={this.state.username}
+              userId={this.state.userId}
               name={this.state.name}
               projects={this.state.projects}
               techFilter={this.state.techFilter}
@@ -207,6 +240,7 @@ class Root extends React.Component {
               filterByViews={this.filterByViews}
               isViewFilter={this.state.isViewFilter}
               toggleViewFilter={this.toggleViewFilter}
+              checkMessages={this.checkMessages}
             />
             <RouteProps
               path="/create"
@@ -236,6 +270,8 @@ class Root extends React.Component {
               username={this.state.username}
               name={this.state.name}
               id={this.state.userId}
+              privateMessages={this.state.privateMessages}
+              handleDeleteMessage={this.handleDeleteMessage}
             />
             <RouteProps
               path="/ideas"
@@ -250,6 +286,8 @@ class Root extends React.Component {
               component={PrivateMessageForm}
               handleSendMessage={this.handleSendMessage}
               userId={this.state.userId}
+              username={this.state.username}
+              name={this.state.name}
             />
           </Switch>
         </div>

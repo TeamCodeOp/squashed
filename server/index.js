@@ -202,13 +202,19 @@ app.get('/notifications', (req, res) => {
   });
 });
 
+app.get('/privateMessages', (req, res) => {
+  console.log('userId: ', req.query.userId);
+  const userId = req.query.userId;
+
+  mysqlModel.selectAllWhere('private_messages', 'recipient_id', userId, false, messages => res.send(messages));
+});
+
 
 app.get('/', (req, res) => {
   res.status(200).json();
 });
 
 app.post('/projects', (req, res) => {
-  console.log('here in projects')
   mysqlModel.insertProjectData(req.body);
   res.status(201).json();
 });
@@ -275,6 +281,13 @@ app.put('/viewCount', (req, res) => {
 });
 
 
+app.put('/privateMessages', (req, res) => {
+  const messages = req.body.messages;
+  const recipientId = req.query.recipient;
+  console.log('MESSAGES---', messages);
+  mysqlModel.markAllOpened(messages, recipientId, results => res.send(results));
+});
+
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
@@ -282,6 +295,12 @@ app.delete('/projects/:id', (req, res) => {
   mysqlDB.deleteProjectByProjectId(projectId, (project) => {
     res.send(project);
   });
+});
+
+app.delete('/privateMessages', (req, res) => {
+  const messageId = req.query.id;
+  const recipientId = req.query.to;
+  mysqlModel.deleteMessage(messageId, recipientId, messages => res.send(messages));
 });
 
 app.post('/privateMessages', (req, res) => {
@@ -317,7 +336,6 @@ app.post('/notifications', (req, res) => {
     });
   }
 });
-
 
 
 app.get('/*', (req, res) => {
