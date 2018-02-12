@@ -15,7 +15,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedActiveItem: 'popular'
+      feedActiveItem: 'Popular'
     };
     this.handleFeedClick = this.handleFeedClick.bind(this);
   }
@@ -29,27 +29,26 @@ class App extends React.Component {
   }
 
   setFeedToRender() {
+    
     let feed;
-    if (this.state.feedActiveItem === 'popular') {
+
+    if (this.state.feedActiveItem === 'Popular') {
       feed = <FeedPopular />;
-    } else if (this.state.feedActiveItem === 'friends') {
+    } else if (this.state.feedActiveItem === 'Friends') {
       feed = <FeedFriends />;
-    } else if (this.state.feedActiveItem === 'github') {
+    } else if (this.state.feedActiveItem === 'On Github') {
       feed = <FeedGithub />;
     }
-    console.log('returning: ', feed);
+    console.log('setting feed to render as: ', feed);
     
     return feed;
   }
 
   handleFeedClick(e, { name }) {
-    console.log('CLICKED', name);
     this.setState({
       feedActiveItem: name
     }, () => {
-      console.log('State is now: ', this.state);
       this.feedToRender = this.setFeedToRender();
-      console.log('feedToRender is now: ', this.feedToRender);
     });
   }
 
@@ -60,7 +59,7 @@ class App extends React.Component {
     // console.log('test: ', test);
     
     const feedToRender = this.setFeedToRender();
-    console.log('feedToRender is: ', feedToRender);
+    // console.log('feedToRender is: ', feedToRender);
     
 
     return (
@@ -93,7 +92,6 @@ class App extends React.Component {
               </div>
               <Segment>
                 {feedToRender}                              
-                {/* <FeedPopular /> */}
               </Segment>
             </div>
 
@@ -103,7 +101,7 @@ class App extends React.Component {
 
         <Search searchByUserInput={this.props.searchByUserInput} />
         <ProjectsMenu
-getProjects={this.props.getProjects}
+          getProjects={this.props.getProjects}
           handleGetLatest={this.props.handleGetLatest}
           filterByViews={this.props.filterByViews}
         />
