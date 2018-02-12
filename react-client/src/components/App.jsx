@@ -5,7 +5,6 @@ import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
 import ProjectsMenu from './ProjectsMenu.jsx';
 import TechsFilter from './TechsFilter.jsx';
-import RepoList from './RepoList.jsx';
 import UserFeed from './UserFeed.jsx';
 import FeedPopular from './FeedPopular.jsx';
 import FeedFriends from './FeedFriends.jsx';
@@ -53,10 +52,10 @@ class App extends React.Component {
     // const { feedToRender } = this.setFeedToRender;
     // let test = this.setFeedToRender();
     // console.log('test: ', test);
-    
+
     const feedToRender = this.setFeedToRender();
     // console.log('feedToRender is: ', feedToRender);
-    
+
 
     return (
       <div className="ui container">
@@ -77,7 +76,6 @@ class App extends React.Component {
           </Grid.Column>
           {/* Right area for our feeds (Following activities, popular, latest) */}
           <Grid.Column width={4}>
-
             <div>
               <div id="feedmenu">
                 <Menu pointing secondary>
@@ -87,14 +85,11 @@ class App extends React.Component {
                 </Menu>
               </div>
               <Segment>
-                {feedToRender}                              
+                {feedToRender}
               </Segment>
             </div>
-
           </Grid.Column>
         </Grid>
-
-
         <Search searchByUserInput={this.props.searchByUserInput} />
         <ProjectsMenu
           getProjects={this.props.getProjects}
@@ -105,10 +100,6 @@ class App extends React.Component {
           getProjectsByTechs={this.props.getProjectsByTechs}
           handleTechs={this.props.handleTechs}
           techFilter={this.props.techFilter}
-        />
-
-        <RepoList
-          repos={this.props.githubRepos}
         />
         <UserFeed />
       </div>);
