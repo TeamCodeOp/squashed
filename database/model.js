@@ -130,7 +130,6 @@ const getProjectsByViews = (cb) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('viewResults----', results)
       cb(results);
     }
   });
