@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Header } from 'semantic-ui-react';
 
 class PrivateMessageForm extends React.Component {
   constructor(props) {
@@ -40,19 +40,22 @@ class PrivateMessageForm extends React.Component {
   render() {
     const { value } = this.state;
     return (
-      <Form>
-        <Form.Input
-          label="Subject"
-          placeholder="Subject"
-          onChange={this.handleSubject}
-        />
-        <Form.TextArea
-          label="Message"
-          placeholder="Your thoughts here..."
-          onChange={this.handleChange}
-        />
-        <Form.Button onClick={this.handleSubmit} >Send</Form.Button>
-      </Form>
+      <div>
+        <Header>Message to {this.props.location.search.slice(4)}</Header>
+        <Form>
+          <Form.Input
+            label="Subject"
+            placeholder="Subject"
+            onChange={this.handleSubject}
+          />
+          <Form.TextArea
+            label="Message"
+            placeholder="Your thoughts here..."
+            onChange={this.handleChange}
+          />
+          <Form.Button onClick={this.handleSubmit} >Send</Form.Button>
+        </Form>
+      </div>
     );
   }
 }

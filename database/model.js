@@ -236,6 +236,19 @@ const deleteMessage = (messageId, recipientId, cb) => {
   });
 };
 
+const markAllOpened = (messages, recipientId, cb) => {
+  const cols = utils.formatMessages(messages)[0];
+  const values = utils.formatMessages(messages)[1];
+
+  db.connection.query(`INSERT INTO private_messages (${cols}) VALUES ? ON DUPLICATE KEY UPDATE ${cols[1]} = true`, [values], (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      selectAllWhere('private_messages', 'recipient_id', recipientId, false, msgs => cb(msgs));
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
@@ -247,4 +260,4 @@ module.exports.formatInsertMessage = formatInsertMessage;
 module.exports.insertFollowerNotification = insertFollowerNotification;
 module.exports.usersJoinNotifications = usersJoinNotifications;
 module.exports.deleteMessage = deleteMessage;
-
+module.exports.markAllOpened = markAllOpened;

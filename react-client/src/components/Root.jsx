@@ -48,6 +48,7 @@ class Root extends React.Component {
     this.toggleViewFilter = this.toggleViewFilter.bind(this);
     this.checkMessages = this.checkMessages.bind(this);
     this.handleDeleteMessage = this.handleDeleteMessage.bind(this);
+    this.markAllOpened = this.markAllOpened.bind(this);
   }
 
   componentWillMount() {
@@ -196,6 +197,14 @@ class Root extends React.Component {
       .catch(err => console.log(err));
   }
 
+  markAllOpened() {
+    axios.put(`/privateMessages?recipient=${this.state.userId}`, {
+      messages: this.state.privateMessages
+    })
+      .then(response => this.setState({ privateMessages: response.data }))
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <Router>
@@ -207,6 +216,7 @@ class Root extends React.Component {
             handleProjectRedirect={this.handleProjectRedirect}
             handleBrainstormRedirect={this.handleBrainstormRedirect}
             privateMessages={this.state.privateMessages}
+            markAllOpened={this.markAllOpened}
           />
           <Switch>
             <RouteProps

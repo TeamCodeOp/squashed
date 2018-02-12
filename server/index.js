@@ -278,6 +278,13 @@ app.put('/viewCount', (req, res) => {
   });
 });
 
+app.put('/privateMessages', (req, res) => {
+  const messages = req.body.messages;
+  const recipientId = req.query.recipient;
+  console.log('MESSAGES---', messages);
+  mysqlModel.markAllOpened(messages, recipientId, results => res.send(results));
+});
+
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;
@@ -287,7 +294,6 @@ app.delete('/projects/:id', (req, res) => {
 });
 
 app.delete('/privateMessages', (req, res) => {
-  console.log('QUERY: ', req.query)
   const messageId = req.query.id;
   const recipientId = req.query.to;
   mysqlModel.deleteMessage(messageId, recipientId, messages => res.send(messages));

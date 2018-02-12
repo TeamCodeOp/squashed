@@ -31,7 +31,8 @@ class NavHeader extends Component {
         />
         {this.props.username ?
           <Menu.Menu position="right">
-             <Menu.Item
+            <Menu.Item
+              onClick={this.props.markAllOpened}
               as={Link}
               icon="mail"
               to={`/users/${this.props.username}`}

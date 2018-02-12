@@ -18,7 +18,7 @@ const MessageListItem = ({ message, handleDeleteMessage }) => (
             <Dropdown.Menu>
               <Dropdown.Item
                 as={Link}
-                to={`/sendMessage?to=${message.sender_id}`}
+                to={`/sendMessage?to=${message.sender_username}`}
               >
                 Reply
               </Dropdown.Item>
