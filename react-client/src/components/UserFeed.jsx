@@ -3,6 +3,7 @@ import { Feed, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import UserFeedList from './UserFeedList.jsx';
 
+
 class UserFeed extends React.Component {
   constructor(props) {
     super(props);
