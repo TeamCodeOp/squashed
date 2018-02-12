@@ -10,7 +10,7 @@ let config;
 let CLOUDINARY_UPLOAD_URL;
 let CLOUDINARY_UPLOAD_PRESET;
 
-console.log('NODE_ENV: ',process.env.NODE_ENV);
+// console.log('NODE_ENV: ',process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
   CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_URL;
   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
@@ -144,7 +144,7 @@ class UploadForm extends React.Component {
 
   handleUpdate(e) {
     e.preventDefault();
-    console.log('hurray', this.state);
+    // console.log('hurray', this.state);
     axios.put('/projects', {
       projectName: this.state.projectName,
       description: this.state.description,
