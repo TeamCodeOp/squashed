@@ -171,6 +171,7 @@ class Developer extends React.Component {
     // console.log('currentlyFollowing?: ', this.state.currentlyFollowing);
 
     if (!this.state.currentlyFollowing) {
+      console.log('174: here in if');
       axios.post('/followRequest', {
         user_id: this.state.currentUserProfileId,
         follower_id: this.props.id
@@ -180,6 +181,17 @@ class Developer extends React.Component {
             currentlyFollowing: true,
             followers: this.state.followers + 1
           });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log('187: here')
+      axios.post('/notifications', {
+        user_id: this.state.currentUserProfileId,
+        follower_id: this.props.id
+      })
+        .then((response) => {
+          console.log('follower id added to database');
         })
         .catch((error) => {
           console.log(error);
