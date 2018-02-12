@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image, List } from 'semantic-ui-react';
+import { Image, List, Icon, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-const MessageListItem = ({ message }) => (
+const MessageListItem = ({ message, handleDeleteMessage }) => (
   <List.Item>
     <Image
       avatar
@@ -11,8 +11,21 @@ const MessageListItem = ({ message }) => (
       to={`/users/${message.sender_username}`}
     />
     <List.Content>
-      <List.Header>{message.subject}</List.Header>
+      <List.Header>
+        <span>{message.subject}</span>
+        <span style={{ float: 'right' }}>
+          <Dropdown icon="vertical ellipsis" floating className="icon">
+            <Dropdown.Menu>
+              <Dropdown.Item>Reply</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleDeleteMessage(message.id)}>
+                Delete
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </span>
+      </List.Header>
       {`${message.sender_name} -- ${message.content}`}
+
     </List.Content>
   </List.Item>
 );

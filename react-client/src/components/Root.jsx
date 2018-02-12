@@ -47,6 +47,7 @@ class Root extends React.Component {
     this.filterByViews = this.filterByViews.bind(this);
     this.toggleViewFilter = this.toggleViewFilter.bind(this);
     this.checkMessages = this.checkMessages.bind(this);
+    this.handleDeleteMessage = this.handleDeleteMessage.bind(this);
   }
 
   componentWillMount() {
@@ -177,7 +178,7 @@ class Root extends React.Component {
     axios.post('/privateMessages', {
       messageInfo
     })
-      .then(response => console.log('Message Sent!'))
+      .then(response => alert('Message Sent!'))
       .catch(err => console.log(err));
   }
 
@@ -186,6 +187,10 @@ class Root extends React.Component {
     axios.get(`/privateMessages?userId=${userId}`)
       .then(response => this.setState({ privateMessages: response.data }))
       .catch(err => console.log(err));
+  }
+
+  handleDeleteMessage(messageId) {
+    console.log('Deleting messageId: ', messageId);
   }
 
   render() {
@@ -253,6 +258,7 @@ class Root extends React.Component {
               name={this.state.name}
               id={this.state.userId}
               privateMessages={this.state.privateMessages}
+              handleDeleteMessage={this.handleDeleteMessage}
             />
             <RouteProps
               path="/ideas"

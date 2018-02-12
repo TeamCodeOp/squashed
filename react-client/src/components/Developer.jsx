@@ -262,7 +262,7 @@ class Developer extends React.Component {
 
                 <div className="extra content">
                   <span className="left floated like">
-                    <i className="user icon"></i>
+                    <i className="user icon" />
                   Following: <b>{`${this.state.following}`}</b>
                   </span>
                   <span className="right floated star">
@@ -274,7 +274,7 @@ class Developer extends React.Component {
 
               <Card.Content extra>
                 <div id="follow-button">
-                  {  showFollowButton ? buttonJsxToRender : null }
+                  { showFollowButton ? buttonJsxToRender : null }
                 </div>
                 <div id="pm-button">
                   {this.props.id && (this.props.id !== this.state.currentUserProfileId) &&
@@ -287,7 +287,6 @@ class Developer extends React.Component {
                   </Button>
                   }
                 </div>
-              }
               </Card.Content>
 
             </Card>
@@ -332,6 +331,7 @@ class Developer extends React.Component {
         { this.props.id && (this.props.id === this.state.currentUserProfileId) &&
         <MessageList
           messages={this.props.privateMessages}
+          handleDeleteMessage={this.props.handleDeleteMessage}
         />
         }
       </div>
