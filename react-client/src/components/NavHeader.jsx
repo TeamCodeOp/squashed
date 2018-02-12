@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Label, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class NavHeader extends Component {
@@ -31,6 +31,14 @@ class NavHeader extends Component {
         />
         {this.props.username ?
           <Menu.Menu position="right">
+            <Menu.Item
+              onClick={this.props.markAllOpened}
+              as={Link}
+              icon="mail"
+              to={`/users/${this.props.username}`}
+              name={this.props.privateMessages.filter(msg => !msg.opened).length}
+            />
+
             <Menu.Item
               as={Link}
               to={`/users/${this.props.username}`}

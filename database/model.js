@@ -2,6 +2,8 @@ const db = require('./index.js');
 const mysql = require('mysql');
 const utils = require('./utils');
 const Promise = require('bluebird');
+Promise.promisifyAll(require('mysql/lib/Connection').prototype);
+Promise.promisifyAll(require('mysql/lib/Pool').prototype);
 const format = require('pg-format');
 const _ = require('underscore');
 
@@ -128,7 +130,6 @@ const getProjectsByViews = (cb) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('viewResults----', results)
       cb(results);
     }
   });
@@ -136,11 +137,11 @@ const getProjectsByViews = (cb) => {
 
 
 const insertNotification = (data, cb) => {
-  console.log('database: insertNotification');
-  const insert = `INSERT INTO notifications(event, user_id) VALUES('project has been added ${data.projectName}', ${data.userId})`;
+  //console.log('database: insertNotification');
+  const insert = `INSERT INTO notifications(event, user_id) VALUES(' added a new project ${data.projectName}', ${data.userId})`;
   console.log('insert', insert);
   db.connection.query(insert, (err, results) => {
-    if(err) {
+    if (err) {
       console.log(err);
     } else {
       console.log('notification inserted');
@@ -151,47 +152,98 @@ const insertNotification = (data, cb) => {
 
 const formatInsertMessage = (messageInfo, cb) => {
   let recipientId;
+  let sender;
   const userQuery = 'SELECT id FROM users WHERE git_username = ?';
   const userSql = mysql.format(userQuery, messageInfo.recipientUsername);
-
-  db.connection.query(userSql, (err, results) => {
+  const senderSql = `SELECT avatar_url FROM users WHERE id = ${messageInfo.senderId}`;
+  db.connection.query(senderSql, (err, senderInfo) => {
     if (err) {
       console.log(err);
     } else {
-      recipientId = results[0].id;
-      console.log(results[0].id);
+      sender = senderInfo[0];
 
-      const sql = 'INSERT INTO private_messages (sender_id, recipient_id, time_sent, content, opened) VALUES(?, ?, CURRENT_TIMESTAMP(), ?, false)';
 
-      const inserts = [messageInfo.senderId, recipientId, messageInfo.content];
-      const sqlQuery = mysql.format(sql, inserts);
+      db.connection.query(userSql, (err, userInfo) => {
+        if (err) {
+          console.log(err);
+        } else {
+          recipientId = userInfo[0].id;
+          const sql = 'INSERT INTO private_messages (sender_id, sender_name, sender_username, sender_img, recipient_id, time_sent, content, subject, opened) VALUES(?, ?, ?, ?, ?, CURRENT_TIMESTAMP(), ?, ?, false)';
 
-      db.connection.query(sqlQuery, (err, results) => {
-    if (err) {
-      console.log(err);
-      cb(err, null);
-    } else {
-      console.log('in else results');
-      cb(null, results);
+          const inserts = [messageInfo.senderId, messageInfo.senderName, messageInfo.senderUsername, sender.avatar_url, recipientId, messageInfo.content, messageInfo.subject];
+          const sqlQuery = mysql.format(sql, inserts);
+
+          db.connection.query(sqlQuery, (err, results) => {
+            if (err) {
+              console.log(err);
+              cb(err, null);
+            } else {
+              console.log('in else results');
+              cb(null, results);
+            }
+          });
+        }
+      });
     }
   });
-    }
-  });
-
 };
 
-
-const insertMessage = (messageInfo, cb) => {
-  const sql = formatInsertMessage(messageInfo);
-  console.log('insertfunc msgInfo', messageInfo);
-  console.log('sql query:', sql)
-  db.connection.query(sql, (err, results) => {
+const insertFollowerNotification = (followerInfo, cb) => {
+  const selectQuery = `SELECT id,git_username FROM users WHERE id in (${followerInfo.user_id}, ${followerInfo.follower_id});`;
+  db.connection.query(selectQuery, (err, results) => {
+    let followerName ='';
+    let userName = '';
     if (err) {
       console.log(err);
-      cb(err, null);
     } else {
-      console.log('in else results');
-      cb(null, results);
+      followerName = results[0].id === followerInfo.user_id ? results[0].git_username : results[1].git_username;
+      userName = results[1].id === followerInfo.follower_id ? results[1].git_username : results[0].git_username;
+    }
+     const insertQuery = `INSERT INTO notifications(event, user_id) VALUES('is following ${followerName}', ${followerInfo.follower_id})`;
+    db.connection.query(insertQuery, (err, results) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('notification inserted', results);
+        cb(results);
+      }
+    });
+  });
+};
+
+const usersJoinNotifications = (userData, cb) => {
+  let queryStr = `select users.git_username,users.avatar_url,notifications.event from users right join notifications on users.id = notifications.user_id`;
+  db.connection.query(queryStr, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('all notifications', results);
+      cb(err, results);
+    }
+  });
+};
+
+const deleteMessage = (messageId, recipientId, cb) => {
+  const sql = 'DELETE FROM private_messages WHERE id = ?';
+  const formattedSql = mysql.format(sql, messageId);
+  db.connection.query(formattedSql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      selectAllWhere('private_messages', 'recipient_id', recipientId, false, messages => cb(messages));
+    }
+  });
+};
+
+const markAllOpened = (messages, recipientId, cb) => {
+  const cols = utils.formatMessages(messages)[0];
+  const values = utils.formatMessages(messages)[1];
+
+  db.connection.query(`INSERT INTO private_messages (${cols}) VALUES ? ON DUPLICATE KEY UPDATE ${cols[1]} = true`, [values], (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      selectAllWhere('private_messages', 'recipient_id', recipientId, false, msgs => cb(msgs));
     }
   });
 };
@@ -203,5 +255,8 @@ module.exports.retrieveGithubRepos = retrieveGithubRepos;
 module.exports.incrementViewCount = incrementViewCount;
 module.exports.getProjectsByViews = getProjectsByViews;
 module.exports.insertNotification = insertNotification;
-module.exports.insertMessage = insertMessage;
 module.exports.formatInsertMessage = formatInsertMessage;
+module.exports.insertFollowerNotification = insertFollowerNotification;
+module.exports.usersJoinNotifications = usersJoinNotifications;
+module.exports.deleteMessage = deleteMessage;
+module.exports.markAllOpened = markAllOpened;

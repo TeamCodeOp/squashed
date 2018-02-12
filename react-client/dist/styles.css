@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 
+.ui.container {
+  width: 1400px;
+}
+
 #titleHeader {
   font-family: 'Pacifico', cursive;
   color: orange;
@@ -11,6 +15,14 @@
   background-color: #ffa500c4;
 }
 
+.ui.menu .item {
+  color: white;
+}
+
+.ui.menu .item:hover {
+  color: white;
+}
+
 .ui.button {
   background-color: orange;
 }
@@ -19,9 +31,10 @@ body, textarea {
   font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
 
+/* ***************** HEADER CONTENT ***************** */
+
 #createProjectHeader {
   margin-top: 2em;
-
 }
 
 .ui.form .field>label, label {
@@ -37,6 +50,21 @@ body, textarea {
   margin-top: 3em;
   margin-bottom: 10em;
 }
+
+/* ***************** Main containers ***************** */
+
+.ui.segment {
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  /* background-color: beige; */
+}
+
+.ui.secondary.menu .item {
+  color: #ccc;
+}
+
+/* ***************** ???????????????? ***************** */
 
 
 .dropZone {
@@ -95,7 +123,7 @@ ul {
 
 
 #messageBox .ui.segment, .ui.segments .segment {
-    padding-left: 20px !important;
+  padding-left: 20px !important;
 }
 
 #groupChatInput {
@@ -155,5 +183,10 @@ div.rbt-input.form-control {
 
 .ui.badge {
   height:120px;
+}
+
+#feed {
+  font-size:85%;
+  font-style: italic;
 }
 
