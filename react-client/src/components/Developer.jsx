@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import UserProjectList from './UserProjectList.jsx';
+import moment from 'moment';
 
 // const socket = io.connect();
 let newMessage;
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 class Developer extends React.Component {
   constructor(props) {
     super(props);
-
+    let today = new Date();
     this.state = {
       fullName: '',
       name: '',
