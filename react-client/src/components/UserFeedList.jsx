@@ -1,5 +1,6 @@
 import React from 'react';
 import { Feed, Image } from 'semantic-ui-react';
+import moment from 'moment';
 
 const UserFeedList = ({ feed }) => {
   return (
@@ -17,13 +18,8 @@ const UserFeedList = ({ feed }) => {
               {feed.event}
             </a>
             <div className="date">
-              1 Hour Ago
+              {moment(feed.created_date).fromNow()}
             </div>
-          </div>
-          <div className="meta">
-            <a className="like">
-              <i className="like icon"></i> 4 Likes
-            </a>
           </div>
         </div>
       </div>

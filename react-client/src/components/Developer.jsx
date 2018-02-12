@@ -22,6 +22,7 @@ class Developer extends React.Component {
   constructor(props) {
     super(props);
     let today = new Date();
+
     this.state = {
       fullName: '',
       name: '',
@@ -34,7 +35,8 @@ class Developer extends React.Component {
       onlineStatus: false,
       currentUserProfileId: '',
       currentlyFollowing: false,
-      bio: ''
+      bio: '',
+      date: new Date()
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -210,6 +212,7 @@ class Developer extends React.Component {
   }
 
   render() {
+    console.log('today', this.state.date);
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;
