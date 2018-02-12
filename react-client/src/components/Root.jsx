@@ -191,6 +191,9 @@ class Root extends React.Component {
 
   handleDeleteMessage(messageId) {
     console.log('Deleting messageId: ', messageId);
+    axios.delete(`/privateMessages?id=${messageId}`)
+      .then(response => alert('Message deleted.'))
+      .catch(err => console.log(err));
   }
 
   render() {

@@ -286,6 +286,11 @@ app.delete('/projects/:id', (req, res) => {
   });
 });
 
+app.delete('/privateMessages', (req, res) => {
+  const messageId = req.query.id;
+  mysqlModel.deleteMessage(messageId, results => console.log(results));
+});
+
 app.post('/privateMessages', (req, res) => {
   console.log('body', req.body.messageInfo);
   mysqlModel.formatInsertMessage(req.body.messageInfo, results => res.send(results));

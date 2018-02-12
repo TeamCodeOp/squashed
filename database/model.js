@@ -189,7 +189,6 @@ const formatInsertMessage = (messageInfo, cb) => {
   });
 };
 
-
 const insertFollowerNotification = (followerInfo, cb) => {
   const selectQuery = `SELECT id,git_username FROM users WHERE id in (${followerInfo.user_id}, ${followerInfo.follower_id});`;
   db.connection.query(selectQuery, (err, results) => {
@@ -225,6 +224,18 @@ const usersJoinNotifications = (userData, cb) => {
   });
 };
 
+const deleteMessage = (messageId, cb) => {
+  const sql = 'DELETE FROM private_messages WHERE id = ?';
+  const formattedSql = mysql.format(sql, messageId);
+  db.connection.query(formattedSql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(results[0]);
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
@@ -235,3 +246,5 @@ module.exports.insertNotification = insertNotification;
 module.exports.formatInsertMessage = formatInsertMessage;
 module.exports.insertFollowerNotification = insertFollowerNotification;
 module.exports.usersJoinNotifications = usersJoinNotifications;
+module.exports.deleteMessage = deleteMessage;
+
