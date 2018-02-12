@@ -29,18 +29,14 @@ class App extends React.Component {
   }
 
   setFeedToRender() {
-    
     let feed;
-
     if (this.state.feedActiveItem === 'Popular') {
       feed = <FeedPopular />;
     } else if (this.state.feedActiveItem === 'Friends') {
       feed = <FeedFriends />;
     } else if (this.state.feedActiveItem === 'On Github') {
-      feed = <FeedGithub />;
+      feed = <FeedGithub repos={this.props.githubRepos} />;
     }
-    console.log('setting feed to render as: ', feed);
-    
     return feed;
   }
 
