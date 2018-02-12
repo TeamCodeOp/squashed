@@ -16,7 +16,12 @@ const MessageListItem = ({ message, handleDeleteMessage }) => (
         <span style={{ float: 'right' }}>
           <Dropdown icon="vertical ellipsis" floating className="icon">
             <Dropdown.Menu>
-              <Dropdown.Item>Reply</Dropdown.Item>
+              <Dropdown.Item
+                as={Link}
+                to={`/sendMessage?to=${message.sender_id}`}
+              >
+                Reply
+              </Dropdown.Item>
               <Dropdown.Item onClick={() => handleDeleteMessage(message.id, message.recipient_id)}>
                 Delete
               </Dropdown.Item>
