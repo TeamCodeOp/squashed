@@ -37,7 +37,8 @@ class Developer extends React.Component {
       currentUserProfileId: '',
       currentlyFollowing: false,
       bio: '',
-      date: new Date()
+      date: new Date(),
+      menuTab: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -76,7 +77,8 @@ class Developer extends React.Component {
           projects: response.data.projects,
           following: response.data.following.length,
           followers: response.data.followers.length,
-          bio: response.data.user_bio || ''
+          bio: response.data.user_bio || '',
+          menuTab: this.props.location.search.slice(1) || 'Projects'
         });
 
         if (this.props.name) {
@@ -324,6 +326,7 @@ class Developer extends React.Component {
               handleDeleteMessage={this.props.handleDeleteMessage}
               id={this.props.id}
               currentProfileId={this.state.currentUserProfileId}
+              menuTab={this.state.menuTab}
             />
           </Grid.Column>
         </Grid>

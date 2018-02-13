@@ -6,9 +6,19 @@ import MessageList from './MessageList.jsx';
 export default class ProfileTabMenu extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeItem: 'Projects' };
+
+    this.state = { activeItem: '' };
 
     this.handleItemClick = this.handleItemClick.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('menuTab:', nextProps.menuTab);
+    if (nextProps.menuTab === 'inbox') {
+      this.setState({ activeItem: 'Inbox' });
+    } else {
+      this.setState({ activeItem: 'Projects' });
+    }
   }
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
