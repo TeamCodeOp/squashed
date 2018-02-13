@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Menu, Label, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import {NotificationBadge, Effect} from 'react-notification-badge';
+import NotificationBadge from 'react-notification-badge';
+import { Effect } from 'react-notification-badge';
 
 class NavHeader extends Component {
   constructor(props) {
@@ -37,7 +38,6 @@ class NavHeader extends Component {
               as={Link}
               icon="mail"
               to={`/users/${this.props.username}`}
-
             />
             <NotificationBadge count={this.props.privateMessages.filter(msg => !msg.opened).length} effect={Effect.SCALE} />
             <Menu.Item

@@ -4,6 +4,7 @@ import _ from 'underscore';
 import TechMenuItem from './TechMenuItem.jsx';
 import techOptions from '../techOptions';
 
+
 class SideTechFilter extends Component {
   constructor(props) {
     super(props);
