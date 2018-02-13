@@ -34,4 +34,4 @@ config/configvars.js
 package-lock.json
 
 .DS_Store
-
+.vscode
