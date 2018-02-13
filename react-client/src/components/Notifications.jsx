@@ -1,6 +1,6 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var NotificationSystem = require('react-notification-system');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const NotificationSystem = require('react-notification-system');
 // var constants = require('constants');
 // var NotificationGenerator = require('./NotificationGenerator');
 // var CustomElement = require('./CustomElement');
@@ -16,17 +16,14 @@ var NotificationSystem = require('react-notification-system');
 class Notifications extends React.Component {
   constructor(props) {
     super(props);
-    console.log('line 19:' , this)
     this.state = {
       _notificationSystem: null
-    }
+    };
 
     this._addNotification = this._addNotification.bind(this);
   }
 
-   _addNotification(event) {
-    console.log('line 26:', event);
-    console.log('line 27:', this);
+  _addNotification(event) {
     event.preventDefault();
     this._notificationSystem.addNotification({
       message: 'Notification message',

@@ -17,7 +17,6 @@ class List extends React.Component {
   }
 
   updateViewCount(id) {
-    console.log('id', id);
     axios.put('/viewCount', { id })
       .then((response) => {
         console.log('new view count: ', response.data.view_count);
@@ -35,7 +34,7 @@ class List extends React.Component {
                 <Link to={`/apps/${project.id}`}>
                   <Card style={{ maxWidth: '230px' }}>
                     <Image
-                      onClick={this.updateViewCount.bind(null, project.id)}
+                      onClick={() => this.updateViewCount(project.id)}
                       className="imgThumb"
                       src={project.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
                       style={{
@@ -53,9 +52,7 @@ class List extends React.Component {
                     </Card.Content>
                     {project.techs &&
                     <Card.Content extra textAlign="left">
-                      {project.techs.filter(tech => {
-                        return this.props.techFilter.includes(tech);
-                      }).join(' ')}
+                      {project.techs.filter(tech => this.props.techFilter.includes(tech)).join(' ')}
                     </Card.Content> }
                     {this.props.isViewFilter &&
                     <Card.Content extra textAlign="right">

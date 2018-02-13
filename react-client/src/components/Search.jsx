@@ -1,10 +1,8 @@
 import React from 'react';
-import { Input, Header } from 'semantic-ui-react';
+import { Input, Header, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import _ from 'underscore';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import { Button } from 'semantic-ui-react';
-
 
 class Search extends React.Component {
   constructor(props) {
@@ -32,14 +30,14 @@ class Search extends React.Component {
 
   handleSearchBar() {
     axios.get(`/searchProjects?title=${this.state.searchProject}`)
-    .then((response) => {
-      this.setState({
-        projects: response.data
+      .then((response) => {
+        this.setState({
+          projects: response.data
+        });
+      })
+      .catch((error) => {
+        console.log('check access token error');
       });
-    })
-    .catch((error) => {
-      console.log('check access token error');
-    });
   }
 
   handleSearch() {
@@ -47,22 +45,20 @@ class Search extends React.Component {
   }
 
   render() {
-
     return (
-      <div id='searchInput'>
-      <Typeahead
-        options={this.state.projects}
-        multiple={false}
-        onInputChange={this.handleChange}
-        onChange={(selected) => {
-           this.setState({
-            selectedProject: selected
-           });
-         }}
-        labelKey={option=> `${option.project_name}`}
-      />
-      <Button onClick={this.handleSearch} style={{marginLeft: '2px', lineHeight: '.9em'}}>Search</Button>
-
+      <div id="searchInput">
+        <Typeahead
+          options={this.state.projects}
+          multiple={false}
+          onInputChange={this.handleChange}
+          onChange={(selected) => {
+            this.setState({
+              selectedProject: selected
+            });
+          }}
+          labelKey={option => `${option.project_name}`}
+        />
+        <Button onClick={this.handleSearch} style={{ marginLeft: '2px', lineHeight: '.9em' }}>Search</Button>
       </div>
     );
   }
