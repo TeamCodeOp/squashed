@@ -4,7 +4,7 @@ class FeedFriends extends React.Component {
   render() {
     return (
       <div>
-        <p>Friends Feed</p>
+        <p>Friends Feed !!!!</p>
       </div>
     );
   }

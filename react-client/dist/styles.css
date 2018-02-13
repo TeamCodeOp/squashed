@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 
 .ui.container {
-  width: 1400px;
+  width: 1600px;
 }
 
 #titleHeader {
@@ -62,6 +62,59 @@ body, textarea {
 
 .ui.secondary.menu .item {
   color: #ccc;
+}
+
+/* *****************  ***************** */
+#mainProjectsMenu {
+  background-color: yellow;
+  padding: 0;
+}
+
+#mainBG {
+  background-color: white;
+  border: none;
+}
+
+#mainBG a{
+  color: black;
+}
+
+#mainBG a:hover {
+  color: black;
+}
+
+.ui.menu a.item:hover {
+  background: white;
+  border-bottom: 1px solid black;
+}
+
+.ui.menu.three.item .item {
+  width: 18%;
+}
+
+#foobar {
+  width: 50%;
+}
+
+#column-1 {
+  /* background-color: grey; */
+}
+
+#column-1 .menu {
+  width: 12.4rem;
+}
+
+#column-2 {
+  /* background-color: blue; */
+}
+
+#column-2 .segment {
+  padding: 0;
+}
+
+#column-3 .segment {
+  background-color: green;
+  height: 400px;
 }
 
 /* ***************** ???????????????? ***************** */
