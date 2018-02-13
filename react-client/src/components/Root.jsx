@@ -148,8 +148,9 @@ class Root extends React.Component {
       .catch(err => console.log(err));
   }
 
-  handleTechs(e, data) {
-    this.setState({ techFilter: data.value }, function () {
+  handleTechs(techs) {
+    console.log('techs: ', techs);
+    this.setState({ techFilter: techs }, function () {
       this.getProjectsByTechs(this.state.techFilter);
     });
   }

@@ -4,11 +4,11 @@ import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
 import ProjectsMenu from './ProjectsMenu.jsx';
-import TechsFilter from './TechsFilter.jsx';
 import UserFeed from './UserFeed.jsx';
 import FeedPopular from './FeedPopular.jsx';
 import FeedFriends from './FeedFriends.jsx';
 import FeedGithub from './FeedGithub.jsx';
+import SideTechFilter from './SideTechFilter.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -58,6 +58,9 @@ class App extends React.Component {
     return (
       <div className="ui container">
         <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
+        <SideTechFilter
+          handleTechs={this.props.handleTechs}
+        />
 
         {/* This is the main content area */}
         <Grid columns={2} stackable>
@@ -94,6 +97,7 @@ class App extends React.Component {
           handleGetLatest={this.props.handleGetLatest}
           filterByViews={this.props.filterByViews}
         />
+
         <TechsFilter
           getProjectsByTechs={this.props.getProjectsByTechs}
           handleTechs={this.props.handleTechs}

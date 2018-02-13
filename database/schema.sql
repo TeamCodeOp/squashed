@@ -56,7 +56,8 @@ CREATE TABLE IF NOT EXISTS github_repos (
 CREATE TABLE IF NOT EXISTS notifications (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   event text NOT NULL,
-  user_id int NOT NULL
+  user_id int NOT NULL,
+  created_date TIMESTAMP
   -- follower_id int NOT NULL,
 
   -- FOREIGN KEY (follower_id) REFERENCES followers(follower_id)

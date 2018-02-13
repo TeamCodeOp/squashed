@@ -44,18 +44,13 @@ describe('<App />', () => {
     expect(wrapper.find('ProjectsMenu')).to.have.length(1);
   });
 
-  it('renders TechsFilter', () => {
+  it('renders SideTechFilter', () => {
     const wrapper = shallow(<App {...props} />);
-    expect(wrapper.find('TechsFilter')).to.have.length(1);
+    expect(wrapper.find('SideTechFilter')).to.have.length(1);
   });
 
   it('renders NewProjects', () => {
     const wrapper = shallow(<App {...props} />);
     expect(wrapper.find('NewProjects')).to.have.length(1);
-  });
-
-  it('renders RepoList', () => {
-    const wrapper = shallow(<App {...props} />);
-    expect(wrapper.find('RepoList')).to.have.length(1);
   });
 });

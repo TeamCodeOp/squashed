@@ -209,6 +209,7 @@ app.get('/privateMessages', (req, res) => {
   mysqlModel.selectAllWhere('private_messages', 'recipient_id', userId, false, messages => res.send(messages));
 });
 
+
 app.get('/', (req, res) => {
   res.status(200).json();
 });
@@ -336,8 +337,8 @@ app.post('/notifications', (req, res) => {
   }
 });
 
+
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
-
 module.exports = app;
