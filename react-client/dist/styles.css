@@ -64,6 +64,20 @@ body, textarea {
   color: #ccc;
 }
 
+/* ***************** Left Column (Tech Filters ***************** */
+
+#column-1 {
+  background-color: grey;
+}
+
+#column-2 {
+  background-color: blue;
+}
+
+#column-3 {
+  background-color: green;
+}
+
 /* ***************** ???????????????? ***************** */
 
 

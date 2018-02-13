@@ -62,10 +62,24 @@ class App extends React.Component {
           handleTechs={this.props.handleTechs}
         />
 
-        {/* This is the main content area */}
-        <Grid columns={2} stackable>
-          {/* Left area for projects */}
-          <Grid.Column width={12}>
+        {/* This is the main content area. We have 3 columns. */}
+        <Grid columns={3} stackable>
+
+          {/* Left column for frpoject filtering by tech */}
+          <Grid.Column width={2} id="column-1">
+            <p>filter area</p>
+            {/* <Segment>
+              <NewProjects
+                projects={this.props.projects}
+                isViewFilter={this.props.isViewFilter}
+                toggleViewFilter={this.props.toggleViewFilter}
+                techFilter={this.props.techFilter}
+              />
+            </Segment> */}
+          </Grid.Column>
+
+          {/* Middle column to show projects */}
+          <Grid.Column width={11} id="column-2">
             <Segment>
               <NewProjects
                 projects={this.props.projects}
@@ -75,8 +89,9 @@ class App extends React.Component {
               />
             </Segment>
           </Grid.Column>
-          {/* Right area for our feeds (Following activities, popular, latest) */}
-          <Grid.Column width={4}>
+
+          {/* Left Column for the feed */}
+          <Grid.Column width={3} id="column-3">
             <div>
               <div id="feedmenu">
                 <Menu pointing secondary>
