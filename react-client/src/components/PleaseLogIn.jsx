@@ -20,7 +20,6 @@ const PleaseLogIn = (props) => {
           <div className="ui container center aligned">
             <a href="/auth/github" style={{ color: 'rgba(0,0,0,.6)' }}>Please login using Github</a>
           </div>
-
         </Grid.Column>
         <Grid.Column />
       </Grid>

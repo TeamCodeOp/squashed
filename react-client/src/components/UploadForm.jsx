@@ -42,7 +42,7 @@ class UploadForm extends React.Component {
   }
 
   componentWillMount() {
-     let techStackArray = [];
+    const techStackArray = [];
     if (this.props.history.location.state) {
       const newTechStack = JSON.parse(this.props.history.location.state.techStack);
       if (this.props.history.location.state) {
@@ -72,7 +72,7 @@ class UploadForm extends React.Component {
   }
 
   handleImageUpload(file) {
-    let upload = request.post(CLOUDINARY_UPLOAD_URL)
+    const upload = request.post(CLOUDINARY_UPLOAD_URL)
       .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
       .field('file', file);
 
@@ -136,7 +136,7 @@ class UploadForm extends React.Component {
       userId: this.props.userId,
     })
       .then((response) => {
-        alert('Notifications schema added successfully');
+        console.log('Notifications schema added successfully');
       })
       .catch((error) => {
         console.log(error);
@@ -145,7 +145,6 @@ class UploadForm extends React.Component {
 
   handleUpdate(e) {
     e.preventDefault();
-    // console.log('hurray', this.state);
     axios.put('/projects', {
       projectName: this.state.projectName,
       description: this.state.description,
@@ -197,7 +196,7 @@ class UploadForm extends React.Component {
                 value={this.state.githubRepo}
                 onChange={this.handleGitHubRepo}
               />
-              <label style={{fontWeight: 'bold', marginBottom: '-2px'}}>Tech Stack</label>
+              <label style={{ fontWeight: 'bold', marginBottom: '-2px' }}>Tech Stack</label>
               <Dropdown
                 placeholder="Select"
                 fluid
@@ -233,10 +232,10 @@ class UploadForm extends React.Component {
               </div>
               <div>
                 {this.state.uploadedFileCloudinaryUrl === '' ? null :
-                  <div style={{textAlign: 'center'}}>
-                    <p>{this.state.uploadedFile.name}</p>
-                    <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }} />
-                  </div>}
+                <div style={{ textAlign: 'center' }}>
+                  <p>{this.state.uploadedFile.name}</p>
+                  <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }} />
+                </div>}
               </div>
               {this.props.history.location.state ? <Form.Button content="Update" floated="right" onClick={this.handleUpdate} /> : <Form.Button content="Submit" floated="right" onClick={this.handleSubmit}/>}
             </Form>

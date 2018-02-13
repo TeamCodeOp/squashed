@@ -18,7 +18,6 @@ class UserFeed extends React.Component {
         this.setState({
           userFeeds: response.data
         });
-        console.log('&&&&', response);
       })
       .catch((error) => {
         console.log(error);
@@ -30,7 +29,7 @@ class UserFeed extends React.Component {
       <div style={{ margin: 'auto', width: '40%', marginTop: '5em', borderRadius: '10px', border: '1px solid rgba(34,36,38,.15)', padding: '2em' }}>
         {this.state.userFeeds.map((feed, i) =>
           <UserFeedList key={i} feed={feed} />
-      )}
+        )}
       </div>
     );
   }

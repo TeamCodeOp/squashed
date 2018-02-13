@@ -7,7 +7,6 @@ import { Route, Redirect, Switch } from 'react-router';
 import Developer from './Developer.jsx';
 import UploadForm from './UploadForm.jsx';
 
-
 class Project extends React.Component {
   constructor(props) {
     super(props);
@@ -28,10 +27,12 @@ class Project extends React.Component {
   componentDidMount() {
     axios.get(`/projects/${this.props.match.params.id}`)
       .then((response) => {
-        const techStackHtml = response.data[1].map((tech) =>
-        <li className="ui label" key={tech.toString()}>
-          {tech}
-        </li>
+        const techStackHtml = response.data[1].map(tech =>
+          (
+            <li className="ui label" key={tech.toString()}>
+              {tech}
+            </li>
+          )
         );
 
         this.setState({
@@ -67,128 +68,121 @@ class Project extends React.Component {
       });
   }
 
-
   render() {
-    console.log('props in project', this.state.projectName);
     if (this.state.githubUser === 1) {
       return (
         <Switch>
           <Redirect from={`/apps/${this.props.match.params.id}`} to={`/users/${this.state.testUser}`} />
-          <Route path={`/users/${this.state.testUser}`} component={Developer}/>
+          <Route path={`/users/${this.state.testUser}`} component={Developer} />
         </Switch>
       );
     } else if (this.props.username === this.state.githubUser) {
       return (
-        <Grid columns='equal'>
-          <Grid.Column></Grid.Column>
+        <Grid columns="equal">
+          <Grid.Column />
           <Grid.Column width={12}>
-          <Item.Group>
-            <Item style={{
-              padding: '2em',
-              border: '1px solid rgba(0,0,0,.4)',
-            }}>
-              <a href={this.state.githubRepo} target="_blank">
-              <Item.Image
-                size='small'
-                src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
-              />
-              </a>
+            <Item.Group>
+              <Item style={{
+                padding: '2em',
+                border: '1px solid rgba(0,0,0,.4)',
+              }}
+              >
+                <a href={this.state.githubRepo} target="_blank">
+                  <Item.Image
+                    size="small"
+                    src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
+                    style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
+                  />
+                </a>
 
-              <Item.Content>
-                <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
-                <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
+                <Item.Content>
+                  <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
+                  <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
+                  <Item.Description>
+                    {this.state.description}
+                  </Item.Description>
 
-                <Item.Description>
-                  {this.state.description}
-                </Item.Description>
+                  <Item.Extra style={{ marginTop: '20px' }}>Tech Stack</Item.Extra>
+                  <Item.Description>
+                    <ul id="project-techs">{this.state.techs}</ul>
+                  </Item.Description>
+                </Item.Content>
 
-                <Item.Extra style={{marginTop: '20px'}}>Tech Stack</Item.Extra>
-
-                <Item.Description>
-                  <ul id="project-techs">{this.state.techs}</ul>
-                </Item.Description>
-              </Item.Content>
-
-            </Item>
-            <button className="ui primary button" onClick={this.onDelete}>
-             Delete
-            </button>
-            <button className="ui primary button" onClick={() => { this.props.history.push({
-              pathname:'/create',
-              state:{ gitUser:this.state.githubUser,
+              </Item>
+              <button className="ui primary button" onClick={this.onDelete}>
+                Delete
+              </button>
+              <button
+                className="ui primary button"
+                onClick={() => {
+                  this.props.history.push({
+                    pathname: '/create',
+                    state: {
+                      gitUser: this.state.githubUser,
                       projectName: this.state.projectName,
                       githubUrl: this.state.githubRepo,
                       description: this.state.description,
                       techStack: JSON.stringify(this.state.techs, null, 3),
                       projectId: this.props.match.params.id
                     }
-             });
-            }
-          }
-            >
+                  });
+                }
+                }
+              >
              Edit
-            </button>
-          </Item.Group>
+              </button>
+            </Item.Group>
             <ReactDisqusThread
               shortname="CodeOp"
               identifier={this.props.match.params.id}
               title="CodeOp"
-              url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${  this.props.match.params.id}`}
+              url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${this.props.match.params.id}`}
               onNewComment={this.handleNewComment}
             />
-
           </Grid.Column>
-          <Grid.Column></Grid.Column>
-
+          <Grid.Column />
         </Grid>
       );
     } else {
       return (
-        <Grid columns='equal'>
-          <Grid.Column></Grid.Column>
+        <Grid columns="equal">
+          <Grid.Column />
           <Grid.Column width={12}>
-          <Item.Group>
-            <Item style={{
-              padding: '2em',
-              border: '1px solid rgba(0,0,0,.4)',
-            }}>
-              <a href={this.state.githubRepo} target="_blank">
-              <Item.Image
-                size='small'
-                src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
-              />
-              </a>
-
-              <Item.Content>
-                <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
-                <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
-
-                <Item.Description>
-                  {this.state.description}
-                </Item.Description>
-
-                <Item.Extra style={{marginTop: '20px'}}>Tech Stack</Item.Extra>
-
-                <Item.Description>
-                  <ul id="project-techs">{this.state.techs}</ul>
-                </Item.Description>
-              </Item.Content>
-
-            </Item>
-          </Item.Group>
-          <ReactDisqusThread
-            shortname="CodeOp"
-            identifier={this.props.match.params.id}
-            title="CodeOp"
-            url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${this.props.match.params.id}`}
-            onNewComment={this.handleNewComment}
-          />
-
+            <Item.Group>
+              <Item style={{
+                padding: '2em',
+                border: '1px solid rgba(0,0,0,.4)',
+              }}
+              >
+                <a href={this.state.githubRepo} target="_blank">
+                  <Item.Image
+                    size="small"
+                    src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
+                    style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
+                  />
+                </a>
+                <Item.Content>
+                  <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
+                  <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
+                  <Item.Description>
+                    {this.state.description}
+                  </Item.Description>
+                  <Item.Extra style={{marginTop: '20px'}}>Tech Stack</Item.Extra>
+                  <Item.Description>
+                    <ul id="project-techs">{this.state.techs}</ul>
+                  </Item.Description>
+                </Item.Content>
+              </Item>
+            </Item.Group>
+            <ReactDisqusThread
+              shortname="CodeOp"
+              identifier={this.props.match.params.id}
+              title="CodeOp"
+              url={`https://codeop28.herokuapp.com/apps/${this.props.match.params.id}` || `http://localhost:3000/apps/${this.props.match.params.id}`}
+              onNewComment={this.handleNewComment}
+            />
           </Grid.Column>
-          <Grid.Column></Grid.Column>
-
+          <Grid.Column />
         </Grid>
       );
     }

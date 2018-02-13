@@ -33,7 +33,6 @@ class PrivateMessageForm extends React.Component {
       content: this.state.messageText,
       subject: this.state.subject
     };
-    console.log('msgInfo', messageInfo);
     this.props.handleSendMessage(messageInfo);
   }
 

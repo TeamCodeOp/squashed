@@ -14,9 +14,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedActiveItem: 'Popular'
+      feedActiveItem: 'Popular',
+      currentMainView: 'Popular'
     };
-    this.handleFeedClick = this.handleFeedClick.bind(this);
   }
 
   componentDidMount() {
@@ -37,35 +37,56 @@ class App extends React.Component {
     return feed;
   }
 
-  handleFeedClick(e, { name }) {
-    this.setState({
-      feedActiveItem: name
-    }, () => {
-      this.feedToRender = this.setFeedToRender();
-    });
+  // TODO for Ralph: Delete after you're done w/ home page refactor
+  // handleFeedClick(e, { name }) {
+  //   this.setState({
+  //     feedActiveItem: name
+  //   }, () => {
+  //     this.feedToRender = this.setFeedToRender();
+  //   });
+  // }
+
+  handleMainProjectsFilter(e, { currentMainView }) {
+    console.log('clicked: ', currentMainView);
+
+    // this.setState({
+    //   feedActiveItem: name
+    // }, () => {
+    //   this.feedToRender = this.setFeedToRender();
+    // });
   }
 
   render() {
-    const { feedActiveItem } = this.state.feedActiveItem;
-    // const { feedToRender } = this.setFeedToRender;
-    // let test = this.setFeedToRender();
-    // console.log('test: ', test);
-
-    const feedToRender = this.setFeedToRender();
-    // console.log('feedToRender is: ', feedToRender);
-
+    const { currentMainView } = this.state.currentMainView;
 
     return (
       <div className="ui container">
         <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
-        <SideTechFilter
-          handleTechs={this.props.handleTechs}
-        />
 
-        {/* This is the main content area */}
-        <Grid columns={2} stackable>
-          {/* Left area for projects */}
-          <Grid.Column width={12}>
+        <Grid>
+          <Grid.Column id="mainProjectsMenu">
+            <Segment>
+              <Menu fluid widths={3} id="mainBG">
+                <Menu.Item name="Popular" active={currentMainView === 'Popular'} onClick={this.handleMainProjectsFilter} />
+                <Menu.Item name="New" active={currentMainView === 'New'} onClick={this.handleMainProjectsFilter} />
+                <Menu.Item name="Featured on Github" active={currentMainView === 'Featured on Github'} onClick={this.handleMainProjectsFilter} />
+              </Menu>
+            </Segment>
+          </Grid.Column>
+        </Grid>
+
+        {/* This is the main content area. We have 3 columns. */}
+        <Grid columns={3} stackable>
+
+          {/* Left column for frpoject filtering by tech */}
+          <Grid.Column width={2} id="column-1">
+            <SideTechFilter
+              handleTechs={this.props.handleTechs}
+            />
+          </Grid.Column>
+
+          {/* Middle column to show projects */}
+          <Grid.Column width={11} id="column-2">
             <Segment>
               <NewProjects
                 projects={this.props.projects}
@@ -75,20 +96,12 @@ class App extends React.Component {
               />
             </Segment>
           </Grid.Column>
-          {/* Right area for our feeds (Following activities, popular, latest) */}
-          <Grid.Column width={4}>
-            <div>
-              <div id="feedmenu">
-                <Menu pointing secondary>
-                  <div id="feedmenu1"><Menu.Item name="Popular" active={feedActiveItem === 'popular'} onClick={this.handleFeedClick} /></div>
-                  <div id="feedmenu2"><Menu.Item name="Friends" active={feedActiveItem === 'friends'} onClick={this.handleFeedClick} /></div>
-                  <div id="feedmenu3"><Menu.Item name="On Github" active={feedActiveItem === 'github'} onClick={this.handleFeedClick} /></div>
-                </Menu>
-              </div>
-              <Segment>
-                {feedToRender}
-              </Segment>
-            </div>
+
+          {/* Right Column for the feed */}
+          <Grid.Column width={3} id="column-3">
+            <Segment>
+              <FeedFriends />
+            </Segment>
           </Grid.Column>
         </Grid>
         <Search searchByUserInput={this.props.searchByUserInput} />

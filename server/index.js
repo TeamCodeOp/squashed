@@ -13,9 +13,7 @@ const queryString = require('query-string');
 const _ = require('underscore');
 
 const app = express();
-
 const port = process.env.PORT || 3000;
-
 const server = app.listen(port, () => {
   console.log(`listening on ${port}!`);
 });
@@ -75,7 +73,6 @@ app.use(passport.initialize());
 // Restore Session
 app.use(passport.session());
 
-
 app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/return', passport.authenticate('github', { failureRedirect: '/' }),
@@ -89,7 +86,6 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
 
 app.get('/projects', (req, res) => {
   let techs;
-  console.log('req.query', req.query);
   if (!req.query.techs && !req.query.views) {
     mysqlDB.retrieveProjects((projects) => {
       res.send(projects);
@@ -108,8 +104,8 @@ app.get('/projects', (req, res) => {
 app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
   mysqlDB.getUserInfo(username, (user) => {
-    let bio = user.user_bio;
-    console.log('bio', bio);
+    const bio = user.user_bio;
+
     mysqlDB.getProjectsByUser(user.id, (projects) => {
       mysqlDB.getFollowersForUser(user.id, (followers) => {
         mysqlDB.getFollowingForUser(user.id, (following) => {
@@ -190,7 +186,6 @@ app.get('/searchProjects', (req, res) => {
 });
 
 app.get('/notifications', (req, res) => {
-  console.log('get /notifications');
   mysqlModel.usersJoinNotifications(req.body, (err, data) => {
     if (err) {
       console.log('err....', err);
@@ -203,12 +198,10 @@ app.get('/notifications', (req, res) => {
 });
 
 app.get('/privateMessages', (req, res) => {
-  console.log('userId: ', req.query.userId);
   const userId = req.query.userId;
 
   mysqlModel.selectAllWhere('private_messages', 'recipient_id', userId, false, messages => res.send(messages));
 });
-
 
 app.get('/', (req, res) => {
   res.status(200).json();
@@ -219,10 +212,7 @@ app.post('/projects', (req, res) => {
   res.status(201).json();
 });
 
-
 app.post('/getCurrentUserProfileId', (req, res) => {
-  console.log('get request /getCurrentUserProfileId in (server / index.js)');
-
   mysqlDB.getCurrentUserProfileId(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -243,7 +233,6 @@ app.post('/checkIfCurrentlyFollowing', (req, res) => {
 });
 
 app.post('/followRequest', (req, res) => {
-  console.log(':::::::::::::req.body: ', req.body);
   mysqlDB.createFollowerConnection(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -254,7 +243,6 @@ app.post('/followRequest', (req, res) => {
 });
 
 app.post('/unfollowRequest', (req, res) => {
-  console.log('-------------------\n\n\n\npost request at /unfollowRequest received.\nreq.body is: ', req.body);
   mysqlDB.removeFollowerConnection(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -266,35 +254,28 @@ app.post('/unfollowRequest', (req, res) => {
 
 
 app.put('/projects', (req, res) => {
-  console.log('here in projects', req.body);
   mysqlDB.updateProjectByProjectId(req.body, (err, data) =>{
     res.status(201).json(data);
   });
 });
 
-
 app.put('/viewCount', (req, res) => {
   mysqlModel.incrementViewCount(req.body.id, (count) => {
-    console.log(count);
     res.send(count);
   });
 });
 
-
 app.put('/privateMessages', (req, res) => {
   const messages = req.body.messages;
   const recipientId = req.query.recipient;
-  console.log('MESSAGES---', messages);
+
   mysqlModel.markAllOpened(messages, recipientId, results => res.send(results));
 });
-
 
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;
-  mysqlDB.deleteProjectByProjectId(projectId, (project) => {
-    res.send(project);
-  });
+  mysqlDB.deleteProjectByProjectId(projectId, project => res.send(project));
 });
 
 app.delete('/privateMessages', (req, res) => {
@@ -304,7 +285,6 @@ app.delete('/privateMessages', (req, res) => {
 });
 
 app.post('/privateMessages', (req, res) => {
-  console.log('body', req.body.messageInfo);
   mysqlModel.formatInsertMessage(req.body.messageInfo, results => res.send(results));
 });
 
@@ -317,7 +297,6 @@ app.get('/testing', (req, res) => {
 
 app.post('/notifications', (req, res) => {
   if (req.body.follower_id) {
-    console.log('if in /notifications');
     mysqlModel.insertFollowerNotification(req.body, (err, data) => {
       if (err) {
         res.status(500).send(err);
@@ -326,7 +305,6 @@ app.post('/notifications', (req, res) => {
       }
     });
   } else {
-    console.log('else in /notifications');
     mysqlModel.insertNotification(req.body, (err, data) => {
       if (err) {
         res.status(500).send(err);
@@ -336,7 +314,6 @@ app.post('/notifications', (req, res) => {
     });
   }
 });
-
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));

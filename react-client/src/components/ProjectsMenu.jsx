@@ -1,6 +1,5 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
-import TechsFilter from './TechsFilter.jsx';
 
 class ProjectsMenu extends React.Component {
   constructor(props) {
