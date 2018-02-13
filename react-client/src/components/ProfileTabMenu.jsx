@@ -49,6 +49,7 @@ export default class ProfileTabMenu extends Component {
           <MessageList
             messages={this.props.messages}
             handleDeleteMessage={this.props.handleDeleteMessage}
+            handleReply={this.props.handleReply}
           />
           }
         </Segment>

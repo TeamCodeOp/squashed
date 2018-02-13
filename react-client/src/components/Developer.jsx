@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
+import moment from 'moment';
 import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import UserProjectList from './UserProjectList.jsx';
-import moment from 'moment';
 import MessageList from './MessageList.jsx';
 import ProfileTabMenu from './ProfileTabMenu.jsx';
+import PrivateMessageForm from './PrivateMessageForm.jsx';
 
 // const socket = io.connect();
 let newMessage;
@@ -38,11 +39,16 @@ class Developer extends React.Component {
       currentlyFollowing: false,
       bio: '',
       date: new Date(),
-      menuTab: ''
+      menuTab: '',
+      showMessageForm: false,
+      replySubject: '',
+      replyRecipient: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
+    this.handleReply = this.handleReply.bind(this);
+    this.hideReply = this.hideReply.bind(this);
   }
 
   componentWillMount() {
@@ -214,12 +220,34 @@ class Developer extends React.Component {
     }
   }
 
+  handleReply(recipient, subject) {
+    this.setState({ showMessageForm: true, replyRecipient: recipient, replySubject: subject });
+  }
+
+  hideReply() {
+    this.setState({ showMessageForm: false });
+  }
+
   render() {
     console.log('today', this.state.date);
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;
     });
+
+    const replyForm = this.state.showMessageForm ?
+      (
+        <PrivateMessageForm
+          replySubject={this.state.replySubject}
+          recipient={this.state.replyRecipient}
+          handleSendMessage={this.props.handleSendMessage}
+          userId={this.props.id}
+          username={this.props.username}
+          name={this.props.name}
+          type="reply"
+          hideReply={this.hideReply}
+        />
+      ) : null;
 
     const { msgInput } = this.state;
 
@@ -327,7 +355,11 @@ class Developer extends React.Component {
               id={this.props.id}
               currentProfileId={this.state.currentUserProfileId}
               menuTab={this.state.menuTab}
+              handleReply={this.handleReply}
             />
+            { this.state.showMessageForm &&
+              replyForm
+            }
           </Grid.Column>
         </Grid>
       </div>
