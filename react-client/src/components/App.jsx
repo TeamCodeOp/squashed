@@ -97,12 +97,6 @@ class App extends React.Component {
           handleGetLatest={this.props.handleGetLatest}
           filterByViews={this.props.filterByViews}
         />
-
-        <TechsFilter
-          getProjectsByTechs={this.props.getProjectsByTechs}
-          handleTechs={this.props.handleTechs}
-          techFilter={this.props.techFilter}
-        />
         <UserFeed />
         <FeedGithub repos={this.props.githubRepos} />
       </div>);
