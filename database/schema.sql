@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS github_repos (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   repo_id int,
   name varchar(50) NOT NULL,
-  description varchar(100),
+  description text,
   url varchar(100) NOT NULL,
   creation_date date,
   owner_id int,

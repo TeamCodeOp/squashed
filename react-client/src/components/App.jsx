@@ -33,8 +33,6 @@ class App extends React.Component {
       feed = <FeedPopular />;
     } else if (this.state.feedActiveItem === 'Friends') {
       feed = <FeedFriends />;
-    } else if (this.state.feedActiveItem === 'On Github') {
-      feed = <FeedGithub repos={this.props.githubRepos} />;
     }
     return feed;
   }
@@ -102,6 +100,7 @@ class App extends React.Component {
           techFilter={this.props.techFilter}
         />
         <UserFeed />
+        <FeedGithub repos={this.props.githubRepos} />
       </div>);
   }
 }

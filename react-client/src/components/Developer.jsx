@@ -209,9 +209,6 @@ class Developer extends React.Component {
   }
 
   render() {
-    console.log('--------------------state(Dev.jsx): ', this.state);
-    console.log('--------------------props(Dev.jsx): ', this.props);
-    // console.log('this.state.currentUserProfileId (Dev.jsx)', this.state.currentUserProfileId)
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;

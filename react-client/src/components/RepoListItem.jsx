@@ -12,4 +12,3 @@ const RepoListItem = ({ repo }) => (
 );
 
 export default RepoListItem;
-
