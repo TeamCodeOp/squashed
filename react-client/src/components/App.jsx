@@ -4,7 +4,6 @@ import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
 import ProjectsMenu from './ProjectsMenu.jsx';
-import TechsFilter from './TechsFilter.jsx';
 import UserFeed from './UserFeed.jsx';
 import FeedPopular from './FeedPopular.jsx';
 import FeedFriends from './FeedFriends.jsx';
@@ -100,12 +99,6 @@ class App extends React.Component {
           handleGetLatest={this.props.handleGetLatest}
           filterByViews={this.props.filterByViews}
         />
-        <TechsFilter
-          getProjectsByTechs={this.props.getProjectsByTechs}
-          handleTechs={this.props.handleTechs}
-          techFilter={this.props.techFilter}
-        />
-
       </div>);
   }
 }
