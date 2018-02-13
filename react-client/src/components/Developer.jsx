@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import UserProjectList from './UserProjectList.jsx';
 import moment from 'moment';
 import MessageList from './MessageList.jsx';
+import ProfileTabMenu from './ProfileTabMenu.jsx';
 
 // const socket = io.connect();
 let newMessage;
@@ -317,27 +318,15 @@ class Developer extends React.Component {
 
           </Grid.Column>
           <Grid.Column width={8}>
-            <Container style={{ textAlign: 'center' }}>
-              <Header as="h3" textAlign="center">
-                Projects
-              </Header>
-              <Grid>
-                {this.state.projects.map((project, i) => {
-                  if (i % 3 === 0 && i <= this.state.projects.length - 1) {
-                    return <UserProjectList key={i} items={this.state.projects.slice(i, i + 3)} />;
-                  }
-                })}
-              </Grid>
-            </Container>
+            <ProfileTabMenu
+              projects={this.state.projects}
+              messages={this.props.privateMessages}
+              handleDeleteMessage={this.props.handleDeleteMessage}
+              id={this.props.id}
+              currentProfileId={this.state.currentUserProfileId}
+            />
           </Grid.Column>
-          <Grid.Column width={2} />
         </Grid>
-        { this.props.id && (this.props.id === this.state.currentUserProfileId) &&
-        <MessageList
-          messages={this.props.privateMessages}
-          handleDeleteMessage={this.props.handleDeleteMessage}
-        />
-        }
       </div>
     );
   }

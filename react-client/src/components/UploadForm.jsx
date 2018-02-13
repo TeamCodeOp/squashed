@@ -136,7 +136,7 @@ class UploadForm extends React.Component {
       userId: this.props.userId,
     })
       .then((response) => {
-        alert('Notifications schema added successfully');
+        console.log('Notifications schema added successfully');
       })
       .catch((error) => {
         console.log(error);
