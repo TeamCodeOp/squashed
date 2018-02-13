@@ -44,9 +44,9 @@ describe('<App />', () => {
     expect(wrapper.find('ProjectsMenu')).to.have.length(1);
   });
 
-  it('renders TechsFilter', () => {
+  it('renders SideTechFilter', () => {
     const wrapper = shallow(<App {...props} />);
-    expect(wrapper.find('TechsFilter')).to.have.length(1);
+    expect(wrapper.find('SideTechFilter')).to.have.length(1);
   });
 
   it('renders NewProjects', () => {
