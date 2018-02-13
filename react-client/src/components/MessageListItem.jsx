@@ -16,8 +16,6 @@ const MessageListItem = ({ message, handleDeleteMessage }) => (
         {message.subject}
       </List.Header>
       <List.Description>{message.sender_name} -- {moment(message.time_sent).fromNow()}
-
-
         <Dropdown icon="vertical ellipsis" floating className="icon">
           <Dropdown.Menu>
             <Dropdown.Item

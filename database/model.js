@@ -26,7 +26,6 @@ const insertProjectData = (projectData) => {
           console.log('error: \n', err2);
         }
       });
-
       return resolve(results);
     });
   });
@@ -76,7 +75,6 @@ const insertGithubRepos = (repos) => {
       console.log('No new repos to add');
       return;
     }
-
     cols = utils.formatGithubRepos(filteredRepos)[0];
     values = utils.formatGithubRepos(filteredRepos)[1];
 
@@ -133,9 +131,7 @@ const getProjectsByViews = (cb) => {
   });
 };
 
-
 const insertNotification = (data, cb) => {
-  //console.log('database: insertNotification');
   const insert = `INSERT INTO notifications(event, user_id, created_date) VALUES(' added a new project ${data.projectName}', ${data.userId}, CURRENT_TIMESTAMP())`;
   console.log('insert', insert);
   db.connection.query(insert, (err, results) => {
@@ -160,7 +156,6 @@ const formatInsertMessage = (messageInfo, cb) => {
     } else {
       sender = senderInfo[0];
 
-
       db.connection.query(userSql, (err, userInfo) => {
         if (err) {
           console.log(err);
@@ -176,7 +171,6 @@ const formatInsertMessage = (messageInfo, cb) => {
               console.log(err);
               cb(err, null);
             } else {
-              console.log('in else results');
               cb(null, results);
             }
           });
@@ -185,7 +179,6 @@ const formatInsertMessage = (messageInfo, cb) => {
     }
   });
 };
-
 
 const deleteMessage = (messageId, recipientId, cb) => {
   const sql = 'DELETE FROM private_messages WHERE id = ?';
@@ -215,7 +208,7 @@ const markAllOpened = (messages, recipientId, cb) => {
 const insertFollowerNotification = (followerInfo, cb) => {
   const selectQuery = `SELECT id,git_username FROM users WHERE id in (${followerInfo.user_id}, ${followerInfo.follower_id});`;
   db.connection.query(selectQuery, (err, results) => {
-    let followerName ='';
+    let followerName = '';
     let userName = '';
     if (err) {
       cb(err, null);
@@ -223,7 +216,7 @@ const insertFollowerNotification = (followerInfo, cb) => {
       followerName = results[0].id === followerInfo.user_id ? results[0].git_username : results[1].git_username;
       userName = results[1].id === followerInfo.follower_id ? results[1].git_username : results[0].git_username;
     }
-     const insertQuery = `INSERT INTO notifications(event, user_id, created_date) VALUES('is following ${followerName}', ${followerInfo.follower_id}, CURRENT_TIMESTAMP())`;
+    const insertQuery = `INSERT INTO notifications(event, user_id, created_date) VALUES('is following ${followerName}', ${followerInfo.follower_id}, CURRENT_TIMESTAMP())`;
     db.connection.query(insertQuery, (err, results) => {
       if (err) {
         console.log(err);
@@ -236,7 +229,7 @@ const insertFollowerNotification = (followerInfo, cb) => {
 };
 
 const usersJoinNotifications = (userData, cb) => {
-  let queryStr = `select users.git_username,users.avatar_url,notifications.event, notifications.created_date from users right join notifications on users.id = notifications.user_id`;
+  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date from users right join notifications on users.id = notifications.user_id';
   db.connection.query(queryStr, (err, results) => {
     if (err) {
       cb(err, null);

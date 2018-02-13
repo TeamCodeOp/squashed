@@ -6,10 +6,9 @@ import { Grid, Header, Icon, Segment, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Route, Redirect, Switch } from 'react-router';
 
-// const socket = io.connect();
 let groupMessage;
-
 let socket;
+
 if (process.env.NODE_ENV === 'production') {
   socket = io.connect();
 } else {
@@ -62,7 +61,6 @@ class Ideas extends React.Component {
     };
   }
 
-
   handleSubmit(e) {
     e.preventDefault();
 
@@ -76,54 +74,54 @@ class Ideas extends React.Component {
 
   render() {
     const messages = this.state.messages.map((msg, i) => {
-      return <p className='messageList' key={i}><span style={{fontWeight: 'bold'}}>{msg.sender}:</span> <span>{msg.text}</span></p>
+      return <p className="messageList" key={i}><span style={{ fontWeight: 'bold' }}>{msg.sender}:</span> <span>{msg.text}</span></p>;
     });
-    const { msgInput } = this.state
+    const { msgInput } = this.state;
 
     return (
       <div>
         <Header as="h2" icon textAlign="center" >
-          <Icon name="idea" color="yellow" size="small"/>
+          <Icon name="idea" color="yellow" size="small" />
           Share your ideas.
         </Header>
         <Grid columns="equal">
           <Grid.Column />
-          <Segment.Group horizontal style={{ width: '70%'}} >
-            <Segment style={{ width: '70%'}}>
-            <Grid.Column width={10}>
-              <div style={{ width: '100%'}} >
-                <Segment
-                  id="messageBox"
-                  attached
-                  style={{ height: '500px', overflowY: 'scroll', border:'none'}}
-                >
-                  {messages}
-                </Segment>
-                <Segment attached style={{ border: 'none' }}>
-                <Form onSubmit={this.handleSubmit} id="groupChatInput">
-                  <Form.Input style={{width: '100%'}} placeholder='Type something...' name='input' value={msgInput} onChange={this.handleChange} action='Send'/>
-                </Form>
-                </Segment>
-              </div>
-            </Grid.Column>
-          </Segment>
-          <Segment>
-            <Grid.Column width={2}>
-              <Header as="h4" style={{textAlign: 'center'}}>
+          <Segment.Group horizontal style={{ width: '70%' }} >
+            <Segment style={{ width: '70%' }}>
+              <Grid.Column width={10}>
+                <div style={{ width: '100%' }} >
+                  <Segment
+                    id="messageBox"
+                    attached
+                    style={{ height: '500px', overflowY: 'scroll', border:'none'}}
+                  >
+                    {messages}
+                  </Segment>
+                  <Segment attached style={{ border: 'none' }}>
+                    <Form onSubmit={this.handleSubmit} id="groupChatInput">
+                      <Form.Input style={{ width: '100%' }} placeholder="Type something..." name="input" value={msgInput} onChange={this.handleChange} action="Send" />
+                    </Form>
+                  </Segment>
+                </div>
+              </Grid.Column>
+            </Segment>
+            <Segment>
+              <Grid.Column width={2}>
+                <Header as="h4" style={{ textAlign: 'center' }}>
               There are {Object.keys(this.state.userSockets).length} users online.
-              </Header>
-              <ul style={{height: '500px'}}>
+                </Header>
+                <ul style={{ height: '500px' }}>
                   {Object.keys(this.state.userSockets).map((user, i) => {
-                    return <li key={i} ><Icon color='green' size='large' name='check circle'/>{user}</li>;
+                    return <li key={i} ><Icon color="green" size="large" name="check circle" />{user}</li>;
                   })}
-              </ul>
-            </Grid.Column>
-          </Segment>
+                </ul>
+              </Grid.Column>
+            </Segment>
           </Segment.Group>
           <Grid.Column />
         </Grid>
-    </div>
-  )
+      </div>
+    );
   }
 }
 
