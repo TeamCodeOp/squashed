@@ -32,9 +32,7 @@ class App extends React.Component {
     if (this.state.feedActiveItem === 'Popular') {
       feed = <FeedPopular />;
     } else if (this.state.feedActiveItem === 'Friends') {
-      feed = <UserFeed />;
-    } else if (this.state.feedActiveItem === 'On Github') {
-      feed = <FeedGithub repos={this.props.githubRepos} />;
+      feed = <FeedFriends />;
     }
     return feed;
   }
@@ -99,6 +97,8 @@ class App extends React.Component {
           handleGetLatest={this.props.handleGetLatest}
           filterByViews={this.props.filterByViews}
         />
+        <UserFeed />
+        <FeedGithub repos={this.props.githubRepos} />
       </div>);
   }
 }
