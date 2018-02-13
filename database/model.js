@@ -2,8 +2,6 @@ const db = require('./index.js');
 const mysql = require('mysql');
 const utils = require('./utils');
 const Promise = require('bluebird');
-Promise.promisifyAll(require('mysql/lib/Connection').prototype);
-Promise.promisifyAll(require('mysql/lib/Pool').prototype);
 const format = require('pg-format');
 const _ = require('underscore');
 
