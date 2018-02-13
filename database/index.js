@@ -30,9 +30,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Uncomment below code for local testing
-
-
 const userLogin = (userProfile, cb) => {
   const userBio = userProfile.user_bio || '';
   connection.query(`SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`, (err, user) => {
@@ -186,7 +183,6 @@ const deleteProjectByProjectId = (query, callback) => {
 
 const getCurrentUserProfileId = (query, cb) => {
   const insertQuery = `SELECT id FROM users WHERE git_username = '${query.username}'`;
-  console.log('Line189',query.username)
   connection.query(insertQuery, (err, results) => {
     if (err) {
       cb(err, null);
@@ -197,7 +193,6 @@ const getCurrentUserProfileId = (query, cb) => {
 };
 
 const checkIfCurrentlyFollowing = (followRequestData, cb) => {
-
   const insertQuery = `SELECT user_id FROM followers WHERE user_id ='${followRequestData.currentUserProfileId}' AND follower_id='${followRequestData.loggedInUserId}'`;
 
   connection.query(insertQuery, (err, data) => {
@@ -206,7 +201,6 @@ const checkIfCurrentlyFollowing = (followRequestData, cb) => {
 };
 
 const createFollowerConnection = (followRequestData, cb) => {
-  console.log('followRequestData:');
   return new Promise((resolve, reject) => {
     const insertQuery =
     `INSERT INTO followers (
@@ -229,22 +223,14 @@ const createFollowerConnection = (followRequestData, cb) => {
 };
 
 const removeFollowerConnection = (unfollowRequestData, cb) => {
-  console.log('removeFollowerConnection in db/index.js');
-  console.log('unfollowRequestData is: ', unfollowRequestData);
-
   const insertQuery = `DELETE FROM followers WHERE user_id ='${unfollowRequestData.user_id}' AND follower_id='${unfollowRequestData.follower_id}'`;
 
-  console.log('Query is: \n', insertQuery);
-
   connection.query(insertQuery, (err, data) => {
-    console.log('--- return data from db/index.js');
-    console.log('Data: ', data);
     cb(err, data);
   });
 };
 
 const getFollowersForUser = (userId, cb) => {
-  console.log(':::::::::::::::::::::::::::::::::::::::::::::::::');
   connection.query(`SELECT * FROM followers WHERE user_id ='${userId}';`, (err, data) => {
     if (err) {
       throw err;
@@ -265,7 +251,6 @@ const getFollowingForUser = (userId, cb) => {
 };
 
 const updateProjectByProjectId = (projectData, cb) => {
-  console.log('update projects');
   connection.query(`UPDATE projects SET project_name ='${projectData.projectName}', description='${projectData.description}',repo_url='${projectData.githubRepo}' WHERE id = '${projectData.projectId}';`, (err, user) => {
     if (err) {
       throw err;

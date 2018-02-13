@@ -12,8 +12,7 @@ import Project from './Project.jsx';
 import UploadForm from './UploadForm.jsx';
 import PleaseLogIn from './PleaseLogIn.jsx';
 import Ideas from './Ideas.jsx';
-import PrivateMessageForm from './PrivateMessageForm.jsx'
-
+import PrivateMessageForm from './PrivateMessageForm.jsx';
 
 class Root extends React.Component {
   constructor(props) {
