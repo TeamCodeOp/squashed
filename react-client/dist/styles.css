@@ -97,15 +97,24 @@ body, textarea {
 }
 
 #column-1 {
-  background-color: grey;
+  /* background-color: grey; */
+}
+
+#column-1 .menu {
+  width: 12.4rem;
 }
 
 #column-2 {
-  background-color: blue;
+  /* background-color: blue; */
 }
 
-#column-3 {
+#column-2 .segment {
+  padding: 0;
+}
+
+#column-3 .segment {
   background-color: green;
+  height: 400px;
 }
 
 /* ***************** ???????????????? ***************** */

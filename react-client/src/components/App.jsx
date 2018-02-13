@@ -17,7 +17,6 @@ class App extends React.Component {
       feedActiveItem: 'Popular',
       currentMainView: 'Popular'
     };
-    this.handleFeedClick = this.handleFeedClick.bind(this);
   }
 
   componentDidMount() {
@@ -38,13 +37,14 @@ class App extends React.Component {
     return feed;
   }
 
-  handleFeedClick(e, { name }) {
-    this.setState({
-      feedActiveItem: name
-    }, () => {
-      this.feedToRender = this.setFeedToRender();
-    });
-  }
+  // TODO for Ralph: Delete after you're done w/ home page refactor
+  // handleFeedClick(e, { name }) {
+  //   this.setState({
+  //     feedActiveItem: name
+  //   }, () => {
+  //     this.feedToRender = this.setFeedToRender();
+  //   });
+  // }
 
   handleMainProjectsFilter(e, { currentMainView }) {
     console.log('clicked: ', currentMainView);
@@ -57,30 +57,19 @@ class App extends React.Component {
   }
 
   render() {
-    const { feedActiveItem } = this.state.feedActiveItem;
     const { currentMainView } = this.state.currentMainView;
-    // const { feedToRender } = this.setFeedToRender;
-    // let test = this.setFeedToRender();
-    // console.log('test: ', test);
-
-    const feedToRender = this.setFeedToRender();
-    // console.log('feedToRender is: ', feedToRender);
-
 
     return (
       <div className="ui container">
         <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
-        <SideTechFilter
-          handleTechs={this.props.handleTechs}
-        />
 
         <Grid>
           <Grid.Column id="mainProjectsMenu">
             <Segment>
               <Menu fluid widths={3} id="mainBG">
-               <Menu.Item name="Popular" active={currentMainView === "Popular"} onClick={this.handleMainProjectsFilter} />
-               <Menu.Item name="New" active={currentMainView === "New"} onClick={this.handleMainProjectsFilter} />
-               <Menu.Item name="Featured on Github" active={currentMainView === "Featured on Github"} onClick={this.handleMainProjectsFilter} />              
+                <Menu.Item name="Popular" active={currentMainView === 'Popular'} onClick={this.handleMainProjectsFilter} />
+                <Menu.Item name="New" active={currentMainView === 'New'} onClick={this.handleMainProjectsFilter} />
+                <Menu.Item name="Featured on Github" active={currentMainView === 'Featured on Github'} onClick={this.handleMainProjectsFilter} />
               </Menu>
             </Segment>
           </Grid.Column>
@@ -91,15 +80,9 @@ class App extends React.Component {
 
           {/* Left column for frpoject filtering by tech */}
           <Grid.Column width={2} id="column-1">
-            <p>filter area</p>
-            {/* <Segment>
-              <NewProjects
-                projects={this.props.projects}
-                isViewFilter={this.props.isViewFilter}
-                toggleViewFilter={this.props.toggleViewFilter}
-                techFilter={this.props.techFilter}
-              />
-            </Segment> */}
+            <SideTechFilter
+              handleTechs={this.props.handleTechs}
+            />
           </Grid.Column>
 
           {/* Middle column to show projects */}
@@ -114,20 +97,11 @@ class App extends React.Component {
             </Segment>
           </Grid.Column>
 
-          {/* Left Column for the feed */}
+          {/* Right Column for the feed */}
           <Grid.Column width={3} id="column-3">
-            <div>
-              <div id="feedmenu">
-                <Menu pointing secondary>
-                  <div id="feedmenu1"><Menu.Item name="Popular" active={feedActiveItem === 'popular'} onClick={this.handleFeedClick} /></div>
-                  <div id="feedmenu2"><Menu.Item name="Friends" active={feedActiveItem === 'friends'} onClick={this.handleFeedClick} /></div>
-                  <div id="feedmenu3"><Menu.Item name="On Github" active={feedActiveItem === 'github'} onClick={this.handleFeedClick} /></div>
-                </Menu>
-              </div>
-              <Segment>
-                {feedToRender}
-              </Segment>
-            </div>
+            <Segment>
+              <FeedFriends />
+            </Segment>
           </Grid.Column>
         </Grid>
         <Search searchByUserInput={this.props.searchByUserInput} />
