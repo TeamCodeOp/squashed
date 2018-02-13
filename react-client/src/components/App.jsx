@@ -14,7 +14,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedActiveItem: 'Popular'
+      feedActiveItem: 'Popular',
+      currentMainView: 'Popular'
     };
     this.handleFeedClick = this.handleFeedClick.bind(this);
   }
@@ -45,8 +46,19 @@ class App extends React.Component {
     });
   }
 
+  handleMainProjectsFilter(e, { currentMainView }) {
+    console.log('clicked: ', currentMainView);
+
+    // this.setState({
+    //   feedActiveItem: name
+    // }, () => {
+    //   this.feedToRender = this.setFeedToRender();
+    // });
+  }
+
   render() {
     const { feedActiveItem } = this.state.feedActiveItem;
+    const { currentMainView } = this.state.currentMainView;
     // const { feedToRender } = this.setFeedToRender;
     // let test = this.setFeedToRender();
     // console.log('test: ', test);
@@ -61,6 +73,18 @@ class App extends React.Component {
         <SideTechFilter
           handleTechs={this.props.handleTechs}
         />
+
+        <Grid>
+          <Grid.Column id="mainProjectsMenu">
+            <Segment>
+              <Menu fluid widths={3} id="mainBG">
+               <Menu.Item name="Popular" active={currentMainView === "Popular"} onClick={this.handleMainProjectsFilter} />
+               <Menu.Item name="New" active={currentMainView === "New"} onClick={this.handleMainProjectsFilter} />
+               <Menu.Item name="Featured on Github" active={currentMainView === "Featured on Github"} onClick={this.handleMainProjectsFilter} />              
+              </Menu>
+            </Segment>
+          </Grid.Column>
+        </Grid>
 
         {/* This is the main content area. We have 3 columns. */}
         <Grid columns={3} stackable>
