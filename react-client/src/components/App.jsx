@@ -4,7 +4,6 @@ import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import NewProjects from './NewProjects.jsx';
 import ProjectsMenu from './ProjectsMenu.jsx';
-import UserFeed from './UserFeed.jsx';
 import FeedPopular from './FeedPopular.jsx';
 import FeedFriends from './FeedFriends.jsx';
 import FeedGithub from './FeedGithub.jsx';
@@ -110,7 +109,6 @@ class App extends React.Component {
           handleGetLatest={this.props.handleGetLatest}
           filterByViews={this.props.filterByViews}
         />
-        <UserFeed />
         <FeedGithub repos={this.props.githubRepos} />
       </div>);
   }
