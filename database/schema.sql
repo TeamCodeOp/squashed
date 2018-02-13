@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS github_repos (
   language varchar(50)
 );
 
-CREATE TABLE IF NOT EXISTS notifications (
+CREATE TABLE notifications (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   event text NOT NULL,
   user_id int NOT NULL,

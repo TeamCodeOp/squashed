@@ -38,10 +38,8 @@ class NavHeader extends Component {
               as={Link}
               icon="mail"
               to={`/users/${this.props.username}`}
-
             />
             <NotificationBadge count={this.props.privateMessages.filter(msg => !msg.opened).length} effect={Effect.SCALE} />
-
             <Menu.Item
               as={Link}
               to={`/users/${this.props.username}`}

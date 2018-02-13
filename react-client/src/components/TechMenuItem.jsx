@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Checkbox, Menu } from 'semantic-ui-react';
 
+
 const TechMenuItem = ({ tech, handleItemClick }) => (
   <Menu.Item >
     <Checkbox
