@@ -31,7 +31,9 @@ export default class ProfileTabMenu extends Component {
       <div>
         <Menu pointing secondary>
           <Menu.Item name="Projects" active={activeItem === 'Projects'} onClick={this.handleItemClick} />
-          <Menu.Item name="Inbox" active={activeItem === 'Inbox'} onClick={this.handleItemClick} />
+          {(this.props.username && (this.props.username === this.props.profileUsername)) &&
+            <Menu.Item name="Inbox" active={activeItem === 'Inbox'} onClick={this.handleItemClick} />
+          }
         </Menu>
 
         <Segment>
@@ -45,11 +47,11 @@ export default class ProfileTabMenu extends Component {
             </Grid>
           }
 
-          {this.state.activeItem === 'Inbox' && (this.props.id && (this.props.id === this.props.currentProfileId)) &&
+          {(this.state.activeItem === 'Inbox' && (this.props.username && (this.props.username === this.props.profileUsername))) &&
           <MessageList
             messages={this.props.messages}
             handleDeleteMessage={this.props.handleDeleteMessage}
-            handleReply={this.props.handleReply}
+            handlePM={this.props.handlePM}
           />
           }
         </Segment>

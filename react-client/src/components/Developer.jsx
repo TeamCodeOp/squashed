@@ -41,14 +41,15 @@ class Developer extends React.Component {
       date: new Date(),
       menuTab: '',
       showMessageForm: false,
-      replySubject: '',
-      replyRecipient: ''
+      subject: '',
+      recipient: '',
+      pmType: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
-    this.handleReply = this.handleReply.bind(this);
-    this.hideReply = this.hideReply.bind(this);
+    this.handlePM = this.handlePM.bind(this);
+    this.hidePM = this.hidePM.bind(this);
   }
 
   componentWillMount() {
@@ -84,7 +85,6 @@ class Developer extends React.Component {
           following: response.data.following.length,
           followers: response.data.followers.length,
           bio: response.data.user_bio || '',
-          menuTab: this.props.location.search.slice(1) || 'Projects'
         });
 
         if (this.props.name) {
@@ -133,7 +133,8 @@ class Developer extends React.Component {
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
-          projects: response.data.projects
+          projects: response.data.projects,
+          menuTab: this.props.location.search.slice(1) || 'Projects'
         });
 
         if (this.props.name) {
@@ -220,11 +221,12 @@ class Developer extends React.Component {
     }
   }
 
-  handleReply(recipient, subject) {
-    this.setState({ showMessageForm: true, replyRecipient: recipient, replySubject: subject });
+  handlePM(recipient, subject, pmType) {
+    this.setState({ showMessageForm: true, pmType, recipient, subject });
   }
 
-  hideReply() {
+  hidePM() {
+    console.log('hiding PM...');
     this.setState({ showMessageForm: false });
   }
 
@@ -235,20 +237,21 @@ class Developer extends React.Component {
       return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;
     });
 
-    const replyForm = this.state.showMessageForm ?
-      (
+    let pmForm;
+    if (this.state.showMessageForm) {
+      pmForm = (
         <PrivateMessageForm
-          replySubject={this.state.replySubject}
-          recipient={this.state.replyRecipient}
-          handleSendMessage={this.props.handleSendMessage}
+          recipient={this.state.recipient}
           userId={this.props.id}
           username={this.props.username}
           name={this.props.name}
-          type="reply"
-          hideReply={this.hideReply}
+          type={this.state.pmType}
+          hidePM={this.hidePM}
+          subject={this.state.subject}
+          handleSendMessage={this.props.handleSendMessage}
         />
-      ) : null;
-
+      );
+    }
     const { msgInput } = this.state;
 
     const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
@@ -312,10 +315,13 @@ class Developer extends React.Component {
                   { showFollowButton ? buttonJsxToRender : null }
                 </div>
                 <div id="pm-button">
-                  {this.props.id && (this.props.id !== this.state.currentUserProfileId) &&
+                  {(this.props.username && (this.props.username !== this.state.username)) &&
                   <Button
-                    as={Link}
-                    to={`/sendMessage?to=${this.state.username}`}
+                    onClick={() => {
+                      this.handlePM(this.state.username, '', 'initial');
+                    }}
+                    // as={Link}
+                    // to={`/sendMessage?to=${this.state.username}`}
                     primary
                     floated="right"
                   >Message
@@ -353,12 +359,14 @@ class Developer extends React.Component {
               messages={this.props.privateMessages}
               handleDeleteMessage={this.props.handleDeleteMessage}
               id={this.props.id}
-              currentProfileId={this.state.currentUserProfileId}
+              username={this.props.username}
+              profileUsername={this.state.username}
               menuTab={this.state.menuTab}
-              handleReply={this.handleReply}
+              handlePM={this.handlePM}
             />
             { this.state.showMessageForm &&
-              replyForm
+              pmForm
+
             }
           </Grid.Column>
         </Grid>
