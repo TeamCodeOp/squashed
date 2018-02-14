@@ -8,7 +8,7 @@ CREATE DATABASE codeop;
 CREATE TABLE IF NOT EXISTS users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
-  git_username varchar(20) NOT NULL,
+  git_username varchar(20) NOT NULL UNIQUE,
   session_id varchar(64),
   avatar_url varchar(100),
   user_bio varchar(200)
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS projects (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   project_name varchar(20) NOT NULL UNIQUE,
   description varchar(100),
-  repo_url varchar(100),
+  repo_url varchar(100) NOT NULL UNIQUE,
   image_Url varchar(100),
   creation_date date,
   user_id int,
@@ -58,9 +58,6 @@ CREATE TABLE notifications (
   event text NOT NULL,
   user_id int NOT NULL,
   created_date TIMESTAMP
-  -- follower_id int NOT NULL,
-
-  -- FOREIGN KEY (follower_id) REFERENCES followers(follower_id)
 );
 
 CREATE TABLE IF NOT EXISTS private_messages(
@@ -83,4 +80,3 @@ CREATE TABLE IF NOT EXISTS private_messages(
 /*  Execute this file from the command line (from database folder)by typing:
  *    mysql -u root < schema.sql
  *  to create the database and the tables.*/
-

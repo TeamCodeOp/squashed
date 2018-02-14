@@ -37,7 +37,7 @@ class NavHeader extends Component {
               onClick={this.props.markAllOpened}
               as={Link}
               icon="mail"
-              to={`/users/${this.props.username}`}
+              to={`/users/${this.props.username}?inbox`}
             />
             <NotificationBadge count={this.props.privateMessages.filter(msg => !msg.opened).length} effect={Effect.SCALE} />
             <Menu.Item

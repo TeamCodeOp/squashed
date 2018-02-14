@@ -272,6 +272,7 @@ class Root extends React.Component {
               id={this.state.userId}
               privateMessages={this.state.privateMessages}
               handleDeleteMessage={this.handleDeleteMessage}
+              handleSendMessage={this.handleSendMessage}
             />
             <RouteProps
               path="/ideas"

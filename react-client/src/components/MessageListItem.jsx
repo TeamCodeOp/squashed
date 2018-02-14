@@ -3,7 +3,7 @@ import { Image, List, Icon, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-const MessageListItem = ({ message, handleDeleteMessage }) => (
+const MessageListItem = ({ message, handleDeleteMessage, handlePM }) => (
   <List.Item>
     <Image
       className="label"
@@ -19,8 +19,7 @@ const MessageListItem = ({ message, handleDeleteMessage }) => (
         <Dropdown icon="vertical ellipsis" floating className="icon">
           <Dropdown.Menu>
             <Dropdown.Item
-              as={Link}
-              to={`/sendMessage?to=${message.sender_username}`}
+              onClick={() => handlePM(message.sender_username, message.subject, 'reply')}
             >
               Reply
             </Dropdown.Item>
