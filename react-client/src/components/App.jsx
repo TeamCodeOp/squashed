@@ -9,10 +9,14 @@ import FeedGithub from './FeedGithub.jsx';
 import FeedFriends from './FeedFriends.jsx';
 
 class App extends React.Component {
+  // Static methods go on top (says our Linter)
+  static setMainViewGithub() {
+    return <FeedGithub />;
+  }
   constructor(props) {
     super(props);
     this.state = {
-      currentMainView: 'New'
+      currentMainView: 'Popular'
     };
     this.handleMainViewFilter = this.handleMainViewFilter.bind(this);
   }
@@ -24,25 +28,6 @@ class App extends React.Component {
     }
   }
 
-  setMainViewToRender() {
-    let newView;
-    if (this.state.currentMainView === 'Popular') {
-      // newView = this.setMainViewNewProjects();
-      this.props.filterByViews();
-    } else if (this.state.currentMainView === 'New') {
-      // console.log('Setting main view to NEW');
-      // newView = this.setMainViewNewProjects();
-      this.props.handleGetLatest();
-    } else if (this.state.currentMainView === 'Featured on Github') {
-      newView = this.setMainViewGithub();
-      // this.props.getGithubRepos();
-    }
-
-    console.log('Ok, setting the main view to render as: \n', newView);
-
-    return newView;
-  }
-
   setMainViewNewProjects() {
     return (<MainViewNewProjects
       projects={this.props.projects}
@@ -50,12 +35,7 @@ class App extends React.Component {
     />);
   }
 
-  setMainViewGithub() {
-    return <FeedGithub />;
-  }
-
   handleMainViewFilter(e, { name }) {
-    console.log('--clicked--: ', name);
     this.setState({
       currentMainView: name
     }, () => {
@@ -66,6 +46,7 @@ class App extends React.Component {
       } else if (this.state.currentMainView === 'Featured on Github') {
         this.props.getGithubRepos();
       } else {
+        console.log('There was an error in handleMainViewFilter');
         console.error('There was an error in handleMainViewFilter');
       }
     });
@@ -75,7 +56,7 @@ class App extends React.Component {
     const currentMainView = this.state.currentMainView;
     let mainViewToRender;
     if (this.state.currentMainView === 'Featured on Github') {
-      mainViewToRender = <FeedGithub repos={this.props.githubRepos} />;
+      mainViewToRender = <FeedGithub repos={this.props.githubRepos}/>;
     } else {
       mainViewToRender = (<MainViewNewProjects
         projects={this.props.projects}

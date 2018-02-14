@@ -7,8 +7,9 @@
 #titleHeader {
   font-family: 'Pacifico', cursive;
   color: orange;
-  font-size: 7em;
-  margin-top: 1em;
+  font-size: 6em;
+  margin-top: .5em;
+  margin-bottom: .5em;
 }
 
 .ui.menu {
@@ -64,7 +65,7 @@ body, textarea {
   color: #ccc;
 }
 
-/* *****************  ***************** */
+/* ***************** Main View Filter Tabs ***************** */
 #mainProjectsMenu {
   background-color: yellow;
   padding: 0;
@@ -83,9 +84,26 @@ body, textarea {
   color: black;
 }
 
+#mainProjectsMenu .ui.menu {
+  font-size: 1.15em;
+  font-weight: normal;
+  box-shadow: none;
+}
+
+.ui.menu .active.item {
+  background: transparent;
+  font-weight: bold;
+  /* border-bottom: 1px solid black; */
+}
+
 .ui.menu a.item:hover {
-  background: white;
-  border-bottom: 1px solid black;
+  background: transparent;
+  /* border-bottom: 1px solid black; */
+}
+
+.ui.menu .active.item:hover {
+  background: transparent;
+  /* border-bottom: 1px solid black; */
 }
 
 .ui.menu.three.item .item {
