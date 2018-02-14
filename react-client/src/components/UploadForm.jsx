@@ -3,7 +3,7 @@ import axios from 'axios';
 import cloudinary from 'cloudinary';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
-import { Header, Icon, Form, Input, Grid, Dropdown } from 'semantic-ui-react';
+import { Header, Icon, Form, Input, Grid, Dropdown, Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import techOptions from '../techOptions';
 
@@ -31,6 +31,10 @@ class UploadForm extends React.Component {
       githubRepo: '',
       techs: [],
       uploadedFileCloudinaryUrl: '',
+      isProjectNameError: false,
+      isGithubUrlError: false,
+      isPosted: false,
+      isPostError: false
     };
 
     this.handleTechs = this.handleTechs.bind(this);
@@ -39,6 +43,7 @@ class UploadForm extends React.Component {
     this.handleDescription = this.handleDescription.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.validateFields = this.validateFields.bind(this);
   }
 
   componentWillMount() {
@@ -106,63 +111,88 @@ class UploadForm extends React.Component {
     });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    axios.post('/projects', {
-      projectName: this.state.projectName,
-      description: this.state.description,
-      githubRepo: this.state.githubRepo,
-      techs: this.state.techs,
-      uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
-      userId: this.props.userId
-    })
-      .then((response) => {
-        this.setState({
-          projectName: '',
-          description: '',
-          githubRepo: '',
-          techs: [],
-          uploadedFileCloudinaryUrl: '',
-          uploadedFile: ''
+  handleSubmit() {
+    const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
+    if (isError) {
+      alert('Please fill in all required fields');
+    } else {
+      axios.post('/projects', {
+        projectName: this.state.projectName,
+        description: this.state.description,
+        githubRepo: this.state.githubRepo,
+        techs: this.state.techs,
+        uploadedFileCloudinaryUrl: this.state.uploadedFileCloudinaryUrl,
+        userId: this.props.userId
+      })
+        .then((response) => {
+          console.log('response', response);
+          this.setState({
+            projectName: '',
+            description: '',
+            githubRepo: '',
+            techs: [],
+            uploadedFileCloudinaryUrl: '',
+            uploadedFile: '',
+            isPosted: true
+          }, () => {
+            axios.post('/notifications', {
+              projectName: this.state.projectName,
+              userId: this.props.userId,
+            })
+              .then((response) => {
+                console.log('Notifications schema added successfully');
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
+        })
+        .catch((error) => {
+          const errorMessage = error.response.data.sqlMessage;
+          this.setState({ isPostError: true, errorMessage });
         });
-        alert('Project added successfully');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    axios.post('/notifications', {
-      projectName: this.state.projectName,
-      userId: this.props.userId,
-    })
-      .then((response) => {
-        console.log('Notifications schema added successfully');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }
   }
 
-  handleUpdate(e) {
-    e.preventDefault();
-    axios.put('/projects', {
-      projectName: this.state.projectName,
-      description: this.state.description,
-      githubRepo: this.state.githubRepo,
-      techs: this.state.techs,
-      userId: this.props.userId,
-      projectId: this.props.history.location.state.projectId
-    })
-      .then((response) => {
-        alert('Project updated successfully');
+  handleUpdate() {
+    const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
+    if (isError) {
+      alert('Please fill in all required fields');
+    } else {
+      axios.put('/projects', {
+        projectName: this.state.projectName,
+        description: this.state.description,
+        githubRepo: this.state.githubRepo,
+        techs: this.state.techs,
+        userId: this.props.userId,
+        projectId: this.props.history.location.state.projectId
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          alert('Project updated successfully');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   handleTechs(e, data) {
     this.setState({ techs: data.value });
+  }
+
+  validateFields(e) {
+    e.preventDefault();
+
+    const isProjectNameError = this.state.projectName === '';
+    const isGithubUrlError = this.state.githubRepo === '';
+
+    this.setState({ isProjectNameError, isGithubUrlError }, () => {
+      if (this.props.history.location.state) {
+        this.handleUpdate();
+      } else {
+        this.handleSubmit();
+      }
+    });
   }
 
   render() {
@@ -181,13 +211,25 @@ class UploadForm extends React.Component {
         <Grid columns="equal">
           <Grid.Column />
           <Grid.Column width={6}>
-            <Form className="addProject">
+            <Form className="addProject" success={this.state.isPosted} error={this.state.isPostError}>
+              <Message
+                success
+                header="Submitted!"
+                content="Your project has been posted."
+              />
+              <Message
+                error
+                header="Error!"
+                content={this.state.errorMessage}
+              />
               <Form.Input
                 label="Name"
                 placeholder="Project Name"
                 name="Project Name"
                 value={this.state.projectName}
                 onChange={this.handleProjectName}
+                required
+                error={this.state.isProjectNameError}
               />
               <Form.Input
                 label="Github"
@@ -195,19 +237,24 @@ class UploadForm extends React.Component {
                 name="Github Repo"
                 value={this.state.githubRepo}
                 onChange={this.handleGitHubRepo}
+                required
+                error={this.state.isGithubUrlError}
               />
-              <label style={{ fontWeight: 'bold', marginBottom: '-2px' }}>Tech Stack</label>
-              <Dropdown
-                placeholder="Select"
-                fluid
-                multiple
-                selection
-                options={techOptions}
-                value={this.state.techs}
-                id="techDropdown"
-                onChange={this.handleTechs}
-              />
-              <p />
+              <Form.Input
+                label="Tech Stack"
+                style={{ fontWeight: 'bold', marginBottom: '-2px' }}
+              >
+                <Dropdown
+                  placeholder="Select"
+                  fluid
+                  multiple
+                  selection
+                  options={techOptions}
+                  value={this.state.techs}
+                  id="techDropdown"
+                  onChange={this.handleTechs}
+                />
+              </Form.Input>
               <Form.TextArea
                 label="Description"
                 placeholder="Tell us more about your project..."
@@ -237,7 +284,7 @@ class UploadForm extends React.Component {
                   <img src={this.state.uploadedFileCloudinaryUrl} style={{ height: '125px' }} />
                 </div>}
               </div>
-              {this.props.history.location.state ? <Form.Button content="Update" floated="right" onClick={this.handleUpdate} /> : <Form.Button content="Submit" floated="right" onClick={this.handleSubmit}/>}
+              {this.props.history.location.state ? <Form.Button content="Update" floated="right" onClick={this.validateFields} /> : <Form.Button content="Submit" floated="right" onClick={this.validateFields} />}
             </Form>
           </Grid.Column>
           <Grid.Column />
