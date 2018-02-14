@@ -89,7 +89,8 @@ class UploadForm extends React.Component {
       }
       if (response.body.secure_url !== '') {
         this.setState({
-          uploadedFileCloudinaryUrl: response.body.secure_url
+          uploadedFileCloudinaryUrl: response.body.secure_url,
+          isPosted: false
         });
       }
     });
@@ -97,23 +98,27 @@ class UploadForm extends React.Component {
 
   handleProjectName(e) {
     this.setState({
-      projectName: e.target.value
+      projectName: e.target.value,
+      isPosted: false
     });
   }
 
   handleGitHubRepo(e) {
     this.setState({
-      githubRepo: e.target.value
+      githubRepo: e.target.value,
+      isPosted: false
     });
   }
 
   handleDescription(e) {
     this.setState({
-      description: e.target.value
+      description: e.target.value,
+      isPosted: false
     });
   }
 
   handleSubmit() {
+    console.log('handling submit');
     const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
     if (isError) {
       alert('Please fill in all required fields');
@@ -150,7 +155,6 @@ class UploadForm extends React.Component {
           });
         })
         .catch((error) => {
-          console.log(error.response.data);
           const code = error.response.data.code;
           const errorMessage = error.response.data.sqlMessage;
           const displayError = errorCodes[code] || 'Please try again.';
@@ -194,11 +198,12 @@ class UploadForm extends React.Component {
 
   validateFields(e) {
     e.preventDefault();
-
+    console.log('validatingFields');
     const isProjectNameError = this.state.projectName === '';
     const isGithubUrlError = this.state.githubRepo === '';
 
-    this.setState({ isProjectNameError, isGithubUrlError }, () => {
+    this.setState({ isProjectNameError, isGithubUrlError, isPostError: false, isPosted: false }, () => {
+      console.log('history state: ',this.props.history.location.state)
       if (this.props.history.location.state) {
         this.handleUpdate();
       } else {

@@ -207,15 +207,16 @@ app.get('/', (req, res) => {
 });
 
 app.post('/projects', (req, res) => {
-  mysqlModel.insertProjectData(req.body, (err) => {
+  mysqlModel.insertProjectData(req.body, (err, results) => {
     console.log('error in server cb',err)
     if (err) {
+      console.log('error');
       res.status(500).send(err);
     } else {
+      console.log('success');
       res.status(201).json();
     }
   });
-
 });
 
 app.post('/getCurrentUserProfileId', (req, res) => {

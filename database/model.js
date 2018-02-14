@@ -13,7 +13,7 @@ const insertProjectData = (projectData, cb) => {
       if (err) {
         console.log('DBERR!!!!', err.code);
         console.log('sqlMsg', err.sqlMessage);
-        cb(err);
+        cb(err, null);
         return reject(err);
       }
       const techs = projectData.techs;
@@ -29,6 +29,7 @@ const insertProjectData = (projectData, cb) => {
           console.log('error: \n', err2);
         }
       });
+      cb(null, results);
       return resolve(results);
     });
   });
