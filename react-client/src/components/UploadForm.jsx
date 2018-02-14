@@ -272,6 +272,7 @@ class UploadForm extends React.Component {
                   onChange={this.handleTechs}
                 />
               </Form.Input>
+
               <Form.TextArea
                 label="Description"
                 placeholder="Tell us more about your project..."
