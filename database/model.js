@@ -5,12 +5,15 @@ const Promise = require('bluebird');
 const format = require('pg-format');
 const _ = require('underscore');
 
-const insertProjectData = (projectData) => {
+const insertProjectData = (projectData, cb) => {
   return new Promise((resolve, reject) => {
     const sql = formatInsertProjectData(projectData);
 
     db.connection.query(sql, (err, results) => {
       if (err) {
+        console.log('DBERR!!!!', err.code);
+        console.log('sqlMsg', err.sqlMessage);
+        cb(err, null);
         return reject(err);
       }
       const techs = projectData.techs;
@@ -26,6 +29,7 @@ const insertProjectData = (projectData) => {
           console.log('error: \n', err2);
         }
       });
+      cb(null, results);
       return resolve(results);
     });
   });
