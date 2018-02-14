@@ -12,7 +12,7 @@ export default class ProfileTabMenu extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.menuTab === 'inbox') {
+    if (nextProps.menuTab === 'inbox' || (nextProps.username && (nextProps.username === nextProps.profileUsername))) {
       this.setState({ activeItem: 'Inbox' });
     } else {
       this.setState({ activeItem: 'Projects' });
