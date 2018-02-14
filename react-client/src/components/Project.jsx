@@ -169,7 +169,7 @@ class Project extends React.Component {
                     src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
                   />
                 </a>
-                <Item.Content>
+                <Item.Content id="project-info">
                   <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
                   <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
                   <Item.Description>

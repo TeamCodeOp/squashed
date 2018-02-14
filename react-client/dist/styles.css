@@ -138,6 +138,20 @@ body, textarea {
   width: 300px;
 }
 
+/* ***************** Project Page ***************** */
+
+#project-info {
+  margin-left: 3rem;
+}
+
+.ui.grid>.column:not(.row) {
+  padding-top: 3rem;
+}
+
+.ui.image img {
+  
+}
+
 
 
 #foobar {
@@ -278,7 +292,7 @@ div.rbt-input.form-control {
   object-fit: cover !important;
   object-position: center top;
   height: 120px;
-  width: 200px;
+  width: 240px;
 }
 
 .ui.badge {
