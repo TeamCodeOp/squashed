@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Container, Grid } from 'semantic-ui-react';
 import List from './List.jsx';
 
-const NewProjects = props => (
+const MainViewNewProjects = props => (
   <Container style={{ textAlign: 'center' }}>
     <Grid>
       {props.projects.map((project, i) => {
@@ -21,4 +21,4 @@ const NewProjects = props => (
     </Grid>
   </Container>
 );
-export default NewProjects;
+export default MainViewNewProjects;

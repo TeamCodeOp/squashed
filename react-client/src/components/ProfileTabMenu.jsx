@@ -6,9 +6,17 @@ import MessageList from './MessageList.jsx';
 export default class ProfileTabMenu extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeItem: 'Projects' };
+    this.state = { activeItem: '' };
 
     this.handleItemClick = this.handleItemClick.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.menuTab === 'inbox') {
+      this.setState({ activeItem: 'Inbox' });
+    } else {
+      this.setState({ activeItem: 'Projects' });
+    }
   }
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
@@ -16,12 +24,13 @@ export default class ProfileTabMenu extends Component {
 
   render() {
     const { activeItem } = this.state;
-
     return (
       <div>
         <Menu pointing secondary>
           <Menu.Item name="Projects" active={activeItem === 'Projects'} onClick={this.handleItemClick} />
-          <Menu.Item name="Inbox" active={activeItem === 'Inbox'} onClick={this.handleItemClick} />
+          {(this.props.username && (this.props.username === this.props.profileUsername)) &&
+            <Menu.Item name="Inbox" active={activeItem === 'Inbox'} onClick={this.handleItemClick} />
+          }
         </Menu>
 
         <Segment>
@@ -35,10 +44,11 @@ export default class ProfileTabMenu extends Component {
             </Grid>
           }
 
-          {this.state.activeItem === 'Inbox' && (this.props.id && (this.props.id === this.props.currentProfileId)) &&
+          {(this.state.activeItem === 'Inbox' && (this.props.username && (this.props.username === this.props.profileUsername))) &&
           <MessageList
             messages={this.props.messages}
             handleDeleteMessage={this.props.handleDeleteMessage}
+            handlePM={this.props.handlePM}
           />
           }
         </Segment>

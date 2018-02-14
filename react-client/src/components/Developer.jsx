@@ -1,14 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
+import moment from 'moment';
 import { Header, Icon, Card, Grid, Image, Container, Button, Segment, Popup, Input, Form, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import UserProjectList from './UserProjectList.jsx';
-import moment from 'moment';
 import MessageList from './MessageList.jsx';
 import ProfileTabMenu from './ProfileTabMenu.jsx';
+import PrivateMessageForm from './PrivateMessageForm.jsx';
 
-// const socket = io.connect();
 let newMessage;
 let socket;
 
@@ -17,7 +17,6 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   socket = io.connect('http://localhost:3000');
 }
-
 
 class Developer extends React.Component {
   constructor(props) {
@@ -37,11 +36,17 @@ class Developer extends React.Component {
       currentUserProfileId: '',
       currentlyFollowing: false,
       bio: '',
-      date: new Date()
+      date: new Date(),
+      showMessageForm: false,
+      subject: '',
+      recipient: '',
+      pmType: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFollowRequest = this.handleFollowRequest.bind(this);
+    this.handlePM = this.handlePM.bind(this);
+    this.hidePM = this.hidePM.bind(this);
   }
 
   componentWillMount() {
@@ -76,7 +81,7 @@ class Developer extends React.Component {
           projects: response.data.projects,
           following: response.data.following.length,
           followers: response.data.followers.length,
-          bio: response.data.user_bio || ''
+          bio: response.data.user_bio || '',
         });
 
         if (this.props.name) {
@@ -125,7 +130,7 @@ class Developer extends React.Component {
           name: response.data.name,
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
-          projects: response.data.projects
+          projects: response.data.projects,
         });
 
         if (this.props.name) {
@@ -168,7 +173,6 @@ class Developer extends React.Component {
   handleFollowRequest(e) {
     e.preventDefault();
     if (!this.state.currentlyFollowing) {
-      console.log('174: here in if');
       axios.post('/followRequest', {
         user_id: this.state.currentUserProfileId,
         follower_id: this.props.id
@@ -218,13 +222,40 @@ class Developer extends React.Component {
     }
   }
 
+  handlePM(recipient, subject, pmType) {
+    this.setState({
+      showMessageForm: true,
+      pmType,
+      recipient,
+      subject
+    });
+  }
+
+  hidePM() {
+    this.setState({ showMessageForm: false });
+  }
+
   render() {
-    console.log('today', this.state.date);
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;
     });
 
+    let pmForm;
+    if (this.state.showMessageForm) {
+      pmForm = (
+        <PrivateMessageForm
+          recipient={this.state.recipient}
+          userId={this.props.id}
+          username={this.props.username}
+          name={this.props.name}
+          type={this.state.pmType}
+          hidePM={this.hidePM}
+          subject={this.state.subject}
+          handleSendMessage={this.props.handleSendMessage}
+        />
+      );
+    }
     const { msgInput } = this.state;
 
     const showFollowButton = (this.props.name !== this.state.name) && (this.props.sessionId !== undefined);
@@ -235,7 +266,6 @@ class Developer extends React.Component {
     }
 
     return (
-
       <div>
         <Grid columns='equal'>
           <Grid.Column width={2} />
@@ -288,10 +318,11 @@ class Developer extends React.Component {
                   { showFollowButton ? buttonJsxToRender : null }
                 </div>
                 <div id="pm-button">
-                  {this.props.id && (this.props.id !== this.state.currentUserProfileId) &&
+                  {(this.props.username && (this.props.username !== this.state.username)) &&
                   <Button
-                    as={Link}
-                    to={`/sendMessage?to=${this.state.username}`}
+                    onClick={() => {
+                      this.handlePM(this.state.username, '', 'initial');
+                    }}
                     primary
                     floated="right"
                   >Message
@@ -329,8 +360,15 @@ class Developer extends React.Component {
               messages={this.props.privateMessages}
               handleDeleteMessage={this.props.handleDeleteMessage}
               id={this.props.id}
-              currentProfileId={this.state.currentUserProfileId}
+              username={this.props.username}
+              profileUsername={this.state.username}
+              menuTab={this.props.location.search.slice(1)}
+              handlePM={this.handlePM}
             />
+            { this.state.showMessageForm &&
+              pmForm
+
+            }
           </Grid.Column>
         </Grid>
       </div>
