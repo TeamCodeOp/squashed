@@ -9,7 +9,6 @@ import MessageList from './MessageList.jsx';
 import ProfileTabMenu from './ProfileTabMenu.jsx';
 import PrivateMessageForm from './PrivateMessageForm.jsx';
 
-// const socket = io.connect();
 let newMessage;
 let socket;
 
@@ -18,7 +17,6 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   socket = io.connect('http://localhost:3000');
 }
-
 
 class Developer extends React.Component {
   constructor(props) {
@@ -39,7 +37,6 @@ class Developer extends React.Component {
       currentlyFollowing: false,
       bio: '',
       date: new Date(),
-      menuTab: '',
       showMessageForm: false,
       subject: '',
       recipient: '',
@@ -134,7 +131,6 @@ class Developer extends React.Component {
           username: response.data.git_username,
           userAvatar: response.data.avatar_url,
           projects: response.data.projects,
-          menuTab: this.props.location.search.slice(1) || 'Projects'
         });
 
         if (this.props.name) {
@@ -233,7 +229,6 @@ class Developer extends React.Component {
   }
 
   render() {
-    console.log('today', this.state.date);
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
       return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;
@@ -360,7 +355,7 @@ class Developer extends React.Component {
               id={this.props.id}
               username={this.props.username}
               profileUsername={this.state.username}
-              menuTab={this.state.menuTab}
+              menuTab={this.props.location.search.slice(1)}
               handlePM={this.handlePM}
             />
             { this.state.showMessageForm &&
