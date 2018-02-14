@@ -1,13 +1,13 @@
 const mysql = require('mysql');
 const { expect } = require('chai');
 
-describe('test database', () => {
+xdescribe('test database', () => {
   let dbConnection;
 
   beforeEach((done) => {
     dbConnection = mysql.createConnection({
       user: 'root',
-      database: 'test',
+      database: 'test'
     });
     dbConnection.connect((err) => {
       if (err) {

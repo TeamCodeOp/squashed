@@ -1,8 +1,8 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { Feed, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import UserFeedList from './UserFeedList.jsx';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 class UserFeed extends React.Component {
   constructor(props) {
