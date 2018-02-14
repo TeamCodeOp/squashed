@@ -260,3 +260,8 @@ div.rbt-input.form-control {
   font-style: italic;
 }
 
+#ui.page {
+  height:120px;
+  width:400px !important;
+}
+
