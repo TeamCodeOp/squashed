@@ -141,7 +141,7 @@ body, textarea {
 /* ***************** Project Page ***************** */
 
 #project-info {
-  margin-left: 3rem;
+  padding-left: 3rem;
 }
 
 .ui.grid>.column:not(.row) {

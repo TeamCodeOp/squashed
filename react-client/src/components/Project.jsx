@@ -175,7 +175,7 @@ class Project extends React.Component {
                   <Item.Description>
                     {this.state.description}
                   </Item.Description>
-                  <Item.Extra>Tech Stack</Item.Extra>
+                  <Item.Extra>Tech Stackkkkkkkk</Item.Extra>
                   <Item.Description>
                     <ul id="project-techs">{this.state.techs}</ul>
                   </Item.Description>
