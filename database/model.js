@@ -52,7 +52,7 @@ const selectAllWhere = (table, column, value, isOne, cb) => {
 };
 
 const formatInsertProjectData = (data) => {
-  const sql = 'INSERT INTO projects (project_name, description, repo_url, image_Url, creation_date, user_id, view_count) VALUES(?,?,?,?,CURDATE(),?, 0)';
+  const sql = 'INSERT INTO projects (project_name, description, repo_url, image_Url, user_id, view_count) VALUES(?,?,?,?,?, 0)';
   const inserts = [data.projectName, data.description, data.githubRepo,
     data.uploadedFileCloudinaryUrl, data.userId];
   return mysql.format(sql, inserts);
@@ -234,7 +234,7 @@ const usersJoinNotifications = (userData, cb) => {
     if (err) {
       cb(err, null);
     } else {
-      console.log('all notifications', results);
+      // console.log('all notifications', results);
       cb(null, results);
     }
   });

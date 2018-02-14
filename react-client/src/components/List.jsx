@@ -54,11 +54,10 @@ class List extends React.Component {
                     <Card.Content extra textAlign="left">
                       {project.techs.filter(tech => this.props.techFilter.includes(tech)).join(' ')}
                     </Card.Content> }
-                    {this.props.isViewFilter &&
                     <Card.Content extra textAlign="right">
                       <Icon name="eye" style={{ float: 'right' }} />
                       {project.view_count}
-                    </Card.Content> }
+                    </Card.Content>
                   </Card>
                 </Link>
               </div>
