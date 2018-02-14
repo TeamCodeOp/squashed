@@ -6,14 +6,12 @@ import MessageList from './MessageList.jsx';
 export default class ProfileTabMenu extends Component {
   constructor(props) {
     super(props);
-
     this.state = { activeItem: '' };
 
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('menuTab:', nextProps.menuTab);
     if (nextProps.menuTab === 'inbox') {
       this.setState({ activeItem: 'Inbox' });
     } else {
@@ -26,7 +24,6 @@ export default class ProfileTabMenu extends Component {
 
   render() {
     const { activeItem } = this.state;
-
     return (
       <div>
         <Menu pointing secondary>
