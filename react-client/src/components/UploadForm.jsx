@@ -6,6 +6,7 @@ import request from 'superagent';
 import { Header, Icon, Form, Input, Grid, Dropdown, Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import techOptions from '../techOptions';
+import errorCodes from '../errorCodes';
 
 let config;
 let CLOUDINARY_UPLOAD_URL;
@@ -34,7 +35,8 @@ class UploadForm extends React.Component {
       isProjectNameError: false,
       isGithubUrlError: false,
       isPosted: false,
-      isPostError: false
+      isPostError: false,
+      displayError: ''
     };
 
     this.handleTechs = this.handleTechs.bind(this);
@@ -148,8 +150,18 @@ class UploadForm extends React.Component {
           });
         })
         .catch((error) => {
+          console.log(error.response.data);
+          const code = error.response.data.code;
           const errorMessage = error.response.data.sqlMessage;
-          this.setState({ isPostError: true, errorMessage });
+          const displayError = errorCodes[code] || 'Please try again.';
+          const isProjectNameError = errorMessage.includes(`key 'project_name'`);
+          const isGithubUrlError = errorMessage.includes(`key 'repo_url'`);
+          this.setState({
+            isPostError: true,
+            displayError,
+            isProjectNameError,
+            isGithubUrlError
+          });
         });
     }
   }
@@ -220,7 +232,7 @@ class UploadForm extends React.Component {
               <Message
                 error
                 header="Error!"
-                content={this.state.errorMessage}
+                content={this.state.displayError}
               />
               <Form.Input
                 label="Name"
