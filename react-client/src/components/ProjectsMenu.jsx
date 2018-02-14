@@ -10,7 +10,7 @@ class ProjectsMenu extends React.Component {
   render() {
 
     return (
-      <div style={{ textAlign: 'center', marginTop: '5em', marginBottom: '1em' }}>
+      <div>
       <Menu compact className="projectMenu">
         <Menu.Item className="projectMenuItem" onClick={this.props.handleGetLatest}>
           Latest

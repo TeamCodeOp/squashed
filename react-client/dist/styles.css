@@ -10,10 +10,12 @@
   font-size: 6em;
   margin-top: .5em;
   margin-bottom: .5em;
+  font-weight: 400;
 }
 
 .ui.menu {
   background-color: #ffa500c4;
+  border-radius: 0;
 }
 
 .ui.menu .item {
@@ -99,6 +101,13 @@ body, textarea {
 .ui.menu a.item:hover {
   background: transparent;
   /* border-bottom: 1px solid black; */
+  /* color: #3d7186; */
+  color: white;
+  /* font-weight: bold; */
+}
+
+.ui.menu .active.item {
+  font-weight: bold;
 }
 
 .ui.menu .active.item:hover {
@@ -109,6 +118,41 @@ body, textarea {
 .ui.menu.three.item .item {
   width: 18%;
 }
+
+/* ***************** Main Column - Project Cards ***************** */
+
+.ui.card {
+  width: 240px;
+}
+
+.ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui) {
+  font-size: 1.1em;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ***************** Developer.JSX ***************** */
+
+#developerProfileCard {
+  margin-top: 2.6rem;
+  width: 300px;
+}
+
+/* ***************** Project Page ***************** */
+
+#project-info {
+  padding-left: 3rem;
+}
+
+.ui.grid>.column:not(.row) {
+  padding-top: 3rem;
+}
+
+.ui.image img {
+  
+}
+
+
 
 #foobar {
   width: 50%;
@@ -248,7 +292,7 @@ div.rbt-input.form-control {
   object-fit: cover !important;
   object-position: center top;
   height: 120px;
-  width: 200px;
+  width: 240px;
 }
 
 .ui.badge {

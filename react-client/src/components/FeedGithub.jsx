@@ -5,7 +5,7 @@ import RepoListItem from './RepoListItem.jsx';
 const FeedGithub = ({ repos }) => (
   <div>
     <List divided relaxed >
-      <Header>Featured from Github</Header>
+      <Header>Featured on Github</Header>
       {repos.map((repo, i) =>
         <RepoListItem key={i} repo={repo} />
       )}

@@ -30,23 +30,19 @@ class List extends React.Component {
         {this.props.projects.map((project, i) => {
           return (
             <Grid.Column key={i}>
-              <div style={{ float: 'left', position: 'relative' }}>
+              <div>
                 <Link to={`/apps/${project.id}`}>
-                  <Card style={{ maxWidth: '230px' }}>
+                  <Card>
                     <Image
                       onClick={() => this.updateViewCount(project.id)}
                       className="imgThumb"
                       src={project.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                      style={{
-                        borderRadius: '0px',
-                        margin: 'auto'
-                      }}
                     />
                     <Card.Content>
-                      <Card.Header style={{ fontSize: '1em' }}>
+                      <Card.Header>
                         {project.project_name}
                       </Card.Header>
-                      <Card.Description style={{ fontSize: '.85em' }}>
+                      <Card.Description>
                         {project.category}
                       </Card.Description>
                     </Card.Content>
@@ -55,7 +51,7 @@ class List extends React.Component {
                       {project.techs.filter(tech => this.props.techFilter.includes(tech)).join(' ')}
                     </Card.Content> }
                     <Card.Content extra textAlign="right">
-                      <Icon name="eye" style={{ float: 'right' }} />
+                      <Icon />
                       {project.view_count}
                     </Card.Content>
                   </Card>
