@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   connection = mysql.createConnection({
     user: 'root',
-    password: 'root',
+    password: '',
     database: 'codeop'
   });
 
