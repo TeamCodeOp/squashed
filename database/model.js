@@ -228,7 +228,7 @@ const insertFollowerNotification = (followerInfo, cb) => {
 };
 
 const usersJoinNotifications = (userData, cb) => {
-  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date from users right join notifications on users.id = notifications.user_id';
+  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date from users right join notifications on users.id = notifications.user_id order by created_date desc';
   db.connection.query(queryStr, (err, results) => {
     if (err) {
       cb(err, null);
