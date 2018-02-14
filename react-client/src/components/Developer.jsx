@@ -177,7 +177,6 @@ class Developer extends React.Component {
   handleFollowRequest(e) {
     e.preventDefault();
     if (!this.state.currentlyFollowing) {
-      console.log('174: here in if');
       axios.post('/followRequest', {
         user_id: this.state.currentUserProfileId,
         follower_id: this.props.id
@@ -191,7 +190,6 @@ class Developer extends React.Component {
         .catch((error) => {
           console.log(error);
         });
-      console.log('187: here')
       axios.post('/notifications', {
         user_id: this.state.currentUserProfileId,
         follower_id: this.props.id
@@ -222,11 +220,15 @@ class Developer extends React.Component {
   }
 
   handlePM(recipient, subject, pmType) {
-    this.setState({ showMessageForm: true, pmType, recipient, subject });
+    this.setState({
+      showMessageForm: true,
+      pmType,
+      recipient,
+      subject
+    });
   }
 
   hidePM() {
-    console.log('hiding PM...');
     this.setState({ showMessageForm: false });
   }
 
@@ -262,7 +264,6 @@ class Developer extends React.Component {
     }
 
     return (
-
       <div>
         <Grid columns='equal'>
           <Grid.Column width={2} />
@@ -320,8 +321,6 @@ class Developer extends React.Component {
                     onClick={() => {
                       this.handlePM(this.state.username, '', 'initial');
                     }}
-                    // as={Link}
-                    // to={`/sendMessage?to=${this.state.username}`}
                     primary
                     floated="right"
                   >Message

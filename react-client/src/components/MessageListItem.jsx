@@ -20,8 +20,6 @@ const MessageListItem = ({ message, handleDeleteMessage, handlePM }) => (
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={() => handlePM(message.sender_username, message.subject, 'reply')}
-              // as={Link}
-              // to={`/sendMessage?to=${message.sender_username}`}
             >
               Reply
             </Dropdown.Item>
