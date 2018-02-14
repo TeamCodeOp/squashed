@@ -212,6 +212,13 @@ class Developer extends React.Component {
         .catch((error) => {
           console.log(error);
         });
+      axios.delete(`/notifications?id=${this.props.id}&name=${this.state.username}`)
+        .then((response) => {
+          console.log('notification deleted from database');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 

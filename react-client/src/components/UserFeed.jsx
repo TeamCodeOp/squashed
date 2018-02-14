@@ -4,6 +4,7 @@ import { Feed, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import UserFeedList from './UserFeedList.jsx';
 
+
 class UserFeed extends React.Component {
   constructor(props) {
     super(props);
@@ -27,10 +28,10 @@ class UserFeed extends React.Component {
   render() {
     return (
       <div>
-        <Scrollbars style={{ height: 480 }}>
+        <Scrollbars style={{ height: 300 }}>
           {this.state.userFeeds.map((feed, i) =>
             <UserFeedList key={i} feed={feed} />
-          )}
+        )}
         </Scrollbars>
       </div>
     );

@@ -216,25 +216,34 @@ const insertFollowerNotification = (followerInfo, cb) => {
       followerName = results[0].id === followerInfo.user_id ? results[0].git_username : results[1].git_username;
       userName = results[1].id === followerInfo.follower_id ? results[1].git_username : results[0].git_username;
     }
-    const insertQuery = `INSERT INTO notifications(event, user_id, created_date) VALUES('is following ${followerName}', ${followerInfo.follower_id}, CURRENT_TIMESTAMP())`;
+    const insertQuery = `INSERT INTO notifications(event, user_id, created_date) VALUES(' is following ${followerName}', ${followerInfo.follower_id}, CURRENT_TIMESTAMP())`;
     db.connection.query(insertQuery, (err, results) => {
       if (err) {
         console.log(err);
       } else {
-        console.log('notification inserted', results);
-        cb(results);
+        cb(null, results);
       }
     });
   });
 };
 
 const usersJoinNotifications = (userData, cb) => {
-  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date from users right join notifications on users.id = notifications.user_id';
+  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date from users right join notifications on users.id = notifications.user_id order by created_date desc';
   db.connection.query(queryStr, (err, results) => {
     if (err) {
       cb(err, null);
     } else {
-      // console.log('all notifications', results);
+      cb(null, results);
+    }
+  });
+};
+
+const deleteFollowerNotification = (followerInfo, cb) => {
+  const deleteQuery = `DELETE FROM notifications WHERE user_id = ${followerInfo.id} and event like '%${followerInfo.name}%';`;
+  db.connection.query(deleteQuery, (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
       cb(null, results);
     }
   });
@@ -252,4 +261,5 @@ module.exports.insertFollowerNotification = insertFollowerNotification;
 module.exports.usersJoinNotifications = usersJoinNotifications;
 module.exports.deleteMessage = deleteMessage;
 module.exports.markAllOpened = markAllOpened;
+module.exports.deleteFollowerNotification = deleteFollowerNotification;
 
