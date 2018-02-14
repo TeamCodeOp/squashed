@@ -233,7 +233,6 @@ const usersJoinNotifications = (userData, cb) => {
     if (err) {
       cb(err, null);
     } else {
-<<<<<<< HEAD
       cb(null, results);
     }
   });
@@ -245,9 +244,6 @@ const deleteFollowerNotification = (followerInfo, cb) => {
     if (err) {
       cb(err, null);
     } else {
-=======
-      // console.log('all notifications', results);
->>>>>>> 2eec22fcf3079b6e635340e2a61e150bbc9a75f3
       cb(null, results);
     }
   });
