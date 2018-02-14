@@ -121,15 +121,21 @@ body, textarea {
 
 /* ***************** Main Column - Project Cards ***************** */
 
-.ui.card, .ui.cards>.card {
-  border-radius: 0;
+.ui.card {
+  width: 240px;
+}
+
+.ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui) {
+  font-size: 1.1em;
+  font-weight: 500;
+  text-align: center;
 }
 
 /* ***************** Developer.JSX ***************** */
 
 #developerProfileCard {
-  /* border: 1rem solid; */
   margin-top: 2.6rem;
+  width: 300px;
 }
 
 
