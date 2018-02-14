@@ -191,7 +191,6 @@ app.get('/notifications', (req, res) => {
       console.log('err....', err);
       res.status(500).send(err);
     } else {
-      console.log('data of all notifications', data);
       res.status(201).json(data);
     }
   });
@@ -314,6 +313,18 @@ app.post('/notifications', (req, res) => {
     });
   }
 });
+
+app.delete('/notifications', (req, res) => {
+  mysqlModel.deleteFollowerNotification(req.query, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).json(data);
+    }
+  });
+});
+
+
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
