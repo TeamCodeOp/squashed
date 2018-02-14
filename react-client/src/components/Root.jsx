@@ -25,7 +25,6 @@ class Root extends React.Component {
       projects: [],
       userId: null,
       techFilter: [],
-      isCheckingLogIn: false,
       shouldRedirectProject: false,
       shouldRedirectBrainstorm: false,
       githubRepos: [],
@@ -155,6 +154,7 @@ class Root extends React.Component {
   }
 
   handleGetLatest() {
+    console.log('Handle latest called');
     this.setState({ techFilter: [], isViewFilter: false }, () => this.getProjects());
   }
 
@@ -164,6 +164,7 @@ class Root extends React.Component {
   handleBrainstormRedirect() {
     this.setState({ shouldRedirectBrainstorm: !this.state.shouldRedirectProject });
   }
+
   filterByViews() {
     axios.get('/projects?views=true')
       .then(response => this.setState({ projects: response.data, isViewFilter: true }))

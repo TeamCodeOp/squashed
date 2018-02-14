@@ -15,7 +15,7 @@
     "postinstall": "npm run build",
     "fetch-repos": "node workers/githubRepoFetcher.js"
   },
-  "author": "Beth Johnson",
+  "author": "Team Squashed",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.23.1",
