@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS projects (
   description varchar(100),
   repo_url varchar(100) NOT NULL UNIQUE,
   image_Url varchar(100),
-  creation_date date,
+  creation_date timestamp default current_timestamp,
   user_id int,
   view_count int,
   FOREIGN KEY (user_id) REFERENCES users(id)

@@ -1,8 +1,8 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { Feed, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import UserFeedList from './UserFeedList.jsx';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 class UserFeed extends React.Component {
   constructor(props) {
@@ -26,11 +26,11 @@ class UserFeed extends React.Component {
 
   render() {
     return (
-      <div style={{ margin: 'auto', width: '40%', marginTop: '5em', borderRadius: '10px', border: '1px solid rgba(34,36,38,.15)', padding: '2em' }}>
+      <div>
         <Scrollbars style={{ height: 300 }}>
           {this.state.userFeeds.map((feed, i) =>
             <UserFeedList key={i} feed={feed} />
-        )}
+          )}
         </Scrollbars>
       </div>
     );
