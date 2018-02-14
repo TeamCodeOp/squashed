@@ -270,7 +270,7 @@ class Developer extends React.Component {
         <Grid columns='equal'>
           <Grid.Column width={2} />
           <Grid.Column width={4}>
-            <Card>
+            <Card id="developerProfileCard">
               <Image src={`${this.state.userAvatar}`} />
 
               <Card.Content>
