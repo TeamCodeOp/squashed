@@ -2,61 +2,86 @@ import React, { Component } from 'react';
 import { Header, Grid, Segment, Menu } from 'semantic-ui-react';
 import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
-import NewProjects from './NewProjects.jsx';
+import MainViewNewProjects from './MainViewNewProjects.jsx';
 import ProjectsMenu from './ProjectsMenu.jsx';
-import FeedPopular from './FeedPopular.jsx';
-import FeedFriends from './FeedFriends.jsx';
-import FeedGithub from './FeedGithub.jsx';
 import SideTechFilter from './SideTechFilter.jsx';
+import FeedGithub from './FeedGithub.jsx';
+import FeedFriends from './FeedFriends.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedActiveItem: 'Popular',
-      currentMainView: 'Popular'
+      currentMainView: 'New'
     };
+    this.handleMainViewFilter = this.handleMainViewFilter.bind(this);
   }
 
   componentDidMount() {
-    this.props.getProjects();
-    this.props.getGithubRepos();
+    this.props.filterByViews();
     if (this.props.userId) {
       this.props.checkMessages(this.props.userId);
     }
   }
 
-  setFeedToRender() {
-    let feed;
-    if (this.state.feedActiveItem === 'Popular') {
-      feed = <FeedPopular />;
-    } else if (this.state.feedActiveItem === 'Friends') {
-      feed = <FeedFriends />;
+  setMainViewToRender() {
+    let newView;
+    if (this.state.currentMainView === 'Popular') {
+      // newView = this.setMainViewNewProjects();
+      this.props.filterByViews();
+    } else if (this.state.currentMainView === 'New') {
+      // console.log('Setting main view to NEW');
+      // newView = this.setMainViewNewProjects();
+      this.props.handleGetLatest();
+    } else if (this.state.currentMainView === 'Featured on Github') {
+      newView = this.setMainViewGithub();
+      // this.props.getGithubRepos();
     }
-    return feed;
+
+    console.log('Ok, setting the main view to render as: \n', newView);
+
+    return newView;
   }
 
-  // TODO for Ralph: Delete after you're done w/ home page refactor
-  // handleFeedClick(e, { name }) {
-  //   this.setState({
-  //     feedActiveItem: name
-  //   }, () => {
-  //     this.feedToRender = this.setFeedToRender();
-  //   });
-  // }
+  setMainViewNewProjects() {
+    return (<MainViewNewProjects
+      projects={this.props.projects}
+      techFilter={this.props.techFilter}
+    />);
+  }
 
-  handleMainProjectsFilter(e, { currentMainView }) {
-    console.log('clicked: ', currentMainView);
+  setMainViewGithub() {
+    return <FeedGithub />;
+  }
 
-    // this.setState({
-    //   feedActiveItem: name
-    // }, () => {
-    //   this.feedToRender = this.setFeedToRender();
-    // });
+  handleMainViewFilter(e, { name }) {
+    console.log('--clicked--: ', name);
+    this.setState({
+      currentMainView: name
+    }, () => {
+      if (this.state.currentMainView === 'Popular') {
+        this.props.filterByViews();
+      } else if (this.state.currentMainView === 'New') {
+        this.props.handleGetLatest();
+      } else if (this.state.currentMainView === 'Featured on Github') {
+        this.props.getGithubRepos();
+      } else {
+        console.error('There was an error in handleMainViewFilter');
+      }
+    });
   }
 
   render() {
-    const { currentMainView } = this.state.currentMainView;
+    const currentMainView = this.state.currentMainView;
+    let mainViewToRender;
+    if (this.state.currentMainView === 'Featured on Github') {
+      mainViewToRender = <FeedGithub repos={this.props.githubRepos} />;
+    } else {
+      mainViewToRender = (<MainViewNewProjects
+        projects={this.props.projects}
+        techFilter={this.props.techFilter}
+      />);
+    }
 
     return (
       <div className="ui container">
@@ -66,9 +91,9 @@ class App extends React.Component {
           <Grid.Column id="mainProjectsMenu">
             <Segment>
               <Menu fluid widths={3} id="mainBG">
-                <Menu.Item name="Popular" active={currentMainView === 'Popular'} onClick={this.handleMainProjectsFilter} />
-                <Menu.Item name="New" active={currentMainView === 'New'} onClick={this.handleMainProjectsFilter} />
-                <Menu.Item name="Featured on Github" active={currentMainView === 'Featured on Github'} onClick={this.handleMainProjectsFilter} />
+                <Menu.Item name="Popular" active={currentMainView === 'Popular'} onClick={this.handleMainViewFilter} />
+                <Menu.Item name="New" active={currentMainView === 'New'} onClick={this.handleMainViewFilter} />
+                <Menu.Item name="Featured on Github" active={currentMainView === 'Featured on Github'} onClick={this.handleMainViewFilter} />
               </Menu>
             </Segment>
           </Grid.Column>
@@ -77,22 +102,17 @@ class App extends React.Component {
         {/* This is the main content area. We have 3 columns. */}
         <Grid columns={3} stackable>
 
-          {/* Left column for frpoject filtering by tech */}
+          {/* Left column for project filtering by tech */}
           <Grid.Column width={2} id="column-1">
             <SideTechFilter
               handleTechs={this.props.handleTechs}
             />
           </Grid.Column>
 
-          {/* Middle column to show projects */}
+          {/* Middle column is the main view */}
           <Grid.Column width={11} id="column-2">
             <Segment>
-              <NewProjects
-                projects={this.props.projects}
-                isViewFilter={this.props.isViewFilter}
-                toggleViewFilter={this.props.toggleViewFilter}
-                techFilter={this.props.techFilter}
-              />
+              {mainViewToRender}
             </Segment>
           </Grid.Column>
 
@@ -103,14 +123,15 @@ class App extends React.Component {
             </Segment>
           </Grid.Column>
         </Grid>
-        <Search searchByUserInput={this.props.searchByUserInput} />
-        <ProjectsMenu
+        {/* <Search searchByUserInput={this.props.searchByUserInput} /> */}
+
+        {/* <ProjectsMenu
           getProjects={this.props.getProjects}
           handleGetLatest={this.props.handleGetLatest}
           filterByViews={this.props.filterByViews}
-        />
-        <FeedGithub repos={this.props.githubRepos} />
+        /> */}
       </div>);
   }
 }
+
 export default App;

@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   connection = mysql.createConnection({
     user: 'root',
-    password: 'root',
+    password: '',
     database: 'codeop'
   });
 
@@ -77,7 +77,7 @@ const deleteUserSession = (sessionID, cb) => {
 };
 
 const retrieveProjects = (cb) => {
-  connection.query('SELECT * FROM projects', (err, projects) => {
+  connection.query('SELECT * FROM projects ORDER BY creation_date DESC', (err, projects) => {
     if (err) {
       console.log(err);
     } else {
