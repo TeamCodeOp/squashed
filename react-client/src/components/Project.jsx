@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ReactDisqusThread from 'react-disqus-thread';
-import { Grid, Image, Item, Button } from 'semantic-ui-react';
+import { Grid, Image, Item, Button, Confirm } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Route, Redirect, Switch } from 'react-router';
 import Developer from './Developer.jsx';
@@ -19,9 +19,12 @@ class Project extends React.Component {
       githubUser: '',
       projectThumb: '',
       testUser: '',
+      open: false
     };
 
     this.onDelete = this.onDelete.bind(this);
+    this.show = this.show.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentDidMount() {
@@ -60,12 +63,21 @@ class Project extends React.Component {
           githubRepo: '',
           techs: '',
           githubUser: 1,
-          projectThumb: ''
+          projectThumb: '',
+          open: false
         });
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+    show(){
+      this.setState({ open: true })
+    }
+
+  handleCancel() {
+    this.setState({ open: false })
   }
 
   render() {
@@ -109,9 +121,15 @@ class Project extends React.Component {
                 </Item.Content>
 
               </Item>
-              <button className="ui primary button" onClick={this.onDelete}>
-                Delete
-              </button>
+              <Button onClick={this.show}>Delete</Button>
+              <Confirm
+                id="ui.page"
+                open={this.state.open}
+                cancelButton='Never mind'
+                confirmButton="Let's do it"
+                onCancel={this.handleCancel}
+                onConfirm={this.onDelete}
+              />
               <button
                 className="ui primary button"
                 onClick={() => {
