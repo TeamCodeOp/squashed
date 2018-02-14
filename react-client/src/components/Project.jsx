@@ -94,16 +94,11 @@ class Project extends React.Component {
           <Grid.Column />
           <Grid.Column width={12}>
             <Item.Group>
-              <Item style={{
-                padding: '2em',
-                border: '1px solid rgba(0,0,0,.4)',
-              }}
-              >
+              <Item>
                 <a href={this.state.githubRepo} target="_blank">
                   <Item.Image
                     size="small"
                     src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                    style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
                   />
                 </a>
 
@@ -114,7 +109,7 @@ class Project extends React.Component {
                     {this.state.description}
                   </Item.Description>
 
-                  <Item.Extra style={{ marginTop: '20px' }}>Tech Stack</Item.Extra>
+                  <Item.Extra>Tech Stack</Item.Extra>
                   <Item.Description>
                     <ul id="project-techs">{this.state.techs}</ul>
                   </Item.Description>
@@ -167,16 +162,11 @@ class Project extends React.Component {
           <Grid.Column />
           <Grid.Column width={12}>
             <Item.Group>
-              <Item style={{
-                padding: '2em',
-                border: '1px solid rgba(0,0,0,.4)',
-              }}
-              >
+              <Item>
                 <a href={this.state.githubRepo} target="_blank">
                   <Item.Image
                     size="small"
                     src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                    style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
                   />
                 </a>
                 <Item.Content>
@@ -185,7 +175,7 @@ class Project extends React.Component {
                   <Item.Description>
                     {this.state.description}
                   </Item.Description>
-                  <Item.Extra style={{marginTop: '20px'}}>Tech Stack</Item.Extra>
+                  <Item.Extra>Tech Stack</Item.Extra>
                   <Item.Description>
                     <ul id="project-techs">{this.state.techs}</ul>
                   </Item.Description>

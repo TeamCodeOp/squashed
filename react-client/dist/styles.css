@@ -119,6 +119,12 @@ body, textarea {
   width: 18%;
 }
 
+/* ***************** Main Column - Project Cards ***************** */
+
+.ui.card, .ui.cards>.card {
+  border-radius: 0;
+}
+
 /* ***************** Developer.JSX ***************** */
 
 #developerProfileCard {

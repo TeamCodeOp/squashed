@@ -30,7 +30,7 @@ class List extends React.Component {
         {this.props.projects.map((project, i) => {
           return (
             <Grid.Column key={i}>
-              <div style={{ float: 'left', position: 'relative' }}>
+              <div>
                 <Link to={`/apps/${project.id}`}>
                   <Card style={{ maxWidth: '230px' }}>
                     <Image
