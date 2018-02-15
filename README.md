@@ -18,9 +18,9 @@ Find other engineers to collaborate with!! :octocat: :squirrel:
 ## Dependencies
 You will need MySQL, node, and npm installed on your computer to run locally:
 
-1.Install node v8.9.3
-2.npm v5.6.0
-3.MySQL v5.7.20
+1. Install node v8.9.3
+2. npm v5.6.0
+3. MySQL v5.7.20
 
 ## Requirements
 
