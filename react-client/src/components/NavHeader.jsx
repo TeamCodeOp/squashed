@@ -13,12 +13,13 @@ class NavHeader extends Component {
 
   render() {
     return (
-      <div>
+      <div id="navHeader">
         <Menu className="sticky">
           <Menu.Item
+            id="squashedHomeButton"
             as={Link}
             to="/"
-            name="Home"
+            name="Squashed"
           />
           <Menu.Item
             as={Link}
@@ -32,6 +33,7 @@ class NavHeader extends Component {
             name="Brainstorm"
             onClick={!this.props.sessionId ? this.props.handleBrainstormRedirect : () => {}}
           />
+          
           {this.props.username ?
             <Menu.Menu position="right">
               <Menu.Item

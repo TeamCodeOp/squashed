@@ -208,6 +208,9 @@ class Root extends React.Component {
             privateMessages={this.state.privateMessages}
             markAllOpened={this.markAllOpened}
           />
+
+
+
           <Switch>
             <RouteProps
               exact
