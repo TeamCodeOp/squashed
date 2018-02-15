@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Raleway:600,700');
 
+
+body, textarea {
+  /* font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif; */
+  font-family: 'Raleway', 'Helvetica Neue', Arial,Helvetica,sans-serif;
+}
 
 #mainBackgroundGraphic {
   /* background-image: url("./img/graphic.png"); */
@@ -19,8 +25,21 @@
 /* *****************  ***************** */
 
 #mainCopy {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   height: 10rem;
+  /* background-color: aqua; */
+
+  font-family: 'Montserrat', sans-serif;
+}
+
+#mainCopy h4 {
+  margin-top: 1rem;
+  font-size: 4rem;
+  font-family: 'Raleway', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+#mainCopy span {
+  font-size: 2rem; 
 }
 
 .ui.inverted.segment, .ui.primary.inverted.segment {
@@ -31,30 +50,29 @@
   border: none;
 }
 
-#titleHeader {
+/* #titleHeader {
   font-family: 'Pacifico', cursive;
   color: orange;
   font-size: 6em;
   margin-top: .5em;
   margin-bottom: .5em;
   font-weight: 400;
-}
+} */
 
-.ui.menu {
-  background-color: #ffa500c4;
+#navHeader .ui.menu {
+  /* background-color: #ffa500c4; */
+  /* linear-gradient(45deg, blue, red); */
+  background: linear-gradient(45deg, #1AC8DB, #0292B7);
   border-radius: 0;
 }
 
-.ui.menu .item {
+#navHeader .ui.menu .item {
+  font-size: 1.1em;
   color: white;
 }
 
 .ui.menu .item:hover {
   color: white;
-}
-
-body, textarea {
-  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
 
 /* ***************** HEADER CONTENT ***************** */
@@ -77,6 +95,17 @@ body, textarea {
   margin-bottom: 10em;
 }
 
+#squashedHomeButton {
+  font-family: 'Raleway', cursive;
+  /* font-family: 'Pacifico', cursive; */
+  color: white;
+  font-size: 1.25em;
+  font-weight: 700;
+  /* letter-spacing: 1px; */
+  /* margin-top: .5em; */
+  /* margin-bottom: .5em; */
+}
+
 /* ***************** Main containers ***************** */
 
 .ui.segment {
@@ -92,7 +121,7 @@ body, textarea {
 
 /* ***************** Main View Filter Tabs ***************** */
 #mainProjectsMenu {
-  background-color: yellow;
+  background-color: white;
   padding: 0;
 }
 
@@ -117,6 +146,7 @@ body, textarea {
 
 .ui.menu .active.item {
   background: transparent;
+  font-size: 1.15em;  
   font-weight: bold;
   /* border-bottom: 1px solid black; */
 }
@@ -288,6 +318,11 @@ body, textarea {
 
 /* ***************** ???????????????? ***************** */
 
+h3.ui.header .sub.header {
+  margin-top: 1rem;
+  font-size: 1.15rem;
+  color: #111;
+}
 
 .dropZone {
   margin-top: .5em;
@@ -299,8 +334,13 @@ body, textarea {
 
 span.imageUploadText {
   line-height: 3em;
-  color: rgba(34,36,38,.15);
+  color: rgba(34,36,38,.5);
 }
+
+/* ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: red;
+  opacity: 1; /* Firefox */
+} */
 
 #login-h3 {
   text-align: center;
@@ -416,6 +456,10 @@ div.rbt-input.form-control {
   padding-right: 1rem;
 }
 
+#feedContainer a {
+  color: #111;
+}
+
 #feedContainer img {
   margin-top: 14px;
 }
@@ -424,6 +468,10 @@ div.rbt-input.form-control {
   font-size:85%;
   font-style: italic;
 }
+
+/* #feed .summary a {
+ color: #111;
+} */
 
 h5 {
   text-align: center;
