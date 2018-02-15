@@ -22,6 +22,21 @@ Find other engineers to collaborate with!! :octocat: :squirrel:
 ## Usage
 
 ## Requirements
+To run locally: 
+
+You will need MySQL, node, and npm installed on your computer. 
+
+We used MySQL v5.7.20, node v8.9.3, npm v5.6.0
+
+Clone the repo and run ```npm install``` from root directory. 
+
+To build the schema: ```cd database``` and then ```mysql -u root < schema.sql``` 
+
+If your MySql root user has a password, you will need to modify the password in database/index.js in order to connect to the database.
+
+Start webpack in watch mode by running ```npm run react-dev``` 
+
+Start the server with nodemon by running ```npm run server-dev``` 
 
 ## Development
 
