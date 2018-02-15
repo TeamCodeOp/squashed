@@ -26,10 +26,6 @@
   color: white;
 }
 
-.ui.button {
-  background-color: orange;
-}
-
 body, textarea {
   font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
@@ -121,6 +117,7 @@ body, textarea {
 
 /* ***************** Main Column - Project Cards ***************** */
 
+
 .ui.card {
   width: 240px;
 }
@@ -143,6 +140,52 @@ body, textarea {
   width: 300px;
 }
 
+#fullname {
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
+#follow-button {
+  width: 100px;
+  float: right;
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+#follow-button button {
+  width: 120px;
+  margin-left: -20px;
+}
+
+#pm-button {
+  width: 120px;
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+#pm-button button {
+  width: 120px;
+}
+
+#pm-button .ui.button:hover {
+  background-color: #2185d0;
+  color: white;
+}
+
+#pm-button .ui.button:click {
+  background-color: #2185d0;
+  color: white;
+}
+
+.ui.button {
+  background-color: #2185d0;
+  color: white;
+}
+
+.fa-envelope {
+  margin-right: 8px;
+}
 /* ***************** Project Page ***************** */
 
 #project-info {
