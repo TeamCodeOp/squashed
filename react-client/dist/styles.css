@@ -299,9 +299,27 @@ div.rbt-input.form-control {
   height:120px;
 }
 
+#column-3 .segment {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+#feedContainer {
+  padding-right: 1rem;
+}
+
+#feedContainer img {
+  margin-top: 14px;
+}
+
 #feed {
   font-size:85%;
   font-style: italic;
+}
+
+h5 {
+  text-align: center;
+  margin-bottom: .5rem;
 }
 
 #ui.page {
