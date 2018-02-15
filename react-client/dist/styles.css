@@ -115,8 +115,13 @@ body, textarea {
   width: 18%;
 }
 
-/* ***************** Main Column - Project Cards ***************** */
+/* ***************** Main Conent Area ***************** */
 
+#mainContentArea .ui.grid>.column:not(.row) {
+  padding-top: 2rem;
+}
+
+/* ***************** Main Column - Project Cards ***************** */
 
 .ui.card {
   width: 240px;
@@ -234,6 +239,7 @@ body, textarea {
 
 #column-2 {
   /* background-color: blue; */
+  padding-left: 4rem;
 }
 
 #column-2 .segment {

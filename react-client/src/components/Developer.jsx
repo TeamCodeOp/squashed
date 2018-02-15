@@ -330,7 +330,7 @@ class Developer extends React.Component {
             </Card>
 
             {(this.props.sessionId) && (this.state.onlineStatus) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
-              <div style={{ width: '290px' }}>
+              <div style={{ width: '300px' }}>
                 <Header as="h4" attached="top" style={{ backgroundColor: '#e0e1e2', textAlign: 'center' }}>Chat with {firstName}</Header>
                 <Segment
                   attached
