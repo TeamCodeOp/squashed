@@ -36,6 +36,7 @@ To Run Locally:
     * An example crontab that runs every 8 hours : ```0 */8 * * * * PATH/TO/NODE PATH/TO/ROOT/DIRECTORY/thesis/workers/githubRepoFetcher.js```
 8. Start the React server by running ```npm run react-server```
 9. Start the node server by running ```npm run server-dev```
+10. Run the test suite with ```npm test```
 
 To deploy on Heroku: 
 1. Create Heroku app either via the Heroku website or Heroku CLI 
