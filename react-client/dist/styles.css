@@ -131,6 +131,11 @@ body, textarea {
   text-align: center;
 }
 
+.fa-eye {
+  margin-right: 6px;
+  color: #bbb;
+}
+
 /* ***************** Developer.JSX ***************** */
 
 #developerProfileCard {
