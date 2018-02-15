@@ -188,7 +188,6 @@ app.get('/searchProjects', (req, res) => {
 app.get('/notifications', (req, res) => {
   mysqlModel.usersJoinNotifications(req.body, (err, data) => {
     if (err) {
-      console.log('err....', err);
       res.status(500).send(err);
     } else {
       res.status(201).json(data);
@@ -198,7 +197,6 @@ app.get('/notifications', (req, res) => {
 
 app.get('/privateMessages', (req, res) => {
   const userId = req.query.userId;
-
   mysqlModel.selectAllWhere('private_messages', 'recipient_id', userId, false, messages => res.send(messages));
 });
 
@@ -208,12 +206,9 @@ app.get('/', (req, res) => {
 
 app.post('/projects', (req, res) => {
   mysqlModel.insertProjectData(req.body, (err, results) => {
-    console.log('error in server cb',err)
     if (err) {
-      console.log('error');
       res.status(500).send(err);
     } else {
-      console.log('success');
       res.status(201).json();
     }
   });
@@ -261,7 +256,7 @@ app.post('/unfollowRequest', (req, res) => {
 
 
 app.put('/projects', (req, res) => {
-  mysqlDB.updateProjectByProjectId(req.body, (err, data) =>{
+  mysqlDB.updateProjectByProjectId(req.body, (err, data) => {
     res.status(201).json(data);
   });
 });
@@ -279,7 +274,7 @@ app.put('/privateMessages', (req, res) => {
   if (messages.length !== 0) {
     mysqlModel.markAllOpened(messages, recipientId, results => res.send(results));
   } else {
-    mysqlModel.selectAllWhere('private_messages', 'recipient_id', recipientId, false, messages => res.send(messages));
+    mysqlModel.selectAllWhere('private_messages', 'recipient_id', recipientId, false, msgs => res.send(msgs));
   }
 });
 
@@ -336,9 +331,8 @@ app.delete('/notifications', (req, res) => {
   });
 });
 
-
-
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));
 });
+
 module.exports = app;
