@@ -119,7 +119,7 @@ class UploadForm extends React.Component {
   handleSubmit() {
     const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
     if (isError) {
-      alert('Please fill in all required fields');
+      this.setState({ displayError: 'Please fill in all required fields', isPostError: true });
     } else {
       axios.post('/projects', {
         projectName: this.state.projectName,
@@ -170,7 +170,7 @@ class UploadForm extends React.Component {
   handleUpdate() {
     const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
     if (isError) {
-      alert('Please fill in all required fields');
+      this.setState({ displayError: 'Please fill in all required fields', isPostError: true });
     } else {
       axios.put('/projects', {
         projectName: this.state.projectName,
