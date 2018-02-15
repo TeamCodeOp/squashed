@@ -12,7 +12,6 @@ let config;
 let CLOUDINARY_UPLOAD_URL;
 let CLOUDINARY_UPLOAD_PRESET;
 
-// console.log('NODE_ENV: ',process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
   CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_URL;
   CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
@@ -53,7 +52,7 @@ class UploadForm extends React.Component {
     if (this.props.history.location.state) {
       const newTechStack = JSON.parse(this.props.history.location.state.techStack);
       if (this.props.history.location.state) {
-        for (let i = 0; i < newTechStack.length; i++) {
+        for (let i = 0; i < newTechStack.length; i += 1) {
           techStackArray.push(newTechStack[i].key);
         }
       }
@@ -118,10 +117,9 @@ class UploadForm extends React.Component {
   }
 
   handleSubmit() {
-    console.log('handling submit');
     const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
     if (isError) {
-      alert('Please fill in all required fields');
+      this.setState({ displayError: 'Please fill in all required fields', isPostError: true });
     } else {
       axios.post('/projects', {
         projectName: this.state.projectName,
@@ -132,7 +130,6 @@ class UploadForm extends React.Component {
         userId: this.props.userId
       })
         .then((response) => {
-          console.log('response', response);
           this.setState({
             projectName: '',
             description: '',
@@ -173,7 +170,7 @@ class UploadForm extends React.Component {
   handleUpdate() {
     const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
     if (isError) {
-      alert('Please fill in all required fields');
+      this.setState({ displayError: 'Please fill in all required fields', isPostError: true });
     } else {
       axios.put('/projects', {
         projectName: this.state.projectName,
@@ -193,7 +190,7 @@ class UploadForm extends React.Component {
   }
 
   handleTechs(e, data) {
-    this.setState({ techs: data.value });
+    this.setState({ techs: data.value, isPosted: false });
   }
 
   validateFields(e) {
@@ -202,8 +199,12 @@ class UploadForm extends React.Component {
     const isProjectNameError = this.state.projectName === '';
     const isGithubUrlError = this.state.githubRepo === '';
 
-    this.setState({ isProjectNameError, isGithubUrlError, isPostError: false, isPosted: false }, () => {
-      console.log('history state: ',this.props.history.location.state)
+    this.setState({
+      isProjectNameError,
+      isGithubUrlError,
+      isPostError: false,
+      isPosted: false
+    }, () => {
       if (this.props.history.location.state) {
         this.handleUpdate();
       } else {

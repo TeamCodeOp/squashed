@@ -52,15 +52,15 @@ class NavHeader extends Component {
                 name="Logout"
               />
             </Menu.Menu>
-          :
+            :
             <Menu.Menu position="right">
               <Menu.Item
-              href="/auth/github"
-              icon="github"
-              name="Login"
-            />
+                href="/auth/github"
+                icon="github"
+                name="Login"
+              />
             </Menu.Menu>
-        }
+          }
         </Menu>
       </div>
     );

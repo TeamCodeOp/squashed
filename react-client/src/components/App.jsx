@@ -3,7 +3,6 @@ import { Header, Grid, Segment, Menu } from 'semantic-ui-react';
 import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import MainViewNewProjects from './MainViewNewProjects.jsx';
-import ProjectsMenu from './ProjectsMenu.jsx';
 import SideTechFilter from './SideTechFilter.jsx';
 import FeedGithub from './FeedGithub.jsx';
 import FeedFriends from './FeedFriends.jsx';
@@ -46,7 +45,6 @@ class App extends React.Component {
       } else if (this.state.currentMainView === 'Featured on Github') {
         this.props.getGithubRepos();
       } else {
-        console.log('There was an error in handleMainViewFilter');
         console.error('There was an error in handleMainViewFilter');
       }
     });
@@ -56,7 +54,7 @@ class App extends React.Component {
     const currentMainView = this.state.currentMainView;
     let mainViewToRender;
     if (this.state.currentMainView === 'Featured on Github') {
-      mainViewToRender = <FeedGithub repos={this.props.githubRepos}/>;
+      mainViewToRender = <FeedGithub repos={this.props.githubRepos} />;
     } else {
       mainViewToRender = (<MainViewNewProjects
         projects={this.props.projects}
@@ -67,7 +65,6 @@ class App extends React.Component {
     return (
       <div className="ui container">
         <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
-
         <Grid>
           <Grid.Column id="mainProjectsMenu">
             <Segment>
@@ -105,12 +102,6 @@ class App extends React.Component {
           </Grid.Column>
         </Grid>
         {/* <Search searchByUserInput={this.props.searchByUserInput} /> */}
-
-        {/* <ProjectsMenu
-          getProjects={this.props.getProjects}
-          handleGetLatest={this.props.handleGetLatest}
-          filterByViews={this.props.filterByViews}
-        /> */}
       </div>);
   }
 }

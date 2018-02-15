@@ -12,7 +12,7 @@ export default class ProfileTabMenu extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.menuTab === 'inbox') {
+    if (nextProps.menuTab === 'inbox' || (nextProps.username && (nextProps.username === nextProps.profileUsername))) {
       this.setState({ activeItem: 'Inbox' });
     } else {
       this.setState({ activeItem: 'Projects' });
@@ -38,7 +38,7 @@ export default class ProfileTabMenu extends Component {
             <Grid>
               {this.props.projects.map((project, i) => {
                 if (i % 3 === 0 && i <= this.props.projects.length - 1) {
-                  return <UserProjectList key={i} items={this.props.projects.slice(i, i + 3)} />;
+                  return <UserProjectList key={project.id} items={this.props.projects.slice(i, i + 3)} />;
                 }
               })}
             </Grid>

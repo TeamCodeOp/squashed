@@ -27,9 +27,9 @@ class List extends React.Component {
   render() {
     return (
       <Grid.Row columns={4}>
-        {this.props.projects.map((project, i) => {
+        {this.props.projects.map((project) => {
           return (
-            <Grid.Column key={i}>
+            <Grid.Column key={project.id}>
               <div>
                 <Link to={`/apps/${project.id}`}>
                   <Card>

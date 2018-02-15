@@ -14,7 +14,7 @@ const UserFeedList = ({ feed }) => {
             <a className="user">
               {feed.git_username}
             </a>
-            <a id='feed'>
+            <a id="feed">
               {feed.event}
             </a>
             <div className="date">

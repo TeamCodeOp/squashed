@@ -56,7 +56,6 @@ class Project extends React.Component {
   onDelete() {
     axios.delete(`/projects/${this.props.match.params.id}`)
       .then((response) => {
-        console.log('response data on line 45: ', response);
         this.setState({
           projectName: '',
           description: '',
@@ -72,12 +71,12 @@ class Project extends React.Component {
       });
   }
 
-    show(){
-      this.setState({ open: true })
-    }
+  show() {
+    this.setState({ open: true });
+  }
 
   handleCancel() {
-    this.setState({ open: false })
+    this.setState({ open: false });
   }
 
   render() {
@@ -120,7 +119,7 @@ class Project extends React.Component {
               <Confirm
                 id="ui.page"
                 open={this.state.open}
-                cancelButton='Never mind'
+                cancelButton="Never mind"
                 confirmButton="Let's do it"
                 onCancel={this.handleCancel}
                 onConfirm={this.onDelete}

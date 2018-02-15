@@ -92,7 +92,6 @@ class Developer extends React.Component {
           username: this.state.username
         })
           .then((profileIdResponse) => {
-            // console.log('Current profile ID is (Dev.jsx): ', profileIdResponse.data);
             this.setState({
               currentUserProfileId: profileIdResponse.data
             });
@@ -238,6 +237,7 @@ class Developer extends React.Component {
   render() {
     const firstName = this.state.name.split(' ')[0];
     const messages = this.state.messages.map((msg, i) => {
+      console.log('msg', msg);
       return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;
     });
 

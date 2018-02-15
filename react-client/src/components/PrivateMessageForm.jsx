@@ -4,7 +4,7 @@ import { Form, Header } from 'semantic-ui-react';
 class PrivateMessageForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { messageText: '', subject: props.subject.length > 0 ? `RE:${props.subject}` : props.subject };
+    this.state = { messageText: '', subject: props.subject.length > 0 ? `${props.subject}` : props.subject };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

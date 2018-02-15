@@ -6,8 +6,8 @@ const FeedGithub = ({ repos }) => (
   <div>
     <List divided relaxed >
       <Header>Featured on Github</Header>
-      {repos.map((repo, i) =>
-        <RepoListItem key={i} repo={repo} />
+      {repos.map(repo =>
+        <RepoListItem key={repo.repo_id} repo={repo} />
       )}
     </List>
   </div>
