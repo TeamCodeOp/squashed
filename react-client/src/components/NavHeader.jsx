@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Menu, Label, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import NotificationBadge from 'react-notification-badge';
-import { Effect } from 'react-notification-badge';
+import { NotificationBadge, Effect } from 'react-notification-badge';
 
 class NavHeader extends Component {
   constructor(props) {
@@ -52,15 +51,15 @@ class NavHeader extends Component {
                 name="Logout"
               />
             </Menu.Menu>
-          :
+            :
             <Menu.Menu position="right">
               <Menu.Item
-              href="/auth/github"
-              icon="github"
-              name="Login"
-            />
+                href="/auth/github"
+                icon="github"
+                name="Login"
+              />
             </Menu.Menu>
-        }
+          }
         </Menu>
       </div>
     );

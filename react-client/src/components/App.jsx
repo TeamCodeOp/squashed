@@ -3,7 +3,6 @@ import { Header, Grid, Segment, Menu } from 'semantic-ui-react';
 import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import MainViewNewProjects from './MainViewNewProjects.jsx';
-import ProjectsMenu from './ProjectsMenu.jsx';
 import SideTechFilter from './SideTechFilter.jsx';
 import FeedGithub from './FeedGithub.jsx';
 import FeedFriends from './FeedFriends.jsx';
