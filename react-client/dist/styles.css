@@ -186,6 +186,24 @@ body, textarea {
 .fa-envelope {
   margin-right: 8px;
 }
+
+/* ***************** Messages & message list ***************** */
+
+
+#messageList .ui.segment {
+  /* margin: 0px; */
+  padding: 0px;
+}
+
+#messageList .item {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+#messageList .icon {
+  margin-left: 20px;
+}
+
 /* ***************** Project Page ***************** */
 
 #project-info {
