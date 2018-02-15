@@ -11,7 +11,7 @@ Find other engineers to collaborate with!! :octocat: :squirrel:
 
 ## Table of Contents
 
-1. [Depndencies](#dependencies)
+1. [Dependencies](#dependencies)
 1. [Requirements](#requirements)
 
 
