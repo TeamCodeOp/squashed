@@ -11,34 +11,27 @@ Find other engineers to collaborate with!! :octocat: :squirrel:
 
 ## Table of Contents
 
-1. [Usage](#Usage)
+1. [Depndencies](#dependencies)
 1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Roadmap](#roadmap)
-1. [Contributing](#contributing)
 
-## Usage
+
+## Dependencies
+You will need MySQL, node, and npm installed on your computer to run locally:
+
+1.Install node v8.9.3
+2.npm v5.6.0
+3.MySQL v5.7.20
 
 ## Requirements
-To run locally: 
 
-You will need MySQL, node, and npm installed on your computer. 
+1. Clone the repo and in the root directory of your app run ```npm install```
+2. Sign up for a Cloudinary account and take note of the upload url and upload preset which will be in your Dashboard.
+3. Create a Github oAuth app (https://github.com/settings/applications/new)
+4. Give your localhost url in the Homepage url(eg: http://localhost:3000/) and Authorization callback url (Eg: http://localhost:3000/auth/github/return)
+4. In the root of your app change the name of configvars.example.js to configvars.js. You can update your keys here.
+5. Build the schema by going to the database folder in your terminal and then run ```mysql -u root < schema.sql``` 
+6. If your MySql root user has a password, you will need to modify the password in database/index.js in order to connect to   the database.
+7. Start the React server by running ```npm run react-server```
+8. Start the node server by running ```npm run server-dev```
 
-We used MySQL v5.7.20, node v8.9.3, npm v5.6.0
-
-Clone the repo and run ```npm install``` from root directory. 
-
-To build the schema: ```cd database``` and then ```mysql -u root < schema.sql``` 
-
-If your MySql root user has a password, you will need to modify the password in database/index.js in order to connect to the database.
-
-Start webpack in watch mode by running ```npm run react-dev``` 
-
-Start the server with nodemon by running ```npm run server-dev``` 
-
-## Development
-
-### Installing Dependencies
 
