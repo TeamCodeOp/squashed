@@ -47,5 +47,7 @@ To deploy on Heroku:
     * CLEARDB_PASS
     * CLEARDB_USERNAME
     * The host, name, and username can be extrapolated from URL. The password can be found (and reset) by navigating to the ClearDB   dashboard, clicking on the heroku database link, and selecting the System Information tab. 
-4. Install the Heroku Scheduler addon
+4. Add the Github App ID and Secret as config vars - CLIENT_ID and CLIENT_SECRET 
+5. Add the Cloudinary Upload Url and preset to the config vars - CLOUDINARY_URL and CLOUDINARY_UPLOAD_PRESET 
+6. Install the Heroku Scheduler addon
     * Create a new job that runs ```npm run fetch-repos``` either every ten minutes, hourly, or daily.
