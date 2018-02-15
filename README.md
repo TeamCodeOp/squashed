@@ -1,4 +1,4 @@
-# Project Name
+# Squashed
 
 Find other engineers to collaborate with!! :octocat: :squirrel:
 
