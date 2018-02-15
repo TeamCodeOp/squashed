@@ -64,7 +64,12 @@ class App extends React.Component {
 
     return (
       <div className="ui container">
-        <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
+        {/* <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header> */}
+        <div id="mainCopy" className="ui vertical masthead center aligned segment">
+            <span>Connect. Collaborate. Innovate.</span> <br/>
+            <span>Showcase and discover new projects.</span>
+        </div>
+
         <Grid>
           <Grid.Column id="mainProjectsMenu">
             <Segment>
