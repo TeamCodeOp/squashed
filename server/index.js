@@ -276,7 +276,11 @@ app.put('/privateMessages', (req, res) => {
   const messages = req.body.messages;
   const recipientId = req.query.recipient;
 
-  mysqlModel.markAllOpened(messages, recipientId, results => res.send(results));
+  if (messages.length !== 0) {
+    mysqlModel.markAllOpened(messages, recipientId, results => res.send(results));
+  } else {
+    mysqlModel.selectAllWhere('private_messages', 'recipient_id', recipientId, false, messages => res.send(messages));
+  }
 });
 
 // delete request to the projects schema
