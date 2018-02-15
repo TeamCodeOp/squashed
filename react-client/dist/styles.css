@@ -26,10 +26,6 @@
   color: white;
 }
 
-.ui.button {
-  background-color: orange;
-}
-
 body, textarea {
   font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
@@ -119,6 +115,12 @@ body, textarea {
   width: 18%;
 }
 
+/* ***************** Main Conent Area ***************** */
+
+#mainContentArea .ui.grid>.column:not(.row) {
+  padding-top: 2rem;
+}
+
 /* ***************** Main Column - Project Cards ***************** */
 
 .ui.card {
@@ -131,11 +133,80 @@ body, textarea {
   text-align: center;
 }
 
+.fa-eye {
+  margin-right: 6px;
+  color: #bbb;
+}
+
 /* ***************** Developer.JSX ***************** */
 
 #developerProfileCard {
   margin-top: 2.6rem;
   width: 300px;
+}
+
+#fullname {
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
+#follow-button {
+  width: 100px;
+  float: right;
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+#follow-button button {
+  width: 120px;
+  margin-left: -20px;
+}
+
+#pm-button {
+  width: 120px;
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+#pm-button button {
+  width: 120px;
+}
+
+#pm-button .ui.button:hover {
+  background-color: #2185d0;
+  color: white;
+}
+
+#pm-button .ui.button:click {
+  background-color: #2185d0;
+  color: white;
+}
+
+.ui.button {
+  background-color: #2185d0;
+  color: white;
+}
+
+.fa-envelope {
+  margin-right: 8px;
+}
+
+/* ***************** Messages & message list ***************** */
+
+
+#messageList .ui.segment {
+  /* margin: 0px; */
+  padding: 0px;
+}
+
+#messageList .item {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+#messageList .icon {
+  margin-left: 20px;
 }
 
 /* ***************** Project Page ***************** */
@@ -152,7 +223,16 @@ body, textarea {
   
 }
 
+#deleteButton {
+  float: right;
+  margin-bottom: 40px;
+  margin-top: -50px;
+}
 
+#editButton {
+  float: right;
+  margin-top: -50px;
+}
 
 #foobar {
   width: 50%;
@@ -168,6 +248,7 @@ body, textarea {
 
 #column-2 {
   /* background-color: blue; */
+  padding-left: 4rem;
 }
 
 #column-2 .segment {
@@ -299,13 +380,25 @@ div.rbt-input.form-control {
   height:120px;
 }
 
+#column-3 .segment {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+#feedContainer {
+  padding-right: 1rem;
+}
+
+#feedContainer img {
+  margin-top: 14px;
+}
+
 #feed {
   font-size:85%;
   font-style: italic;
 }
 
-#ui.page {
-  height:120px;
-  width:400px !important;
+h5 {
+  text-align: center;
+  margin-bottom: .5rem;
 }
-

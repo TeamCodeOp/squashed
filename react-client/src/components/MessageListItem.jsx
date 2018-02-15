@@ -16,12 +16,12 @@ const MessageListItem = ({ message, handleDeleteMessage, handlePM }) => (
         {message.subject}
       </List.Header>
       <List.Description>{message.sender_name} -- {moment(message.time_sent).fromNow()}
+      
         <Dropdown icon="vertical ellipsis" floating className="icon">
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={() => handlePM(message.sender_username, message.subject, 'reply')}
-            >
-              Reply
+            >              Reply
             </Dropdown.Item>
             <Dropdown.Item onClick={() => handleDeleteMessage(message.id, message.recipient_id)}>
               Delete

@@ -3,8 +3,7 @@ import { List, Header } from 'semantic-ui-react';
 import MessageListItem from './MessageListItem.jsx';
 
 const MessageList = ({ messages, handleDeleteMessage, handlePM }) => (
-  <div style={{ margin: 'auto', width: '40%', marginTop: '5em', borderRadius: '10px', border: '1px solid rgba(34,36,38,.15)', padding: '2em' }}>
-    <Header>Messages</Header>
+  <div id="messageList">
     <List celled>
       {messages.map(message =>
         (

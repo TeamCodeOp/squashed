@@ -77,9 +77,9 @@ class App extends React.Component {
           </Grid.Column>
         </Grid>
 
+        <div id="mainContentArea">
         {/* This is the main content area. We have 3 columns. */}
         <Grid columns={3} stackable>
-
           {/* Left column for project filtering by tech */}
           <Grid.Column width={2} id="column-1">
             <SideTechFilter
@@ -101,6 +101,7 @@ class App extends React.Component {
             </Segment>
           </Grid.Column>
         </Grid>
+        </div>
         {/* <Search searchByUserInput={this.props.searchByUserInput} /> */}
       </div>);
   }
