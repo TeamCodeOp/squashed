@@ -57,6 +57,8 @@ CREATE TABLE notifications (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   event text NOT NULL,
   user_id int NOT NULL,
+  project_id int,
+  project_name varchar(20),
   created_date TIMESTAMP
 );
 
