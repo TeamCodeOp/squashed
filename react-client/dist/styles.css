@@ -223,7 +223,16 @@ body, textarea {
   
 }
 
+#deleteButton {
+  float: right;
+  margin-bottom: 40px;
+  margin-top: -50px;
+}
 
+#editButton {
+  float: right;
+  margin-top: -50px;
+}
 
 #foobar {
   width: 50%;
@@ -393,9 +402,3 @@ h5 {
   text-align: center;
   margin-bottom: .5rem;
 }
-
-#ui.page {
-  height:120px;
-  width:400px !important;
-}
-

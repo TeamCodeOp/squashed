@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { component } from 'react';
 import axios from 'axios';
 import ReactDisqusThread from 'react-disqus-thread';
 import { Grid, Image, Item, Button, Confirm } from 'semantic-ui-react';
@@ -80,6 +80,7 @@ class Project extends React.Component {
   }
 
   render() {
+    // 
     if (this.state.githubUser === 1) {
       return (
         <Switch>
@@ -88,6 +89,7 @@ class Project extends React.Component {
         </Switch>
       );
     } else if (this.props.username === this.state.githubUser) {
+      // Currently logged in user viewing own account
       return (
         <Grid columns="equal">
           <Grid.Column />
@@ -101,7 +103,7 @@ class Project extends React.Component {
                   />
                 </a>
 
-                <Item.Content>
+                <Item.Content id="project-info">
                   <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
                   <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
                   <Item.Description>
@@ -113,19 +115,23 @@ class Project extends React.Component {
                     <ul id="project-techs">{this.state.techs}</ul>
                   </Item.Description>
                 </Item.Content>
-
               </Item>
-              <Button onClick={this.show}>Delete</Button>
-              <Confirm
-                id="ui.page"
-                open={this.state.open}
-                cancelButton="Never mind"
-                confirmButton="Let's do it"
-                onCancel={this.handleCancel}
-                onConfirm={this.onDelete}
-              />
+              <div>
+                <Button basic color="red" id="deleteButton" onClick={this.show}>Delete</Button>
+                <Confirm
+                  id="ui.page"
+                  open={this.state.open}
+                  content="Are you sure you want to remove this project?"
+                  size='tiny'
+                  cancelButton="Cancel"
+                  confirmButton="Remove Project"
+                  onCancel={this.handleCancel}
+                  onConfirm={this.onDelete}
+                />
+              </div>
               <button
-                className="ui primary button"
+                id="editButton"
+                className="ui secondary basic button"
                 onClick={() => {
                   this.props.history.push({
                     pathname: '/create',
@@ -138,7 +144,7 @@ class Project extends React.Component {
                       projectId: this.props.match.params.id
                     }
                   });
-                }
+                  }
                 }
               >
              Edit
