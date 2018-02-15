@@ -28,7 +28,8 @@ class UserFeed extends React.Component {
   render() {
     return (
       <div>
-        <Scrollbars style={{ height: 300 }}>
+        <h5>Recent activity</h5>
+        <Scrollbars style={{ height: 700 }}>
           {this.state.userFeeds.map((feed, i) =>
             <UserFeedList key={i} feed={feed} />
         )}

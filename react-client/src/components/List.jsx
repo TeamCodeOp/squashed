@@ -32,9 +32,8 @@ class List extends React.Component {
             <Grid.Column key={i}>
               <div>
                 <Link to={`/apps/${project.id}`}>
-                  <Card>
+                  <Card onClick={() => this.updateViewCount(project.id)}>
                     <Image
-                      onClick={() => this.updateViewCount(project.id)}
                       className="imgThumb"
                       src={project.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
                     />
@@ -51,7 +50,7 @@ class List extends React.Component {
                       {project.techs.filter(tech => this.props.techFilter.includes(tech)).join(' ')}
                     </Card.Content> }
                     <Card.Content extra textAlign="right">
-                      <Icon />
+                      <i className="fas fa-eye" />
                       {project.view_count}
                     </Card.Content>
                   </Card>

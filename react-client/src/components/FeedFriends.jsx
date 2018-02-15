@@ -4,7 +4,7 @@ import UserFeed from './UserFeed.jsx';
 class FeedFriends extends React.Component {
   render() {
     return (
-      <div>
+      <div id="feedContainer">
         <UserFeed />
       </div>
     );
