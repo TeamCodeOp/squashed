@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { component } from 'react';
 import axios from 'axios';
 import ReactDisqusThread from 'react-disqus-thread';
 import { Grid, Image, Item, Button, Confirm } from 'semantic-ui-react';
@@ -56,7 +56,6 @@ class Project extends React.Component {
   onDelete() {
     axios.delete(`/projects/${this.props.match.params.id}`)
       .then((response) => {
-        console.log('response data on line 45: ', response);
         this.setState({
           projectName: '',
           description: '',
@@ -72,15 +71,16 @@ class Project extends React.Component {
       });
   }
 
-    show(){
-      this.setState({ open: true })
-    }
+  show() {
+    this.setState({ open: true });
+  }
 
   handleCancel() {
-    this.setState({ open: false })
+    this.setState({ open: false });
   }
 
   render() {
+    //
     if (this.state.githubUser === 1) {
       return (
         <Switch>
@@ -89,49 +89,49 @@ class Project extends React.Component {
         </Switch>
       );
     } else if (this.props.username === this.state.githubUser) {
+      // Currently logged in user viewing own account
       return (
         <Grid columns="equal">
           <Grid.Column />
           <Grid.Column width={12}>
             <Item.Group>
-              <Item style={{
-                padding: '2em',
-                border: '1px solid rgba(0,0,0,.4)',
-              }}
-              >
+              <Item>
                 <a href={this.state.githubRepo} target="_blank">
                   <Item.Image
                     size="small"
                     src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                    style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
                   />
                 </a>
 
-                <Item.Content>
+                <Item.Content id="project-info">
                   <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
                   <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
                   <Item.Description>
                     {this.state.description}
                   </Item.Description>
 
-                  <Item.Extra style={{ marginTop: '20px' }}>Tech Stack</Item.Extra>
+                  <Item.Extra>Tech Stack</Item.Extra>
                   <Item.Description>
                     <ul id="project-techs">{this.state.techs}</ul>
                   </Item.Description>
                 </Item.Content>
-
               </Item>
-              <Button onClick={this.show}>Delete</Button>
-              <Confirm
-                id="ui.page"
-                open={this.state.open}
-                cancelButton='Never mind'
-                confirmButton="Let's do it"
-                onCancel={this.handleCancel}
-                onConfirm={this.onDelete}
-              />
+              <div>
+                <Button basic color="red" id="deleteButton" onClick={this.show}>Delete</Button>
+                <Confirm
+                  id="ui.page"
+                  open={this.state.open}
+                  content="Are you sure you want to remove this project?"
+                  size='tiny'
+                  cancelButton="Cancel"
+                  confirmButton="Remove Project"
+                  onCancel={this.handleCancel}
+                  onConfirm={this.onDelete}
+                />
+              </div>
               <button
-                className="ui primary button"
+                id="editButton"
+                className="ui secondary basic button"
                 onClick={() => {
                   this.props.history.push({
                     pathname: '/create',
@@ -144,7 +144,7 @@ class Project extends React.Component {
                       projectId: this.props.match.params.id
                     }
                   });
-                }
+                  }
                 }
               >
              Edit
@@ -167,25 +167,20 @@ class Project extends React.Component {
           <Grid.Column />
           <Grid.Column width={12}>
             <Item.Group>
-              <Item style={{
-                padding: '2em',
-                border: '1px solid rgba(0,0,0,.4)',
-              }}
-              >
+              <Item>
                 <a href={this.state.githubRepo} target="_blank">
                   <Item.Image
                     size="small"
                     src={this.state.projectThumb || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                    style={{ paddingRight: '20px', width: '200px', height: 'auto' }}
                   />
                 </a>
-                <Item.Content>
+                <Item.Content id="project-info">
                   <Item.Header><a href={this.state.githubRepo} target="_blank">{this.state.projectName}</a></Item.Header>
                   <Item.Meta>by <Link to={`/users/${this.state.githubUser}`}>{this.state.githubUser}</Link></Item.Meta>
                   <Item.Description>
                     {this.state.description}
                   </Item.Description>
-                  <Item.Extra style={{marginTop: '20px'}}>Tech Stack</Item.Extra>
+                  <Item.Extra>Tech Stack</Item.Extra>
                   <Item.Description>
                     <ul id="project-techs">{this.state.techs}</ul>
                   </Item.Description>

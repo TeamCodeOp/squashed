@@ -3,7 +3,6 @@ import { Header, Grid, Segment, Menu } from 'semantic-ui-react';
 import NavHeader from './NavHeader.jsx';
 import Search from './Search.jsx';
 import MainViewNewProjects from './MainViewNewProjects.jsx';
-import ProjectsMenu from './ProjectsMenu.jsx';
 import SideTechFilter from './SideTechFilter.jsx';
 import FeedGithub from './FeedGithub.jsx';
 import FeedFriends from './FeedFriends.jsx';
@@ -46,7 +45,6 @@ class App extends React.Component {
       } else if (this.state.currentMainView === 'Featured on Github') {
         this.props.getGithubRepos();
       } else {
-        console.log('There was an error in handleMainViewFilter');
         console.error('There was an error in handleMainViewFilter');
       }
     });
@@ -56,7 +54,7 @@ class App extends React.Component {
     const currentMainView = this.state.currentMainView;
     let mainViewToRender;
     if (this.state.currentMainView === 'Featured on Github') {
-      mainViewToRender = <FeedGithub repos={this.props.githubRepos}/>;
+      mainViewToRender = <FeedGithub repos={this.props.githubRepos} />;
     } else {
       mainViewToRender = (<MainViewNewProjects
         projects={this.props.projects}
@@ -66,7 +64,11 @@ class App extends React.Component {
 
     return (
       <div className="ui container">
-        <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header>
+        {/* <Header id="titleHeader"size="huge" style={{ textAlign: 'center' }}>Squashed</Header> */}
+        <div id="mainCopy" className="ui vertical masthead center aligned segment">
+            <h4>Connect  Collaborate  Contribute.</h4>
+            <span>Showcase and discover new projects.</span>
+        </div>
 
         <Grid>
           <Grid.Column id="mainProjectsMenu">
@@ -80,9 +82,9 @@ class App extends React.Component {
           </Grid.Column>
         </Grid>
 
+        <div id="mainContentArea">
         {/* This is the main content area. We have 3 columns. */}
         <Grid columns={3} stackable>
-
           {/* Left column for project filtering by tech */}
           <Grid.Column width={2} id="column-1">
             <SideTechFilter
@@ -104,13 +106,8 @@ class App extends React.Component {
             </Segment>
           </Grid.Column>
         </Grid>
+        </div>
         {/* <Search searchByUserInput={this.props.searchByUserInput} /> */}
-
-        {/* <ProjectsMenu
-          getProjects={this.props.getProjects}
-          handleGetLatest={this.props.handleGetLatest}
-          filterByViews={this.props.filterByViews}
-        /> */}
       </div>);
   }
 }

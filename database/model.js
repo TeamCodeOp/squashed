@@ -5,12 +5,15 @@ const Promise = require('bluebird');
 const format = require('pg-format');
 const _ = require('underscore');
 
-const insertProjectData = (projectData) => {
+const insertProjectData = (projectData, cb) => {
   return new Promise((resolve, reject) => {
     const sql = formatInsertProjectData(projectData);
 
     db.connection.query(sql, (err, results) => {
       if (err) {
+        console.log('DBERR!!!!', err.code);
+        console.log('sqlMsg', err.sqlMessage);
+        cb(err, null);
         return reject(err);
       }
       const techs = projectData.techs;
@@ -26,6 +29,7 @@ const insertProjectData = (projectData) => {
           console.log('error: \n', err2);
         }
       });
+      cb(null, results);
       return resolve(results);
     });
   });
@@ -89,7 +93,7 @@ const insertGithubRepos = (repos) => {
 };
 
 const retrieveGithubRepos = (cb) => {
-  const sql = 'SELECT * from github_repos LIMIT 5';
+  const sql = 'SELECT * from github_repos ORDER BY creation_date DESC LIMIT 10';
 
   db.connection.query(sql, (err, results) => {
     if (err) {
@@ -134,16 +138,12 @@ const getProjectsByViews = (cb) => {
 const insertNotification = (data, cb) => {
   let projectId;
   let insert;
-
-  console.log('insert', insert);
   const selectProjectId = `SELECT id FROM projects WHERE PROJECT_NAME='${data.projectName}'`;
   db.connection.query(selectProjectId, (err, results) => {
     projectId = results[0].id;
-    console.log('project id results', projectId);
     insert = `INSERT INTO notifications(event, user_id, project_id, project_name, follower_name, created_date) VALUES(' added a new project ', ${data.userId}, ${projectId},'${data.projectName}', null, CURRENT_TIMESTAMP())`;
-    console.log('insert', insert);
-    if(err) {
-      cb(err, null)
+    if (err) {
+      cb(err, null);
     } else {
       db.connection.query(insert, (err, results) => {
         if (err) {
@@ -151,7 +151,7 @@ const insertNotification = (data, cb) => {
         } else {
           console.log('notification inserted');
           cb(null, results);
-       }
+        }
       });
     }
   });

@@ -15,7 +15,7 @@ const UserFeedList = ({ feed }) => {
             <a className="user">
               {feed.git_username}
             </a>
-            <a id='feed'>
+            <a id="feed">
               {feed.event}
             </a>
             {feed.project_id !== null ? <Link to={`/apps/${feed.project_id}`}>{`${feed.project_name}`}</Link> : <Link to={`/users/${feed.follower_name}`}>{`${feed.follower_name}`}</Link> }

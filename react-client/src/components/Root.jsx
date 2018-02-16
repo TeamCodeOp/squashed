@@ -28,7 +28,6 @@ class Root extends React.Component {
       shouldRedirectProject: false,
       shouldRedirectBrainstorm: false,
       githubRepos: [],
-      isViewFilter: false,
       privateMessages: []
     };
 
@@ -43,7 +42,6 @@ class Root extends React.Component {
     this.getGithubRepos = this.getGithubRepos.bind(this);
     this.getProjectInfoByProjectId = this.getProjectInfoByProjectId.bind(this);
     this.filterByViews = this.filterByViews.bind(this);
-    this.toggleViewFilter = this.toggleViewFilter.bind(this);
     this.checkMessages = this.checkMessages.bind(this);
     this.handleDeleteMessage = this.handleDeleteMessage.bind(this);
     this.markAllOpened = this.markAllOpened.bind(this);
@@ -147,15 +145,13 @@ class Root extends React.Component {
   }
 
   handleTechs(techs) {
-    console.log('techs: ', techs);
     this.setState({ techFilter: techs }, function () {
       this.getProjectsByTechs(this.state.techFilter);
     });
   }
 
   handleGetLatest() {
-    console.log('Handle latest called');
-    this.setState({ techFilter: [], isViewFilter: false }, () => this.getProjects());
+    this.setState({ techFilter: [] }, () => this.getProjects());
   }
 
   handleProjectRedirect() {
@@ -167,16 +163,11 @@ class Root extends React.Component {
 
   filterByViews() {
     axios.get('/projects?views=true')
-      .then(response => this.setState({ projects: response.data, isViewFilter: true }))
+      .then(response => this.setState({ projects: response.data }))
       .catch(err => console.log(err));
   }
 
-  toggleViewFilter() {
-    this.setState({ isViewFilter: !this.state.isViewFilter });
-  }
-
   handleSendMessage(messageInfo) {
-    console.log('sending message :', messageInfo);
     axios.post('/privateMessages', {
       messageInfo
     })
@@ -185,14 +176,12 @@ class Root extends React.Component {
   }
 
   checkMessages(userId) {
-    console.log(`checking messages for ${userId}`);
     axios.get(`/privateMessages?userId=${userId}`)
       .then(response => this.setState({ privateMessages: response.data }))
       .catch(err => console.log(err));
   }
 
   handleDeleteMessage(messageId, recipientId) {
-    console.log('Deleting messageId: ', messageId);
     axios.delete(`/privateMessages?id=${messageId}&to=${recipientId}`)
       .then(response => this.setState({ privateMessages: response.data }, () => alert('Message deleted')))
       .catch(err => console.log(err));
@@ -219,6 +208,9 @@ class Root extends React.Component {
             privateMessages={this.state.privateMessages}
             markAllOpened={this.markAllOpened}
           />
+
+
+
           <Switch>
             <RouteProps
               exact
@@ -239,8 +231,6 @@ class Root extends React.Component {
               githubRepos={this.state.githubRepos}
               getGithubRepos={this.getGithubRepos}
               filterByViews={this.filterByViews}
-              isViewFilter={this.state.isViewFilter}
-              toggleViewFilter={this.toggleViewFilter}
               checkMessages={this.checkMessages}
             />
             <RouteProps

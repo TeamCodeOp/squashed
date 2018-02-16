@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
 class Developer extends React.Component {
   constructor(props) {
     super(props);
-    let today = new Date();
+    const today = new Date();
 
     this.state = {
       fullName: '',
@@ -92,7 +92,6 @@ class Developer extends React.Component {
           username: this.state.username
         })
           .then((profileIdResponse) => {
-            // console.log('Current profile ID is (Dev.jsx): ', profileIdResponse.data);
             this.setState({
               currentUserProfileId: profileIdResponse.data
             });
@@ -237,9 +236,7 @@ class Developer extends React.Component {
 
   render() {
     const firstName = this.state.name.split(' ')[0];
-    const messages = this.state.messages.map((msg, i) => {
-      return <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>;
-    });
+    const messages = this.state.messages.map((msg, i) => <p className="messageList" key={i}>{msg.sender}: {msg.text}</p>);
 
     let pmForm;
     if (this.state.showMessageForm) {
@@ -267,15 +264,15 @@ class Developer extends React.Component {
 
     return (
       <div>
-        <Grid columns='equal'>
+        <Grid columns="equal">
           <Grid.Column width={2} />
           <Grid.Column width={4}>
-            <Card>
+            <Card id="developerProfileCard">
               <Image src={`${this.state.userAvatar}`} />
 
               <Card.Content>
                 <Card.Header>
-                  <span>{this.state.fullName}</span>
+                  <span id="fullname">{this.state.fullName}</span>
                   {this.state.onlineStatus ?
                     <span style={{ fontSize: '.5em', float: 'right', color: 'green' }}>
                       <Icon color="green" size="large" name="check circle" />
@@ -289,7 +286,8 @@ class Developer extends React.Component {
                 </Card.Header>
 
                 <Card.Meta>
-                  <span className='githubUsername'>
+                  <br />
+                  <span className="githubUsername">
                     <a href={`https://github.com/${this.state.username}`}>{this.state.username}</a>
                   </span>
                 </Card.Meta>
@@ -323,9 +321,7 @@ class Developer extends React.Component {
                     onClick={() => {
                       this.handlePM(this.state.username, '', 'initial');
                     }}
-                    primary
-                    floated="right"
-                  >Message
+                  ><i className="far fa-envelope" />Message
                   </Button>
                   }
                 </div>
@@ -334,7 +330,7 @@ class Developer extends React.Component {
             </Card>
 
             {(this.props.sessionId) && (this.state.onlineStatus) && ((this.state.messages.length > 0) || (this.state.name !== this.props.name)) ?
-              <div style={{ width: '290px' }}>
+              <div style={{ width: '300px' }}>
                 <Header as="h4" attached="top" style={{ backgroundColor: '#e0e1e2', textAlign: 'center' }}>Chat with {firstName}</Header>
                 <Segment
                   attached
