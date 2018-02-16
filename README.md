@@ -49,13 +49,12 @@ To deploy on Heroku:
     * CLEARDB_PASS
     * CLEARDB_USERNAME
     * The host, name, and username can be extrapolated from URL. The password can be found (and reset) by navigating to the ClearDB   dashboard, clicking on the heroku database link, and selecting the System Information tab. 
-4. Add the Github App ID and Secret as config vars - CLIENT_ID and CLIENT_SECRET 
-5. Add the Github App ID and Secret as config vars - CLIENT_ID and CLIENT_SECRET  
-6. Build the heroku database schema  
+4. Add the Github App ID and Secret as config vars - CLIENT_ID and CLIENT_SECRET  
+5. Build the heroku database schema  
     * ```cd database``` and ```-- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql```
-7. Add the Cloudinary Upload Url and preset to the config vars - CLOUDINARY_URL and CLOUDINARY_UPLOAD_PRESET 
-8. Install the Heroku Scheduler addon
+6. Add the Cloudinary Upload Url and preset to the config vars - CLOUDINARY_URL and CLOUDINARY_UPLOAD_PRESET 
+7. Install the Heroku Scheduler addon
     * Create a new job that runs ```npm run fetch-repos``` either every ten minutes, hourly, or daily.
 
 ## Contributing 
-Please see [Contributing.md](#https://github.com/TeamCodeOp/Squashed/blob/master/CONTRIBUTING.md) for guidelines on making pull requests.
+Please see [Contributing.md](https://github.com/TeamCodeOp/Squashed/blob/master/CONTRIBUTING.md) for guidelines on making pull requests.
