@@ -461,6 +461,12 @@ div.rbt-input.form-control {
   padding-right: 1rem;
 }
 
+#feedContainer p {
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+}
+
 #feedContainer a {
   color: #111;
 }
