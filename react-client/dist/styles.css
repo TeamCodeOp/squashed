@@ -137,12 +137,10 @@ body, textarea {
 
 /* ***************** Main View Filter Tabs ***************** */
 #mainProjectsMenu {
-  background-color: white;
   padding: 0;
 }
 
 #mainBG {
-  background-color: white;
   /* border: none; */
 }
 
