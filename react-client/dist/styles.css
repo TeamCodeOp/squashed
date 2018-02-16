@@ -499,8 +499,12 @@ div.rbt-input.form-control {
 }
 
 #feed {
-  font-size:85%;
+  font-size: 85%;
   font-style: italic;
+}
+
+#activityFeedLink {
+  color: #2185d0 !important;
 }
 
 /* #feed .summary a {
