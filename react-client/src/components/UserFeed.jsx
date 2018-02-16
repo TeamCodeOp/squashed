@@ -9,11 +9,8 @@ class UserFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userFeeds: [],
-      follower_gitName: "",
-
+      userFeeds: []
     };
-    this.getFollowerName = this.getFollowerName.bind(this);
   }
 
   componentDidMount() {
@@ -23,30 +20,13 @@ class UserFeed extends React.Component {
           userFeeds: response.data
         });
         console.log('RESPONSE', response.data);
-      }, () => { this.getFollowerName(); })
+      })
       .catch((error) => {
         console.log(error);
       });
-      //this.getFollowerName();
-  }
-
-  getFollowerName() {
-    console.log('called');
-    for (let i = 0; i < this.state.userFeeds.length; i++) {
-      console.log(this.state.userFeeds[i].event);
-      if (this.state.userFeeds[i].event.includes("following")) {
-        console.log('inside if');
-        let name = this.state.userFeeds[0].event.split(" ");
-        let gitName = name[name.length - 1];
-        this.setState({
-          follower_gitName : gitName
-        });
-      }
-    }
   }
 
   render() {
-    console.log('Hello', this.state);
     return (
       <div>
         <Scrollbars style={{ height: 300 }}>

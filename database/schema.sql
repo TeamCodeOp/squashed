@@ -59,6 +59,7 @@ CREATE TABLE notifications (
   user_id int NOT NULL,
   project_id int,
   project_name varchar(20),
+  follower_name varchar(20),
   created_date TIMESTAMP
 );
 
