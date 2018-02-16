@@ -113,6 +113,7 @@ body, textarea {
   border: none;
   border-radius: 0;
   /* background-color: beige; */
+  background: none;
 }
 
 .ui.secondary.menu .item {
@@ -342,7 +343,11 @@ span.imageUploadText {
   opacity: 1; /* Firefox */
 } */
 
-#login-h3 {
+h2:first-child {
+  margin-top: 5rem;
+}
+
+#pleaseLogIn {
   text-align: center;
 }
 
