@@ -274,6 +274,14 @@ body, textarea {
   padding-left: 3rem;
 }
 
+#project-info a {
+  color: rgb(71, 71, 71);
+}
+
+#project-info .extra {
+  color: rgb(71, 71, 71);
+}
+
 .ui.grid>.column:not(.row) {
   padding-top: 3rem;
 }
