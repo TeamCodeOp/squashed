@@ -39,7 +39,7 @@ body, textarea {
   font-family: 'Raleway', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
   /* text-transform: uppercase; */
-  letter-spacing: -1px !important; 
+  letter-spacing: -1px !important;
 
   /* display: inline-block; */
   background-image: linear-gradient(-45deg, rgb(26, 219, 177), #0292B7 );
@@ -48,11 +48,11 @@ body, textarea {
   letter-spacing: 2px;
   transition: all .2s;
   /* background: linear-gradient(45deg, #1AC8DB, #0292B7); */
-  
+
 }
 
 #mainCopy span {
-  font-size: 2rem; 
+  font-size: 2rem;
   color: rgb(41, 41, 41);
 }
 
