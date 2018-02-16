@@ -117,7 +117,8 @@ body, textarea {
 }
 
 .ui.secondary.menu .item {
-  color: #ccc;
+  color: rgb(71, 71, 71);
+  font-size: 1.15rem;
 }
 
 /* ***************** Main View Filter Tabs ***************** */
