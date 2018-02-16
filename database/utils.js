@@ -26,6 +26,10 @@ const formatProjectsWithTechs = (data, techs) => {
     }
   }
   projects = _.map(Object.entries(storage), pair => pair[1]);
+
+  _.each(projects, (proj) => {
+    proj.id = proj.project_id;
+  });
   return _.filter(projects, project => compareTechStacks(techs, project.techs)
   );
 };

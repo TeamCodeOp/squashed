@@ -12,7 +12,8 @@ Find other engineers to collaborate with!! :octocat: :squirrel:
 ## Table of Contents
 
 1. [Dependencies](#dependencies)
-1. [Requirements](#requirements)
+1. [Setup](#setup)
+1. [Contributing](#contributing)
 
 
 ## Dependencies
@@ -22,8 +23,9 @@ You will need MySQL, node, and npm installed on your computer to run locally:
 2. npm v5.6.0
 3. MySQL v5.7.20
 
-## Requirements
-To Run Locally: 
+## Setup
+
+### Local
 
 1. Clone the repo and in the root directory of your app run ```npm install```
 2. Sign up for a Cloudinary account and take note of the upload url and upload preset which will be in your Dashboard.
@@ -38,7 +40,7 @@ To Run Locally:
 9. Start the node server by running ```npm run server-dev```
 10. Run the test suite with ```npm test```
 
-To deploy on Heroku: 
+### Heroku 
 1. Create Heroku app either via the Heroku website or Heroku CLI 
 2. Install the ClearDB addon
 3. Retrieve the necessary credentials from ClearDB and add them to the config vars on Heroku 
@@ -48,7 +50,12 @@ To deploy on Heroku:
     * CLEARDB_PASS
     * CLEARDB_USERNAME
     * The host, name, and username can be extrapolated from URL. The password can be found (and reset) by navigating to the ClearDB   dashboard, clicking on the heroku database link, and selecting the System Information tab. 
-4. Add the Github App ID and Secret as config vars - CLIENT_ID and CLIENT_SECRET 
-5. Add the Cloudinary Upload Url and preset to the config vars - CLOUDINARY_URL and CLOUDINARY_UPLOAD_PRESET 
-6. Install the Heroku Scheduler addon
+4. Add the Github App ID and Secret as config vars - CLIENT_ID and CLIENT_SECRET  
+5. Build the heroku database schema  
+    * ```cd database``` and ```-- mysql --host=DB_HOST --user=DB_USER--password=DB_PASS --reconnect DB_NAME < schema.sql```
+6. Add the Cloudinary Upload Url and preset to the config vars - CLOUDINARY_URL and CLOUDINARY_UPLOAD_PRESET 
+7. Install the Heroku Scheduler addon
     * Create a new job that runs ```npm run fetch-repos``` either every ten minutes, hourly, or daily.
+
+## Contributing 
+Please see [Contributing.md](https://github.com/TeamCodeOp/Squashed/blob/master/CONTRIBUTING.md) for guidelines on making pull requests.

@@ -20,12 +20,12 @@ describe('<NavHeader />', () => {
     wrapper.unmount();
   });
 
-  it('should contain Home item', () => {
+  it('should contain Squashed item', () => {
     const wrapper = mount(
       <MemoryRouter>
         <NavHeader />
       </MemoryRouter>
     );
-    expect(wrapper.find('MenuItem').find({ name: 'Home' })).to.have.length(1);
+    expect(wrapper.find('MenuItem').find({ name: 'Squashed' })).to.have.length(1);
   });
 });

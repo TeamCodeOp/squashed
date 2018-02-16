@@ -14,9 +14,9 @@ const PleaseLogIn = (props) => {
       <Grid columns="equal">
         <Grid.Column />
         <Grid.Column width={6}>
-          <h3 id="login-h3">
+          <h2 id="pleaseLogIn" className="ui container center aligned">
             <i className="fab fa-github" />
-          </h3>
+          </h2>
           <div className="ui container center aligned">
             <a href="/auth/github" style={{ color: 'rgba(0,0,0,.6)' }}>Please login using Github</a>
           </div>

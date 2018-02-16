@@ -34,12 +34,26 @@ body, textarea {
 
 #mainCopy h4 {
   margin-top: 1rem;
-  font-size: 4rem;
+  font-size: 3.25rem;
+  font-weight: 100;
   font-family: 'Raleway', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
+  /* text-transform: uppercase; */
+  letter-spacing: -1px !important;
+
+  /* display: inline-block; */
+  background-image: linear-gradient(-45deg, rgb(26, 219, 177), #0292B7 );
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 2px;
+  transition: all .2s;
+  /* background: linear-gradient(45deg, #1AC8DB, #0292B7); */
+
 }
 
 #mainCopy span {
   font-size: 2rem;
+  color: rgb(41, 41, 41);
 }
 
 .ui.inverted.segment, .ui.primary.inverted.segment {
@@ -113,21 +127,21 @@ body, textarea {
   border: none;
   border-radius: 0;
   /* background-color: beige; */
+  background: none;
 }
 
 .ui.secondary.menu .item {
-  color: #ccc;
+  color: rgb(71, 71, 71);
+  font-size: 1.15rem;
 }
 
 /* ***************** Main View Filter Tabs ***************** */
 #mainProjectsMenu {
-  background-color: white;
   padding: 0;
 }
 
 #mainBG {
-  background-color: white;
-  border: none;
+  /* border: none; */
 }
 
 #mainBG a{
@@ -272,6 +286,14 @@ body, textarea {
   padding-left: 3rem;
 }
 
+#project-info a {
+  color: rgb(71, 71, 71);
+}
+
+#project-info .extra {
+  color: rgb(71, 71, 71);
+}
+
 .ui.grid>.column:not(.row) {
   padding-top: 3rem;
 }
@@ -342,7 +364,11 @@ span.imageUploadText {
   opacity: 1; /* Firefox */
 } */
 
-#login-h3 {
+h2:first-child {
+  margin-top: 5rem;
+}
+
+#pleaseLogIn {
   text-align: center;
 }
 
@@ -456,6 +482,12 @@ div.rbt-input.form-control {
   padding-right: 1rem;
 }
 
+#feedContainer p {
+  font-weight: bold;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
 #feedContainer a {
   color: #111;
 }
@@ -465,8 +497,12 @@ div.rbt-input.form-control {
 }
 
 #feed {
-  font-size:85%;
+  font-size: 85%;
   font-style: italic;
+}
+
+#activityFeedLink {
+  color: #2185d0 !important;
 }
 
 /* #feed .summary a {
@@ -476,4 +512,8 @@ div.rbt-input.form-control {
 h5 {
   text-align: center;
   margin-bottom: .5rem;
+}
+
+#brainstormHeader {
+  margin-top: 1rem;
 }

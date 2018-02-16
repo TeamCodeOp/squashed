@@ -118,6 +118,7 @@ class UploadForm extends React.Component {
 
   handleSubmit() {
     const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
+    let projectToBeAdded = this.state.projectName;
     if (isError) {
       this.setState({ displayError: 'Please fill in all required fields', isPostError: true });
     } else {
@@ -140,7 +141,7 @@ class UploadForm extends React.Component {
             isPosted: true
           }, () => {
             axios.post('/notifications', {
-              projectName: this.state.projectName,
+              projectName: projectToBeAdded,
               userId: this.props.userId,
             })
               .then((response) => {
