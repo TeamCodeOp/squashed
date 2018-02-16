@@ -136,14 +136,23 @@ const getProjectsByViews = (cb) => {
 };
 
 const insertNotification = (data, cb) => {
-  const insert = `INSERT INTO notifications(event, user_id, created_date) VALUES(' added a new project ${data.projectName}', ${data.userId}, CURRENT_TIMESTAMP())`;
-  console.log('insert', insert);
-  db.connection.query(insert, (err, results) => {
+  let projectId;
+  let insert;
+  const selectProjectId = `SELECT id FROM projects WHERE PROJECT_NAME='${data.projectName}'`;
+  db.connection.query(selectProjectId, (err, results) => {
+    projectId = results[0].id;
+    insert = `INSERT INTO notifications(event, user_id, project_id, project_name, follower_name, created_date) VALUES(' added a new project ', ${data.userId}, ${projectId},'${data.projectName}', null, CURRENT_TIMESTAMP())`;
     if (err) {
       cb(err, null);
     } else {
-      console.log('notification inserted');
-      cb(null, results);
+      db.connection.query(insert, (err, results) => {
+        if (err) {
+          cb(err, null);
+        } else {
+          console.log('notification inserted');
+          cb(null, results);
+        }
+      });
     }
   });
 };
@@ -220,7 +229,7 @@ const insertFollowerNotification = (followerInfo, cb) => {
       followerName = results[0].id === followerInfo.user_id ? results[0].git_username : results[1].git_username;
       userName = results[1].id === followerInfo.follower_id ? results[1].git_username : results[0].git_username;
     }
-    const insertQuery = `INSERT INTO notifications(event, user_id, created_date) VALUES(' is following ${followerName}', ${followerInfo.follower_id}, CURRENT_TIMESTAMP())`;
+    const insertQuery = `INSERT INTO notifications(event, user_id, project_id, project_name,follower_name, created_date) VALUES(' is following ', ${followerInfo.follower_id}, null, null, '${followerName}',CURRENT_TIMESTAMP())`;
     db.connection.query(insertQuery, (err, results) => {
       if (err) {
         console.log(err);
@@ -232,7 +241,7 @@ const insertFollowerNotification = (followerInfo, cb) => {
 };
 
 const usersJoinNotifications = (userData, cb) => {
-  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date from users right join notifications on users.id = notifications.user_id order by created_date desc';
+  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date,notifications.project_id,notifications.project_name,notifications.follower_name from users right join notifications on users.id = notifications.user_id order by created_date desc';
   db.connection.query(queryStr, (err, results) => {
     if (err) {
       cb(err, null);
@@ -243,7 +252,7 @@ const usersJoinNotifications = (userData, cb) => {
 };
 
 const deleteFollowerNotification = (followerInfo, cb) => {
-  const deleteQuery = `DELETE FROM notifications WHERE user_id = ${followerInfo.id} and event like '%${followerInfo.name}%';`;
+  const deleteQuery = `DELETE FROM notifications WHERE user_id = ${followerInfo.id} and follower_name = '${followerInfo.name}';`;
   db.connection.query(deleteQuery, (err, results) => {
     if (err) {
       cb(err, null);

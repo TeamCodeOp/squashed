@@ -39,7 +39,7 @@ body, textarea {
 }
 
 #mainCopy span {
-  font-size: 2rem; 
+  font-size: 2rem;
 }
 
 .ui.inverted.segment, .ui.primary.inverted.segment {
@@ -146,7 +146,7 @@ body, textarea {
 
 .ui.menu .active.item {
   background: transparent;
-  font-size: 1.15em;  
+  font-size: 1.15em;
   font-weight: bold;
   /* border-bottom: 1px solid black; */
 }
@@ -277,7 +277,7 @@ body, textarea {
 }
 
 .ui.image img {
-  
+
 }
 
 #deleteButton {

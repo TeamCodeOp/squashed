@@ -9,7 +9,7 @@ class UserFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userFeeds: [],
+      userFeeds: []
     };
   }
 
@@ -19,6 +19,7 @@ class UserFeed extends React.Component {
         this.setState({
           userFeeds: response.data
         });
+        console.log('RESPONSE', response.data);
       })
       .catch((error) => {
         console.log(error);
