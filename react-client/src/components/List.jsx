@@ -17,6 +17,8 @@ class List extends React.Component {
   }
 
   updateViewCount(id) {
+    console.log('---------------ID: ', id);
+    
     axios.put('/viewCount', { id })
       .then((response) => {
         console.log('new view count: ', response.data.view_count);
