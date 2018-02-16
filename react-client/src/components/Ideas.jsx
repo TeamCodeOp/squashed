@@ -80,7 +80,7 @@ class Ideas extends React.Component {
 
     return (
       <div>
-        <Header as="h2" icon textAlign="center" >
+        <Header as="h2" icon textAlign="center" id="brainstormHeader" >
           <Icon name="idea" color="yellow" size="small" />
           Share your ideas.
         </Header>
