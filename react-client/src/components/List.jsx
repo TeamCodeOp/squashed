@@ -53,7 +53,7 @@ class List extends React.Component {
                     <Card.Content extra textAlign="right">
                       <Icon />
                       <i className="fas fa-eye" />
-                      
+
                       {project.view_count}
                     </Card.Content>
                   </Card>
