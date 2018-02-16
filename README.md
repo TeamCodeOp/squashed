@@ -12,7 +12,7 @@ Find other engineers to collaborate with!! :octocat: :squirrel:
 ## Table of Contents
 
 1. [Dependencies](#dependencies)
-1. [Requirements](#requirements)
+1. [Setup](#setup)
 1. [Contributing](#contributing)
 
 
@@ -23,8 +23,9 @@ You will need MySQL, node, and npm installed on your computer to run locally:
 2. npm v5.6.0
 3. MySQL v5.7.20
 
-## Requirements
-To Run Locally: 
+## Setup
+
+### Local
 
 1. Clone the repo and in the root directory of your app run ```npm install```
 2. Sign up for a Cloudinary account and take note of the upload url and upload preset which will be in your Dashboard.
@@ -39,7 +40,7 @@ To Run Locally:
 9. Start the node server by running ```npm run server-dev```
 10. Run the test suite with ```npm test```
 
-To deploy on Heroku: 
+### Heroku 
 1. Create Heroku app either via the Heroku website or Heroku CLI 
 2. Install the ClearDB addon
 3. Retrieve the necessary credentials from ClearDB and add them to the config vars on Heroku 
