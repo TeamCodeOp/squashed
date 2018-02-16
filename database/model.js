@@ -11,8 +11,6 @@ const insertProjectData = (projectData, cb) => {
 
     db.connection.query(sql, (err, results) => {
       if (err) {
-        console.log('DBERR!!!!', err.code);
-        console.log('sqlMsg', err.sqlMessage);
         cb(err, null);
         return reject(err);
       }
