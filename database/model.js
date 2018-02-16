@@ -93,7 +93,7 @@ const insertGithubRepos = (repos) => {
 };
 
 const retrieveGithubRepos = (cb) => {
-  const sql = 'SELECT * from github_repos LIMIT 5';
+  const sql = 'SELECT * from github_repos ORDER BY creation_date DESC LIMIT 10';
 
   db.connection.query(sql, (err, results) => {
     if (err) {
