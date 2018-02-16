@@ -18,7 +18,7 @@ const UserFeedList = ({ feed }) => {
             <a id="feed">
               {feed.event}
             </a>
-            {feed.project_id !== null ? <Link to={`/apps/${feed.project_id}`}>{`${feed.project_name}`}</Link> : <Link to={`/users/${feed.follower_name}`}>{`${feed.follower_name}`}</Link> }
+            {feed.project_id !== null ? <Link to={`/apps/${feed.project_id}`} id="activityFeedLink">{`${feed.project_name}`}</Link> : <Link to={`/users/${feed.follower_name}`}  id="activityFeedLink">{`${feed.follower_name}`}</Link> }
             <div className="date">
               {moment(feed.created_date).fromNow()}
             </div>

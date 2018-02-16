@@ -27,10 +27,10 @@ export default class ProfileTabMenu extends Component {
     return (
       <div>
         <Menu pointing secondary>
-          <Menu.Item name="Projects" active={activeItem === 'Projects'} onClick={this.handleItemClick} />
           {(this.props.username && (this.props.username === this.props.profileUsername)) &&
             <Menu.Item name="Inbox" active={activeItem === 'Inbox'} onClick={this.handleItemClick} />
           }
+          <Menu.Item name="Projects" active={activeItem === 'Projects'} onClick={this.handleItemClick} />
         </Menu>
 
         <Segment>
