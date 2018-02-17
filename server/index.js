@@ -288,6 +288,26 @@ app.post('/privateMessages', (req, res) => {
   mysqlModel.formatInsertMessage(req.body.messageInfo, results => res.send(results));
 });
 
+app.delete('/notifications', (req, res) => {
+  if (req.query.projectId) {
+    mysqlModel.deleteMessageNotification(req.query, (err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(201).json(data);
+      }
+    });
+  } else {
+    mysqlModel.deleteFollowerNotification(req.query, (err,   data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(201).json(data);
+      }
+    });
+  }
+});
+
 /* ************************************ */
 
 app.get('/testing', (req, res) => {
@@ -315,15 +335,7 @@ app.post('/notifications', (req, res) => {
   }
 });
 
-app.delete('/notifications', (req, res) => {
-  mysqlModel.deleteFollowerNotification(req.query, (err, data) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(201).json(data);
-    }
-  });
-});
+
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../react-client/dist`, 'index.html'));

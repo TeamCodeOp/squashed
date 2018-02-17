@@ -239,7 +239,7 @@ const insertFollowerNotification = (followerInfo, cb) => {
 };
 
 const usersJoinNotifications = (userData, cb) => {
-  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date,notifications.project_id,notifications.project_name,notifications.follower_name from users right join notifications on users.id = notifications.user_id order by created_date desc';
+  const queryStr = 'select users.git_username,users.avatar_url,notifications.event, notifications.created_date,notifications.project_id,notifications.project_name,notifications.follower_name from users right join notifications on users.id = notifications.user_id order by created_date desc LIMIT 10';
   db.connection.query(queryStr, (err, results) => {
     if (err) {
       cb(err, null);
@@ -439,6 +439,17 @@ const updateProjectByProjectId = (projectData, cb) => {
   });
 };
 
+const deleteMessageNotification = (projectInfo, cb) => {
+  const deleteQuery = `DELETE FROM notifications WHERE project_id = ${projectInfo.projectId};`;
+  db.connection.query(deleteQuery, (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results);
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
@@ -466,3 +477,4 @@ module.exports.checkIfCurrentlyFollowing = checkIfCurrentlyFollowing;
 module.exports.removeFollowerConnection = removeFollowerConnection;
 module.exports.createFollowerConnection = createFollowerConnection;
 module.exports.updateProjectByProjectId = updateProjectByProjectId;
+module.exports.deleteMessageNotification = deleteMessageNotification;

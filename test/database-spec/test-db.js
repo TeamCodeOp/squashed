@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const { expect } = require('chai');
+const { expect } = require('chai').expect;
 
 xdescribe('test database', () => {
   let dbConnection;
@@ -84,4 +84,3 @@ xdescribe('test database', () => {
     });
   });
 });
-
