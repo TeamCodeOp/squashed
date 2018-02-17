@@ -423,7 +423,6 @@ const createFollowerConnection = (followRequestData, cb) => {
       if (err) {
         console.log('error: \n', err);
       }
-      console.log('Created a follower connection (from modex/index.js): \n', results);
       cb(null, results);
       return resolve(results);
     });
