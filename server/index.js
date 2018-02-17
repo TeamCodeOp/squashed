@@ -87,14 +87,14 @@ app.get('/auth/github/return', passport.authenticate('github', { failureRedirect
 app.get('/projects', (req, res) => {
   let techs;
   if (!req.query.techs && !req.query.views) {
-    mysqlDB.retrieveProjects((projects) => {
+    mysqlModel.retrieveProjects((projects) => {
       res.send(projects);
     });
   } else if (req.query.views) {
     mysqlModel.getProjectsByViews(projects => res.send(projects));
   } else {
     techs = Array.isArray(req.query.techs) ? req.query.techs : [req.query.techs];
-    mysqlDB.retrieveProjectsByTechs(techs, (projects) => {
+    mysqlModel.retrieveProjectsByTechs(techs, (projects) => {
       res.send(projects);
     });
   }
@@ -103,12 +103,12 @@ app.get('/projects', (req, res) => {
 // GET request to database to get user info and user's projects
 app.get('/developers/:username', (req, res) => {
   const username = req.params.username;
-  mysqlDB.getUserInfo(username, (user) => {
+  mysqlModel.getUserInfo(username, (user) => {
     const bio = user.user_bio;
 
-    mysqlDB.getProjectsByUser(user.id, (projects) => {
-      mysqlDB.getFollowersForUser(user.id, (followers) => {
-        mysqlDB.getFollowingForUser(user.id, (following) => {
+    mysqlModel.getProjectsByUser(user.id, (projects) => {
+      mysqlModel.selectAllWhere('followers', 'user_id', user.id, false, (followers) => {
+        mysqlModel.selectAllWhere('followers', 'follower_id', user.id, false, (following) => {
           const followersToReturn = [];
           followers.forEach((dataPacket) => {
             followersToReturn.push(dataPacket['follower_id']);
@@ -118,7 +118,6 @@ app.get('/developers/:username', (req, res) => {
           following.forEach((dataPacket) => {
             followingToReturn.push(dataPacket['user_id']);
           });
-
           user.followers = followersToReturn;
           user.following = followingToReturn;
           user.projects = projects;
@@ -133,7 +132,6 @@ app.get('/developers/:username', (req, res) => {
 // GET request to database to project info and project's owner
 app.get('/projects/:id', (req, res) => {
   const projectId = req.params.id;
-
   mysqlModel.selectAllWhere('projects', 'id', projectId, true, (project) => {
     mysqlModel.selectAllWhere('users', 'id', project.user_id, true, (user) => {
       project.user = user; // <-- is this being used anywhere?
@@ -156,7 +154,7 @@ app.get('/githubRepos', (req, res) => {
 });
 
 app.get('/checkSession', (req, res) => {
-  mysqlDB.checkUserSession(req.sessionID, (user) => {
+  mysqlModel.checkUserSession(req.sessionID, (user) => {
     res.send(user);
   });
 });
@@ -167,7 +165,7 @@ app.get('/logout', (req, res) => {
     if (err) {
       return next(err);
     }
-    mysqlDB.deleteUserSession(req.sessionID, (user) => {
+    mysqlModel.deleteUserSession(req.sessionID, (user) => {
     });
     req.logout();
     res.redirect('/');
@@ -176,7 +174,7 @@ app.get('/logout', (req, res) => {
 
 app.get('/searchProjects', (req, res) => {
   const queryTerm = req.query;
-  mysqlDB.findProject(queryTerm.title, (err, data) => {
+  mysqlModel.findProject(queryTerm.title, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -215,7 +213,7 @@ app.post('/projects', (req, res) => {
 });
 
 app.post('/getCurrentUserProfileId', (req, res) => {
-  mysqlDB.getCurrentUserProfileId(req.body, (err, data) => {
+  mysqlModel.getCurrentUserProfileId(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -225,7 +223,7 @@ app.post('/getCurrentUserProfileId', (req, res) => {
 });
 
 app.post('/checkIfCurrentlyFollowing', (req, res) => {
-  mysqlDB.checkIfCurrentlyFollowing(req.body, (err, data) => {
+  mysqlModel.checkIfCurrentlyFollowing(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -235,7 +233,7 @@ app.post('/checkIfCurrentlyFollowing', (req, res) => {
 });
 
 app.post('/followRequest', (req, res) => {
-  mysqlDB.createFollowerConnection(req.body, (err, data) => {
+  mysqlModel.createFollowerConnection(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -245,7 +243,7 @@ app.post('/followRequest', (req, res) => {
 });
 
 app.post('/unfollowRequest', (req, res) => {
-  mysqlDB.removeFollowerConnection(req.body, (err, data) => {
+  mysqlModel.removeFollowerConnection(req.body, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -254,9 +252,8 @@ app.post('/unfollowRequest', (req, res) => {
   });
 });
 
-
 app.put('/projects', (req, res) => {
-  mysqlDB.updateProjectByProjectId(req.body, (err, data) => {
+  mysqlModel.updateProjectByProjectId(req.body, (err, data) => {
     res.status(201).json(data);
   });
 });
@@ -281,7 +278,7 @@ app.put('/privateMessages', (req, res) => {
 // delete request to the projects schema
 app.delete('/projects/:id', (req, res) => {
   const projectId = req.params.id;
-  mysqlDB.deleteProjectByProjectId(projectId, project => res.send(project));
+  mysqlModel.deleteProjectByProjectId(projectId, project => res.send(project));
 });
 
 app.delete('/privateMessages', (req, res) => {

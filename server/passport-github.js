@@ -1,5 +1,5 @@
 const passport = require('passport');
-const mysqlDB = require('../database/index.js');
+const mysqlModel = require('../database/model.js');
 const GitHubStrategy = require('passport-github').Strategy;
 
 let config;
@@ -31,7 +31,7 @@ passport.use(new GitHubStrategy(options, (req, accessToken, refreshToken, profil
     user_bio: profile._json.bio
 
   };
-  mysqlDB.userLogin(userProfile, (err, user) => {
+  mysqlModel.userLogin(userProfile, (err, user) => {
     if (err) {
       return done(err, null);
     }
