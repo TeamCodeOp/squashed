@@ -260,6 +260,17 @@ const deleteFollowerNotification = (followerInfo, cb) => {
   });
 };
 
+const deleteMessageNotification = (projectInfo, cb) => {
+  const deleteQuery = `DELETE FROM notifications WHERE project_id = ${projectInfo.projectId};`;
+  db.connection.query(deleteQuery, (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results);
+    }
+  });
+};
+
 module.exports.insertProjectData = insertProjectData;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.insertGithubRepos = insertGithubRepos;
@@ -273,4 +284,5 @@ module.exports.usersJoinNotifications = usersJoinNotifications;
 module.exports.deleteMessage = deleteMessage;
 module.exports.markAllOpened = markAllOpened;
 module.exports.deleteFollowerNotification = deleteFollowerNotification;
+module.exports.deleteMessageNotification = deleteMessageNotification;
 

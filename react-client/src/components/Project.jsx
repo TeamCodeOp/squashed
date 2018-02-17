@@ -69,6 +69,13 @@ class Project extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+    axios.delete(`/notifications?projectId=${this.props.match.params.id}`)
+      .then((response) => {
+        console.log('project notification deleted from   database');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   show() {
