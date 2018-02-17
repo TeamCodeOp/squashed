@@ -33,7 +33,6 @@ class NavHeader extends Component {
             name="Brainstorm"
             onClick={!this.props.sessionId ? this.props.handleBrainstormRedirect : () => {}}
           />
-          
           {this.props.username ?
             <Menu.Menu position="right">
               <Menu.Item
@@ -42,7 +41,7 @@ class NavHeader extends Component {
                 icon="mail"
                 to={`/users/${this.props.username}?inbox`}
               />
-              <NotificationBadge count={this.props.privateMessages.filter(msg => !msg.opened).length} effect={Effect.SCALE} />
+            <NotificationBadge count={this.props.privateMessages.filter(msg => !msg.opened).length} effect={Effect.SCALE} />
               <Menu.Item
                 as={Link}
                 to={`/users/${this.props.username}`}

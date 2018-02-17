@@ -8,9 +8,6 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const passportGithub = require('./passport-github.js');
 const cache = require('memory-cache');
-const url = require('url');
-const queryString = require('query-string');
-const _ = require('underscore');
 
 const app = express();
 const port = process.env.PORT || 3000;

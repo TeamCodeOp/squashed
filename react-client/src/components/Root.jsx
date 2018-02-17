@@ -3,7 +3,6 @@ import axios from 'axios';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import RouteProps from 'react-route-props';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import NavHeader from './NavHeader.jsx';
 import App from './App.jsx';
@@ -208,9 +207,6 @@ class Root extends React.Component {
             privateMessages={this.state.privateMessages}
             markAllOpened={this.markAllOpened}
           />
-
-
-
           <Switch>
             <RouteProps
               exact
