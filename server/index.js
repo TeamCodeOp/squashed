@@ -118,7 +118,6 @@ app.get('/developers/:username', (req, res) => {
           following.forEach((dataPacket) => {
             followingToReturn.push(dataPacket['user_id']);
           });
-
           user.followers = followersToReturn;
           user.following = followingToReturn;
           user.projects = projects;
@@ -133,7 +132,6 @@ app.get('/developers/:username', (req, res) => {
 // GET request to database to project info and project's owner
 app.get('/projects/:id', (req, res) => {
   const projectId = req.params.id;
-
   mysqlModel.selectAllWhere('projects', 'id', projectId, true, (project) => {
     mysqlModel.selectAllWhere('users', 'id', project.user_id, true, (user) => {
       project.user = user; // <-- is this being used anywhere?
@@ -253,7 +251,6 @@ app.post('/unfollowRequest', (req, res) => {
     }
   });
 });
-
 
 app.put('/projects', (req, res) => {
   mysqlModel.updateProjectByProjectId(req.body, (err, data) => {
