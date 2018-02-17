@@ -14,7 +14,7 @@ const List = (props) => {
                   <Image
                     className="imgThumb"
                     src={item.image_Url || 'https://avatars0.githubusercontent.com/u/583231?s=460&v=4'}
-                   />
+                  />
                   <Card.Content>
                     <Card.Header>
                       {item.project_name}

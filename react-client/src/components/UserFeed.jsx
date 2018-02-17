@@ -19,7 +19,6 @@ class UserFeed extends React.Component {
         this.setState({
           userFeeds: response.data
         });
-        console.log('RESPONSE', response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -30,13 +29,13 @@ class UserFeed extends React.Component {
     return (
       <div>
         <p>Recent activity</p>
-        <Scrollbars 
+        <Scrollbars
           style={{ height: 700 }}
           autoHide
         >
           {this.state.userFeeds.map((feed, i) =>
             <UserFeedList key={i} feed={feed} />
-        )}
+          )}
         </Scrollbars>
       </div>
     );
