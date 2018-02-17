@@ -10,15 +10,12 @@ class List extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmounting');
     if (this.props.isViewFilter) {
       this.props.toggleViewFilter();
     }
   }
 
   updateViewCount(id) {
-    console.log('---------------ID: ', id);
-    
     axios.put('/viewCount', { id })
       .then((response) => {
         console.log('new view count: ', response.data.view_count);

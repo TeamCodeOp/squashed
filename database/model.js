@@ -260,6 +260,185 @@ const deleteFollowerNotification = (followerInfo, cb) => {
   });
 };
 
+const userLogin = (userProfile, cb) => {
+  const userBio = userProfile.user_bio || '';
+  db.connection.query(`SELECT * FROM users WHERE git_username ='${userProfile.gitLogin}';`, (err, user) => {
+    if (user.length === 0 || err) {
+      db.connection.query(`INSERT INTO users (name,git_username,session_id,avatar_url,user_bio) VALUES ("${userProfile.displayName}",
+        "${userProfile.gitLogin}", "${userProfile.session_id}", "${userProfile.avatarUrl}", "${userBio}");`, (err, results) => {
+        if (err) {
+          cb(err, null);
+        } else {
+          cb(null, results);
+        }
+      });
+    } else if (user.length !== 0) {
+      db.connection.query(`UPDATE users SET session_id ='${userProfile.session_id}' WHERE git_username = '${userProfile.gitLogin}';`, (err, user) => {
+        if (err) {
+          throw err;
+        } else {
+          cb(null, user);
+        }
+      });
+    }
+  });
+};
+
+const checkUserSession = (sessionID, cb) => {
+  db.connection.query(`SELECT * FROM users WHERE session_id = '${sessionID}';`, (err, user) => {
+    if (err) {
+      throw err;
+    } else if (user[0]) {
+      cb(user[0]);
+    } else {
+      cb('User not logged in');
+    }
+  });
+};
+
+const deleteUserSession = (sessionID, cb) => {
+  db.connection.query(`UPDATE users SET session_id ="" WHERE session_id ='${sessionID}';`, (err, user) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(user);
+    }
+  });
+};
+
+const retrieveProjects = (cb) => {
+  db.connection.query('SELECT * FROM projects ORDER BY creation_date DESC', (err, projects) => {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(projects);
+    }
+  });
+};
+
+const retrieveProjectsByTechs = (techs, cb) => {
+  const sql = 'SELECT * FROM projects LEFT JOIN technologies ON projects.id = technologies.project_id';
+
+  db.connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(utils.formatProjectsWithTechs(results, techs));
+    }
+  });
+};
+
+const getUserInfo = (username, cb) => {
+  db.connection.query(`SELECT * FROM users WHERE git_username ='${username}';`, (err, user) => {
+    if (user.length === 0 || err) {
+      console.log(err);
+    } else {
+      cb(user[0]);
+    }
+  });
+};
+
+const getProjectsByUser = (userId, cb) => {
+  db.connection.query(`SELECT * FROM projects WHERE user_id ='${userId}';`, (err, projects) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(projects);
+    }
+  });
+};
+
+const findProject = (query, cb) => {
+  const selectQuery = "SELECT * FROM projects WHERE project_name like \'%" + query + "%\';";
+  db.connection.query(selectQuery, (err, results) => {
+    if (err) {
+      console.log('err in database find project', err);
+      cb(err, null);
+    } else {
+      console.log('success in findProject', results);
+      cb(null, results);
+    }
+  });
+};
+
+const deleteProjectByProjectId = (query, callback) => {
+  const deleteTechQuery = `DELETE FROM technologies WHERE project_id = '${query}';`;
+  db.connection.query(deleteTechQuery, (err1, data) => {
+    if (err1) {
+      console.log('error in database technologies delete');
+      callback(err1, null);
+    } else {
+      const deleteQuery = `DELETE FROM projects WHERE id ='${query}';`;
+      db.connection.query(deleteQuery, (err, results) => {
+        if (err) {
+          console.log('err in database delete project', err);
+          callback(err, null);
+        } else {
+          callback(null, results);
+        }
+      });
+    }
+  });
+};
+
+const getCurrentUserProfileId = (query, cb) => {
+  const insertQuery = `SELECT id FROM users WHERE git_username = '${query.username}'`;
+  db.connection.query(insertQuery, (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results[0]['id']);
+    }
+  });
+};
+
+const checkIfCurrentlyFollowing = (followRequestData, cb) => {
+  const insertQuery = `SELECT user_id FROM followers WHERE user_id ='${followRequestData.currentUserProfileId}' AND follower_id='${followRequestData.loggedInUserId}'`;
+
+  db.connection.query(insertQuery, (err, data) => {
+    cb(err, data);
+  });
+};
+
+const removeFollowerConnection = (unfollowRequestData, cb) => {
+  const insertQuery = `DELETE FROM followers WHERE user_id ='${unfollowRequestData.user_id}' AND follower_id='${unfollowRequestData.follower_id}'`;
+
+  db.connection.query(insertQuery, (err, data) => {
+    cb(err, data);
+  });
+};
+
+const createFollowerConnection = (followRequestData, cb) => {
+  return new Promise((resolve, reject) => {
+    const insertQuery =
+    `INSERT INTO followers (
+      user_id,
+      follower_id
+    ) VALUES(
+      ${followRequestData.user_id},
+      ${followRequestData.follower_id}
+    )`;
+
+    db.connection.query(insertQuery, (err, results) => {
+      if (err) {
+        console.log('error: \n', err);
+      }
+      cb(null, results);
+      return resolve(results);
+    });
+  });
+};
+
+const updateProjectByProjectId = (projectData, cb) => {
+  db.connection.query(`UPDATE projects SET project_name ='${projectData.projectName}', description='${projectData.description}',repo_url='${projectData.githubRepo}' WHERE id = '${projectData.projectId}';`, (err, user) => {
+    if (err) {
+      throw err;
+    } else {
+      cb(null, user);
+    }
+  });
+};
+
 const deleteMessageNotification = (projectInfo, cb) => {
   const deleteQuery = `DELETE FROM notifications WHERE project_id = ${projectInfo.projectId};`;
   db.connection.query(deleteQuery, (err, results) => {
@@ -284,5 +463,18 @@ module.exports.usersJoinNotifications = usersJoinNotifications;
 module.exports.deleteMessage = deleteMessage;
 module.exports.markAllOpened = markAllOpened;
 module.exports.deleteFollowerNotification = deleteFollowerNotification;
+module.exports.userLogin = userLogin;
+module.exports.checkUserSession = checkUserSession;
+module.exports.deleteUserSession = deleteUserSession;
+module.exports.retrieveProjects = retrieveProjects;
+module.exports.retrieveProjectsByTechs = retrieveProjectsByTechs;
+module.exports.getUserInfo = getUserInfo;
+module.exports.getProjectsByUser = getProjectsByUser;
+module.exports.findProject = findProject;
+module.exports.deleteProjectByProjectId = deleteProjectByProjectId;
+module.exports.getCurrentUserProfileId = getCurrentUserProfileId;
+module.exports.checkIfCurrentlyFollowing = checkIfCurrentlyFollowing;
+module.exports.removeFollowerConnection = removeFollowerConnection;
+module.exports.createFollowerConnection = createFollowerConnection;
+module.exports.updateProjectByProjectId = updateProjectByProjectId;
 module.exports.deleteMessageNotification = deleteMessageNotification;
-

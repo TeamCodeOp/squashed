@@ -14,7 +14,7 @@ class PrivateMessageForm extends React.Component {
   handleChange(e) {
     this.setState({
       messageText: e.target.value
-    }, () => console.log(this.state.messageText));
+    });
   }
 
   handleSubject(e) {

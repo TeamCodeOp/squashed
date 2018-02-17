@@ -118,7 +118,7 @@ class UploadForm extends React.Component {
 
   handleSubmit() {
     const isError = this.state.isProjectNameError || this.state.isGithubUrlError;
-    let projectToBeAdded = this.state.projectName;
+    const projectToBeAdded = this.state.projectName;
     if (isError) {
       this.setState({ displayError: 'Please fill in all required fields', isPostError: true });
     } else {
@@ -196,7 +196,6 @@ class UploadForm extends React.Component {
 
   validateFields(e) {
     e.preventDefault();
-    console.log('validatingFields');
     const isProjectNameError = this.state.projectName === '';
     const isGithubUrlError = this.state.githubRepo === '';
 

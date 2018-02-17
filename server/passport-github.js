@@ -1,5 +1,5 @@
 const passport = require('passport');
-const mysqlDB = require('../database/index.js');
+const mysqlModel = require('../database/model.js');
 const GitHubStrategy = require('passport-github').Strategy;
 
 let config;
@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
   options = {
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'https://codeop28.herokuapp.com/auth/github/return',
+    callbackURL: 'https://squashed.herokuapp.com/auth/github/return',
     passReqToCallback: true
   };
 } else {
@@ -31,7 +31,7 @@ passport.use(new GitHubStrategy(options, (req, accessToken, refreshToken, profil
     user_bio: profile._json.bio
 
   };
-  mysqlDB.userLogin(userProfile, (err, user) => {
+  mysqlModel.userLogin(userProfile, (err, user) => {
     if (err) {
       return done(err, null);
     }
