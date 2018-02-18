@@ -2,7 +2,9 @@ const utils = require('./utils');
 const dbModel = require('../database/model');
 
 // Every 8 hours fetch repos from github
-// 0 */8 * * * * /usr/local/bin/node /Users/Dan/Desktop/HRR_Thesis/CodeOp/thesis/workers/githubRepoFetcher.js
+
+// example crontab
+// 0 */8 * * * * /path/to/node path/to/root/directory/workers/githubRepoFetcher.js
 
 console.log('Worker fetching repos...');
 

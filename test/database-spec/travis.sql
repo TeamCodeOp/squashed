@@ -3,8 +3,6 @@ CREATE DATABASE test;
 
 USE test;
 
--- USE heroku_a9ded5de1ff1c8b;
-
 CREATE TABLE users (
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
